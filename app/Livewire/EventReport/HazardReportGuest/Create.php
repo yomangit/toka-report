@@ -267,22 +267,26 @@ class Create extends Component
             $this->reference = $referenceHazard . $references;
         }
         $this->validate();
-        if (!empty($this->documentation)) {
+       $file_name = '';
+        if ($this->documentation) {
+            $file_name = $this->documentation->getClientOriginalName();
+            $extension = strtolower($this->documentation->getClientOriginalExtension());
+            $this->fileUpload = $extension;
 
-            // Kompres dan resize gambar
-            $image = Image::make($this->documentation->getRealPath())
-                ->resize(1200, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                })
-                ->encode($this->documentation->getClientOriginalExtension(), 75);
+            $allowedImageExtensions = ['jpg', 'jpeg', 'png', 'webp'];
 
-            // Simpan hasil kompres ke storage secara manual
-            $filename = uniqid() . '.' . strtolower($this->documentation->getClientOriginalExtension());
-            Storage::disk('public')->put('documents/hzd/' . $filename, $image);
-            $this->fileUpload = $filename;
-        } else {
-            $this->fileUpload = null;
+            if (in_array($extension, $allowedImageExtensions)) {
+                // ✅ Ambil isi file (tanpa getRealPath)
+                $fileContent = $this->documentation->get(); // raw file content
+
+                // Kompres dan encode langsung dari content
+                $image = Image::make($fileContent)->encode($extension, 70);
+
+                Storage::put("public/documents/hzd/{$file_name}", $image);
+            } else {
+                // PDF, Word, dll — simpan biasa
+                $this->documentation->storeAs('public/documents/hzd', $file_name);
+            }
         }
         if ($this->show_immidiate === 'no') {
             $this->immediate_corrective_action = null;
