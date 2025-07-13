@@ -267,7 +267,7 @@ class Create extends Component
             $this->reference = $referenceHazard . $references;
         }
         $this->validate();
-       $file_name = '';
+        $file_name = '';
         if ($this->documentation) {
             $file_name = $this->documentation->getClientOriginalName();
             $extension = strtolower($this->documentation->getClientOriginalExtension());
@@ -353,11 +353,11 @@ class Create extends Component
         foreach ($User as $key => $value) {
             $users     = User::whereId($value->id)->get();
             $offerData = [
-                'greeting'  => 'Hi' . ' ' . $value->lookup_name,
-                'subject'   => 'Hazard Report' . ' ' . $this->task_being_done,
-                'line'      => $this->report_byName . ' ' . 'has submitted a hazard report, please review',
-                'line2'     => 'by click the button below',
-                'line3'     => 'Thank you',
+                'greeting'  => 'Halo ' . $value->lookup_name . ' 👋',
+                'subject'   => '⚠️ Laporan Bahaya: ' . $this->reference,
+                'line'      => $this->report_byName . ' baru saja mengirimkan laporan bahaya. Mohon untuk segera ditinjau.',
+                'line2'     => 'Klik tombol di bawah ini untuk melihat detail laporan dan mengambil tindakan.',
+                'line3'     => 'Tetap waspada dan terima kasih atas perhatian Anda 🙏',
                 'actionUrl' => url("/eventReport/hazardReportDetail/$url"),
             ];
             Notification::send($users, new toModerator($offerData));
@@ -365,12 +365,13 @@ class Create extends Component
         $report_to = User::where('id', $this->report_to)->whereNotNull('email')->get();
         if ($report_to) {
             $offerData = [
-                'greeting'  => 'Hi' . ' ' . $this->report_toName,
-                'subject'   => 'hazard report with reference number ' . ' ' . $this->reference,
-                'line'      => $this->report_byName . ' ' . 'has sent a hazard report to you, please review it',
-                'line2'     => 'by click the button below',
-                'line3'     => 'Thank you',
+                'greeting'  => 'Halo ' . $this->report_toName . ' 👋',
+                'subject'   => '⚠️ Laporan Bahaya dengan Nomor Referensi: ' . $this->reference,
+                'line'      => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.',
+                'line2'     => 'Klik tombol di bawah ini untuk melihat detail laporan.',
+                'line3'     => 'Terima kasih atas perhatian dan kerjasamanya 🙏',
                 'actionUrl' => url("/eventReport/hazardReportDetail/$url"),
+
             ];
             Notification::send($report_to, new toModerator($offerData));
             $this->clearFields();
