@@ -79,10 +79,10 @@
                     <td>{{ DateTime::createFromFormat('Y-m-d : H:i', $item->date)->format('d-m-Y') }}</td>
                     <td>{{ $item->reference }}</td>
                     <td>
-                        {{ $item->event_type_id != null ? $item->eventType->type_eventreport_name : '' }}
+                        {{" $item->event_type_id != null ? $item->eventType->type_eventreport_name : '' "}}
                     </td>
                     <td>
-                        {{ $item->event_type_id != null ? $item->subEventType->event_sub_type_name : '' }}
+                        {{" $item->event_type_id != null ? $item->subEventType->event_sub_type_name : '' "}}
                     </td>
                     <td>
                         {{ $item->workgroup_name }}

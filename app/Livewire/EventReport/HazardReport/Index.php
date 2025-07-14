@@ -56,13 +56,13 @@ class Index extends Component
                 'WorkflowDetails',
                 'subEventType',
                 'eventType'
-            ])->findSubmitter(trim($this->nilai))->searchStatus(trim($this->search_status))->searchEventType(trim($this->search_eventType))->searchEventSubType(trim($this->search_eventSubType))->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->search(trim($this->searching))->paginate(30);
+            ])->findSubmitter(trim($this->nilai))->searchStatus(trim($this->search_status))->searchEventType(trim($this->search_eventType))->searchEventSubType(trim($this->search_eventSubType))->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->search(trim($this->searching))->orderBy('created_at','DESC')->paginate(30);
         } else {
             $Hazard = HazardReport::with([
                 'WorkflowDetails',
                 'subEventType',
                 'eventType'
-            ])->findSubmitter(trim($this->nilai))->searchStatus(trim($this->search_status))->searchEventType(trim($this->search_eventType))->searchEventSubType(trim($this->search_eventSubType))->search(trim($this->searching))->paginate(30);
+            ])->findSubmitter(trim($this->nilai))->searchStatus(trim($this->search_status))->searchEventType(trim($this->search_eventType))->searchEventSubType(trim($this->search_eventSubType))->search(trim($this->searching))->orderBy('created_at','DESC')->paginate(30);
         }
 
         if (choseEventType::where('route_name', 'LIKE', '%' . '/eventReport/hazardReport' . '%')->exists()) {
