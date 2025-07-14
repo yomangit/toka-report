@@ -1,20 +1,18 @@
 <div>
     @section('bradcrumbs')
-        {{ Breadcrumbs::render('hazardReport') }}
+    {{ Breadcrumbs::render('hazardReport') }}
     @endsection
     @push('styles')
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @endpush
     <x-notification />
     <div class="flex flex-col mb-2 justify-items-stretch sm:flex-row sm:justify-between">
         <div class="justify-self-start">
             <div>
-                <x-icon-btn-a href="{{ route('hazardReportform', ['workflow_template_id' => $workflow_template_id]) }}"
-                    data-tip="Add Data" />
+                <x-icon-btn-a href="{{ route('hazardReportform', ['workflow_template_id' => $workflow_template_id]) }}" data-tip="Add Data" />
                 @if ($view)
-                    <x-btn-admin-template
-                        wire:click="$dispatch('openModal', { component: 'admin.route-request.create'})">Chose Workflow
-                        Template</x-btn-admin-template>
+                <x-btn-admin-template wire:click="$dispatch('openModal', { component: 'admin.route-request.create'})">Chose Workflow
+                    Template</x-btn-admin-template>
                 @endif
             </div>
 
@@ -22,8 +20,7 @@
             <div class="flex flex-row form-control">
                 <label class="gap-4 cursor-pointer label">
                     <span class="label-text font-spicy_rice">My Tray</span>
-                    <input type="checkbox" wire:model.live='in_tray' checked="checked"
-                        class="checkbox [--chkbg:oklch(var(--a))] [--chkfg:oklch(var(--p))] checkbox-xs" />
+                    <input type="checkbox" wire:model.live='in_tray' checked="checked" class="checkbox [--chkbg:oklch(var(--a))] [--chkfg:oklch(var(--p))] checkbox-xs" />
                 </label>
             </div>
         </div>
@@ -33,21 +30,21 @@
             <x-select-search wire:model.live='search_eventType'>
                 <option class="opacity-40 " value="" selected>Select All Event Type</option>
                 @foreach ($EventType as $event_type)
-                    <option value="{{ $event_type->id }}">
-                        {{ $event_type->EventCategory->event_category_name }} -
-                        {{ $event_type->type_eventreport_name }}</option>
+                <option value="{{ $event_type->id }}">
+                    {{ $event_type->EventCategory->event_category_name }} -
+                    {{ $event_type->type_eventreport_name }}</option>
                 @endforeach
             </x-select-search>
             <x-select-search wire:model.live='search_eventSubType'>
                 <option class="opacity-40 " value="" selected>Select All Event Sub Type</option>
                 @foreach ($EventSubType as $item)
-                    <option value="{{ $item->id }}">{{ $item->event_sub_type_name }}</option>
+                <option value="{{ $item->id }}">{{ $item->event_sub_type_name }}</option>
                 @endforeach
             </x-select-search>
             <x-select-search wire:model.live='search_status'>
                 <option class="opacity-40 " value="" selected>Select All Status</option>
                 @foreach ($Status as $item)
-                    <option value="{{ $item->status_name }}">{{ $item->status_name }}</option>
+                <option value="{{ $item->status_name }}">{{ $item->status_name }}</option>
                 @endforeach
             </x-select-search>
             <x-input-daterange id="rangeDate" wire:model.live='rangeDate' placeholder='date-range' />
@@ -77,71 +74,63 @@
             <tbody>
 
                 @forelse ($HazardReport as $index => $item)
-                    <tr wire:target='rangeDate,search_workgroup,search_eventType,search_eventSubType,search_status,searching,in_tray'
-                        wire:loading.class='hidden ' class="text-center">
-                        <th>{{ $HazardReport->firstItem() + $index }}</th>
-                        <td>{{ DateTime::createFromFormat('Y-m-d : H:i', $item->date)->format('d-m-Y') }}</td>
-                        <td>{{ $item->reference }}</td>
-                        <td>
-                            {{ $item->event_type_id != null ? $item->eventType->type_eventreport_name : '' }}
-                        </td>
-                        <td>
-                            {{ $item->event_type_id != null ? $item->subEventType->event_sub_type_name : '' }}
-                        </td>
-                        <td>
-                            {{ $item->workgroup_name }}
-                        </td>
-                        <td>
-                            {{ $ActionHazard->where('hazard_id', $item->id)->count('due_date') }}/{{ $ActionHazard->where('hazard_id', $item->id)->WhereNull('completion_date')->count('completion_date') }}
-                        </td>
-                        <td>
-                            <p
-                                class="bg-clip-text text-transparent font-bold font-mono {{ $item->WorkflowDetails->Status->bg_status }}">
-                                {{ $item->WorkflowDetails->Status->status_name }}</p>
-                        </td>
-                        <td>
-                            <div class="">
-                                @if (auth()->user()->role_user_permit_id == 1 ||
-                                        $item->submitter == auth()->user()->id ||
-                                        $item->report_by == auth()->user()->id ||
-                                        $item->report_to == auth()->user()->id ||
-                                        $item->assign_to == auth()->user()->id ||
-                                        $item->also_assign_to == auth()->user()->id)
-                                    <x-icon-btn-detail href="{{ route('hazardReportDetail', ['id' => $item->id]) }}"
-                                        data-tip="Details" />
+                <tr wire:target='rangeDate,search_workgroup,search_eventType,search_eventSubType,search_status,searching,in_tray' wire:loading.class='hidden ' class="text-center">
+                    <th>{{ $HazardReport->firstItem() + $index }}</th>
+                    <td>{{ DateTime::createFromFormat('Y-m-d : H:i', $item->date)->format('d-m-Y') }}</td>
+                    <td>{{ $item->reference }}</td>
+                    <td>
+                        {{ $item->event_type_id != null ? $item->eventType->type_eventreport_name : '' }}
+                    </td>
+                    <td>
+                        {{ $item->event_type_id != null ? $item->subEventType->event_sub_type_name : '' }}
+                    </td>
+                    <td>
+                        {{ $item->workgroup_name }}
+                    </td>
+                    <td>
+                        {{ $ActionHazard->where('hazard_id', $item->id)->count('due_date') }}/{{ $ActionHazard->where('hazard_id', $item->id)->WhereNull('completion_date')->count('completion_date') }}
+                    </td>
+                    <td>
+                        <p class="bg-clip-text text-transparent font-bold font-mono {{ $item->WorkflowDetails->Status->bg_status }}">
+                            {{ $item->WorkflowDetails->Status->status_name }}</p>
+                    </td>
+                    <td>
+                        <div class="">
+                            @if (auth()->user()->role_user_permit_id == 1 ||
+                            $item->submitter == auth()->user()->id ||
+                            $item->report_by == auth()->user()->id ||
+                            $item->report_to == auth()->user()->id ||
+                            $item->assign_to == auth()->user()->id ||
+                            $item->also_assign_to == auth()->user()->id)
+                            <x-icon-btn-detail href="{{ route('hazardReportDetail', ['id' => $item->id]) }}" data-tip="Details" />
 
-                                    <x-icon-btn-delete data-tip="delete" wire:click='delete({{ $item->id }})'
-                                        wire:confirm.prompt="Are you sure delete {{ $item->reference }}?\n\nType DELETE to confirm|DELETE" />
-                                @endif
-                            </div>
-                        </td>
-                    </tr>
+                            <x-icon-btn-delete data-tip="delete" wire:click='delete({{ $item->id }})' wire:confirm.prompt="Are you sure delete {{ $item->reference }}?\n\nType DELETE to confirm|DELETE" />
+                            @endif
+                        </div>
+                    </td>
+                </tr>
                 @empty
-                    <tr wire:loading.class='hidden '
-                        wire:target='rangeDate,search_workgroup,search_eventType,search_eventSubType,search_status,searching,in_tray'>
-                        <th colspan="9" class="text-xl text-center font-signika"> <span
-                                class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-yellow-500">
-                                data not found
-                            </span>
-                        </th>
-                    </tr>
+                <tr wire:loading.class='hidden ' wire:target='rangeDate,search_workgroup,search_eventType,search_eventSubType,search_status,searching,in_tray'>
+                    <th colspan="9" class="text-xl text-center font-signika"> <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-yellow-500">
+                            data not found
+                        </span>
+                    </th>
+                </tr>
                 @endforelse
-                <tr class="hidden skeleton"
-                    wire:target='rangeDate,search_workgroup,search_eventType,search_eventSubType,search_status,searching,in_tray'
-                    wire:loading.class.remove='hidden '>
+                <tr class="hidden skeleton" wire:target='rangeDate,search_workgroup,search_eventType,search_eventSubType,search_status,searching,in_tray' wire:loading.class.remove='hidden '>
                     <th colspan="10" class="h-32 text-center">
                         <x-loading-spinner />
                     </th>
                 </tr>
             </tbody>
         </table>
-        <div>{{ $HazardReport->links() }}</div>
+        <div class="mt-2">{{ $HazardReport->links() }}</div>
     </div>
     <script nonce="{{ csp_nonce() }}" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script nonce="{{ csp_nonce() }}">
         flatpickr("#rangeDate", {
-            mode: 'range',
-            dateFormat: "d-m-Y", //defaults to "F Y"
+            mode: 'range'
+            , dateFormat: "d-m-Y", //defaults to "F Y"
             onChange: function(dates) {
                 if (dates.length === 2) {
 
@@ -181,5 +170,6 @@
                 }
             }
         });
+
     </script>
 </div>
