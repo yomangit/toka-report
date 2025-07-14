@@ -50,11 +50,8 @@
             </x-select-search>
             <x-input-daterange id="rangeDate" wire:model.live='rangeDate' placeholder='date-range' />
             <x-inputsearch wire:model.live='searching' placeholder='specific search' />
-
         </div>
-
     </div>
-
     <div class="overflow-x-auto">
         <table class="table table-zebra table-xs">
             <!-- head -->

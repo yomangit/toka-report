@@ -135,7 +135,7 @@
                 </tr>
             </tbody>
         </table>
-        <div></div>
+        <div>{{ $HazardReport->links() }}</div>
     </div>
     <script nonce="{{ csp_nonce() }}" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script nonce="{{ csp_nonce() }}">

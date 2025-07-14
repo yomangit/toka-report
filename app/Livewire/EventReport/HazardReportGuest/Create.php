@@ -21,7 +21,6 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
-
 class Create extends Component
 {
     use WithFileUploads;
@@ -408,7 +407,6 @@ class Create extends Component
             // $this->redirectRoute('hazardReportCreate', ['workflow_template_id' => $this->workflow_template_id]);
         }
     }
-
     public function clearFields()
     {
         $this->report_byName               = "";
