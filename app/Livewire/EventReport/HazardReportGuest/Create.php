@@ -347,20 +347,12 @@ class Create extends Component
             'duration' => 4000,
         ]);
         // Notification
-        // $getModerator = (Auth::check() ? EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->where('type_event_report_id', $this->event_type_id)->where('user_id', 'NOT LIKE', Auth::user()->id)->pluck('user_id')->toArray() : EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->pluck('user_id')->pluck('user_id')->toArray());
         // $User         = User::whereIn('id', $getModerator)->get();
         $url          = $HazardReport->id;
         $actionUrl = url("/eventReport/hazardReportDetail/{ $url}");
         if ($this->ResponsibleRole == 1) {
-            $moderators = User::whereIn('id', function ($query) {
-                $query->select('user_id')
-                    ->from('event_user_securities')
-                    ->where('responsible_role_id', 1)
-                    ->where('type_event_report_id', $this->event_type_id)
-                    ->where('user_id', '!=', Auth::id());
-            })
-                ->whereNotNull('email')
-                ->get();
+            $moderators = (Auth::check() ? EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->where('type_event_report_id', $this->event_type_id)->where('user_id', 'NOT LIKE', Auth::user()->id)->pluck('user_id')->toArray() : EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->pluck('user_id')->pluck('user_id')->toArray());
+            $moderators = User::whereIn('id',$moderators)->whereNotNull('email')->get();
             foreach ($moderators as $moderator) {
                 // Laravel notification
                 $offerData = [
