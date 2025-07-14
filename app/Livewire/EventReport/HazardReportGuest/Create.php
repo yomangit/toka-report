@@ -351,20 +351,31 @@ class Create extends Component
         $url          = $HazardReport->id;
         $actionUrl = url("/eventReport/hazardReportDetail/{ $url}");
         if ($this->ResponsibleRole == 1) {
-            $moderators_id = (Auth::check() ? EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->where('type_event_report_id', $this->event_type_id)->where('user_id', 'NOT LIKE', Auth::user()->id)->pluck('user_id')->toArray() : EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->where('type_event_report_id', $this->event_type_id)->pluck('user_id')->toArray())
-            $moderators = User::whereIn('id',$moderators_id)->whereNotNull('email')->get();
+            $moderatorQuery = User::whereIn('id', function ($query) {
+                $query->select('user_id')
+                    ->from('event_user_securities')
+                    ->where('responsible_role_id', 1)
+                    ->where('type_event_report_id', $this->event_type_id);
+
+                if (Auth::check()) {
+                    $query->where('user_id', '!=', Auth::id());
+                }
+            })
+                ->whereNotNull('email');
+
+            $moderators = $moderatorQuery->get();
+
             foreach ($moderators as $moderator) {
-                // Laravel notification
                 $offerData = [
                     'greeting'  => 'Halo ' . $moderator->lookup_name . ' 👋',
                     'subject'   => '⚠️ Laporan Bahaya: ' . $this->reference,
                     'line'      => $this->report_byName . ' baru saja mengirimkan laporan bahaya. Mohon untuk segera ditinjau.',
                     'line2'     => 'Klik tombol di bawah ini untuk melihat detail laporan dan mengambil tindakan.',
                     'line3'     => 'Tetap waspada dan terima kasih atas perhatian Anda 🙏',
-                    'actionUrl' =>  $actionUrl,
+                    'actionUrl' => $actionUrl,
                 ];
-                // Laravel Notification (email/db)
-                Notification::send(User::where('id',$moderator->id)->get(), new toModerator($offerData));
+
+                Notification::send($moderator, new toModerator($offerData));
             }
         }
 
