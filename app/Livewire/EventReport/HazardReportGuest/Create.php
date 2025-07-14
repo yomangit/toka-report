@@ -351,8 +351,7 @@ class Create extends Component
         $url          = $HazardReport->id;
         $actionUrl = url("/eventReport/hazardReportDetail/{ $url}");
         if ($this->ResponsibleRole == 1) {
-            $moderators_id = (Auth::check() ? EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->where('type_event_report_id', $this->event_type_id)->where('user_id', 'NOT LIKE', Auth::user()->id)->pluck('user_id')->toArray() : EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->where('type_event_report_id', $this->event_type_id)->pluck('user_id')->toArray());
-            dd($moderators_id);
+            $moderators_id = (Auth::check() ? EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->where('type_event_report_id', $this->event_type_id)->where('user_id', 'NOT LIKE', Auth::user()->id)->pluck('user_id')->toArray() : EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->where('type_event_report_id', $this->event_type_id)->pluck('user_id')->toArray())
             $moderators = User::whereIn('id',$moderators_id)->whereNotNull('email')->get();
             foreach ($moderators as $moderator) {
                 // Laravel notification
