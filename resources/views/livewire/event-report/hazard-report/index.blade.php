@@ -72,57 +72,63 @@
                 </tr>
             </thead>
             <tbody>
-
                 @forelse ($HazardReport as $index => $item)
-                <tr wire:target='rangeDate,search_workgroup,search_eventType,search_eventSubType,search_status,searching,in_tray' wire:loading.class='hidden ' class="text-center">
+                <tr wire:target='rangeDate,search_workgroup,search_eventType,search_eventSubType,search_status,searching,in_tray' wire:loading.class='hidden' class="text-center">
                     <th>{{ $HazardReport->firstItem() + $index }}</th>
-                    <td>{{ DateTime::createFromFormat('Y-m-d : H:i', $item->date)->format('d-m-Y') }}</td>
+                    <td>
+                        {{ \DateTime::createFromFormat('Y-m-d : H:i', $item->date)?->format('d-m-Y') ?? '-' }}
+                    </td>
                     <td>{{ $item->reference }}</td>
                     <td>
-                        {{" $item->event_type_id != null ? $item->eventType->type_eventreport_name : '' "}}
+                        {{ $item->eventType?->type_eventreport_name ?? '-' }}
                     </td>
                     <td>
-                        {{" $item->event_type_id != null ? $item->subEventType->event_sub_type_name : '' "}}
+                        {{ $item->subEventType?->event_sub_type_name ?? '-' }}
+                    </td>
+                    <td>{{ $item->workgroup_name ?? '-' }}</td>
+                    <td>
+                        {{ $ActionHazard->where('hazard_id', $item->id)->count('due_date') }}
+                        /
+                        {{ $ActionHazard->where('hazard_id', $item->id)->whereNull('completion_date')->count('completion_date') }}
                     </td>
                     <td>
-                        {{ $item->workgroup_name }}
+                        <p class="bg-clip-text text-transparent font-bold font-mono {{ $item->WorkflowDetails?->Status?->bg_status }}">
+                            {{ $item->WorkflowDetails?->Status?->status_name ?? '-' }}
+                        </p>
                     </td>
                     <td>
-                        {{ $ActionHazard->where('hazard_id', $item->id)->count('due_date') }}/{{ $ActionHazard->where('hazard_id', $item->id)->WhereNull('completion_date')->count('completion_date') }}
-                    </td>
-                    <td>
-                        <p class="bg-clip-text text-transparent font-bold font-mono {{ $item->WorkflowDetails->Status->bg_status }}">
-                            {{ $item->WorkflowDetails->Status->status_name }}</p>
-                    </td>
-                    <td>
-                        <div class="">
-                            @if (auth()->user()->role_user_permit_id == 1 ||
-                            $item->submitter == auth()->user()->id ||
-                            $item->report_by == auth()->user()->id ||
-                            $item->report_to == auth()->user()->id ||
-                            $item->assign_to == auth()->user()->id ||
-                            $item->also_assign_to == auth()->user()->id)
+                        <div>
+                            @if (
+                            auth()->user()->role_user_permit_id == 1 ||
+                            $item->submitter == auth()->id() ||
+                            $item->report_by == auth()->id() ||
+                            $item->report_to == auth()->id() ||
+                            $item->assign_to == auth()->id() ||
+                            $item->also_assign_to == auth()->id()
+                            )
                             <x-icon-btn-detail href="{{ route('hazardReportDetail', ['id' => $item->id]) }}" data-tip="Details" />
-
                             <x-icon-btn-delete data-tip="delete" wire:click='delete({{ $item->id }})' wire:confirm.prompt="Are you sure delete {{ $item->reference }}?\n\nType DELETE to confirm|DELETE" />
                             @endif
                         </div>
                     </td>
                 </tr>
                 @empty
-                <tr wire:loading.class='hidden ' wire:target='rangeDate,search_workgroup,search_eventType,search_eventSubType,search_status,searching,in_tray'>
-                    <th colspan="9" class="text-xl text-center font-signika"> <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-yellow-500">
+                <tr wire:loading.class='hidden' wire:target='rangeDate,search_workgroup,search_eventType,search_eventSubType,search_status,searching,in_tray'>
+                    <th colspan="9" class="text-xl text-center font-signika">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-yellow-500">
                             data not found
                         </span>
                     </th>
                 </tr>
                 @endforelse
-                <tr class="hidden skeleton" wire:target='rangeDate,search_workgroup,search_eventType,search_eventSubType,search_status,searching,in_tray' wire:loading.class.remove='hidden '>
+
+                <tr class="hidden skeleton" wire:target='rangeDate,search_workgroup,search_eventType,search_eventSubType,search_status,searching,in_tray' wire:loading.class.remove='hidden'>
                     <th colspan="10" class="h-32 text-center">
                         <x-loading-spinner />
                     </th>
                 </tr>
             </tbody>
+
         </table>
         <div class="mt-2">{{ $HazardReport->links() }}</div>
     </div>
