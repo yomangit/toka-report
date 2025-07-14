@@ -351,7 +351,8 @@ class Create extends Component
         $url          = $HazardReport->id;
         $actionUrl = url("/eventReport/hazardReportDetail/{ $url}");
         if ($this->ResponsibleRole == 1) {
-            $moderators_id = (Auth::check() ? EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->where('type_event_report_id', $this->event_type_id)->where('user_id', 'NOT LIKE', Auth::user()->id)->pluck('user_id')->toArray() : EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->pluck('user_id')->pluck('user_id')->toArray());
+            $moderators_id = (Auth::check() ? EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->where('type_event_report_id', $this->event_type_id)->where('user_id', 'NOT LIKE', Auth::user()->id)->pluck('user_id')->toArray() : EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->where('type_event_report_id', $this->event_type_id)->pluck('user_id')->toArray());
+            dd($moderators_id);
             $moderators = User::whereIn('id',$moderators_id)->whereNotNull('email')->get();
             foreach ($moderators as $moderator) {
                 // Laravel notification
@@ -364,7 +365,7 @@ class Create extends Component
                     'actionUrl' =>  $actionUrl,
                 ];
                 // Laravel Notification (email/db)
-                Notification::send(User::whereId($moderator->id)->get(), new toModerator($offerData));
+                Notification::send(User::where('id',$moderator->id)->get(), new toModerator($offerData));
             }
         }
 
