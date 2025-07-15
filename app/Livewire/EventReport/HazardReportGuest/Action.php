@@ -20,24 +20,10 @@ class Action extends Component
     #[Validate]
     public $hazard_id,$responsible_role_id,$reference, $responsibility, $responsibility_name, $followup_action, $actionee_comment, $action_condition, $due_date, $completion_date;
 
-    #[On('modalActionHazard')]
-    public function modalActionHazard(HazardReport $hazard, ActionHazard $action)
+    #[On('modalActionHazardNew')]
+    public function modalActionHazard()
     {
         $this->modal = ' modal-open';
-        $this->hazard_id = $hazard->id;
-        $this->current_step = $hazard->WorkflowDetails->name;
-         $this->responsible_role_id = $hazard->WorkflowDetails->responsible_role_id;
-         $this->reference = $hazard->reference;
-        $this->action_id = $action->id;
-        if ($this->action_id) {
-            $this->responsibility = $action->responsibility;
-            $this->responsibility_name = $action->users->lookup_name;
-            $this->followup_action = $action->followup_action;
-            $this->actionee_comment = $action->actionee_comment;
-            $this->action_condition = $action->action_condition;
-            $this->due_date = $action->due_date;
-            $this->completion_date = $action->completion_date;
-        }
     }
     public function clickResponsibility()
     {
