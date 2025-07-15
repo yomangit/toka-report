@@ -18,13 +18,14 @@ class Index extends Component
     protected $listeners = [
         'actionHazard_created' => 'render',
     ];
-    public function mount($reference, HazardReport $id)
+    public function mount($reference, HazardReport $hr)
     {
         $this->reference = $reference;
-        $this->hazard_id = $id;
-        $Hazard = HazardReport::where('id', $this->hazard_id)->first();
-        $this->task_being_done = $Hazard->task_being_done;
-        $this->orginal_due_date = DateTime::createFromFormat('Y-m-d : H:i', $Hazard->date)->format('d-m-Y');
+        if ($hr->id) {
+        $this->hazard_id = $hr->id;
+        $this->task_being_done = $hr->task_being_done;
+        $this->orginal_due_date = DateTime::createFromFormat('Y-m-d : H:i', $hr->date)->format('d-m-Y');
+        }
     }
     public function render()
     {
