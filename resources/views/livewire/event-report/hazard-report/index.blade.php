@@ -130,8 +130,8 @@
             </tbody>
 
         </table>
-        <div class="mt-2">{{ $HazardReport->links() }}</div>
     </div>
+    <div class="mt-2">{{ $HazardReport->links() }}</div>
     <script nonce="{{ csp_nonce() }}" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script nonce="{{ csp_nonce() }}">
         flatpickr("#rangeDate", {
