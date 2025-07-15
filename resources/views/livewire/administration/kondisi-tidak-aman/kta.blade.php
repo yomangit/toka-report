@@ -1,7 +1,7 @@
 <div>
     <div class="flex flex-col sm:flex-row sm:justify-between ">
         <div>
-            {{-- <x-btn-add wire:click='modalOpen'></x-btn-add> --}}
+            <x-btn-add wire:click='modalOpen'></x-btn-add>
         </div>
         <div>
             <x-inputsearch name='search' wire:model.live='search' />
