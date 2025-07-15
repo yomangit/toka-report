@@ -297,7 +297,6 @@ class Create extends Component
             $this->workflow_detail_id = $workflow->id;
             $this->ResponsibleRole = $workflow->responsible_role_id;
         }
-     
     }
 
     public function render()
@@ -452,7 +451,7 @@ class Create extends Component
 
         $this->clearFields();
         // $this->redirectRoute('hazardReportCreate', ['workflow_template_id' => $this->workflow_template_id]);
-        if
+
     }
 
 
