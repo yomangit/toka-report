@@ -57,7 +57,7 @@
 <body class="static antialiased">
     @include('navigation.sidebar')
     <!-- start: Main -->
-    <main class="w-full min-h-screen transition-all md:ml-64 md:w-[calc(100%-256px)]">
+   <main class="w-full md:w-[calc(100%-256px)] md:ml-64  min-h-screen transition-all main">
         @include('navigation.navbar')
         <div class="w-full px-4 py-4 mx-auto overflow-y-scroll sm:px-6 lg:px-8 xl:px-10 2xl:px-12 max-w-screen-2xl">
             @yield('content')
