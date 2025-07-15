@@ -26,23 +26,14 @@
         <div class="grid gap-1 sm:grid-cols-2 lg:grid-cols-3">
             <div class="w-full max-w-md xl:max-w-xl form-control">
                 <x-label-req :value="__('event_type')" />
-                {{-- <x-select wire:model.live='event_type_id' :error="$errors->get('event_type_id')">
-                    <option value="">Select an option</option>
-                    @foreach ($EventType as $event_type)
-                    <option value="{{ $event_type->id }}">
-                {{ $event_type->EventCategory->event_category_name }} -
-                {{ $event_type->type_eventreport_name }}</option>
-                @endforeach
-                </x-select> --}}
-                <x-select-use-search wire:model.live='event_type_id' id="event-type-select" :error="$errors->get('event_type_id')">
+                <x-select wire:model.live='event_type_id' :error="$errors->get('event_type_id')">
                     <option value="">Select an option</option>
                     @foreach ($EventType as $event_type)
                     <option value="{{ $event_type->id }}">
                         {{ $event_type->EventCategory->event_category_name }} -
-                        {{ $event_type->type_eventreport_name }}
-                    </option>
+                        {{ $event_type->type_eventreport_name }}</option>
                     @endforeach
-                </x-select-use-search>
+                </x-select>
                 <x-label-error :messages="$errors->get('event_type_id')" />
             </div>
             <div class="w-full max-w-md xl:max-w-xl form-control">
@@ -200,7 +191,7 @@
                 </fieldset>
             </div>
             <div class='px-4 md:place-self-center'>
-                <fieldset class="w-40 max-w-sm fieldset rounded-box">
+                <fieldset class="w-40 max-w-sm  fieldset rounded-box">
 
                     <x-label-req :value="__('perbaikan tingkat lanjut')" />
 
@@ -294,26 +285,6 @@
             });
 
     </script>
-    <script nonce="{{ csp_nonce() }}">
-        document.addEventListener('livewire:load', function() {
-            const selectEl = document.getElementById('event-type-select');
 
-            if (selectEl && typeof TomSelect !== 'undefined') {
-                const ts = new TomSelect(selectEl, {
-                    allowEmptyOption: true
-                    , create: false
-                    , onChange: function(value) {
-                        @this.set('event_type_id', value);
-                    }
-                , });
-
-                // Sync ulang kalau Livewire update
-                Livewire.on('refreshTomSelect', () => {
-                    ts.setValue(@this.get('event_type_id'));
-                });
-            }
-        });
-
-    </script>
 
 </div>

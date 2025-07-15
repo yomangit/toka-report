@@ -7,15 +7,8 @@ import "flatpickr/dist/flatpickr.min.css";
 import monthSelectPlugin from "flatpickr/dist/plugins/monthSelect";
 import "flatpickr/dist/themes/dark.css";
 import "flatpickr/dist/plugins/monthSelect/style.css";
-import {
-    initOneSignal
-} from './onesignal-client';
-// import $ from 'jquery';
-// import 'select2';
-// import 'select2/dist/css/select2.min.css';
-import TomSelect from 'tom-select'
-window.TomSelect = TomSelect;
-window.$ = window.jQuery = $;
+import { initOneSignal } from './onesignal-client';
+
 document.addEventListener('DOMContentLoaded', () => {
     initOneSignal();
 });
