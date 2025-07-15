@@ -57,9 +57,11 @@
 <body class="static antialiased">
     @include('navigation.sidebar')
     <!-- start: Main -->
-   <main class="w-full md:w-[calc(100%-256px)] md:ml-64  min-h-screen transition-all main">
+sesuaikan tampilan untuk smartphone,laptop,dan pc computer
+
+ <main class="w-full md:w-[calc(100%-256px)] md:ml-64  min-h-screen transition-all main">
         @include('navigation.navbar')
-        <div class="w-full px-4 py-4 mx-auto overflow-y-scroll sm:px-6 lg:px-8 xl:px-10 2xl:px-12 max-w-screen-2xl">
+        <div class="px-2 py-4 mx-auto sm:px-6 lg:px-4 ">
             @yield('content')
         </div>
     </main>
