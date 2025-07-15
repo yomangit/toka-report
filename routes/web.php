@@ -49,6 +49,7 @@ use App\Livewire\Admin\TableRiskAssessment\Index as TableRiskAssessment;
 use App\Livewire\Admin\UserInputManhours\Index as userInputManhours;
 use App\Livewire\EventReport\IncidentReport\Detail as incidentReportDetail;
 use App\Livewire\Admin\WorkflowAdministration\Index as workflowAdministration;
+use App\Livewire\Administration\KondisiTidakAman\Kta;
 use App\Livewire\EventReport\HazardReport\CreateAndUpdate as hazardReportform;
 use App\Livewire\EventReport\HazardReport\TableExcel;
 use App\Livewire\EventReport\HazardReportGuest\Create as HazardReportGuestCreate;
@@ -116,6 +117,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         Route::get('admin/parent/routeRequestEvent', routeRequestEvent::class)->name('routeRequestEvent');
         Route::get('admin/parent/choseEventType', choseEventType::class)->name('choseEventType');
         Route::get('admin/parent/userInputManhours', userInputManhours::class)->name('userInputManhours');
+        Route::get('admin/parent/kta', Kta::class)->name('kta');
         Route::get('manhours/manhoursSite', manhoursSite::class)->name('manhoursSite');
         // people
         Route::get('admin/people', people::class)->name('people');
