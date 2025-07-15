@@ -296,18 +296,22 @@
     </script>
     <script nonce="{{ csp_nonce() }}">
         document.addEventListener('livewire:load', function() {
-            let selectEl = $('#event-type-select');
+            const selectEl = document.getElementById('event-type-select');
 
-            selectEl.select2();
+            if (selectEl && typeof TomSelect !== 'undefined') {
+                const ts = new TomSelect(selectEl, {
+                    allowEmptyOption: true
+                    , create: false
+                    , onChange: function(value) {
+                        @this.set('event_type_id', value);
+                    }
+                , });
 
-            selectEl.on('change', function() {
-                @this.set('event_type_id', $(this).val());
-            });
-
-            // Optional: sync when Livewire updates from backend
-            Livewire.on('refreshSelect2', () => {
-                selectEl.trigger('change');
-            });
+                // Sync ulang kalau Livewire update
+                Livewire.on('refreshTomSelect', () => {
+                    ts.setValue(@this.get('event_type_id'));
+                });
+            }
         });
 
     </script>
