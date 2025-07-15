@@ -349,7 +349,6 @@ class Create extends Component
         $count = HazardReport::count() + 1;
         $refNumber = str_pad($count, 4, '0', STR_PAD_LEFT);
         $this->reference = "HR/TOKA/{$dateForRef}/{$refNumber}";
-        dd( $this->reference);
         // Validasi input
         $this->validate();
 
