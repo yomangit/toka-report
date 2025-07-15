@@ -20,10 +20,6 @@ class Create extends Component
     #[Validate]
     public $hazard_id,$responsible_role_id,$reference, $responsibility, $responsibility_name, $followup_action, $actionee_comment, $action_condition, $due_date, $completion_date;
 
-     public function mount($reference, HazardReport $hr){
-        $this->reference=$reference;
-        $this->hazard_id = $hr->id;
-     }
     #[On('modalActionHazard')]
     public function modalActionHazard(HazardReport $hazard, ActionHazard $action)
     {

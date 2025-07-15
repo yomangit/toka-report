@@ -1,7 +1,6 @@
 <div>
     <div class="flex justify-start gap-2 mb-2 md:justify-between">
-            <x-btn-add data-tip="Add"  wire:click="$dispatch('modalActionHazard', { reference: @js($reference),hazard: @js($hazard_id)  })"
-  class="{{ $current_step === 'Closed' || $current_step === 'Cancelled' ? 'btn-disabled' : '' }}" />
+            <x-btn-add data-tip="Add"  wire:click="$dispatch('modalActionHazard', @js($reference), @js($hazard_id))"  class="{{ $current_step === 'Closed' || $current_step === 'Cancelled' ? 'btn-disabled' : '' }}" />
            <div class="w-full max-w-xs" > <x-inputsearch wire:model.live='search' /></div>
     </div>
     @forelse ($ActionHazard as $no => $index)
