@@ -8,7 +8,11 @@ import monthSelectPlugin from "flatpickr/dist/plugins/monthSelect";
 import "flatpickr/dist/themes/dark.css";
 import "flatpickr/dist/plugins/monthSelect/style.css";
 import { initOneSignal } from './onesignal-client';
-
+import TomSelect from 'tom-select';
+import 'tom-select/dist/css/tom-select.css';
+import Alpine from 'alpinejs'
+window.Alpine = Alpine
+Alpine.start()
 document.addEventListener('DOMContentLoaded', () => {
     initOneSignal();
 });
@@ -62,7 +66,6 @@ flatpickr("#month", {
         }),
     ],
 });
-
 // code for resposive side-bar menu
 // start: Sidebar
 const sidebarToggle = document.querySelector(".sidebar-toggle");
