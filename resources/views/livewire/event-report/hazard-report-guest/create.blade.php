@@ -158,6 +158,20 @@
             </div>
             <x-label-error :messages="$errors->get('description')" />
         </div>
+        <div class="w-full max-w-md xl:max-w-xl form-control">
+            <x-label-no-req :value="__('documentation')" />
+            <div class="relative">
+                <x-input-file wire:model.live='documentation' :error="$errors->get('documentation')" />
+                <div class="absolute inset-y-0 right-0 avatar" wire:target="documentation" wire:loading.class="hidden">
+                    <div class="w-6 rounded">
+                        @include('livewire.event-report.svg-file')
+                        {{ $documentation }}
+                    </div>
+                </div>
+                <span wire:target="documentation" wire:loading.class="absolute inset-y-0 right-0 loading loading-spinner text-warning"></span>
+            </div>
+            <x-label-error :messages="$errors->get('documentation')" />
+        </div>
         <div>
             <div wire:ignore class="w-full form-control">
                 <x-label-req :value="__('immediate corrective action')" />
@@ -166,9 +180,6 @@
             </div>
             <x-label-error :messages="$errors->get('immediate_corrective_action')" />
         </div>
-
-
-
         <div class="grid grid-rows-3 mt-2 border divide-y-2 md:grid-rows-1 md:grid-cols-3 md:content-center md:gap-4 md:divide-y-0 md:divide-x-2 divide-base-200 border-base-200 rounded-box">
             <div class='px-4 md:place-self-center'>
                 <fieldset class="w-full max-w-md xl:max-w-xl ">
@@ -199,9 +210,7 @@
             </div>
             <div class='px-4 md:place-self-center'>
                 <fieldset class="w-40 max-w-sm fieldset rounded-box">
-
                     <x-label-req :value="__('perbaikan tingkat lanjut')" />
-
                     <input wire:model.live="tindakkan_selanjutnya" value='1' name="tingkat_lanjut" id="yes_lanjut" class="radio-xs peer/yes_lanjut checked:bg-rose-500 radio" type="radio" />
                     <label for="yes_lanjut" class="text-xs font-semibold peer-checked/yes_lanjut:text-rose-500">{{ __('Yes') }}</label>
                     <input wire:model.live="tindakkan_selanjutnya" value="0" id="no_lanjut" class="peer/no_lanjut checked:bg-emerald-500 radio-xs radio" type="radio" name="tingkat_lanjut" />
@@ -209,21 +218,6 @@
                 </fieldset>
                 <x-label-error :messages="$errors->get('tindakkan_selanjutnya')" />
             </div>
-        </div>
-
-        <div class="w-full max-w-md xl:max-w-xl form-control">
-            <x-label-no-req :value="__('documentation')" />
-            <div class="relative">
-                <x-input-file wire:model.live='documentation' :error="$errors->get('documentation')" />
-                <div class="absolute inset-y-0 right-0 avatar" wire:target="documentation" wire:loading.class="hidden">
-                    <div class="w-6 rounded">
-                        @include('livewire.event-report.svg-file')
-                        {{ $documentation }}
-                    </div>
-                </div>
-                <span wire:target="documentation" wire:loading.class="absolute inset-y-0 right-0 loading loading-spinner text-warning"></span>
-            </div>
-            <x-label-error :messages="$errors->get('documentation')" />
         </div>
 
         <div class="modal-action ">
