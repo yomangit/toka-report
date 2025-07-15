@@ -34,7 +34,7 @@
                 {{ $event_type->type_eventreport_name }}</option>
                 @endforeach
                 </x-select> --}}
-                <x-select-use-search wire:model.live='event_type_id' :error="$errors->get('event_type_id')">
+                <x-select-use-search x-data x-init="new TomSelect($el)"  wire:model.live='event_type_id' :error="$errors->get('event_type_id')">
                     <option value="">Select an option</option>
                     @foreach ($EventType as $event_type)
                     <option value="{{ $event_type->id }}">
