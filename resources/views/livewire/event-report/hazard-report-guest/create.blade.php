@@ -170,9 +170,9 @@
         <fieldset>
             <x-label-req :value="__('immediate corrective action')" />
             <input id="draft" class="peer/draft radio radio-xs radio-primary" type="radio" name="status" checked />
-            <label for="draft" class="peer-checked/draft:text-primary">KTA</label>
-            <input id="published" class="peer/published radio-accent radio-xs" type="radio" name="status" />
-            <label for="published" class="peer-checked/published:text-accent">TTA</label>
+            <label for="draft" class="text-xs peer-checked/draft:text-primary">KTA</label>
+            <input id="published" class="peer/published radio radio-accent radio-xs" type="radio" name="status" />
+            <label for="published" class="text-xs peer-checked/published:text-accent">TTA</label>
             <div class="hidden peer-checked/draft:block">Drafts are only visible to administrators.</div>
             <div class="hidden peer-checked/published:block">Your post will be publicly visible on your site.</div>
             <x-label-error :messages="$errors->get('immediate_corrective_action')" />
