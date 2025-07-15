@@ -37,8 +37,10 @@ class Index extends Component
     #[On('panel_hazard')]
     public function updatePanel()
     {
-        $HazardReport = HazardReport::whereId($this->hazard_id)->first();
+       if ($this->hazard_id) {
+         $HazardReport = HazardReport::whereId($this->hazard_id)->first();
         $this->current_step = $HazardReport->WorkflowDetails->name;
+       }
     }
     public function updateData($id)
     {
