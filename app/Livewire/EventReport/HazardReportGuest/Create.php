@@ -119,15 +119,6 @@ class Create extends Component
     // data action
     public function mount()
     {
-
-        if (Auth::check()) {
-            $reportBy            = (Auth::user()->lookup_name) ? Auth::user()->lookup_name : Auth::user()->name;
-            $this->report_byName = $reportBy;
-            $this->report_by     = Auth::user()->id;
-        }
-    }
-    public function mount()
-    {
         if (Auth::check()) {
             $this->report_byName = Auth::user()->lookup_name ?? Auth::user()->name;
             $this->report_by     = Auth::id();
