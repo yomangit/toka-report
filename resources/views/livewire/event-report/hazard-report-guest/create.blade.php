@@ -181,7 +181,7 @@
             <x-label-error :messages="$errors->get('immediate_corrective_action')" />
         </div>
         <div class="grid grid-rows-3 mt-2 border divide-y-2 md:grid-rows-1 md:grid-cols-3 md:content-center md:gap-4 md:divide-y-0 md:divide-x-2 divide-base-200 border-base-200 rounded-box">
-            <div class='px-4 md:place-self-center'>
+            <div class='px-4 '>
                 <fieldset class="w-full max-w-md xl:max-w-xl ">
                     <x-label-req :value="__('immediate corrective action')" />
                     <input id="draft" class="peer/draft radio radio-xs radio-primary" type="radio" name="status" />
