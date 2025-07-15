@@ -30,11 +30,11 @@
                     <option value="">Select an option</option>
                     @foreach ($EventType as $event_type)
                     <option value="{{ $event_type->id }}">
-                {{ $event_type->EventCategory->event_category_name }} -
-                {{ $event_type->type_eventreport_name }}</option>
-                @endforeach
+                        {{ $event_type->EventCategory->event_category_name }} -
+                        {{ $event_type->type_eventreport_name }}</option>
+                    @endforeach
                 </x-select>
-               
+
                 <x-label-error :messages="$errors->get('event_type_id')" />
             </div>
             <div class="w-full max-w-md xl:max-w-xl form-control">
@@ -154,26 +154,19 @@
             <div wire:ignore class="w-full form-control">
                 <x-label-req :value="__('Hazard Details')" />
                 <!--<x-text-area id="description" :error="$errors->get('description')" />-->
-                <textarea id="description">{{ $description }}</textarea>
+                <textarea id="description"></textarea>
             </div>
             <x-label-error :messages="$errors->get('description')" />
         </div>
-
-        <fieldset>
-            @if ($show_immidiate === 'yes')
-            <x-label-req :value="__('immediate corrective action')" />
-            @else
-            <x-label-no-req :value="__('immediate corrective action')" />
-            @endif
-            <input wire:model.live="show_immidiate" value='yes' name="status" id="draft" class="radio-xs peer/draft checked:bg-indigo-500 radio" type="radio" name="13" />
-            <label for="draft" class="text-xs font-semibold peer-checked/draft:text-indigo-500">{{ __('Yes') }}</label>
-            <input wire:model.live="show_immidiate" value="no" id="published" class="peer/published checked:bg-sky-500 radio-xs radio" type="radio" name="status" />
-            <label for="published" class="text-xs font-semibold peer-checked/published:text-sky-500">{{ __('No') }}</label>
-            <div wire:ignore class="hidden w-full peer-checked/draft:block form-control">
-                <x-text-area id="immediate_corrective_action" :error="$errors->get('immediate_corrective_action')" />
+        <div>
+            <div wire:ignore class="w-full form-control">
+                <x-label-req :value="__('immediate corrective action')" />
+                <!--<x-text-area id="description" :error="$errors->get('description')" />-->
+                <textarea id="immediate_corrective_action"></textarea>
             </div>
-            <x-label-error :messages="$errors->get('immediate_corrective_action')" />
-        </fieldset>
+            <x-label-error :messages="$errors->get('description')" />
+        </div>
+       
         <div class="grid grid-rows-3 mt-2 border divide-y-2 md:grid-rows-1 md:grid-cols-3 md:content-center md:gap-4 md:divide-y-0 md:divide-x-2 divide-base-200 border-base-200 rounded-box">
             <div class='px-4 md:place-self-center '>
                 <fieldset class="self-center w-40 max-w-sm fieldset rounded-box">
