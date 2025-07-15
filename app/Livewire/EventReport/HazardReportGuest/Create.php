@@ -452,6 +452,7 @@ class Create extends Component
 
         $this->clearFields();
         // $this->redirectRoute('hazardReportCreate', ['workflow_template_id' => $this->workflow_template_id]);
+        if
     }
 
 

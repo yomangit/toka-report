@@ -80,6 +80,7 @@ Route::get('/config-clear', function () {
 });
 Route::get('eventReport/hazardReportform/{workflow_template_id?}', hazardReportform::class)->name('hazardReportform');
 Route::get('eventReport/hazardReportGuest/{workflow_template_id?}', HazardReportGuestCreate::class)->name('hazardReportCreate');
+Route::get('eventReport/hazardReportDetail/action/{hazard_id}', hazardReportDetail::class)->name('hazardActionPelapor');
 Route::get('manhours/manhoursTable', WebAccess::class)->name('WebAccess');
 Route::get('eventReport/hazardReportExcel', TableExcel::class)->name('TableExcel');
 Route::middleware(['auth', 'auth.session'])->group(function () {
@@ -133,6 +134,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('eventReport/incidentReportDetail/{id}', incidentReportDetail::class)->name('incidentReportDetail');
     // event report Hazard route
     Route::get('eventReport/hazardReport', hazardReport::class)->name('hazardReport');
+    Route::get('eventReport/hazardReportDetail/{id}', hazardReportDetail::class)->name('hazardReportDetail');
     Route::get('eventReport/hazardReportDetail/{id}', hazardReportDetail::class)->name('hazardReportDetail');
 
     // event report pto route

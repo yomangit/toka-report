@@ -178,7 +178,7 @@
                 <div role="tabpanel" class="p-6 tab-content bg-base-100 border-base-300 rounded-box">
                     <div class="mx-4 my-2">
                         @if ($date)
-                        <livewire:event-report.hazard-report.action.index :reference="$reference">
+                        <livewire:event-report.hazard-report-guest.action-index>
                             @endif
                     </div>
                 </div>

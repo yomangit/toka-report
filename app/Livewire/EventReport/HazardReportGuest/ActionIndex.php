@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Livewire\EventReport\HazardReport\Action;
+namespace App\Livewire\EventReport\HazardReportGuest;
 
 use DateTime;
 use Livewire\Component;
 use Livewire\Attributes\On;
-use App\Models\ActionHazard;
+use App\Models\DocHazPelapor;
 use App\Models\HazardReport;
 use Livewire\WithPagination;
 
-class Index extends Component
+class ActionIndex extends Component
 {
     use WithPagination;
     public $search = '';
-    public $hazard_id, $task_being_done, $orginal_due_date,$current_step;
+    public $hazard_id, $task_being_done, $orginal_due_date, $current_step;
     protected $listeners = [
-        'actionHazard_created' => 'render',
+        'DocHazPelapor_created' => 'render',
     ];
     public function mount($id)
     {
@@ -27,8 +27,8 @@ class Index extends Component
     public function render()
     {
         $this->updatePanel();
-        return view('livewire.event-report.hazard-report.action.index', [
-            'ActionHazard' => ActionHazard::searchHazard(trim($this->search))->where('hazard_id', $this->hazard_id)->with('users')->paginate(20)
+        return view('livewire.event-report.hazard-report-guest.action-index', [
+            'DocHazPelapor' => DocHazPelapor::searchHazard(trim($this->search))->where('hazard_id', $this->hazard_id)->with('users')->paginate(20)
         ]);
     }
     #[On('panel_hazard')]
@@ -43,7 +43,7 @@ class Index extends Component
     }
     public function delete($id)
     {
-        $deleteFile = ActionHazard::whereId($id);
+        $deleteFile = DocHazPelapor::whereId($id);
         $this->dispatch(
             'alert',
             [
