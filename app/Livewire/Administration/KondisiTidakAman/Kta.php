@@ -78,7 +78,22 @@ class Kta extends Component
             $this->reset('name');
         }
     }
-
+public function delete($id)
+    {
+        $deleteFile = Kondisitidakaman::whereId($id);
+        $this->dispatch(
+            'alert',
+            [
+                'text' => "Deleted Data Successfully!!",
+                'duration' => 3000,
+                'destination' => '/contact',
+                'newWindow' => true,
+                'close' => true,
+                'backgroundColor' => "linear-gradient(to right, #f97316, #ef4444)",
+            ]
+        );
+        $deleteFile->delete();
+    }
     public function render()
     {
         return view('livewire.administration.kondisi-tidak-aman.kta', [

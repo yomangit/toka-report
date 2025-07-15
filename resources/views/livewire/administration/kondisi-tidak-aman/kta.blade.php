@@ -22,7 +22,7 @@
                 @forelse ($KTA as $no => $cc)
                 <tr class="text-center">
                     <th>{{ $KTA->firstItem() + $no }}</th>
-                    <td>{{ $cc->name_category_company }}</td>
+                    <td>{{ $cc->name }}</td>
                     <td>
                         <div class="">
                             <label class="btn btn-xs btn-square btn-warning tooltip tooltip-top tooltip-warning" wire:click="updateData({{ $cc->id }})" data-tip="Update">
