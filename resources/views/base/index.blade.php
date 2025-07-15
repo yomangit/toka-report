@@ -57,8 +57,6 @@
 <body class="static antialiased">
     @include('navigation.sidebar')
     <!-- start: Main -->
-sesuaikan tampilan untuk smartphone,laptop,dan pc computer
-
  <main class="w-full md:w-[calc(100%-256px)] md:ml-64  min-h-screen transition-all main">
         @include('navigation.navbar')
         <div class="px-2 py-4 mx-auto sm:px-6 lg:px-4 ">
