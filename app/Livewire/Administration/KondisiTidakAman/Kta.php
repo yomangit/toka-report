@@ -82,7 +82,7 @@ class Kta extends Component
     {
         return view('livewire.administration.kondisi-tidak-aman.kta', [
             'KTA' => Kondisitidakaman::paginate(30)
-        ]);
+        ])->extends('base.index', ['header' => 'KTA', 'title' => 'KTA'])->section('content');
     }
     public function paginationView()
     {
