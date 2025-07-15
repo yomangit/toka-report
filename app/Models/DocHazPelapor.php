@@ -17,4 +17,25 @@ class DocHazPelapor extends Model
         'due_date',
         'completion_date',
     ];
+    public function Hazard()
+    {
+        return $this->belongsTo(HazardReport::class);
+    }
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'responsibility');
+    }
+    public function scopeSearchHazard($query, $term)
+       {
+           $query->when(
+               $term ?? false,
+               fn($query, $term) =>
+               $query->whereHas('Hazard', function ($q) use ($term) {
+                   $q->where('task_being_done', 'like', '%' . $term . '%');
+               })->orwhereHas('users', function ($q) use ($term) {
+                   $q->where('lookup_name', 'like', '%' . $term . '%');
+               })
+           );
+       }
 }
+
