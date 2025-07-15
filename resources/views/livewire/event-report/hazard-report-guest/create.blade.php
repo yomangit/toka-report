@@ -170,11 +170,25 @@
         <fieldset>
             <x-label-req :value="__('immediate corrective action')" />
             <input id="draft" class="peer/draft radio radio-xs radio-primary" type="radio" name="status" checked />
-            <label for="draft" class="text-xs peer-checked/draft:text-primary">KTA</label>
+            <label for="draft" class="text-xs font-semibold peer-checked/draft:text-primary">KTA</label>
             <input id="published" class="peer/published radio radio-accent radio-xs" type="radio" name="status" />
-            <label for="published" class="text-xs peer-checked/published:text-accent">TTA</label>
-            <div class="hidden peer-checked/draft:block">Drafts are only visible to administrators.</div>
-            <div class="hidden peer-checked/published:block">Your post will be publicly visible on your site.</div>
+            <label for="published" class="text-xs font-semibold peer-checked/published:text-accent">TTA</label>
+            <div class="hidden peer-checked/draft:block">
+                <x-select wire:model.live='kta_id' :error="$errors->get('location_id')">
+                    <option value="" selected>Select an option</option>
+                    @forelse ($KTA as $kta)
+                    <option value="{{ $kta->id }}" selected>{{ $kta->name }}</option>
+                    @endforeach
+                </x-select>
+            </div>
+            <div class="hidden peer-checked/published:block">
+                <x-select wire:model.live='tta_id' :error="$errors->get('location_id')">
+                    <option value="" selected>Select an option</option>
+                    @forelse ($TTA as $tta)
+                    <option value="{{ $tta->id }}" selected>{{ $tta->name }}</option>
+                    @endforeach
+                </x-select>
+            </div>
             <x-label-error :messages="$errors->get('immediate_corrective_action')" />
         </fieldset>
 
