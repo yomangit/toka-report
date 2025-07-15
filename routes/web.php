@@ -125,8 +125,6 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         Route::get('admin/people', people::class)->name('people');
         Route::get('admin/people/show/{id}', peopleShow::class)->name('peopleShow');
     });
-
-
     // event report Incident route
     Route::get('eventReport/incidentReport', IncidentReport::class)->name('incidentReport');
     Route::get('eventReport/incidentReportsform/{workflow_template_id?}', CreateAndUpdateIncidentReport::class)->name('incidentReportform');

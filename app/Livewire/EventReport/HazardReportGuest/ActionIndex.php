@@ -17,13 +17,7 @@ class ActionIndex extends Component
     protected $listeners = [
         'DocHazPelapor_created' => 'render',
     ];
-    public function mount($id)
-    {
-        $this->hazard_id = $id;
-        $Hazard = HazardReport::where('id', $this->hazard_id)->first();
-        $this->task_being_done = $Hazard->task_being_done;
-        $this->orginal_due_date = DateTime::createFromFormat('Y-m-d : H:i', $Hazard->date)->format('d-m-Y');
-    }
+  
     public function render()
     {
         $this->updatePanel();
