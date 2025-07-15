@@ -13,7 +13,8 @@ class Index extends Component
 {
     use WithPagination;
     public $search = '';
-    public $hazard_id, $task_being_done, $orginal_due_date,$current_step,$reference;
+    public $hazard_id, $task_being_done, $orginal_due_date,$current_step;
+    public string  $reference;
     protected $listeners = [
         'actionHazard_created' => 'render',
     ];
