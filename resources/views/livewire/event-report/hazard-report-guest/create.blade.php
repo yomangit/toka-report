@@ -170,30 +170,32 @@
 
 
         <div class="grid grid-rows-3 mt-2 border divide-y-2 md:grid-rows-1 md:grid-cols-3 md:content-center md:gap-4 md:divide-y-0 md:divide-x-2 divide-base-200 border-base-200 rounded-box">
-            <fieldset class="w-full max-w-md xl:max-w-xl ">
-                <x-label-req :value="__('immediate corrective action')" />
-                <input id="draft" class="peer/draft radio radio-xs radio-primary" type="radio" name="status" />
-                <label for="draft" class="text-xs font-semibold peer-checked/draft:text-primary">KTA</label>
-                <input id="published" class="peer/published radio radio-accent radio-xs" type="radio" name="status" />
-                <label for="published" class="text-xs font-semibold peer-checked/published:text-accent">TTA</label>
-                <div class="hidden peer-checked/draft:block">
-                    <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')">
-                        <option value="" selected>Select an option</option>
-                        @forelse ($KTA as $kta)
-                        <option value="{{ $kta->id }}" selected>{{ $kta->name }}</option>
-                        @endforeach
-                    </x-select>
-                </div>
-                <div class="hidden peer-checked/published:block">
-                    <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
-                        <option value="" selected>Select an option</option>
-                        @forelse ($TTA as $tta)
-                        <option value="{{ $tta->id }}" selected>{{ $tta->name }}</option>
-                        @endforeach
-                    </x-select>
-                </div>
-                <x-label-error :messages="$errors->get('immediate_corrective_action')" />
-            </fieldset>
+            <div class='px-4 md:place-self-center'>
+                <fieldset class="w-full max-w-md xl:max-w-xl ">
+                    <x-label-req :value="__('immediate corrective action')" />
+                    <input id="draft" class="peer/draft radio radio-xs radio-primary" type="radio" name="status" />
+                    <label for="draft" class="text-xs font-semibold peer-checked/draft:text-primary">KTA</label>
+                    <input id="published" class="peer/published radio radio-accent radio-xs" type="radio" name="status" />
+                    <label for="published" class="text-xs font-semibold peer-checked/published:text-accent">TTA</label>
+                    <div class="hidden peer-checked/draft:block">
+                        <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')">
+                            <option value="" selected>Select an option</option>
+                            @forelse ($KTA as $kta)
+                            <option value="{{ $kta->id }}" selected>{{ $kta->name }}</option>
+                            @endforeach
+                        </x-select>
+                    </div>
+                    <div class="hidden peer-checked/published:block">
+                        <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
+                            <option value="" selected>Select an option</option>
+                            @forelse ($TTA as $tta)
+                            <option value="{{ $tta->id }}" selected>{{ $tta->name }}</option>
+                            @endforeach
+                        </x-select>
+                    </div>
+                    <x-label-error :messages="$errors->get('immediate_corrective_action')" />
+                </fieldset>
+            </div>
             <div class='px-4 md:place-self-center'>
                 <fieldset class="w-40 max-w-sm fieldset rounded-box">
 
