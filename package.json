@@ -23,6 +23,8 @@
         "ckeditor5-premium-features": "^43.1.0",
         "flatpickr": "^4.6.13",
         "onesignal": "^0.1.2",
-        "toastify-js": "^1.12.0"
+        "select2": "^4.1.0-rc.0",
+        "toastify-js": "^1.12.0",
+        "tom-select": "^2.4.3"
     }
 }
