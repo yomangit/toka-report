@@ -297,12 +297,14 @@ class Create extends Component
             $this->workflow_detail_id = $workflow->id;
             $this->ResponsibleRole = $workflow->responsible_role_id;
         }
-        $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $this->date);
+       if ($this->date) {
+         $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $this->date);
         $dateForRef = $dateObj->format('Y/m/d');
         // Generate reference number
         $count = HazardReport::count() + 1;
         $refNumber = str_pad($count, 4, '0', STR_PAD_LEFT);
         $this->reference = "HR/TOKA/{$dateForRef}/{$refNumber}";
+       }
     }
 
     public function render()
