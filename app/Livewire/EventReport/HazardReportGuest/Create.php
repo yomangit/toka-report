@@ -259,39 +259,15 @@ class Create extends Component
 
         // Proses data divisi
         if ($this->division_id) {
-            $division = Division::with([
+            $divisi = Division::with([
                 'DeptByBU.BusinesUnit.Company',
                 'DeptByBU.Department',
                 'Company',
                 'Section'
             ])->find($this->division_id);
 
-            if ($division) {
-                $company       = optional(optional($division->DeptByBU)->BusinesUnit->Company)->name_company;
-                $department    = optional(optional($division->DeptByBU)->Department)->department_name;
-                $companySelf   = optional($division->Company)->name_company;
-                $section       = optional($division->Section)->name;
-
-                $this->workgroup_name = implode('-', array_filter([
-                    $company,
-                    $department,
-                    $companySelf,
-                    $section,
-                ]));
-
-                $this->divisi_search = Division::with([
-                    'DeptByBU.BusinesUnit.Company',
-                    'DeptByBU.Department',
-                    'Company',
-                    'Section'
-                ])
-                    ->where('id', $this->division_id)
-                    ->searchParent(trim($this->parent_Company))
-                    ->searchBU(trim($this->business_unit))
-                    ->searchDept(trim($this->dept))
-                    ->searchComp(trim($this->select_divisi))
-                    ->orderBy('dept_by_business_unit_id', 'asc')
-                    ->get();
+            if ($divisi) {
+                $this->workgroup_name = $divisi->formatWorkgroupName();
             }
         } else {
             // Jika tidak ada division_id

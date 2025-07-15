@@ -101,6 +101,22 @@ class Division extends Model
             })
         );
     }
-    
+    public function formatWorkgroupName(): string
+{
+    $companyFromBU = optional($this->DeptByBU->BusinesUnit->Company)->name_company;
+    $department     = optional($this->DeptByBU->Department)->department_name;
+    $ownCompany     = optional($this->Company)->name_company;
+    $section        = optional($this->Section)->name;
+
+    $parts = array_filter([
+        $companyFromBU,
+        $department,
+        $ownCompany,
+        $section
+    ]);
+
+    return implode('-', $parts) ?: 'N/A';
+}
+
     
 }
