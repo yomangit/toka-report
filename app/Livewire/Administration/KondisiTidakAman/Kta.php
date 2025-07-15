@@ -82,6 +82,7 @@ class Kta extends Component
 public function delete($id)
     {
         $deleteFile = Kondisitidakaman::whereId($id);
+        $deleteFile->delete();
         $this->dispatch(
             'alert',
             [
@@ -93,7 +94,6 @@ public function delete($id)
                 'backgroundColor' => "linear-gradient(to right, #f97316, #ef4444)",
             ]
         );
-        $deleteFile->delete();
     }
     public function render()
     {
