@@ -15,15 +15,16 @@ class Kta extends Component
     public function modalOpen()
     {
         $this->modal = 'modal modal-open';
+         $this->divider='input KTA';
     }
-    public function modalClose()
+    public function closeModal()
     {
         $this->reset('modal');
     }
     public function createKta()
     {
         $this->modalOpen();
-        $this->divider='input KTA';
+       
     }
     public function editKta(Kondisitidakaman $kta)
     {
