@@ -169,7 +169,7 @@
 
         <fieldset class="w-full max-w-md xl:max-w-xl ">
             <x-label-req :value="__('immediate corrective action')" />
-            <input id="draft" class="peer/draft radio radio-xs radio-primary" type="radio" name="status" checked />
+            <input id="draft" class="peer/draft radio radio-xs radio-primary" type="radio" name="status"  />
             <label for="draft" class="text-xs font-semibold peer-checked/draft:text-primary">KTA</label>
             <input id="published" class="peer/published radio radio-accent radio-xs" type="radio" name="status" />
             <label for="published" class="text-xs font-semibold peer-checked/published:text-accent">TTA</label>
