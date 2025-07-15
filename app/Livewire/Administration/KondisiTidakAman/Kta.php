@@ -29,6 +29,7 @@ class Kta extends Component
     public function updateData(Kondisitidakaman $kta)
     {
         $this->modalOpen();
+        $this->kta_id = $kta->id;
         $this->name = $kta->name;
           $this->divider='Edit KTA';
     }
