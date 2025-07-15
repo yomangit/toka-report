@@ -21,8 +21,8 @@ class Index extends Component
     public function mount($reference, HazardReport $hr)
     {
         $this->reference = $reference;
-        if ($hr->id) {
         $this->hazard_id = $hr->id;
+        if ( $this->hazard_id) {
         $this->task_being_done = $hr->task_being_done;
         $this->orginal_due_date = DateTime::createFromFormat('Y-m-d : H:i', $hr->date)->format('d-m-Y');
         }
