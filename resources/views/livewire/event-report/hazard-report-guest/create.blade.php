@@ -167,7 +167,7 @@
             <x-label-error :messages="$errors->get('description')" />
         </div>
 
-        <fieldset class="w-full max-w-md xl:max-w-xl form-control">
+        <fieldset class="w-full max-w-md xl:max-w-xl ">
             <x-label-req :value="__('immediate corrective action')" />
             <input id="draft" class="peer/draft radio radio-xs radio-primary" type="radio" name="status" checked />
             <label for="draft" class="text-xs font-semibold peer-checked/draft:text-primary">KTA</label>
