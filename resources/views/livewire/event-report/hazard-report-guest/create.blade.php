@@ -168,11 +168,7 @@
         </div>
 
         <fieldset>
-            @if ($show_immidiate === 'yes')
             <x-label-req :value="__('immediate corrective action')" />
-            @else
-            <x-label-no-req :value="__('immediate corrective action')" />
-            @endif
             <input wire:model.live="show_immidiate" value='yes' name="status" id="draft" class="radio-xs peer/draft checked:bg-indigo-500 radio" type="radio" name="13" />
             <label for="draft" class="text-xs font-semibold peer-checked/draft:text-indigo-500">{{ __('Yes') }}</label>
             <input wire:model.live="show_immidiate" value="no" id="published" class="peer/published checked:bg-sky-500 radio-xs radio" type="radio" name="status" />
