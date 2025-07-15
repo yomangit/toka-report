@@ -34,7 +34,7 @@
                 {{ $event_type->type_eventreport_name }}</option>
                 @endforeach
                 </x-select> --}}
-                <x-select wire:model.live='event_type_id' id="event-type-select" :error="$errors->get('event_type_id')">
+                <x-select-use-search wire:model.live='event_type_id' id="event-type-select" :error="$errors->get('event_type_id')">
                     <option value="">Select an option</option>
                     @foreach ($EventType as $event_type)
                     <option value="{{ $event_type->id }}">
@@ -42,7 +42,7 @@
                         {{ $event_type->type_eventreport_name }}
                     </option>
                     @endforeach
-                </x-select>
+                </x-select-use-search>
                 <x-label-error :messages="$errors->get('event_type_id')" />
             </div>
             <div class="w-full max-w-md xl:max-w-xl form-control">
