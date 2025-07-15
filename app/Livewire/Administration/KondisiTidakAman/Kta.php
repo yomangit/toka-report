@@ -10,7 +10,7 @@ class Kta extends Component
 {
     use WithPagination;
     public $name;
-    public $kta_id, $modal = 'modal';
+    public $kta_id, $modal = 'modal',$divider;
 
     public function modalOpen()
     {
@@ -23,11 +23,13 @@ class Kta extends Component
     public function createKta()
     {
         $this->modalOpen();
+        $this->divider='input KTA';
     }
     public function editKta(Kondisitidakaman $kta)
     {
         $this->modalOpen();
         $this->name = $kta->name;
+          $this->divider='Edit KTA';
     }
     public function rules()
     {
