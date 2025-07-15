@@ -10,12 +10,12 @@ class Kta extends Component
 {
     use WithPagination;
     public $name;
-    public $kta_id, $modal = 'modal',$divider,$search='';
+    public $kta_id, $modal = 'modal', $divider, $search = '';
 
     public function modalOpen()
     {
         $this->modal = 'modal modal-open';
-         $this->divider='Input KTA';
+        $this->divider = 'Input KTA';
     }
     public function closeModal()
     {
@@ -24,14 +24,13 @@ class Kta extends Component
     public function createKta()
     {
         $this->modalOpen();
-       
     }
     public function updateData(Kondisitidakaman $kta)
     {
         $this->modalOpen();
         $this->kta_id = $kta->id;
         $this->name = $kta->name;
-          $this->divider='Edit KTA';
+        $this->divider = 'Edit KTA';
     }
     public function rules()
     {
@@ -79,7 +78,7 @@ class Kta extends Component
             $this->reset('name');
         }
     }
-public function delete($id)
+    public function delete($id)
     {
         $deleteFile = Kondisitidakaman::whereId($id);
         $deleteFile->delete();

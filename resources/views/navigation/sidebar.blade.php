@@ -162,6 +162,9 @@
                                         <li><a
                                                 href="{{ route('kta') }}"class="{{ Request::is('admin/parent/kta') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Kondisi Tidak Aman') }}</a>
                                         </li>
+                                        <li><a
+                                                href="{{ route('tta') }}"class="{{ Request::is('admin/parent/tta') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Tindakan Tidak Aman') }}</a>
+                                        </li>
                                         <li>
                                             <details {{ Request::is('admin/parent/event/*') ? ' open' : '' }}>
                                                 <summary

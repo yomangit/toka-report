@@ -1,4 +1,5 @@
 <div>
+    <x-notification />
     <div class="flex flex-col sm:flex-row sm:justify-between ">
         <div>
             <x-btn-add wire:click='modalOpen'></x-btn-add>
