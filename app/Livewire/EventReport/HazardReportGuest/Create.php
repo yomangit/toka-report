@@ -26,19 +26,95 @@ class Create extends Component
 {
     use WithFileUploads;
     use WithPagination;
-    public $location_name, $search, $location_id, $divider = 'Input Hazard Report', $TableRisk = [], $Event_type = [], $RiskAssessment = [], $EventSubType = [], $ResponsibleRole, $division_id, $parent_Company, $business_unit, $dept, $workflow_template_id;
-    public $searchLikelihood                               = '', $searchConsequence                               = '', $tablerisk_id, $risk_assessment_id, $workflow_detail_id, $reference, $select_divisi;
-    public $risk_likelihood_id, $risk_likelihood_notes;
-    public $risk_consequence_id, $risk_consequence_doc, $risk_probability_doc, $show = false;
-    public $workgroup_id, $workgroup_name, $show_immidiate                           = 'yes';
-    public $search_workgroup                                                         = '', $divisi_search                                                         = '', $search_report_by                                                         = '', $search_report_to                                                         = '', $fileUpload, $location_search                                                         = '';
-    public $event_type_id, $sub_event_type_id, $report_by, $report_byName, $report_by_nolist, $report_to, $report_toName, $report_to_nolist, $date, $event_location_id, $site_id, $company_involved, $task_being_done, $documentation, $description, $immediate_corrective_action, $suggested_corrective_action, $preliminary_cause, $corrective_action_suggested;
-    public $dropdownLocation                                                                         = 'dropdown', $hidden                                                                         = 'block';
-    public $dropdownWorkgroup                                                                        = 'dropdown', $hiddenWorkgroup                                                                        = 'block';
-    public $dropdownReportBy                                                                         = 'dropdown', $hiddenReportBy                                                                         = 'block';
-    public $dropdownReportTo                                                                         = 'dropdown', $hiddenReportTo                                                                         = 'block';
-    public $alamat, $kondisi_tidak_aman, $tindakan_tidak_aman, $tindakkan_selanjutnya, $showLocation = false;
-    public $data                                                                                     = [];
+
+    // Basic UI Controls
+    public $divider = 'Input Hazard Report';
+    public $show = false;
+    public $show_immidiate = 'yes';
+    public $showLocation = false;
+
+    // Dropdown & Visibility Controls
+    public $dropdownLocation = 'dropdown', $hidden = 'block';
+    public $dropdownWorkgroup = 'dropdown', $hiddenWorkgroup = 'block';
+    public $dropdownReportBy = 'dropdown', $hiddenReportBy = 'block';
+    public $dropdownReportTo = 'dropdown', $hiddenReportTo = 'block';
+
+    // Search Fields
+    public $search = '';
+    public $searchLikelihood = '';
+    public $searchConsequence = '';
+    public $search_workgroup = '';
+    public $divisi_search = '';
+    public $search_report_by = '';
+    public $search_report_to = '';
+    public $location_search = '';
+
+    // IDs and Relational Keys
+    public $location_id;
+    public $tablerisk_id;
+    public $risk_assessment_id;
+    public $workflow_detail_id;
+    public $workflow_template_id;
+    public $division_id;
+    public $event_type_id;
+    public $sub_event_type_id;
+    public $report_by;
+    public $report_to;
+    public $event_location_id;
+    public $site_id;
+    public $workgroup_id;
+    public $select_divisi;
+
+    // Names and Labels
+    public $location_name;
+    public $workgroup_name;
+    public $report_byName;
+    public $report_toName;
+
+    // Other Report Data
+    public $reference;
+    public $report_by_nolist;
+    public $report_to_nolist;
+    public $company_involved;
+    public $task_being_done;
+    public $date;
+    public $description;
+    public $documentation;
+    public $immediate_corrective_action;
+    public $suggested_corrective_action;
+    public $preliminary_cause;
+    public $corrective_action_suggested;
+
+    // Risk Details
+    public $TableRisk = [];
+    public $RiskAssessment = [];
+    public $risk_likelihood_id;
+    public $risk_likelihood_notes;
+    public $risk_consequence_id;
+    public $risk_consequence_doc;
+    public $risk_probability_doc;
+
+    // Event Types and Roles
+    public $Event_type = [];
+    public $EventSubType = [];
+    public $ResponsibleRole;
+
+    // Hierarchy Data
+    public $parent_Company;
+    public $business_unit;
+    public $dept;
+
+    // Address & Conditions
+    public $alamat;
+    public $kondisi_tidak_aman;
+    public $tindakan_tidak_aman;
+    public $tindakkan_selanjutnya;
+
+    // File Handling
+    public $fileUpload;
+
+    // Miscellaneous
+    public $data = [];
 
     // data action
     public function mount()
@@ -50,105 +126,120 @@ class Create extends Component
             $this->report_by     = Auth::user()->id;
         }
     }
-    public function rules()
+    public function mount()
     {
-        if ($this->show_immidiate === 'yes') {
-            return [
-                'workgroup_name'              => ['required'],
-                'event_type_id'               => ['required'],
-                'sub_event_type_id'           => ['required'],
-                'report_byName'               => ['required'],
-                'date'                        => ['required'],
-                'tindakkan_selanjutnya'       => ['required'],
-                'documentation'               => 'nullable|mimes:jpg,jpeg,png,svg,gif,xlsx,pdf,docx',
-                'description'                 => ['required'],
-                'immediate_corrective_action' => ['required'],
-                'location_name'               => ['required'],
-                'location_id'                 => ['required'],
-            ];
-        } else {
-            return [
-                'workgroup_name'        => ['required'],
-                'event_type_id'         => ['required'],
-                'sub_event_type_id'     => ['required'],
-                'report_byName'         => ['required'],
-                'date'                  => ['required'],
-                'documentation'         => 'nullable|mimes:jpg,jpeg,png,svg,gif,xlsx,pdf,docx',
-                'description'           => ['required'],
-                'location_id'           => ['required'],
-                'location_name'         => ['required'],
-                'tindakkan_selanjutnya' => ['required'],
-            ];
+        if (Auth::check()) {
+            $this->report_byName = Auth::user()->lookup_name ?? Auth::user()->name;
+            $this->report_by     = Auth::id();
         }
     }
+
+    public function rules()
+    {
+        $baseRules = [
+            'workgroup_name'        => ['required'],
+            'event_type_id'         => ['required'],
+            'sub_event_type_id'     => ['required'],
+            'report_byName'         => ['required'],
+            'date'                  => ['required'],
+            'documentation'         => 'nullable|mimes:jpg,jpeg,png,svg,gif,xlsx,pdf,docx',
+            'description'           => ['required'],
+            'location_id'           => ['required'],
+            'location_name'         => ['required'],
+            'tindakkan_selanjutnya' => ['required'],
+        ];
+
+        if ($this->show_immidiate === 'yes') {
+            $baseRules['immediate_corrective_action'] = ['required'];
+        }
+
+        return $baseRules;
+    }
+
     public function messages()
     {
         return [
-            'event_type_id.required'               => 'kolom wajib di isi',
-            'tindakkan_selanjutnya.required'       => 'kolom wajib di centang',
-            'report_byName.required'               => 'kolom wajib di isi',
-            'workgroup_name.required'              => 'kolom wajib di isi',
-            'date.required'                        => 'kolom wajib di isi',
-            'site_id.required'                     => 'kolom wajib di isi',
-            'documentation.mimes'                  => 'hanya format jpg,jpeg,png,svg,gif,xlsx,pdf,docx file types are allowed',
-            'documentation.nullable'               => 'kolom wajib di isi',
-            'description.required'                 => 'kolom wajib di isi',
-            'immediate_corrective_action.required' => 'kolom wajib di isi',
-            'location_name.required'               => 'kolom wajib di isi',
-            'location_id.required'                 => 'kolom wajib di isi',
-            'workgroup_name.required'              => 'kolom wajib di isi',
+            'event_type_id.required'                => 'Kolom wajib diisi',
+            'sub_event_type_id.required'            => 'Kolom wajib diisi',
+            'report_byName.required'                => 'Kolom wajib diisi',
+            'workgroup_name.required'               => 'Kolom wajib diisi',
+            'date.required'                         => 'Kolom wajib diisi',
+            'site_id.required'                      => 'Kolom wajib diisi',
+            'documentation.mimes'                   => 'Hanya format file jpg, jpeg, png, svg, gif, xlsx, pdf, docx yang diizinkan',
+            'description.required'                  => 'Kolom wajib diisi',
+            'immediate_corrective_action.required'  => 'Kolom wajib diisi',
+            'location_name.required'                => 'Kolom wajib diisi',
+            'location_id.required'                  => 'Kolom wajib diisi',
+            'tindakkan_selanjutnya.required'        => 'Kolom wajib dicentang',
         ];
     }
+
     public function reportedBy($id)
     {
-        $this->report_by        = $id;
-        $ReportBy               = User::whereId($id)->first();
-        $this->report_byName    = $ReportBy->lookup_name;
+        $this->report_by = $id;
+
+        $reportBy = User::find($id);
+        if ($reportBy) {
+            $this->report_byName = $reportBy->lookup_name;
+        }
+
         $this->report_by_nolist = null;
-        $this->hiddenReportBy   = 'hidden';
+        $this->hiddenReportBy = 'hidden';
     }
+
     public function reportedTo($id)
     {
-        $this->report_to        = $id;
-        $ReportTo               = User::whereId($id)->first();
-        $this->report_toName    = $ReportTo->lookup_name;
+        $this->report_to = $id;
+
+        $reportTo = User::find($id);
+        if ($reportTo) {
+            $this->report_toName = $reportTo->lookup_name;
+        }
+
         $this->report_to_nolist = null;
-        $this->hiddenReportTo   = 'hidden';
+        $this->hiddenReportTo = 'hidden';
     }
-    public function ReportByAndReportTo()
+
+    public function reportByAndReportTo()
     {
-        if (! empty($this->report_by_nolist)) {
-            $this->report_by     = null;
+        if (!empty($this->report_by_nolist)) {
+            $this->report_by = null;
             $this->report_byName = $this->report_by_nolist;
         }
     }
-    public function select_division($id)
+
+    public function selectDivision($id)
     {
-        $this->division_id     = $id;
+        $this->division_id = $id;
         $this->hiddenWorkgroup = 'hidden';
-        $this->hiddenReportBy  = 'hidden';
+        $this->hiddenReportBy = 'hidden';
     }
+
     public function clickReportBy()
     {
         $this->dropdownReportBy = 'dropdown dropdown-open dropdown-end';
-        $this->hiddenReportBy   = 'block';
+        $this->hiddenReportBy = 'block';
     }
+
     public function clickReportTo()
     {
         $this->hiddenReportTo = 'block';
     }
+
     public function clickWorkgroup()
     {
         $this->dropdownWorkgroup = 'dropdown dropdown-open dropdown-end';
-        $this->hiddenWorkgroup   = 'block';
+        $this->hiddenWorkgroup = 'block';
     }
+
     public function changeConditionDivision()
     {
         $this->business_unit = null;
-        $this->dept          = null;
+        $this->dept = null;
         $this->select_divisi = null;
-        $this->division_id   = null;
+        $this->division_id = null;
     }
+
     public function realTimeFunc()
     {
         // Tampilkan lokasi jika dipilih
@@ -156,9 +247,9 @@ class Create extends Component
 
         // Ambil event_type berdasarkan route
         $routePath = Request::getPathInfo();
-        if (choseEventType::where('route_name', 'LIKE', $routePath)->exists()) {
-            $eventTypeIds = choseEventType::where('route_name', 'LIKE', $routePath)
-                ->pluck('event_type_id');
+        $eventTypeIds = choseEventType::where('route_name', 'LIKE', $routePath)->pluck('event_type_id');
+
+        if ($eventTypeIds->isNotEmpty()) {
             $this->Event_type = TypeEventReport::whereIn('id', $eventTypeIds)->get();
         }
 
@@ -172,23 +263,23 @@ class Create extends Component
             $this->fileUpload = pathinfo($this->documentation->getClientOriginalName(), PATHINFO_EXTENSION);
         }
 
-        // Tampilkan form jika user adalah superadmin (id = 1)
+        // Tampilkan form jika user adalah superadmin (role_user_permit_id = 1)
         $this->show = Auth::check() && Auth::user()->role_user_permit_id == 1;
 
         // Proses data divisi
         if ($this->division_id) {
-            $divisi = Division::with([
+            $division = Division::with([
                 'DeptByBU.BusinesUnit.Company',
                 'DeptByBU.Department',
                 'Company',
                 'Section'
             ])->find($this->division_id);
 
-            if ($divisi) {
-                $company = optional($divisi->DeptByBU->BusinesUnit->Company)->name_company;
-                $department = optional($divisi->DeptByBU->Department)->department_name;
-                $section = optional($divisi->Section)->name;
-                $companySelf = optional($divisi->Company)->name_company;
+            if ($division) {
+                $company       = optional(optional($division->DeptByBU)->BusinesUnit->Company)->name_company;
+                $department    = optional(optional($division->DeptByBU)->Department)->department_name;
+                $companySelf   = optional($division->Company)->name_company;
+                $section       = optional($division->Section)->name;
 
                 $this->workgroup_name = implode('-', array_filter([
                     $company,
@@ -229,12 +320,16 @@ class Create extends Component
         }
 
         // Ambil workflow detail jika ada
-        if ($this->workflow_template_id && WorkflowDetail::where('workflow_administration_id', $this->workflow_template_id)->exists()) {
-            $workflow = WorkflowDetail::where('workflow_administration_id', $this->workflow_template_id)->first();
-            $this->workflow_detail_id = optional($workflow)->id;
-            $this->ResponsibleRole = optional($workflow)->responsible_role_id;
+        $workflow = $this->workflow_template_id
+            ? WorkflowDetail::where('workflow_administration_id', $this->workflow_template_id)->first()
+            : null;
+
+        if ($workflow) {
+            $this->workflow_detail_id = $workflow->id;
+            $this->ResponsibleRole = $workflow->responsible_role_id;
         }
     }
+
     public function render()
     {
         $this->realTimeFunc();
@@ -254,19 +349,20 @@ class Create extends Component
     }
     public function store()
     {
-        $hazard          = HazardReport::exists();
-        $referenceHazard = "TT–OHS–HZD-";
-        if (! $hazard) {
-            $reference       = 1;
-            $references      = str_pad($reference, 4, "0", STR_PAD_LEFT);
-            $this->reference = $referenceHazard . $references;
-        } else {
-            $hazard          = HazardReport::latest()->first();
-            $reference       = $hazard->id + 1;
-            $references      = str_pad($reference, 4, "0", STR_PAD_LEFT);
-            $this->reference = $referenceHazard . $references;
-        }
+        // Format tanggal untuk referensi
+        $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $this->date);
+        $dateForRef = $dateObj->format('Y/m/d');
+        $dateForDB  = $dateObj->format('Y-m-d : H:i');
+
+        // Generate reference number
+        $count = HazardReport::count() + 1;
+        $refNumber = str_pad($count, 4, '0', STR_PAD_LEFT);
+        $this->reference = "HR/TOKA/{$dateForRef}/{$refNumber}";
+
+        // Validasi input
         $this->validate();
+
+        // Upload file
         $file_name = '';
         if ($this->documentation) {
             $file_name = $this->documentation->getClientOriginalName();
@@ -274,38 +370,41 @@ class Create extends Component
             $this->fileUpload = $extension;
 
             $allowedImageExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+            $filePath = "public/documents/hzd/{$file_name}";
 
             if (in_array($extension, $allowedImageExtensions)) {
-                // ✅ Ambil isi file (tanpa getRealPath)
-                $fileContent = $this->documentation->get(); // raw file content
-
-                // Kompres dan encode langsung dari content
-                $image = Image::make($fileContent)->encode($extension, 70);
-
-                Storage::put("public/documents/hzd/{$file_name}", $image);
+                $image = Image::make($this->documentation->get())->encode($extension, 70);
+                Storage::put($filePath, $image);
             } else {
-                // PDF, Word, dll — simpan biasa
                 $this->documentation->storeAs('public/documents/hzd', $file_name);
             }
         }
+
+        // Atur tindakan langsung
         if ($this->show_immidiate === 'no') {
             $this->immediate_corrective_action = null;
         }
+
+        // Jika tidak ditindaklanjuti, cari status "closed"
+        $closed_by = '';
         if ($this->tindakkan_selanjutnya == 0) {
-            $WorkflowDetail           = WorkflowDetail::where('workflow_administration_id', $this->workflow_template_id)->where('name', 'like', '%' . "closed" . '%')->first();
-            $this->workflow_detail_id = $WorkflowDetail->id;
-            $closed_by                = $this->report_byName;
-        } else {
-            $closed_by = '';
+            $workflow = WorkflowDetail::where('workflow_administration_id', $this->workflow_template_id)
+                ->where('name', 'like', '%closed%')
+                ->first();
+
+            $this->workflow_detail_id = optional($workflow)->id;
+            $closed_by = $this->report_byName;
         }
-        $filds = [
+
+        // Simpan data ke database
+        $fields = [
             'event_type_id'               => $this->event_type_id,
             'sub_event_type_id'           => $this->sub_event_type_id,
             'reference'                   => $this->reference,
             'report_by'                   => $this->report_by,
             'report_to'                   => $this->report_to,
             'division_id'                 => $this->division_id,
-            'date'                        => DateTime::createFromFormat('d-m-Y : H:i', $this->date)->format('Y-m-d : H:i'),
+            'date'                        => $dateForDB,
             'location_name'               => $this->location_name,
             'event_location_id'           => $this->location_id,
             'site_id'                     => $this->site_id,
@@ -331,53 +430,59 @@ class Create extends Component
             'workflow_template_id'        => $this->workflow_template_id,
             'closed_by'                   => $closed_by,
         ];
-        $HazardReport = HazardReport::create($filds);
-        $this->dispatch(
-            'alert',
-            [
-                'text'            => "Laporan Hazard Anda Sudah Terkirim, Terima kasih sudah melapor!!!",
-                'duration'        => 5000,
-                'destination'     => '/contact',
-                'newWindow'       => true,
-                'close'           => true,
-                'backgroundColor' => "linear-gradient(to right, #06b6d4, #22c55e)",
-            ]
-        );
-        $this->dispatch('buttonClicked', [
-            'duration' => 4000,
+
+        $hazardReport = HazardReport::create($fields);
+
+        // Pop-up sukses
+        $this->dispatch('alert', [
+            'text'            => "Laporan Hazard Anda Sudah Terkirim, Terima kasih sudah melapor!!!",
+            'duration'        => 5000,
+            'destination'     => '/contact',
+            'newWindow'       => true,
+            'close'           => true,
+            'backgroundColor' => "linear-gradient(to right, #06b6d4, #22c55e)",
         ]);
-        // Notification
-        $getModerator = (Auth::check() ? EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->where('type_event_report_id', $this->event_type_id)->where('user_id', 'NOT LIKE', Auth::user()->id)->pluck('user_id')->toArray() : EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)->pluck('user_id')->pluck('user_id')->toArray());
-        $User         = User::whereIn('id', $getModerator)->get();
-        $url          = $HazardReport->id;
-        foreach ($User as $key => $value) {
-            $users     = User::whereId($value->id)->get();
-            $offerData = [
-                'greeting'  => 'Halo ' . $value->lookup_name . ' 👋',
+
+        $this->dispatch('buttonClicked', ['duration' => 4000]);
+
+        // Kirim notifikasi ke moderator
+        $moderatorIds = EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)
+            ->where('type_event_report_id', $this->event_type_id)
+            ->when(Auth::check(), fn($q) => $q->where('user_id', '!=', Auth::id()))
+            ->pluck('user_id')
+            ->toArray();
+
+        $moderators = User::whereIn('id', $moderatorIds)->get();
+        $url = $hazardReport->id;
+
+        foreach ($moderators as $user) {
+            Notification::send($user, new toModerator([
+                'greeting'  => 'Halo ' . $user->lookup_name . ' 👋',
                 'subject'   => '⚠️ Laporan Bahaya: ' . $this->reference,
                 'line'      => $this->report_byName . ' baru saja mengirimkan laporan bahaya. Mohon untuk segera ditinjau.',
                 'line2'     => 'Klik tombol di bawah ini untuk melihat detail laporan dan mengambil tindakan.',
                 'line3'     => 'Tetap waspada dan terima kasih atas perhatian Anda 🙏',
-                'actionUrl' => url("/eventReport/hazardReportDetail/$url"),
-            ];
-            Notification::send($users, new toModerator($offerData));
+                'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
+            ]));
         }
-        $report_to = User::where('id', $this->report_to)->whereNotNull('email')->get();
-        if ($report_to) {
-            $offerData = [
+
+        // Kirim notifikasi ke report_to
+        $reportTo = User::where('id', $this->report_to)->whereNotNull('email')->get();
+        if ($reportTo->isNotEmpty()) {
+            Notification::send($reportTo, new toModerator([
                 'greeting'  => 'Halo ' . $this->report_toName . ' 👋',
                 'subject'   => '⚠️ Laporan Bahaya dengan Nomor Referensi: ' . $this->reference,
                 'line'      => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.',
                 'line2'     => 'Klik tombol di bawah ini untuk melihat detail laporan.',
                 'line3'     => 'Terima kasih atas perhatian dan kerjasamanya 🙏',
-                'actionUrl' => url("/eventReport/hazardReportDetail/$url"),
-
-            ];
-            Notification::send($report_to, new toModerator($offerData));
-            $this->clearFields();
-            // $this->redirectRoute('hazardReportCreate', ['workflow_template_id' => $this->workflow_template_id]);
+                'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
+            ]));
         }
+
+        $this->clearFields();
+        // $this->redirectRoute('hazardReportCreate', ['workflow_template_id' => $this->workflow_template_id]);
     }
+
 
     public function clearFields()
     {
