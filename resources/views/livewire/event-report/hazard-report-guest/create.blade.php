@@ -177,9 +177,9 @@
                 <input type="radio" name="my_tabs_2" class="font-semibold tab z-1 font-signika text-sky-500" aria-label="Additional Action" checked="checked" />
                 <div role="tabpanel" class="p-6 tab-content bg-base-100 border-base-300 rounded-box">
                     <div class="mx-4 my-2">
-                       @if ($date)
-                            <livewire:event-report.hazard-report.action.index :reference="$reference">
-                       @endif
+                        @if ($date)
+                        <livewire:event-report.hazard-report.action.index :reference="$reference">
+                            @endif
                     </div>
                 </div>
             </div>
@@ -237,68 +237,70 @@
             </x-btn-save-active>
         </div>
     </form>
-     {{-- <livewire:event-report.hazard-report.action.create > --}}
-    <!--<button wire:click="setData">Set Data</button>-->
-    <script nonce="{{ csp_nonce() }}">
-        var count = 10;
-        var redirect = "https://tokasafe.archimining.com/eventReport/hazardReportGuest/3";
-        document.addEventListener('livewire:init', () => {
-            Livewire.on('buttonClicked', (event) => {
-                const data = event
-                var ss = data[0]['duration'];
-                (function() {
-                    setTimeout(
-                        function() {
-                            window.location.href = redirect;
-                        }, ss);
-                })();
+    @if ($date)
+    <livewire:event-report.hazard-report.action.create :reference="$reference">
+        @endif
+        <!--<button wire:click="setData">Set Data</button>-->
+        <script nonce="{{ csp_nonce() }}">
+            var count = 10;
+            var redirect = "https://tokasafe.archimining.com/eventReport/hazardReportGuest/3";
+            document.addEventListener('livewire:init', () => {
+                Livewire.on('buttonClicked', (event) => {
+                    const data = event
+                    var ss = data[0]['duration'];
+                    (function() {
+                        setTimeout(
+                            function() {
+                                window.location.href = redirect;
+                            }, ss);
+                    })();
+                });
             });
-        });
 
-    </script>
-    <script nonce="{{ csp_nonce() }}">
-        ClassicEditor
-            .create(document.querySelector('#immediate_corrective_action'), {
-                toolbar: ['undo', 'redo', 'bold', 'italic', 'numberedList', 'bulletedList', 'link']
-            })
-            .then(newEditor => {
-                newEditor.editing.view.change((writer) => {
-                    writer.setStyle(
-                        "height"
-                        , "155px"
-                        , newEditor.editing.view.document.getRoot()
-                    );
-                });
-                newEditor.model.document.on('change:data', () => {
-                    @this.set('immediate_corrective_action', newEditor.getData())
-                });
-                window.addEventListener('articleStore', event => {
-                    newEditor.setData('');
+        </script>
+        <script nonce="{{ csp_nonce() }}">
+            ClassicEditor
+                .create(document.querySelector('#immediate_corrective_action'), {
+                    toolbar: ['undo', 'redo', 'bold', 'italic', 'numberedList', 'bulletedList', 'link']
                 })
-            });
-        // involved person
-        ClassicEditor
-            .create(document.querySelector('#description'), {
-                toolbar: ['undo', 'redo', 'bold', 'italic', 'numberedList', 'bulletedList', 'link']
+                .then(newEditor => {
+                    newEditor.editing.view.change((writer) => {
+                        writer.setStyle(
+                            "height"
+                            , "155px"
+                            , newEditor.editing.view.document.getRoot()
+                        );
+                    });
+                    newEditor.model.document.on('change:data', () => {
+                        @this.set('immediate_corrective_action', newEditor.getData())
+                    });
+                    window.addEventListener('articleStore', event => {
+                        newEditor.setData('');
+                    })
+                });
+            // involved person
+            ClassicEditor
+                .create(document.querySelector('#description'), {
+                    toolbar: ['undo', 'redo', 'bold', 'italic', 'numberedList', 'bulletedList', 'link']
 
-            })
-            .then(newEditor => {
-                newEditor.editing.view.change((writer) => {
-                    writer.setStyle(
-                        "height"
-                        , "155px"
-                        , newEditor.editing.view.document.getRoot()
-                    );
-                });
-                newEditor.model.document.on('change:data', () => {
-                    @this.set('description', newEditor.getData())
-                });
-                window.addEventListener('articleStore', event => {
-                    newEditor.setData('');
                 })
-            });
+                .then(newEditor => {
+                    newEditor.editing.view.change((writer) => {
+                        writer.setStyle(
+                            "height"
+                            , "155px"
+                            , newEditor.editing.view.document.getRoot()
+                        );
+                    });
+                    newEditor.model.document.on('change:data', () => {
+                        @this.set('description', newEditor.getData())
+                    });
+                    window.addEventListener('articleStore', event => {
+                        newEditor.setData('');
+                    })
+                });
 
-    </script>
+        </script>
 
 
 </div>
