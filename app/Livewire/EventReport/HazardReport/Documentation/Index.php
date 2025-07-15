@@ -10,14 +10,15 @@ use App\Models\HazardDocumentation;
 
 class Index extends Component
 {
-    public $hazard_id, $current_step;
+    public $hazard_id, $current_step,$reference;
     use WithPagination;
     protected $listeners = [
         'documents_hazard_created' => 'render',
     ];
-    public function mount($id)
+    public function mount($reference,HazardDocumentation $id)
     {
-        $this->hazard_id = $id;
+        $this->hazard_id = $id->id;
+        $this->reference = $reference;
     }
     public function render()
     {
