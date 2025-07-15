@@ -15,12 +15,11 @@ class Create extends ModalComponent
     use WithFileUploads;
     public $modal = 'modal', $divider, $documentation_id, $current_step;
     #[Validate]
-    public $description, $name_doc, $hazard_id, $file_doc,$reference;
+    public $description, $name_doc, $hazard_id, $file_doc;
 
-    public function mount($reference,HazardReport $doc)
+    public function mount(HazardReport $doc)
     {
         $this->hazard_id = $doc->id;
-        $this->reference = $reference;
     }
     public function render()
     {

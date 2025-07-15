@@ -13,12 +13,13 @@ class Index extends Component
 {
     use WithPagination;
     public $search = '';
-    public $hazard_id, $task_being_done, $orginal_due_date,$current_step;
+    public $hazard_id, $task_being_done, $orginal_due_date,$current_step,$reference;
     protected $listeners = [
         'actionHazard_created' => 'render',
     ];
-    public function mount($id)
+    public function mount($reference,$id)
     {
+        $this->reference = $reference;
         $this->hazard_id = $id;
         $Hazard = HazardReport::where('id', $this->hazard_id)->first();
         $this->task_being_done = $Hazard->task_being_done;

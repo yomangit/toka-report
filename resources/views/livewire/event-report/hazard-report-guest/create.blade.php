@@ -177,7 +177,7 @@
                 <input type="radio" name="my_tabs_2" class="font-semibold tab z-1 font-signika text-sky-500" aria-label="Additional Action" checked="checked" />
                 <div role="tabpanel" class="p-6 tab-content bg-base-100 border-base-300 rounded-box">
                     <div class="mx-4 my-2">
-                        {{-- <livewire:event-report.hazard-report.action.index > --}}
+                        <livewire:event-report.hazard-report.action.index :reference="$reference">
                     </div>
                 </div>
             </div>
