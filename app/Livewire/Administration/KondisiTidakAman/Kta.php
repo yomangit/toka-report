@@ -10,7 +10,7 @@ class Kta extends Component
 {
     use WithPagination;
     public $name;
-    public $kta_id, $modal = 'modal',$divider;
+    public $kta_id, $modal = 'modal',$divider,$search='';
 
     public function modalOpen()
     {
