@@ -13,13 +13,11 @@
             </div>
         </div>
     </dialog>
+   
+    <script>
+        window.addEventListener('show-modal-action-hazard', () => {
+            const modal = document.getElementById('modal_action_hazard');
+            if (modal) modal.showModal();
+        });
+    </script>
 </div>
-@push('scripts')
-<script>
-    window.addEventListener('show-modal-action-hazard', () => {
-        const modal = document.getElementById('modal_action_hazard');
-        if (modal) modal.showModal();
-    });
-
-</script>
-@endpush
