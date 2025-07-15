@@ -164,7 +164,7 @@
                 <!--<x-text-area id="description" :error="$errors->get('description')" />-->
                 <textarea id="immediate_corrective_action"></textarea>
             </div>
-            <x-label-error :messages="$errors->get('description')" />
+            <x-label-error :messages="$errors->get('immediate_corrective_action')" />
         </div>
 
 
@@ -184,6 +184,7 @@
                             <option value="{{ $kta->id }}" selected>{{ $kta->name }}</option>
                             @endforeach
                         </x-select>
+                        <x-label-error :messages="$errors->get('kondisitidakamen_id')" />
                     </div>
                     <div class="hidden peer-checked/published:block">
                         <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
@@ -192,8 +193,8 @@
                             <option value="{{ $tta->id }}" selected>{{ $tta->name }}</option>
                             @endforeach
                         </x-select>
+                        <x-label-error :messages="$errors->get('tindakantidakamen_id')" />
                     </div>
-                    <x-label-error :messages="$errors->get('immediate_corrective_action')" />
                 </fieldset>
             </div>
             <div class='px-4 md:place-self-center'>
