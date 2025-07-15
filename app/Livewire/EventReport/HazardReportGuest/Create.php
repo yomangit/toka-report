@@ -199,7 +199,7 @@ class Create extends Component
         }
     }
 
-    public function selectDivision($id)
+    public function select_division($id)
     {
         $this->division_id = $id;
         $this->hiddenWorkgroup = 'hidden';
