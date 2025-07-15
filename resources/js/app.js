@@ -8,32 +8,8 @@ import monthSelectPlugin from "flatpickr/dist/plugins/monthSelect";
 import "flatpickr/dist/themes/dark.css";
 import "flatpickr/dist/plugins/monthSelect/style.css";
 import { initOneSignal } from './onesignal-client';
-
 import TomSelect from 'tom-select';
 import 'tom-select/dist/css/tom-select.css';
-
-window.TomSelect = TomSelect;
-
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('select[data-tom-select]').forEach((el) => {
-        if (!el.classList.contains('tomselect-initialized')) {
-            new TomSelect(el);
-            el.classList.add('tomselect-initialized');
-        }
-    });
-});
-
-// Tambahkan ini agar select tetap aktif setelah Livewire re-render
-Livewire.hook('message.processed', () => {
-    document.querySelectorAll('select[data-tom-select]').forEach((el) => {
-        if (!el.classList.contains('tomselect-initialized')) {
-            new TomSelect(el);
-            el.classList.add('tomselect-initialized');
-        }
-    });
-});
-
-
 document.addEventListener('DOMContentLoaded', () => {
     initOneSignal();
 });

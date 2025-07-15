@@ -26,23 +26,15 @@
         <div class="grid gap-1 sm:grid-cols-2 lg:grid-cols-3">
             <div class="w-full max-w-md xl:max-w-xl form-control">
                 <x-label-req :value="__('event_type')" />
-                {{-- <x-select wire:model.live='event_type_id' :error="$errors->get('event_type_id')">
+                <x-select wire:model.live='event_type_id' :error="$errors->get('event_type_id')">
                     <option value="">Select an option</option>
                     @foreach ($EventType as $event_type)
                     <option value="{{ $event_type->id }}">
                 {{ $event_type->EventCategory->event_category_name }} -
                 {{ $event_type->type_eventreport_name }}</option>
                 @endforeach
-                </x-select> --}}
-                <x-select-use-search wire:model.live='event_type_id' :error="$errors->get('event_type_id')">
-                    <option value="">Select an option</option>
-                    @foreach ($EventType as $event_type)
-                    <option value="{{ $event_type->id }}">
-                        {{ $event_type->EventCategory->event_category_name }} -
-                        {{ $event_type->type_eventreport_name }}
-                    </option>
-                    @endforeach
-                </x-select-use-search>
+                </x-select>
+               
                 <x-label-error :messages="$errors->get('event_type_id')" />
             </div>
             <div class="w-full max-w-md xl:max-w-xl form-control">

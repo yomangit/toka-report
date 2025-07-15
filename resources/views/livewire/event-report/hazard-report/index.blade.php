@@ -41,8 +41,8 @@
                 <option value="{{ $item->id }}">{{ $item->event_sub_type_name }}</option>
                 @endforeach
             </x-select-search>
-            <x-select-search wire:model.live='search_status'>
-                <option class="opacity-40 " value="" selected>Select All Status</option>
+            <x-select-search wire:model.live="search_status">
+                <option class="opacity-40" value="" selected>Select All Status</option>
                 @foreach ($Status as $item)
                 <option value="{{ $item->status_name }}">{{ $item->status_name }}</option>
                 @endforeach
