@@ -15,6 +15,8 @@ use App\Models\choseEventType;
 use App\Models\WorkflowDetail;
 use App\Models\TypeEventReport;
 use App\Models\EventUserSecurity;
+use App\Models\Kondisitidakaman;
+use App\Models\Tindakantidakaman;
 use App\Notifications\toModerator;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -306,6 +308,8 @@ class Create extends Component
             'Report_To'  => User::searchNama(trim($this->report_toName))->paginate(100, ['*'], 'Report_To'),
             'Division'   => $this->divisi_search,
             'EventType'  => $this->Event_type,
+            'KTA' => Kondisitidakaman::get(),
+            'TTA' => Tindakantidakaman::get(),
             'Location'   => LocationEvent::all(),
         ])
             ->extends('base.index', [

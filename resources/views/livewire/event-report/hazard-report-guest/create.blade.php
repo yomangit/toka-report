@@ -166,6 +166,25 @@
             </div>
             <x-label-error :messages="$errors->get('description')" />
         </div>
+
+        <fieldset>
+            @if ($show_immidiate === 'yes')
+            <x-label-req :value="__('immediate corrective action')" />
+            @else
+            <x-label-no-req :value="__('immediate corrective action')" />
+            @endif
+            <input wire:model.live="show_immidiate" value='yes' name="status" id="draft" class="radio-xs peer/draft checked:bg-indigo-500 radio" type="radio" name="13" />
+            <label for="draft" class="text-xs font-semibold peer-checked/draft:text-indigo-500">{{ __('Yes') }}</label>
+            <input wire:model.live="show_immidiate" value="no" id="published" class="peer/published checked:bg-sky-500 radio-xs radio" type="radio" name="status" />
+            <label for="published" class="text-xs font-semibold peer-checked/published:text-sky-500">{{ __('No') }}</label>
+            <div wire:ignore class="hidden w-full peer-checked/draft:block form-control">
+               <p>a</p>
+            </div>
+            <div wire:ignore class="hidden w-full peer-checked/published:block form-control">
+               <p>b</p>
+            </div>
+            <x-label-error :messages="$errors->get('immediate_corrective_action')" />
+        </fieldset>
        
         <div class="grid grid-rows-3 mt-2 border divide-y-2 md:grid-rows-1 md:grid-cols-3 md:content-center md:gap-4 md:divide-y-0 md:divide-x-2 divide-base-200 border-base-200 rounded-box">
             <div class='px-4 md:place-self-center '>
