@@ -17,7 +17,7 @@ class Index extends Component
     protected $listeners = [
         'actionHazard_created' => 'render',
     ];
-    public function mount($reference,$id)
+    public function mount($reference, HazardReport $id)
     {
         $this->reference = $reference;
         $this->hazard_id = $id;
