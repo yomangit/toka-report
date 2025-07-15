@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('icons.png') }}">
-    
+
     <meta name="apple-mobile-web-app-status-bar" content="#01d679">
     <meta name="apple-mobile-web-app-capable" content="yes">
-     <link rel="manifest" href="/manifest.json">
-     <link rel="apple-touch-icon" sizes="16x16" href="/pwa/icons/ios/16.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" sizes="16x16" href="/pwa/icons/ios/16.png">
     <link rel="apple-touch-icon" sizes="20x20" href="/pwa/icons/ios/20.png">
     <link rel="apple-touch-icon" sizes="29x29" href="/pwa/icons/ios/29.png">
     <link rel="apple-touch-icon" sizes="32x32" href="/pwa/icons/ios/32.png">
@@ -49,7 +49,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Signika&family=Spicy+Rice&display=swap" rel="stylesheet">
     <title>
         @if (isset($title))
-            {{ $title }}
+        {{ $title }}
         @endif
     </title>
     @vite(['resources/css/app.css','resources/js/app.js'])
@@ -57,12 +57,13 @@
 <body class="static antialiased">
     @include('navigation.sidebar')
     <!-- start: Main -->
-    <main class="w-full md:w-[calc(100%-256px)] md:ml-64  min-h-screen transition-all main">
+    <main class="w-full min-h-screen transition-all md:ml-64 md:w-[calc(100%-256px)]">
         @include('navigation.navbar')
-        <div class="px-2 py-4 mx-auto  sm:px-6 lg:px-4 ">
+        <div class="w-full px-4 py-4 mx-auto sm:px-6 lg:px-8 xl:px-10 2xl:px-12 max-w-screen-2xl">
             @yield('content')
         </div>
     </main>
+
     @livewire('wire-elements-modal')
     @stack('skripts')
 </body>
