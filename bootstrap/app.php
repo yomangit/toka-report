@@ -20,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))->withRouting(
         $middleware->web(append: [
             setLocale::class,
             // AddCspHeaders::class,
-          AddContentSecurityPolicyHeaders::class,
+        //   AddContentSecurityPolicyHeaders::class,
         ]);
         $middleware->alias([
             'admin' => AdminMiddleware::class,
