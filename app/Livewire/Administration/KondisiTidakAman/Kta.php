@@ -15,7 +15,7 @@ class Kta extends Component
     public function modalOpen()
     {
         $this->modal = 'modal modal-open';
-         $this->divider='input KTA';
+         $this->divider='Input KTA';
     }
     public function closeModal()
     {
@@ -26,7 +26,7 @@ class Kta extends Component
         $this->modalOpen();
        
     }
-    public function editKta(Kondisitidakaman $kta)
+    public function updateData(Kondisitidakaman $kta)
     {
         $this->modalOpen();
         $this->name = $kta->name;
