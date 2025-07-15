@@ -25,7 +25,7 @@ class ActionIndex extends Component
             'DocHazPelapor' => DocHazPelapor::searchHazard(trim($this->search))->where('hazard_id', $this->hazard_id)->with('users')->paginate(20)
         ]);
     }
-    #[On('panel_hazard')]
+
     public function updateData($id)
     {
         $this->dispatch('action_hazard_update', $id);
