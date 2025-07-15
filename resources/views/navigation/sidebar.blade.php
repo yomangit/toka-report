@@ -160,7 +160,7 @@
                                                 href="{{ route('statusEvent') }}"class="{{ Request::is('admin/parent/statusEvent') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Status Event') }}</a>
                                         </li>
                                         <li><a
-                                                href="{{ route('kta') }}"class="{{ Request::is('admin/parent/kta') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Status Event') }}</a>
+                                                href="{{ route('kta') }}"class="{{ Request::is('admin/parent/kta') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Kondisi Tidak Aman') }}</a>
                                         </li>
                                         <li>
                                             <details {{ Request::is('admin/parent/event/*') ? ' open' : '' }}>
