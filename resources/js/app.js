@@ -31,6 +31,14 @@ flatpickr("#completion_date", {
     disableMobile: "true",
     dateFormat: "d-m-Y ",
 });
+flatpickr("#due_date_guest", {
+    disableMobile: "true",
+    dateFormat: "d-m-Y ",
+});
+flatpickr("#completion_date_guest", {
+    disableMobile: "true",
+    dateFormat: "d-m-Y ",
+});
 flatpickr("#tanggal_komplite", {
     disableMobile: "true",
     dateFormat: "d-m-Y ",
