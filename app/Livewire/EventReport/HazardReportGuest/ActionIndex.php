@@ -21,7 +21,7 @@ class ActionIndex extends Component
     public function render()
     {
         return view('livewire.event-report.hazard-report-guest.action-index', [
-            'DocHazPelapor' => DocHazPelapor::searchHazard(trim($this->search))->where('hazard_id', $this->hazard_id)->with('users')->paginate(20)
+            'DocHazPelapor' => DocHazPelapor::onlyNotApproved()->get()
         ]);
     }
 
