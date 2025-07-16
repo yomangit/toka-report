@@ -14,7 +14,7 @@
         }
 
     </style>
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @if ($show)
     <x-btn-admin-template wire:click="$dispatch('openModal', { component: 'admin.chose-event-type.create'})">Chose
         Event Category</x-btn-admin-template>
@@ -177,7 +177,7 @@
                 <input type="radio" name="my_tabs_2" class="font-semibold tab z-1 font-signika text-sky-500" aria-label="Additional Action" checked="checked" />
                 <div role="tabpanel" class="p-6 tab-content bg-base-100 border-base-300 rounded-box">
                     <div class="mx-4 my-2">
-                        <livewire:event-report.hazard-report-guest.action>
+                      
                         <livewire:event-report.hazard-report-guest.action-index>
                     </div>
                 </div>
@@ -236,7 +236,7 @@
             </x-btn-save-active>
         </div>
     </form>
-    f
+    <livewire:event-report.hazard-report-guest.action>
     <!--<button wire:click="setData">Set Data</button>-->
     <script nonce="{{ csp_nonce() }}">
         var count = 10;
@@ -298,6 +298,4 @@
             });
 
     </script>
-
-
 </div>

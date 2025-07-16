@@ -15,7 +15,6 @@
     <div class="font-mono text-sm font-semibold text-transparent divider divider-info bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
         {{ $divider }}</div>
     <livewire:event-report.hazard-report.panal.index :id="$data_id">
-
         <form wire:submit.prevent='store'>
             @csrf
             @method('PATCH')
