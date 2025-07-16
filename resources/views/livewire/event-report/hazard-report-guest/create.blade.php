@@ -34,7 +34,6 @@
                         {{ $event_type->type_eventreport_name }}</option>
                     @endforeach
                 </x-select>
-
                 <x-label-error :messages="$errors->get('event_type_id')" />
             </div>
             <div class="w-full max-w-md xl:max-w-xl form-control">
