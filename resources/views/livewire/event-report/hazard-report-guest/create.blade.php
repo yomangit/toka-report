@@ -220,15 +220,10 @@
                 <x-label-error :messages="$errors->get('tindakkan_selanjutnya')" />
             </div>
         </div>
-        <div role="tablist" class="mb-4 tabs tabs-lifted">
-            <input type="radio" name="my_tabs_2" class="font-semibold tab z-1 font-signika text-sky-500" aria-label="Additional Action" checked="checked" />
-            <div role="tabpanel" class="p-6 tab-content bg-base-100 border-base-300 rounded-box">
-                <div class="mx-4 my-2">
-                    @if($date && $tindakkan_selanjutnya==1)
-                    <livewire:event-report.hazard-report-guest.action-index :token="$token" :tgl="$date">
-                        @endif
-                </div>
-            </div>
+        <div>
+            @if($date && $tindakkan_selanjutnya==1)
+            <livewire:event-report.hazard-report-guest.action-index :token="$token" :tgl="$date">
+                @endif
         </div>
         <div class="modal-action ">
             <x-btn-save-active wire:target="documentation" wire:loading.class="btn-disabled">{{ __('Submit') }}
