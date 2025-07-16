@@ -231,7 +231,6 @@
             </div>
     </form>
     <livewire:event-report.hazard-report-guest.action :token="$token" :tgl="$date" />
-
     <script nonce="{{ csp_nonce() }}">
         ClassicEditor
             .create(document.querySelector('#immediate_corrective_action'), {
