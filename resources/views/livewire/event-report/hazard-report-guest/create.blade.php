@@ -225,9 +225,9 @@
                 <input type="radio" name="my_tabs_2" class="font-semibold tab z-1 font-signika text-sky-500" aria-label="Additional Action" checked="checked" />
                 <div role="tabpanel" class="p-6 tab-content bg-base-100 border-base-300 rounded-box">
                     <div class="mx-4 my-2">
-                        @isset($date && $tindakkan_selanjutnya==1)
+                        @if($date && $tindakkan_selanjutnya==1)
                         <livewire:event-report.hazard-report-guest.action-index :token="$token" :tgl="$date">
-                            @endisset
+                            @endif
                     </div>
                 </div>
             </div>
