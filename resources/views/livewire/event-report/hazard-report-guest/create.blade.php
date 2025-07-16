@@ -220,7 +220,9 @@
             </div>
         </div>
         @isset($date)
-        <livewire:event-report.hazard-report-guest.action-index :token="$token" :tgl="$date">
+        <div class="mt-2">
+            <livewire:event-report.hazard-report-guest.action-index :token="$token" :tgl="$date">
+        </div>
             @endisset
 
             <div class="modal-action ">
