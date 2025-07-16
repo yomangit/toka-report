@@ -220,15 +220,15 @@
                 <x-label-error :messages="$errors->get('tindakkan_selanjutnya')" />
             </div>
         </div>
-        <div>
-            @if($date && $tindakkan_selanjutnya==1)
-            <livewire:event-report.hazard-report-guest.action-index :token="$token" :tgl="$date">
-                @endif
-        </div>
-        <div class="modal-action ">
-            <x-btn-save-active wire:target="documentation" wire:loading.class="btn-disabled">{{ __('Submit') }}
-            </x-btn-save-active>
-        </div>
+
+        @ifset($date)
+        <livewire:event-report.hazard-report-guest.action-index :token="$token" :tgl="$date">
+            @endif
+
+            <div class="modal-action ">
+                <x-btn-save-active wire:target="documentation" wire:loading.class="btn-disabled">{{ __('Submit') }}
+                </x-btn-save-active>
+            </div>
     </form>
     <livewire:event-report.hazard-report-guest.action :token="$token" :tgl="$date" />
 

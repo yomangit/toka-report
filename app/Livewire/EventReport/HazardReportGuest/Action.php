@@ -119,6 +119,7 @@ class Action extends Component
             $this->notifyModerators();
         }
         $this->dispatch('DocHazPelapor_created');
+        $this->closeModal();
     }
     protected function sendAlert($message)
     {

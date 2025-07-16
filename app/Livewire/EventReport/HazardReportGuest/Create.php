@@ -172,7 +172,8 @@ class Create extends Component
         ];
     }
     #[On('closeAll')]
-    public function clearTindakkan_selanjutnya(){
+    public function clearTindakkan_selanjutnya()
+    {
         $this->reset('tindakkan_selanjutnya');
     }
     public function reportedBy($id)
@@ -410,14 +411,19 @@ class Create extends Component
         ];
 
         $hazardReport = HazardReport::create($fields);
-        $source = Approval::where('new_data->token', $this->token)->get();
-        foreach ($source as $approval) {
-            $newData = $approval->new_data; // ini adalah array/object yang bisa diubah
-            $newData['hazard_id'] = $hazardReport->id; // ubah hazard_id
+        if ($this->tindakkan_selanjutnya == 1) {
+            $source = Approval::where('new_data->token', $this->token)->get();
+            foreach ($source as $approval) {
+                $newData = $approval->new_data; // ini adalah array/object yang bisa diubah
+                $newData['hazard_id'] = $hazardReport->id; // ubah hazard_id
 
-            $approval->new_data = $newData; // set ulang ke model
-            $approval->save();              // simpan ke database
-            $approval->approve();
+                $approval->new_data = $newData; // set ulang ke model
+                $approval->save();              // simpan ke database
+                $approval->approve();
+            }
+        }
+        else{
+            Approval::whereIn('new_data->token',$this->token)->delete();
         }
         // Pop-up sukses
         $this->dispatch('alert', [
