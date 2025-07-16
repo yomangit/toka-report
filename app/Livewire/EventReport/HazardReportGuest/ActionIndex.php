@@ -14,11 +14,13 @@ class ActionIndex extends Component
 {
     use WithPagination;
     public $search = '';
-    public $hazard_id, $task_being_done, $orginal_due_date, $current_step;
+    public $hazard_id, $task_being_done, $orginal_due_date, $current_step,$token;
     protected $listeners = [
         'DocHazPelapor_created' => 'render',
     ];
-
+    public function mount($token){
+        $this->token =$token;
+    }
     public function render()
     {
         return view('livewire.event-report.hazard-report-guest.action-index', [

@@ -19,7 +19,7 @@ class Action extends Component
     public $search_report_by = '';
     public $hiddenResponsibility = 'block';
     public $modal = 'modal';
-    public $divider, $action_id, $orginal_due_date, $current_step;
+    public $divider, $action_id, $orginal_due_date, $current_step,$token;
 
     #[Validate]
     public $hazard_id, $responsible_role_id, $reference;
@@ -27,9 +27,10 @@ class Action extends Component
     public $followup_action, $actionee_comment, $action_condition, $due_date, $completion_date;
 
     #[On('modalActionHazardNew')]
-    public function modalActionHazardNew()
+    public function modalActionHazardNew($token)
     {
         $this->openModal();
+        $this->token = $token;
     }
 
     public function clickResponsibility()
@@ -97,7 +98,7 @@ class Action extends Component
                 'responsibility'   => $this->responsibility,
                 'due_date'         => $this->due_date,
                 'completion_date'  => $this->completion_date,
-                'token'=> Str::uuid(),
+                'token'=> $this->token,
                 'is_temporary' => true,
             ]
         );

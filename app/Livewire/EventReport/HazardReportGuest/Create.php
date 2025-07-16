@@ -6,6 +6,7 @@ use DateTime;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Division;
+use Illuminate\Support\Str;
 use App\Models\Eventsubtype;
 use App\Models\HazardReport;
 use Livewire\WithPagination;
@@ -67,6 +68,7 @@ class Create extends Component
     public $site_id;
     public $workgroup_id;
     public $select_divisi;
+    public $token;
 
     // Names and Labels
     public $location_name;
@@ -122,12 +124,12 @@ class Create extends Component
     // data action
     public function mount()
     {
+        $this->token =Str::uuid();
         if (Auth::check()) {
             $this->report_byName = Auth::user()->lookup_name ?? Auth::user()->name;
             $this->report_by     = Auth::id();
         }
     }
-
     public function rules()
     {
         $baseRules = [

@@ -178,7 +178,7 @@
                 <div role="tabpanel" class="p-6 tab-content bg-base-100 border-base-300 rounded-box">
                     <div class="mx-4 my-2">
                       
-                        <livewire:event-report.hazard-report-guest.action-index>
+                        <livewire:event-report.hazard-report-guest.action-index :token="$token">
                     </div>
                 </div>
             </div>
