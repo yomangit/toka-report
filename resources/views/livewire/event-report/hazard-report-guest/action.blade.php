@@ -65,5 +65,21 @@
             </form>
         </div>
     </div>
-   
+    @push('scripts')
+    <script>
+        document.addEventListener('livewire:load', function() {
+            flatpickr("#due_date_guest", {
+                dateFormat: "d-m-Y "
+            , });
+        });
+
+        // Re-init flatpickr setelah Livewire DOM update
+        Livewire.hook('message.processed', (message, component) => {
+            flatpickr("#due_date_guest", {
+                dateFormat: "d-m-Y "
+            , });
+        });
+
+    </script>
+    @endpush
 </div>
