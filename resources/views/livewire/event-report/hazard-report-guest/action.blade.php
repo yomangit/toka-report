@@ -60,7 +60,7 @@
                 </div>
                 <div class="modal-action">
                     <x-btn-save>{{ __('Save') }}</x-btn-save>
-                    <x-btn-close wire:click='closeModal'>{{ __('Close') }}</x-btn-close>
+                    <x-btn-close  wire:click="$dispatch('closeAll')">{{ __('Close') }}</x-btn-close>
                 </div>
             </form>
         </div>

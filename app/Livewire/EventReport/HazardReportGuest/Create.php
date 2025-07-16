@@ -7,6 +7,7 @@ use App\Models\User;
 use Livewire\Component;
 use App\Models\Division;
 use Illuminate\Support\Str;
+use Livewire\Attributes\On;
 use App\Models\Eventsubtype;
 use App\Models\HazardReport;
 use Livewire\WithPagination;
@@ -170,7 +171,10 @@ class Create extends Component
             'tindakkan_selanjutnya.required'        => 'Kolom wajib dicentang',
         ];
     }
-
+    #[On('closeAll')]
+    public function clearTindakkan_selanjutnya(){
+        $this->reset('tindakkan_selanjutnya');
+    }
     public function reportedBy($id)
     {
         $this->report_by = $id;

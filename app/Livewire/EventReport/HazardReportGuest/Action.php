@@ -53,7 +53,7 @@ class Action extends Component
     {
         $this->modal = ' modal-open';
     }
-
+     #[On('closeAll')]
     public function closeModal()
     {
         $this->reset('followup_action', 'actionee_comment', 'action_condition', 'due_date', 'completion_date', 'modal');
