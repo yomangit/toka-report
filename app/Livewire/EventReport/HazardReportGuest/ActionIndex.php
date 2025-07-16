@@ -4,10 +4,11 @@ namespace App\Livewire\EventReport\HazardReportGuest;
 
 use DateTime;
 use Livewire\Component;
+use Illuminate\Support\Str;
 use Livewire\Attributes\On;
-use App\Models\DocHazPelapor;
 use App\Models\HazardReport;
 use Livewire\WithPagination;
+use App\Models\DocHazPelapor;
 
 class ActionIndex extends Component
 {
@@ -22,6 +23,7 @@ class ActionIndex extends Component
     {
         return view('livewire.event-report.hazard-report-guest.action-index', [
             'DocHazPelapor' => DocHazPelapor::withoutGlobalScope('not-approved')
+                ->where('token', Str::uuid())
                 ->whereNull('approved_at')
                 ->paginate(20)
         ]);
