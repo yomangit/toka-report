@@ -236,7 +236,7 @@
             </x-btn-save-active>
         </div>
     </form>
-    <livewire:event-report.hazard-report-guest.action>
+    <livewire:event-report.hazard-report-guest.action :token="$token">
     <!--<button wire:click="setData">Set Data</button>-->
     <script nonce="{{ csp_nonce() }}">
         var count = 10;

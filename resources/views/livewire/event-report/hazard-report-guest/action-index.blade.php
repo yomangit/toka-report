@@ -1,6 +1,6 @@
 <div>
     <div class="flex justify-start gap-2 mb-2 md:justify-between">
-        <x-btn-add data-tip="Add" wire:click="$dispatch('modalActionHazardNew',{ token: {{ $token }} })" />
+        <x-btn-add data-tip="Add" wire:click="$dispatch('modalActionHazardNew')" />
         <div class="w-full max-w-xs">
             {{ $token }}
             <x-inputsearch wire:model.live='search' />
