@@ -20,11 +20,11 @@ class Action extends Component
     #[Validate]
     public $hazard_id,$responsible_role_id,$reference, $responsibility, $responsibility_name, $followup_action, $actionee_comment, $action_condition, $due_date, $completion_date;
 
-    protected $listeners = ['modalActionHazardNew' => 'modalActionHazardNew'];
+    #[On('modalActionHazardNew')]
     public function modalActionHazardNew()
     {
-        dd('test');
-       $this->openModal();
+        $this->modal = ' modal-open';
+       
     }
     public function clickResponsibility()
     {
