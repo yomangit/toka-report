@@ -38,7 +38,7 @@
                 <x-label-error :messages="$errors->get('event_type_id')" />
             </div>
             <div class="w-full max-w-md xl:max-w-xl form-control">
-                <x-label-req :value="__('sub_event_type')" />
+                <x-label-req :value="__('jenis bahaya')" />
                 <x-select wire:model.live='sub_event_type_id' :error="$errors->get('sub_event_type_id')">
                     <option value="" selected>Select an option</option>
                     @foreach ($EventSubType as $item)
