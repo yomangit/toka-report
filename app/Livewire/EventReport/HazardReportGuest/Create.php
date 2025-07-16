@@ -408,7 +408,10 @@ class Create extends Component
         $hazardReport = HazardReport::create($fields);
         $source = Approval::where('new_data->token', $this->token)->get();
         foreach ($source as $approval) {
-            $approval->approve();
+            $doc = $approval->new_data; // ambil model aslinya
+            $doc->hazard_id = $hazardReport->id;
+            $doc->save();
+            $approval->approve(); // approve setelah data lengkap
         }
         // Pop-up sukses
         $this->dispatch('alert', [
