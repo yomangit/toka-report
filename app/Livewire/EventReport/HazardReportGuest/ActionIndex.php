@@ -19,8 +19,9 @@ class ActionIndex extends Component
     protected $listeners = [
         'DocHazPelapor_created' => 'render',
     ];
-    public function mount($token){
+    public function mount($token,$tgl){
         $this->token =$token;
+        $this->orginal_due_date = $tgl;
     }
     public function render()
     {
