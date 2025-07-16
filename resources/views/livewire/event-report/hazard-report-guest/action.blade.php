@@ -2,7 +2,7 @@
     <div class="modal {{ $modal }} " role="dialog">
         <div wire:target="store" wire:loading.class="skeleton" class="modal-box">
             <div class="py-2 font-extrabold text-transparent divider divider-info bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
-                {{ $divider }} {{ $token }}</div>
+                {{ $divider }}</div>
             <form wire:submit.prevent='store'>
                 @csrf
                 @method('PATCH')
@@ -65,21 +65,4 @@
             </form>
         </div>
     </div>
-    {{-- @push('scripts')
-    <script>
-        document.addEventListener('livewire:load', function() {
-            flatpickr("#due_date_guest", {
-                dateFormat: "d-m-Y "
-            , });
-        });
-
-        // Re-init flatpickr setelah Livewire DOM update
-        Livewire.hook('message.processed', (message, component) => {
-            flatpickr("#due_date_guest", {
-                dateFormat: "d-m-Y "
-            , });
-        });
-
-    </script>
-    @endpush --}}
 </div>
