@@ -11,7 +11,7 @@
             <div class="w-full basis-1/5">
                 <div class="space-x-4 text-gray-500">
                     <span class="font-mono text-[10px] font-semibold">Action No.</span>
-                    <span class="text-[10px] font-semibold">{{ $ActionHazard->firstItem() + $no }} </span>
+                    <span class="text-[10px] font-semibold">{{ $DocHazPelapor->firstItem() + $no }} </span>
                     <div class="flex gap-2">
                             <x-icon-btn-detail wire:click="$dispatch('modalActionHazard',{ hazard: {{ $hazard_id }}, action:{{$index->id}} })" data-tip="Edit" class="{{($current_step ==='Closed' || $current_step ==='Cancelled') ? 'btn-disabled' :'' }}"/>
                             <x-icon-btn-delete  data-tip="delete" wire:click='delete({{$index->id}})'
