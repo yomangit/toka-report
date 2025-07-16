@@ -17,11 +17,13 @@ class ActionIndex extends Component
     protected $listeners = [
         'DocHazPelapor_created' => 'render',
     ];
-  
+
     public function render()
     {
         return view('livewire.event-report.hazard-report-guest.action-index', [
-            'DocHazPelapor' => DocHazPelapor::onlyNotApproved()->get()
+            'DocHazPelapor' => DocHazPelapor::withoutGlobalScope('not-approved')
+                ->whereNull('approved_at')
+                ->get()
         ]);
     }
 
