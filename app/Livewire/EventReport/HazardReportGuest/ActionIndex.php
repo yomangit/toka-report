@@ -25,8 +25,9 @@ class ActionIndex extends Component
     }
     public function render()
     {
+
         return view('livewire.event-report.hazard-report-guest.action-index', [
-            'DocHazPelapor' => Approval::where('token','like','%'. $this->token.'%')->paginate(20)
+            'DocHazPelapor' => Approval::where('new_data->token','like','%'. $this->token.'%')->paginate(20)
         ]);
     }
 
