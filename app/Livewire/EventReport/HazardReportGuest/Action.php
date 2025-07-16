@@ -23,7 +23,8 @@ class Action extends Component
     protected $listeners = ['modalActionHazardNew' => 'modalActionHazardNew'];
     public function modalActionHazardNew()
     {
-        $this->modal = ' modal-open';
+        dd('test');
+       $this->openModal();
     }
     public function clickResponsibility()
     {
