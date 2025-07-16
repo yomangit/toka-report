@@ -230,24 +230,6 @@
     </form>
     <livewire:event-report.hazard-report-guest.action :token="$token" :tgl="$date" />
 
-    <!--<button wire:click="setData">Set Data</button>-->
-    <script nonce="{{ csp_nonce() }}">
-        var count = 10;
-        var redirect = "https://tokasafe.archimining.com/eventReport/hazardReportGuest/3";
-        document.addEventListener('livewire:init', () => {
-            Livewire.on('buttonClicked', (event) => {
-                const data = event
-                var ss = data[0]['duration'];
-                (function() {
-                    setTimeout(
-                        function() {
-                            window.location.href = redirect;
-                        }, ss);
-                })();
-            });
-        });
-
-    </script>
     <script nonce="{{ csp_nonce() }}">
         ClassicEditor
             .create(document.querySelector('#immediate_corrective_action'), {
