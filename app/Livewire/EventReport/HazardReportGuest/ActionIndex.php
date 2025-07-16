@@ -23,7 +23,7 @@ class ActionIndex extends Component
         return view('livewire.event-report.hazard-report-guest.action-index', [
             'DocHazPelapor' => DocHazPelapor::withoutGlobalScope('not-approved')
                 ->whereNull('approved_at')
-                ->paginate(20);
+                ->paginate(20)
         ]);
     }
 
