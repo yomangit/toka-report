@@ -22,11 +22,7 @@
             <div class="w-full p-4 basis-3/4">
                 <div class="flex flex-col items-stretch divide-y divide-gray-400 ">
 
-                    <div class="grid flex-row grid-cols-4 gap-1 text-gray-500">
-                        <span class="font-mono text-[10px] font-semibold ">Hazard</span>
-                        <span
-                            class="font-mono text-[10px] text-justify font-semibold col-span-3">{{ $task_being_done }}</span>
-                    </div>
+                    
                     <div class="grid flex-row grid-cols-4 gap-1 text-gray-500 ">
                         <span class="font-mono text-[10px] font-semibold ">Followup Action</span>
                         <span
