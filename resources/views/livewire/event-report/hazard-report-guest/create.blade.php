@@ -76,6 +76,30 @@
                 <x-label-error :messages="$errors->get('report_byName')" />
             </div>
             <div class="w-full max-w-md xl:max-w-xl form-control">
+                <x-label-req :value="__('Perusahaan terkait')" />
+                <div class="dropdown dropdown-end">
+                    <x-input wire:click='clickWorkgroup' wire:model.live='workgroup_name' wire:keydown.self="changeConditionDivision" placeholder='cari divisi...' :error="$errors->get('workgroup_name')" class="cursor-pointer" tabindex="0" role="button" />
+                    <div tabindex="0" class="z-10 w-full   overflow-y-auto shadow dropdown-content card card-compact bg-base-200 text-primary-content {{ $hiddenWorkgroup }}">
+                        <ul class="h-full px-4 py-4 list-disc list-inside max-h-40 bg-base-200 rounded-box">
+                            @forelse ($Division as $item)
+                            <li wire:click="select_division({{ $item->id }})" class="text-[9px] text-wrap hover:bg-primary subpixel-antialiased text-left cursor-pointer">
+                                {{ $item->DeptByBU->BusinesUnit->Company->name_company }}-{{ $item->DeptByBU->Department->department_name }}
+                                @if (!empty($item->company_id))
+                                -{{ $item->Company->name_company }}
+                                @endif
+                                @if (!empty($item->section_id))
+                                -{{ $item->Section->name }}
+                                @endif
+                            </li>
+                            @empty
+                            <li class='font-semibold text-center text-rose-500'>Division not found!! </li>
+                            @endforelse
+                        </ul>
+                    </div>
+                </div>
+                <x-label-error :messages="$errors->get('workgroup_name')" />
+            </div>
+            <div class="w-full max-w-md xl:max-w-xl form-control">
                 <x-label-no-req :value="__('report_to')" />
                 <div class="dropdown dropdown-end">
                     <x-input wire:click='clickReportTo' wire:model.live='report_toName' placeholder="{{ __('report_to') }}" :error="$errors->get('report_toName')" class="cursor-pointer" tabindex="0" role="button" />
@@ -103,31 +127,6 @@
                 </div>
                 <x-label-error :messages="$errors->get('report_toName')" />
             </div>
-            <div class="w-full max-w-md xl:max-w-xl form-control">
-                <x-label-req :value="__('Perusahaan terkait')" />
-                <div class="dropdown dropdown-end">
-                    <x-input wire:click='clickWorkgroup' wire:model.live='workgroup_name' wire:keydown.self="changeConditionDivision" placeholder='cari divisi...' :error="$errors->get('workgroup_name')" class="cursor-pointer" tabindex="0" role="button" />
-                    <div tabindex="0" class="z-10 w-full   overflow-y-auto shadow dropdown-content card card-compact bg-base-200 text-primary-content {{ $hiddenWorkgroup }}">
-                        <ul class="h-full px-4 py-4 list-disc list-inside max-h-40 bg-base-200 rounded-box">
-                            @forelse ($Division as $item)
-                            <li wire:click="select_division({{ $item->id }})" class="text-[9px] text-wrap hover:bg-primary subpixel-antialiased text-left cursor-pointer">
-                                {{ $item->DeptByBU->BusinesUnit->Company->name_company }}-{{ $item->DeptByBU->Department->department_name }}
-                                @if (!empty($item->company_id))
-                                -{{ $item->Company->name_company }}
-                                @endif
-                                @if (!empty($item->section_id))
-                                -{{ $item->Section->name }}
-                                @endif
-                            </li>
-                            @empty
-                            <li class='font-semibold text-center text-rose-500'>Division not found!! </li>
-                            @endforelse
-                        </ul>
-                    </div>
-                </div>
-                <x-label-error :messages="$errors->get('workgroup_name')" />
-            </div>
-
             <div class="w-full max-w-md xl:max-w-xl form-control">
                 <x-label-req :value="__('date of event')" />
                 <x-input-date id="tanggal" wire:model.live='date' readonly :error="$errors->get('date')" />
@@ -184,7 +183,7 @@
         <div class="grid grid-rows-3 mt-2 border divide-y-2 md:grid-rows-1 md:grid-cols-3 md:content-center md:gap-4 md:divide-y-0 md:divide-x-2 divide-base-200 border-base-200 rounded-box">
             <div class='px-4 '>
                 <fieldset class="w-full max-w-md xl:max-w-xl ">
-                    <x-label-req :value="__('immediate corrective action')" />
+                    <x-label-req :value="__('key word')" />
                     <input id="draft" class="peer/draft radio radio-xs radio-primary" type="radio" name="status" />
                     <label for="draft" class="text-xs font-semibold peer-checked/draft:text-primary">KTA</label>
                     <input id="published" class="peer/published radio radio-accent radio-xs" type="radio" name="status" />
