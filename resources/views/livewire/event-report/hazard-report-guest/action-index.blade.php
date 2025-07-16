@@ -12,11 +12,6 @@
                 <div class="space-x-4 text-gray-500">
                     <span class="font-mono text-[10px] font-semibold">Action No.</span>
                     <span class="text-[10px] font-semibold">{{ $DocHazPelapor->firstItem() + $no }} </span>
-                    <div class="flex gap-2">
-                            <x-icon-btn-detail wire:click="$dispatch('modalActionHazard',{ hazard: {{ $hazard_id }}, action:{{$index->id}} })" data-tip="Edit" class="{{($current_step ==='Closed' || $current_step ==='Cancelled') ? 'btn-disabled' :'' }}"/>
-                            <x-icon-btn-delete  data-tip="delete" wire:click='delete({{$index->id}})'
-                                wire:confirm.prompt="Are you sure delete action {{ $task_being_done }}?\n\nType DELETE to confirm|DELETE" class="{{($current_step ==='Closed' || $current_step ==='Cancelled') ? 'btn-disabled' :'' }}"/>
-                    </div>
                 </div>
             </div>
             <div class="w-full p-4 basis-3/4">
