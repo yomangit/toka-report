@@ -25,7 +25,7 @@
         @csrf
         <div class="grid gap-1 sm:grid-cols-2 lg:grid-cols-3">
             <div class="w-full max-w-md xl:max-w-xl form-control">
-                <x-label-req :value="__('event_type')" />
+                <x-label-req :value="__('tipe bahaya')" />
                 <x-select wire:model.live='event_type_id' :error="$errors->get('event_type_id')">
                     <option value="">Select an option</option>
                     @foreach ($EventType as $event_type)
