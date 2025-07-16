@@ -28,6 +28,7 @@ class Action extends Component
     public function mount($token)
     {
         $this->token = $token;
+
     }
     #[On('modalActionHazardNew')]
     public function modalActionHazardNew()

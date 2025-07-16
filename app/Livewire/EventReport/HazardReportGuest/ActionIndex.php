@@ -2,6 +2,7 @@
 
 namespace App\Livewire\EventReport\HazardReportGuest;
 
+use App\Models\Approval;
 use DateTime;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -24,9 +25,7 @@ class ActionIndex extends Component
     public function render()
     {
         return view('livewire.event-report.hazard-report-guest.action-index', [
-            'DocHazPelapor' => DocHazPelapor::withoutGlobalScope('not-approved')
-                ->where('token', $this->token)
-                ->paginate(20)
+            'DocHazPelapor' => Approval::where('token', $this->token)->paginate(20)
         ]);
     }
 
