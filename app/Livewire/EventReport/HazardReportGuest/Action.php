@@ -114,7 +114,7 @@ class Action extends Component
         if ($this->responsible_role_id == 1) {
             $this->notifyModerators();
         }
-        $this->dispatch('actionHazard_created');
+        $this->dispatch('DocHazPelapor_created');
     }
     protected function sendAlert($message)
     {
