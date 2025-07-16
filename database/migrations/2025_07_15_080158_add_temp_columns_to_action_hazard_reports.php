@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('action_hazards', function (Blueprint $table) {
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->uuid('token')->nullable()->index();
             $table->boolean('is_temporary')->default(false);
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('action_hazards', function (Blueprint $table) {
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->uuid('token')->nullable()->index();
             $table->boolean('is_temporary')->default(false);
         });
     }
