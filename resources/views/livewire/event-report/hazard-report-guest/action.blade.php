@@ -75,6 +75,5 @@
             disableMobile: "true"
             , dateFormat: "d-m-Y "
         , });
-
     </script>
 </div>
