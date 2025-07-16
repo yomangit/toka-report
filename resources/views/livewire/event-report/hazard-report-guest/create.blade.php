@@ -179,7 +179,7 @@
                     <div class="mx-4 my-2">
                         @isset($date)
                         <livewire:event-report.hazard-report-guest.action-index :token="$token" :tgl="$date">
-                        @endisset
+                            @endisset
                     </div>
                 </div>
             </div>
@@ -223,8 +223,8 @@
             <div class='px-4 md:place-self-center'>
                 <fieldset class="w-40 max-w-sm fieldset rounded-box">
                     <x-label-req :value="__('perbaikan tingkat lanjut')" />
-                    <input wire:model.live="tindakkan_selanjutnya" value='1' name="tingkat_lanjut" id="yes_lanjut" class="radio-xs peer/yes_lanjut checked:bg-rose-500 radio" type="radio" />
-                    <label for="yes_lanjut" class="text-xs font-semibold peer-checked/yes_lanjut:text-rose-500">{{ __('Yes') }}</label>
+                    <input wire:click="$dispatch('modalActionHazardNew')" wire:model.live="tindakkan_selanjutnya" value='1' name="tingkat_lanjut" id="yes_lanjut" class="radio-xs peer/yes_lanjut checked:bg-rose-500 radio" type="radio" />
+                    <label wire:click="$dispatch('modalActionHazardNew')" for="yes_lanjut" class="text-xs font-semibold peer-checked/yes_lanjut:text-rose-500">{{ __('Yes') }}</label>
                     <input wire:model.live="tindakkan_selanjutnya" value="0" id="no_lanjut" class="peer/no_lanjut checked:bg-emerald-500 radio-xs radio" type="radio" name="tingkat_lanjut" />
                     <label for="no_lanjut" class="text-xs font-semibold peer-checked/no_lanjut:text-emerald-500">{{ __('No') }}</label>
                 </fieldset>
