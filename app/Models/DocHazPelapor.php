@@ -7,6 +7,7 @@ use Cjmellor\Approval\Concerns\MustBeApproved;
 
 class DocHazPelapor extends Model
 {
+    use MustBeApproved;
     protected $table = 'action_hazards';
     protected $fillable = [
         'hazard_id',

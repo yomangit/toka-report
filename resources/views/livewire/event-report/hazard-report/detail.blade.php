@@ -210,7 +210,7 @@
                         </fieldset>
                     </div>
                     <div class='px-4 md:place-self-center'>
-                        <fieldset class="w-40 max-w-sm  fieldset rounded-box">
+                        <fieldset class="w-40 max-w-sm fieldset rounded-box">
 
                             <x-label-req :value="__('perbaikan tingkat lanjut')" />
 
@@ -378,7 +378,6 @@
                         <div wire:ignore class="w-full form-control">
                             <x-label-no-req :value="__('moderator comment')" />
                             <textarea id="comment">{{ $comment_temp }}</textarea>
-
                         </div>
                         <x-label-error :messages="$errors->get('comment')" />
                     </div>

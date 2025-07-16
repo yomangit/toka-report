@@ -1,8 +1,7 @@
 <div>
     <div class="modal {{ $modal }} " role="dialog">
         <div wire:target="store" wire:loading.class="skeleton" class="modal-box">
-            <div
-                class="py-2 font-extrabold text-transparent divider divider-info bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
+            <div class="py-2 font-extrabold text-transparent divider divider-info bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
                 {{ $divider }}</div>
             <form wire:submit.prevent='store'>
                 @csrf
@@ -25,36 +24,30 @@
                     <x-label-error :messages="$errors->get('action_condition')" />
                 </div>
                 <!-- Name -->
-                    <div class="w-full max-w-xs sm:max-w-sm xl:max-w-xl form-control">
-                        <x-label-no-req  for="name" :value="__('Responsibility')" />
-                        <div class="dropdown dropdown-end">
-                            <x-input-search-with-error wire:click='clickResponsibility' placeholder="search name" wire:model.live='responsibility_name'
-                                :error="$errors->get('responsibility_name')" class="cursor-pointer read-only:bg-gray-200 " tabindex="0"
-                                role="button" />
-                            <div tabindex="0"
-                                class="dropdown-content card card-compact  bg-base-300 text-primary-content z-[1] w-full  p-2 shadow {{ $hiddenResponsibility }}">
-                                <div class="relative">
-                                    <ul class="pt-2 mb-2 overflow-auto scroll-smooth focus:scroll-auto h-28"
-                                        wire:target='responsibility_name' wire:loading.class='hidden'>
-                                        @forelse ($Report_By as $spv_area)
-                                            <div wire:click="reportedBy({{ $spv_area->id }})"
-                                                class="flex flex-col border-b cursor-pointer border-base-200 active:bg-gray-400">
-                                                <strong
-                                                    class="text-[10px] text-slate-800">{{ $spv_area->lookup_name }}</strong>
-                                            </div>
-                                        @empty
-                                            <strong
-                                                class="text-xs text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-rose-800">Name
-                                                Not Found!!!</strong>
-                                        @endforelse
-                                        </ul>
-                                    <div class="hidden pt-5 text-center" wire:target='name'
-                                        wire:loading.class.remove='hidden'> <x-loading-spinner /></div>
+                <div class="w-full max-w-xs sm:max-w-sm xl:max-w-xl form-control">
+                    <x-label-no-req for="name" :value="__('Responsibility')" />
+                    <div class="dropdown dropdown-end">
+                        <x-input-search-with-error wire:click='clickResponsibility' placeholder="search name" wire:model.live='responsibility_name' :error="$errors->get('responsibility_name')" class="cursor-pointer read-only:bg-gray-200 " tabindex="0" role="button" />
+                        <div tabindex="0" class="dropdown-content card card-compact  bg-base-300 text-primary-content z-[1] w-full  p-2 shadow {{ $hiddenResponsibility }}">
+                            <div class="relative">
+                                <ul class="pt-2 mb-2 overflow-auto scroll-smooth focus:scroll-auto h-28" wire:target='responsibility_name' wire:loading.class='hidden'>
+                                    @forelse ($Report_By as $spv_area)
+                                    <div wire:click="reportedBy({{ $spv_area->id }})" class="flex flex-col border-b cursor-pointer border-base-200 active:bg-gray-400">
+                                        <strong class="text-[10px] text-slate-800">{{ $spv_area->lookup_name }}</strong>
+                                    </div>
+                                    @empty
+                                    <strong class="text-xs text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-rose-800">Name
+                                        Not Found!!!</strong>
+                                    @endforelse
+                                </ul>
+                                <div class="hidden pt-5 text-center" wire:target='name' wire:loading.class.remove='hidden'>
+                                    <x-loading-spinner />
                                 </div>
                             </div>
                         </div>
-                        <x-label-error :messages="$errors->get('responsibility_name')" />
                     </div>
+                    <x-label-error :messages="$errors->get('responsibility_name')" />
+                </div>
                 <div class="w-full max-w-xs sm:max-w-sm xl:max-w-xl form-control">
                     <x-label-no-req :value="__('Due Date')" />
                     <x-input-date id="due_date" wire:model.live='due_date' readonly :error="$errors->get('due_date')" />
@@ -72,4 +65,16 @@
             </form>
         </div>
     </div>
+    <script nonce="{{ csp_nonce() }}" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script nonce="{{ csp_nonce() }}">
+        flatpickr("#due_date", {
+            disableMobile: "true"
+            , dateFormat: "d-m-Y "
+        , });
+        flatpickr("#completion_date", {
+            disableMobile: "true"
+            , dateFormat: "d-m-Y "
+        , });
+
+    </script>
 </div>
