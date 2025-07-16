@@ -20,11 +20,10 @@ class Action extends Component
     #[Validate]
     public $hazard_id,$responsible_role_id,$reference, $responsibility, $responsibility_name, $followup_action, $actionee_comment, $action_condition, $due_date, $completion_date;
 
-   protected $listeners = ['modalActionHazardNew' => 'showModal'];
-
-    public function showModal()
+    protected $listeners = ['modalActionHazardNew' => 'modalActionHazardNew'];
+    public function modalActionHazardNew()
     {
-        $this->dispatchBrowserEvent('show-modal-action-hazard');
+        $this->modal = ' modal-open';
     }
     public function clickResponsibility()
     {
