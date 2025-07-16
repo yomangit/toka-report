@@ -404,7 +404,7 @@ class Create extends Component
 
         $hazardReport = HazardReport::create($fields);
         DocHazPelapor::withoutGlobalScope('not-approved')
-            ->where('user_id', Auth::id())
+            ->where('token', Auth::id())
             ->where('is_temporary', true)
             ->update([
                 'hazard_id' => $hazardReport->id,

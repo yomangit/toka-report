@@ -4,6 +4,7 @@ namespace App\Livewire\EventReport\HazardReportGuest;
 
 use App\Models\User;
 use Livewire\Component;
+use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use App\Models\ActionHazard;
 use App\Models\DocHazPelapor;
@@ -96,7 +97,7 @@ class Action extends Component
                 'responsibility'   => $this->responsibility,
                 'due_date'         => $this->due_date,
                 'completion_date'  => $this->completion_date,
-                'user_id', auth()->user()->id(),
+                'token', Str::uuid(),
                 'is_temporary' => true,
             ]
         );
