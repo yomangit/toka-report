@@ -97,7 +97,7 @@ class Action extends Component
                 'responsibility'   => $this->responsibility,
                 'due_date'         => $this->due_date,
                 'completion_date'  => $this->completion_date,
-                'token', Str::uuid(),
+                'token'=> Str::uuid(),
                 'is_temporary' => true,
             ]
         );
