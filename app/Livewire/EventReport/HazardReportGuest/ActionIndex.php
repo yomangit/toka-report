@@ -22,8 +22,7 @@ class ActionIndex extends Component
     public function mount($token,$tgl){
         $this->token =$token;
         $this->tgl = $tgl;
-        $this->user = Approval::where('new_data->token','like','%'. $this->token.'%')->first()->new_data->responsibility;
-        dd($this->user);
+       
     }
     public function render()
     {
