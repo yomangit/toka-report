@@ -17,6 +17,8 @@ class DocHazPelapor extends Model
         'responsibility',
         'due_date',
         'completion_date',
+        'is_temporary',
+        'user_id'
     ];
     public function Hazard()
     {

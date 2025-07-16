@@ -9,13 +9,14 @@ use App\Models\Division;
 use App\Models\Eventsubtype;
 use App\Models\HazardReport;
 use Livewire\WithPagination;
+use App\Models\DocHazPelapor;
 use App\Models\LocationEvent;
 use Livewire\WithFileUploads;
 use App\Models\choseEventType;
 use App\Models\WorkflowDetail;
 use App\Models\TypeEventReport;
-use App\Models\EventUserSecurity;
 use App\Models\Kondisitidakaman;
+use App\Models\EventUserSecurity;
 use App\Models\Tindakantidakaman;
 use App\Notifications\toModerator;
 use Illuminate\Support\Facades\Auth;
@@ -402,7 +403,13 @@ class Create extends Component
         ];
 
         $hazardReport = HazardReport::create($fields);
-
+        DocHazPelapor::withoutGlobalScope('not-approved')
+            ->where('user_id', Auth::id())
+            ->where('is_temporary', true)
+            ->update([
+                'hazard_id' => $hazardReport->id,
+                'is_temporary' => false,
+            ]);
         // Pop-up sukses
         $this->dispatch('alert', [
             'text'            => "Laporan Hazard Anda Sudah Terkirim, Terima kasih sudah melapor!!!",
