@@ -46,7 +46,7 @@
                 <div class="flex-row">
                     <div class="grid grid-cols-3 text-gray-500">
                         <span class="font-mono text-[10px] font-semibold ">{{ __('Orginal Due Date') }}</span>
-                        <span class="font-mono text-[10px] font-semibold "> {{ $orginal_due_date }}</span>
+                        <span class="font-mono text-[10px] font-semibold "> {{ $tgl }}</span>
                     </div>
                 </div>
                 <div class="flex-row">

@@ -15,18 +15,18 @@ class ActionIndex extends Component
 {
     use WithPagination;
     public $search = '';
-    public $hazard_id, $task_being_done, $orginal_due_date, $current_step,$token;
+    public $hazard_id, $task_being_done, $tgl, $current_step,$token;
     protected $listeners = [
         'DocHazPelapor_created' => 'render',
     ];
     public function mount($token,$tgl){
         $this->token =$token;
-        $this->orginal_due_date = $tgl;
+        $this->tgl = $tgl;
     }
     public function render()
     {
         return view('livewire.event-report.hazard-report-guest.action-index', [
-            'DocHazPelapor' => Approval::where('token', $this->token)->paginate(20)
+            'DocHazPelapor' => Approval::where('token','like','%'. $this->token.'%')->paginate(20)
         ]);
     }
 
