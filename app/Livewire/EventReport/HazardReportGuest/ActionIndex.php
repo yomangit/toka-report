@@ -25,7 +25,7 @@ class ActionIndex extends Component
     {
         return view('livewire.event-report.hazard-report-guest.action-index', [
             'DocHazPelapor' => DocHazPelapor::withoutGlobalScope('not-approved')
-                ->where('token', Str::uuid())
+                ->where('token', $this->token)
                 ->whereNull('approved_at')
                 ->paginate(20)
         ]);
