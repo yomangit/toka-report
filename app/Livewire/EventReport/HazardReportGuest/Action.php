@@ -96,7 +96,7 @@ class Action extends Component
                 'responsibility'   => $this->responsibility,
                 'due_date'         => $this->due_date,
                 'completion_date'  => $this->completion_date,
-                'user_id', Auth::id(),
+                'user_id', auth()->id(),
                 'is_temporary' => true,
             ]
         );
