@@ -53,7 +53,7 @@
                     </div>
                     <div class="flex-row">
                         <div class="grid grid-cols-3 text-gray-500">
-                            <span class="font-mono text-[10px] font-semibold ">{{ __('Due Date') }}</span>
+                            <span class="font-mono text-[10px] font-semibold ">Due Date</span>
                             <span class="font-mono text-[10px] col-span-2 font-semibold ">
                                 {{  $data['due_date'] }}</span>
                         </div>

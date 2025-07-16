@@ -22,6 +22,7 @@ use App\Models\Tindakantidakaman;
 use App\Notifications\toModerator;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Cjmellor\Approval\Models\Approval;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
@@ -124,7 +125,7 @@ class Create extends Component
     // data action
     public function mount()
     {
-        $this->token =Str::uuid()->toString();
+        $this->token = Str::uuid()->toString();
         if (Auth::check()) {
             $this->report_byName = Auth::user()->lookup_name ?? Auth::user()->name;
             $this->report_by     = Auth::id();
@@ -405,13 +406,10 @@ class Create extends Component
         ];
 
         $hazardReport = HazardReport::create($fields);
-        DocHazPelapor::withoutGlobalScope('not-approved')
-            ->where('token', Auth::id())
-            ->where('is_temporary', true)
-            ->update([
-                'hazard_id' => $hazardReport->id,
-                'is_temporary' => false,
-            ]);
+        $source = Approval::where('new_data->token', $this->token)->get();
+        foreach ($source as $approval) {
+            $approval->approve();
+        }
         // Pop-up sukses
         $this->dispatch('alert', [
             'text'            => "Laporan Hazard Anda Sudah Terkirim, Terima kasih sudah melapor!!!",
