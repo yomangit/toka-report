@@ -220,10 +220,9 @@
                 <x-label-error :messages="$errors->get('tindakkan_selanjutnya')" />
             </div>
         </div>
-
-        @ifset($date)
+        @isset($date)
         <livewire:event-report.hazard-report-guest.action-index :token="$token" :tgl="$date">
-            @endif
+            @endisset
 
             <div class="modal-action ">
                 <x-btn-save-active wire:target="documentation" wire:loading.class="btn-disabled">{{ __('Submit') }}
