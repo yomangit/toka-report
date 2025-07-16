@@ -65,7 +65,7 @@
             </form>
         </div>
     </div>
-    @push('scripts')
+    {{-- @push('scripts')
     <script>
         document.addEventListener('livewire:load', function() {
             flatpickr("#due_date_guest", {
@@ -81,5 +81,5 @@
         });
 
     </script>
-    @endpush
+    @endpush --}}
 </div>
