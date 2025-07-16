@@ -7,6 +7,7 @@
         </div>
     </div>
     @forelse ($DocHazPelapor as $no => $index)
+    @php $data = json_decode($index->new_data, true); @endphp
      <div class="flex flex-col items-center justify-between p-2 mb-2 border-b-2 sm:flex-row border-base-300">
             <div class="w-full basis-1/5">
                 <div class="space-x-4 text-gray-500">
@@ -21,17 +22,17 @@
                     <div class="grid flex-row grid-cols-4 gap-1 text-gray-500 ">
                         <span class="font-mono text-[10px] font-semibold ">Followup Action</span>
                         <span
-                            class="font-mono text-[10px] text-justify font-semibold col-span-3">{{ $index->new_data['followup_action'] }}</span>
+                            class="font-mono text-[10px] text-justify font-semibold col-span-3">{{ $data['followup_action'] }}</span>
                     </div>
                     <div class="grid flex-row grid-cols-4 gap-1 text-gray-500 ">
                         <span class="font-mono text-[10px] font-semibold ">Actionee Comments</span>
                         <span class="font-mono text-[10px] text-justify font-semibold col-span-3">
-                            {{  $index->new_data['actionee_comment'] }}</span>
+                            {{  $data['actionee_comment'] }}</span>
                     </div>
                     <div class="grid flex-row grid-cols-4 gap-1 text-gray-500 ">
                         <span class="font-mono text-[10px] font-semibold ">Action Conditions</span>
                         <span class="font-mono text-[10px] font-semibold col-span-3">
-                            {{  $index->new_data['action_condition'] }}</span>
+                            {{  $data['action_condition'] }}</span>
                     </div>
                 </div>
             </div>
@@ -47,21 +48,21 @@
                         <div class="grid grid-cols-3 text-gray-500">
                             <span class="font-mono text-[10px] font-semibold ">{{ __('Responsibility') }}</span>
                             <span class="font-mono text-[10px] col-span-2 font-semibold ">
-                                {{ App\Models\User::whereId($index->new_data['responsibility'])->first()->lookup_name }}</span>
+                                {{ App\Models\User::whereId($data['responsibility'])->first()->lookup_name }}</span>
                         </div>
                     </div>
                     <div class="flex-row">
                         <div class="grid grid-cols-3 text-gray-500">
                             <span class="font-mono text-[10px] font-semibold ">{{ __('Due Date') }}</span>
                             <span class="font-mono text-[10px] col-span-2 font-semibold ">
-                                {{  $index->new_data['due_date'] }}</span>
+                                {{  $data['due_date'] }}</span>
                         </div>
                     </div>
                     <div class="flex-row">
                         <div class="grid grid-cols-3 text-gray-500">
                             <span class="font-mono text-[10px] font-semibold ">{{ __('Completion Date') }}</span>
                             <span class="font-mono text-[10px] col-span-2 font-semibold ">
-                                {{  $index->new_data['completion_date'] }}</span>
+                                {{  $data['completion_date'] }}</span>
                         </div>
                     </div>
                 </div>
