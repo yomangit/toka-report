@@ -1,9 +1,7 @@
 <div>
-    <h2 class="text-xl font-bold">Kelola Akses Divisi</h2>
     <x-notification />
-    <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
-    <div class="p-4">
-
+    <div class="">
+        <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
     </div>
     {{-- Tabel User & Akses --}}
     <div class="overflow-x-auto">
