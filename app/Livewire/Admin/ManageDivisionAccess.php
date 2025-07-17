@@ -16,13 +16,35 @@ class ManageDivisionAccess extends Component
     public $showModal = false;
     public $showForm = false;
     public $editMode = false;
+    public $searchUserQuery = '';
+    public $searchResults = [];
+    public $showUserDropdown = false;
+
     public function openCreateModal()
     {
         $this->resetForm();
         $this->showModal = true;
         $this->editMode = false;
-         $this->dispatch('initTomSelect');
+        $this->dispatch('initTomSelect');
     }
+
+    public function updatedSearchUserQuery()
+    {
+        $this->showUserDropdown = true;
+        $this->searchResults = User::where('name', 'like', '%' . $this->searchUserQuery . '%')
+            ->limit(10)
+            ->get();
+    }
+
+    public function selectUserFromDropdown($userId)
+    {
+        $user = User::find($userId);
+
+        $this->selectedUserId = $user->id;
+        $this->searchUserQuery = $user->name;
+        $this->showUserDropdown = false;
+    }
+
     public function openEditModal($userId)
     {
         $user = User::with('divisions')->findOrFail($userId);
@@ -31,7 +53,7 @@ class ManageDivisionAccess extends Component
         $this->selectedDivisionIds = $user->divisions->pluck('id')->toArray();
         $this->showModal = true;
         $this->editMode = true;
-         $this->dispatch('initTomSelect');
+        $this->dispatch('initTomSelect');
     }
     public function getModalTitleProperty()
     {
@@ -78,7 +100,7 @@ class ManageDivisionAccess extends Component
 
     public function resetForm()
     {
-        $this->reset(['showModal', 'editMode', 'selectedUserId', 'selectedDivisionIds']);
+       $this->reset(['showModal', 'editMode', 'selectedUserId', 'selectedDivisionIds', 'searchUserQuery', 'searchResults', 'showUserDropdown']);
     }
     public function render()
     {
@@ -88,7 +110,7 @@ class ManageDivisionAccess extends Component
             'divisions' => Division::all()
         ])->extends('base.index', ['header' => 'Akeses Divisi', 'title' => 'Akeses Divisi'])->section('content');
     }
-      public function paginationView()
+    public function paginationView()
     {
         return 'pagination.masterpaginate';
     }

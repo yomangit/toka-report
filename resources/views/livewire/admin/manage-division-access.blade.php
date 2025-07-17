@@ -2,15 +2,26 @@
     <h2 class="text-xl font-bold">Kelola Akses Divisi</h2>
     <x-notification />
     <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
-    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
     <div class="p-4">
-        <x-select id="select-beast" class="tom-select" :error="$errors->get('selectedUserId')" placeholder="Select a person..." autocomplete="off">
-            <option value="">-- Pilih User --</option>
-            @foreach ($user_select as $user)
-            <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
-            @endforeach
-        </x-select>
+        <div class="relative w-full" wire:click.away="$set('showUserDropdown', false)">
+            <input type="text" wire:model="searchUserQuery" class="w-full input input-bordered input-sm" placeholder="Cari nama user...">
+
+            @if ($showUserDropdown && strlen($searchUserQuery) > 1)
+            <ul class="absolute z-10 w-full mt-1 overflow-auto text-sm bg-white border border-gray-300 rounded shadow max-h-60">
+                @forelse ($searchResults as $user)
+                <li wire:click="selectUserFromDropdown({{ $user->id }})" class="px-3 py-2 cursor-pointer hover:bg-sky-100">
+                    {{ $user->lookup_name }}
+                </li>
+                @empty
+                <li class="px-3 py-2 text-gray-400">Tidak ditemukan</li>
+                @endforelse
+            </ul>
+            @endif
+
+            @if ($selectedUserId)
+            <p class="mt-1 text-xs text-gray-500">User terpilih: {{ \App\Models\User::find($selectedUserId)?->name }}</p>
+            @endif
+        </div>
     </div>
     {{-- Tabel User & Akses --}}
     <div class="overflow-x-auto">
