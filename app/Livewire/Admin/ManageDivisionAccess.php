@@ -9,7 +9,6 @@ use Livewire\WithPagination;
 class ManageDivisionAccess extends Component
 {
     use WithPagination;
-    public $users;
     public $editUserId;
     public $editCanView = false;
 
@@ -32,7 +31,7 @@ class ManageDivisionAccess extends Component
     public function render()
     {
         return view('livewire.admin.manage-division-access',[
-           'users' =>User::paginate(20)
+           'users' => User::paginate(20)
         ])->extends('base.index', ['header' => 'Akeses Divisi', 'title' => 'Akeses Divisi'])->section('content');
     }
      public function paginationView()
