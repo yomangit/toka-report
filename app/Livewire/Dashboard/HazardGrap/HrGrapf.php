@@ -18,7 +18,7 @@ public function mount()
         ->groupBy('division_id')
         ->get();
 
-    $this->divisionLabels = $reports->map(fn($r) => optional($r->division)->name ?? 'Unknown')->toArray();
+    $this->divisionLabels = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
     $this->divisionCounts = $reports->pluck('total')->toArray();
 }
     public function render()
