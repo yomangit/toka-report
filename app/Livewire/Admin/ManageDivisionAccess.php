@@ -9,7 +9,6 @@ use Livewire\WithPagination;
 
 class ManageDivisionAccess extends Component
 {
-
     public $search_nama;
     public $selectedUserId;
     public $selectedDivisionIds = [];
