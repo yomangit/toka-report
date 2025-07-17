@@ -1,5 +1,4 @@
 import TomSelect from 'tom-select';
-window.TomSelect = TomSelect;
 // fungsi reusable untuk inisialisasi
 function initTomSelects() {
     document.querySelectorAll('select.tom-select').forEach((el) => {
