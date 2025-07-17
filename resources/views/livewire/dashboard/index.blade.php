@@ -74,7 +74,7 @@
         <div class="my-2 bg-slate-300 lg:my-0" id="lagging_and_leading_indicator_status"></div>
     </div>
 </div>
-{{-- 
+
 
 <script nonce="{{ $csp_nonce }}">
     var data_table = JSON.parse('<?php echo $key_state; ?>');
@@ -102,7 +102,7 @@
             `;
         tableBody.innerHTML += row;
     }
-</script> --}}
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         renderHazardTable(@json($key_state));
