@@ -27,8 +27,8 @@
                         @endforeach
                     </td>
                     <td class="p-2 space-x-2">
-                        <button wire:click="openEditModal({{ $user->id }})" class="text-blue-600">Edit</button>
-                        <button wire:click="delete({{ $user->id }})" class="text-red-600" onclick="return confirm('Hapus semua akses divisi user ini?')">Hapus</button>
+                        <x-icon-btn-edit data-tip="Edit" wire:click="openEditModal({{ $user->id }})" class="text-blue-600"/>
+                       <x-icon-btn-delete data-tip="Hapus" wire:click="delete({{ $user->id }})" class="text-red-600" onclick="return confirm('Hapus semua akses divisi user ini?')"/>
                     </td>
                 </tr>
                 @endforeach
