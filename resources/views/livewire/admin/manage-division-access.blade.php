@@ -41,12 +41,13 @@
         <div class="space-y-4">
             <div>
                 <label for="user" class="block font-semibold">Pilih User:</label>
-                <select id="user-select" wire:model.live='selectedUserId' :error="$errors->get('selectedUserId')">
+                <x-select wire:model="selectedUserId">
                     <option value="">-- Pilih User --</option>
-                    @foreach($user_select as $user)
+                    @foreach ($users as $user)
                     <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
                     @endforeach
-                </select>
+                </x-select>
+
             </div>
             <div>
                 <label class="block font-semibold">Pilih Divisi:</label>

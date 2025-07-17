@@ -1,9 +1,27 @@
 import TomSelect from 'tom-select';
+window.TomSelect = TomSelect;
+// fungsi reusable untuk inisialisasi
+function initTomSelects() {
+    document.querySelectorAll('select.tom-select').forEach((el) => {
+        if (!el.tomSelect) {
+            el.tomSelect = new TomSelect(el, {
+                create: false,
+                allowEmptyOption: true,
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                }
+            });
+        }
+    });
+}
 
-new TomSelect("#user-select",{
-	create: true,
-	sortField: {
-		field: "text",
-		direction: "asc"
-	}
+// Auto init setelah semua update Livewire
+Livewire.hook('message.processed', (message, component) => {
+    initTomSelects();
+});
+
+// Manual trigger pakai dispatch('initTomSelect')
+Livewire.on('initTomSelect', () => {
+    initTomSelects();
 });

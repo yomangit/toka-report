@@ -21,6 +21,7 @@ class ManageDivisionAccess extends Component
         $this->resetForm();
         $this->showModal = true;
         $this->editMode = false;
+         $this->dispatch('initTomSelect');
     }
     public function openEditModal($userId)
     {
@@ -30,6 +31,7 @@ class ManageDivisionAccess extends Component
         $this->selectedDivisionIds = $user->divisions->pluck('id')->toArray();
         $this->showModal = true;
         $this->editMode = true;
+         $this->dispatch('initTomSelect');
     }
     public function getModalTitleProperty()
     {
