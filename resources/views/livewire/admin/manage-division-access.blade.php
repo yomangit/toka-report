@@ -35,7 +35,7 @@
                 </tbody>
             </table>
         </div>
-        <div>{{ $users->links() }}</div>
+        <div class="mt-4">{{ $users->links() }}</div>
         
     </div>
     <x-modal wire:model="showModal">
