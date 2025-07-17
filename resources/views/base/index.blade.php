@@ -64,8 +64,8 @@
         </div>
     </main>
 
-    @livewire('wire-elements-modal')
     @stack('skripts')
+    @livewire('wire-elements-modal')
 </body>
 
 </html>
