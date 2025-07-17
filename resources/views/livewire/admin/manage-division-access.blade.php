@@ -2,8 +2,8 @@
     <h2 class="text-xl font-bold">Kelola Akses Divisi</h2>
     <x-notification />
     <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
-    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
+    {{-- <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script> --}}
     <div class="p-4">
         <x-select id="select-beast" :error="$errors->get('selectedUserId')" placeholder="Select a person..." autocomplete="off">
             <option value="">-- Pilih User --</option>
