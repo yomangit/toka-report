@@ -66,6 +66,7 @@ class ManageDivisionAccess extends Component
             'divisions' => Division::all()
         ])->extends('base.index', ['header' => 'Akeses Divisi', 'title' => 'Akeses Divisi'])->section('content');
     }
+    
     public function paginationView()
     {
         return 'pagination.masterpaginate';
