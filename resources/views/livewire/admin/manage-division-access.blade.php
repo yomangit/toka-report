@@ -1,4 +1,4 @@
-<div class="space-y-4">
+<div>
     <h2 class="text-xl font-bold">Kelola Akses Divisi</h2>
     @if (session()->has('success'))
     <div class="text-green-600">{{ session('success') }}</div>
