@@ -37,36 +37,36 @@
         </div>
         <div>{{ $users->links() }}</div>
         
-        <x-modal wire:model="showModal">
-            <x-slot name="title">
-                {{ $this->modalTitle }}
-            </x-slot>
-            <div class="space-y-4">
-                <div>
-                    <label for="user" class="block font-semibold">Pilih User:</label>
-                    <x-select data-tom id="user-select" wire:model.live='selectedUserId' :error="$errors->get('selectedUserId')">
-                        <option value="">-- Pilih User --</option>
-                        @foreach($user_select as $user)
-                        <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
-                        @endforeach
-                    </x-select>
-                </div>
-                <div>
-                    <label class="block font-semibold">Pilih Divisi:</label>
-                    <div class="p-2 overflow-y-auto border rounded max-h-48">
-                        @foreach($divisions as $division)
-                        <label class="block">
-                            <input type="checkbox" wire:model="selectedDivisionIds" class="checkbox checkbox-xs" value="{{ $division->id }}">
-                            {{ $division->formatWorkgroupName() }}
-                        </label>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-            <x-slot name="footer">
-                <button wire:click="resetForm" class="px-4 py-2 bg-gray-300 rounded">Batal</button>
-                <button wire:click="store" class="px-4 py-2 text-white bg-blue-600 rounded">Simpan</button>
-            </x-slot>
-        </x-modal>
     </div>
 </div>
+<x-modal wire:model="showModal">
+    <x-slot name="title">
+        {{ $this->modalTitle }}
+    </x-slot>
+    <div class="space-y-4">
+        <div>
+            <label for="user" class="block font-semibold">Pilih User:</label>
+            <x-select data-tom id="user-select" wire:model.live='selectedUserId' :error="$errors->get('selectedUserId')">
+                <option value="">-- Pilih User --</option>
+                @foreach($user_select as $user)
+                <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
+                @endforeach
+            </x-select>
+        </div>
+        <div>
+            <label class="block font-semibold">Pilih Divisi:</label>
+            <div class="p-2 overflow-y-auto border rounded max-h-48">
+                @foreach($divisions as $division)
+                <label class="block">
+                    <input type="checkbox" wire:model="selectedDivisionIds" class="checkbox checkbox-xs" value="{{ $division->id }}">
+                    {{ $division->formatWorkgroupName() }}
+                </label>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    <x-slot name="footer">
+        <button wire:click="resetForm" class="px-4 py-2 bg-gray-300 rounded">Batal</button>
+        <button wire:click="store" class="px-4 py-2 text-white bg-blue-600 rounded">Simpan</button>
+    </x-slot>
+</x-modal>
