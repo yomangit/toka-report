@@ -1,25 +1,24 @@
-
 import TomSelect from 'tom-select';
 
-// Inisialisasi semua <select data-tom>
-function initTomSelects() {
-    document.querySelectorAll('select[data-tom]').forEach((el) => {
-        if (!el.tomselect) {
-            new TomSelect(el, {
-                create: false,
-                allowEmptyOption: true,
-                placeholder: el.getAttribute('placeholder') || "Pilih opsi...",
-            });
-        }
-    });
+function initTomSelect() {
+    const selectEl = document.getElementById('user-select');
+    if (selectEl && !selectEl.tomselect) {
+        new TomSelect(selectEl, {
+            create: true,
+            sortField: {
+                field: "text",
+                direction: "asc"
+            }
+        });
+    }
 }
 
-// Pertama kali halaman dimuat
+// Inisialisasi saat pertama kali load
 document.addEventListener('livewire:load', () => {
-    initTomSelects();
+    initTomSelect();
 });
 
-// Saat Livewire update DOM (misal: buka modal, submit, dsb)
+// Re-init setelah Livewire DOM update (misalnya habis submit, buka modal, dsb)
 Livewire.hook('message.processed', () => {
-    initTomSelects();
+    initTomSelect();
 });

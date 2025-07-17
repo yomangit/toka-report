@@ -18,7 +18,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-C7VkCzzi.js",
+    "file": "assets/app-BRN2J07W.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -26,7 +26,7 @@
       "_apexcharts.common-DdDBkiWh.js"
     ],
     "css": [
-      "assets/app-C0hZoNCO.css"
+      "assets/app-puXvd4I0.css"
     ]
   }
 }
