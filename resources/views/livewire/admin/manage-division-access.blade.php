@@ -70,7 +70,7 @@
 
         <x-slot name="footer">
             <button wire:click="resetForm" class="px-4 py-2 bg-gray-300 rounded">Batal</button>
-            <button wire:click="save" class="px-4 py-2 text-white bg-blue-600 rounded">Simpan</button>
+            <button wire:click="store" class="px-4 py-2 text-white bg-blue-600 rounded">Simpan</button>
         </x-slot>
     </x-modal>
 </div>
