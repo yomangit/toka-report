@@ -7,6 +7,7 @@ import "flatpickr/dist/flatpickr.min.css";
 import monthSelectPlugin from "flatpickr/dist/plugins/monthSelect";
 import "flatpickr/dist/themes/dark.css";
 import "flatpickr/dist/plugins/monthSelect/style.css";
+import './tom-search';
 import {
     renderDivisionChart
 } from './charts/divisionChart';
