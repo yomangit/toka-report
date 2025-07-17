@@ -5,11 +5,10 @@
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
     <div class="p-4"><select id="select-beast" placeholder="Select a person..." autocomplete="off">
-            <option value="">Select a person...</option>
-            <option value="4">Thomas Edison</option>
-            <option value="1">Nikola</option>
-            <option value="3">Nikola Tesla</option>
-            <option value="5">Arnold Schwarzenegger</option>
+            <option value="">-- Pilih User --</option>
+            @foreach ($users as $user)
+            <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
+            @endforeach
         </select></div>
     {{-- Tabel User & Akses --}}
     <div class="overflow-x-auto">
@@ -56,7 +55,7 @@
                     <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
                     @endforeach
                 </x-select>
-             
+
             </div>
             <div>
                 <label class="block font-semibold">Pilih Divisi:</label>
