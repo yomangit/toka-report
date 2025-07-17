@@ -46,7 +46,7 @@
                     <label for="user" class="block font-semibold">Pilih User:</label>
                     <x-select data-tom wire:model.live='selectedUserId' :error="$errors->get('selectedUserId')">
                         <option value="">-- Pilih User --</option>
-                        @foreach($users as $user)
+                        @foreach($user_select as $user)
                         <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
                         @endforeach
                     </x-select>
