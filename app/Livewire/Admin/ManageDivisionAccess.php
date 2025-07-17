@@ -41,18 +41,37 @@ class ManageDivisionAccess extends Component
             'selectedUserId' => 'required|exists:users,id',
             'selectedDivisionIds' => 'array',
         ]);
-
         $user = User::findOrFail($this->selectedUserId);
         $user->divisions()->sync($this->selectedDivisionIds);
-        session()->flash('success', 'Akses divisi berhasil disimpan.');
+        $this->sendAlert($this->selectedUserId ? 'Data has been updated' : 'Data added Successfully!!');
         $this->resetForm();
     }
-
+    protected function sendAlert($message)
+    {
+        $this->dispatch('alert', [
+            'text'            => $message,
+            'duration'        => 3000,
+            'destination'     => '/contact',
+            'newWindow'       => true,
+            'close'           => true,
+            'backgroundColor' => 'linear-gradient(to right, #00b09b, #96c93d)',
+        ]);
+    }
     public function delete($userId)
     {
         $user = User::findOrFail($userId);
         $user->divisions()->detach();
-        session()->flash('success', 'Akses divisi dihapus.');
+        $this->dispatch(
+            'alert',
+            [
+                'text' => "Deleted Data Successfully!!",
+                'duration' => 3000,
+                'destination' => '/contact',
+                'newWindow' => true,
+                'close' => true,
+                'backgroundColor' => "linear-gradient(to right, #f97316, #ef4444)",
+            ]
+        );
     }
 
     public function resetForm()
@@ -66,7 +85,7 @@ class ManageDivisionAccess extends Component
             'divisions' => Division::all()
         ])->extends('base.index', ['header' => 'Akeses Divisi', 'title' => 'Akeses Divisi'])->section('content');
     }
-    
+
     public function paginationView()
     {
         return 'pagination.masterpaginate';

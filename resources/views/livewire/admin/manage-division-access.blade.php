@@ -1,9 +1,7 @@
 <div>
     <div>
         <h2 class="text-xl font-bold">Kelola Akses Divisi</h2>
-        @if (session()->has('success'))
-        <div class="text-green-600">{{ session('success') }}</div>
-        @endif
+        <x-notification />
         <button wire:click="openCreateModal" class="px-4 py-2 text-white bg-green-600 rounded">
             Tambah Akses Divisi
         </button>
@@ -38,6 +36,7 @@
             </table>
         </div>
         <div>{{ $users->links() }}</div>
+        
         <x-modal wire:model="showModal">
             <x-slot name="title">
                 {{ $this->modalTitle }}
