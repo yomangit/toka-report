@@ -1,43 +1,39 @@
 <div>
-    <div>
-        <h2 class="text-xl font-bold">Kelola Akses Divisi</h2>
-        <x-notification />
-        <button wire:click="openCreateModal" class="px-4 py-2 text-white bg-green-600 rounded">
-            Tambah Akses Divisi
-        </button>
-        {{-- Tabel User & Akses --}}
-        <div class="overflow-x-auto">
-            <table class="table table-xs">
-                <thead>
-                    <tr>
-                        <th>User</th>
-                        <th>Divisi</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($users as $user)
-                    <tr class="border-t">
-                        <td>{{ $user->lookup_name }}</td>
-                        <td>
-                            @foreach($user->divisions as $div)
-                            <span class="inline-block px-2 py-1 mr-1 text-sm text-blue-800 bg-blue-100 rounded">
-                                {{ $div->formatWorkgroupName() }}
-                            </span>
-                            @endforeach
-                        </td>
-                        <td class="p-2 space-x-2">
-                            <button wire:click="openEditModal({{ $user->id }})" class="text-blue-600">Edit</button>
-                            <button wire:click="delete({{ $user->id }})" class="text-red-600" onclick="return confirm('Hapus semua akses divisi user ini?')">Hapus</button>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        <div class="mt-4">{{ $users->links() }}</div>
-        
+    <h2 class="text-xl font-bold">Kelola Akses Divisi</h2>
+    <x-notification />
+    <x-btn-add wire:click="openCreateModal" class="px-4 py-2 text-white bg-green-600 rounded" />
+    {{-- Tabel User & Akses --}}
+    <div class="overflow-x-auto">
+        <table class="table table-xs">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Divisi</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($users as $user)
+                <tr class="border-t">
+                    <td>{{ $user->lookup_name }}</td>
+                    <td>
+                        @foreach($user->divisions as $div)
+                        <span class="inline-block px-2 py-1 mr-1 text-sm text-blue-800 bg-blue-100 rounded">
+                            {{ $div->formatWorkgroupName() }}
+                        </span>
+                        @endforeach
+                    </td>
+                    <td class="p-2 space-x-2">
+                        <button wire:click="openEditModal({{ $user->id }})" class="text-blue-600">Edit</button>
+                        <button wire:click="delete({{ $user->id }})" class="text-red-600" onclick="return confirm('Hapus semua akses divisi user ini?')">Hapus</button>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
+    <div class="mt-4">{{ $users->links() }}</div>
+
     <x-modal wire:model="showModal">
         <x-slot name="title">
             {{ $this->modalTitle }}

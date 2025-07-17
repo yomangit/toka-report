@@ -9,6 +9,7 @@ use Livewire\WithPagination;
 
 class ManageDivisionAccess extends Component
 {
+    use WithPagination;
     public $search_nama;
     public $selectedUserId;
     public $selectedDivisionIds = [];
@@ -85,8 +86,7 @@ class ManageDivisionAccess extends Component
             'divisions' => Division::all()
         ])->extends('base.index', ['header' => 'Akeses Divisi', 'title' => 'Akeses Divisi'])->section('content');
     }
-
-    public function paginationView()
+      public function paginationView()
     {
         return 'pagination.masterpaginate';
     }
