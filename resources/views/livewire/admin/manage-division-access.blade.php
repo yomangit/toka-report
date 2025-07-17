@@ -50,7 +50,7 @@
                 <select wire:model="selectedUserId" class="w-full border rounded">
                     <option value="">-- Pilih User --</option>
                     @foreach($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -61,7 +61,7 @@
                     @foreach($divisions as $division)
                     <label class="block">
                         <input type="checkbox" wire:model="selectedDivisionIds" value="{{ $division->id }}">
-                        {{ $division->name }}
+                        {{ $division->formatWorkgroupName() }}
                     </label>
                     @endforeach
                 </div>
