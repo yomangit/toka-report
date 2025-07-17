@@ -4,7 +4,7 @@ namespace App\Livewire\EventReport\HazardReport;
 use DateTime;
 use App\Models\User;
 use Livewire\Component;
-use App\Models\Approval;
+use Cjmellor\Approval\Models\Approval;
 use App\Models\Division;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
