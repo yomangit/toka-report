@@ -44,19 +44,15 @@ class ManageDivisionAccess extends Component
 
         $user = User::findOrFail($this->selectedUserId);
         $user->divisions()->sync($this->selectedDivisionIds);
-
         session()->flash('success', 'Akses divisi berhasil disimpan.');
         $this->resetForm();
-        $this->mount(); // refresh data
     }
 
     public function delete($userId)
     {
         $user = User::findOrFail($userId);
         $user->divisions()->detach();
-
         session()->flash('success', 'Akses divisi dihapus.');
-        $this->mount(); // refresh data
     }
 
     public function resetForm()
