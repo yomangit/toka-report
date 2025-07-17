@@ -45,7 +45,7 @@
         <div class="space-y-4">
             <div>
                 <label for="user" class="block font-semibold">Pilih User:</label>
-                <x-select wire:model="selectedUserId" :error="$errors->get('selectedUserId')">
+                <x-select wire:model="selectedUserId" id="select-beast" :error="$errors->get('selectedUserId')">
                     <option value="">-- Pilih User --</option>
                     @foreach ($users as $user)
                     <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
