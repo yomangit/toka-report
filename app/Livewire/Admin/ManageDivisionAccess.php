@@ -13,14 +13,7 @@ class ManageDivisionAccess extends Component
     public $editUserId;
     public $editCanView = false;
 
-    public function mount()
-    {
-        $this->loadUsers();
-    }
-    public function loadUsers()
-    {
-        $this->users = User::paginate(20);
-    }
+   
     public function edit($userId)
     {
         $user = User::findOrFail($userId);
@@ -38,6 +31,8 @@ class ManageDivisionAccess extends Component
     }
     public function render()
     {
-        return view('livewire.admin.manage-division-access')->extends('base.index', ['header' => 'Akeses Divisi', 'title' => 'Akeses Divisi'])->section('content');
+        return view('livewire.admin.manage-division-access',[
+           'users' =>User::paginate(20)
+        ])->extends('base.index', ['header' => 'Akeses Divisi', 'title' => 'Akeses Divisi'])->section('content');
     }
 }
