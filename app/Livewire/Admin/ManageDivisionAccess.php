@@ -31,7 +31,7 @@ class ManageDivisionAccess extends Component
     public function updatedSearchUserQuery()
     {
         $this->showUserDropdown = true;
-        $this->searchResults = User::where('name', 'like', '%' . $this->searchUserQuery . '%')
+        $this->searchResults = User::where('lookup_name', 'like', '%' . $this->searchUserQuery . '%')
             ->limit(10)
             ->get();
     }
@@ -41,7 +41,7 @@ class ManageDivisionAccess extends Component
         $user = User::find($userId);
 
         $this->selectedUserId = $user->id;
-        $this->searchUserQuery = $user->name;
+        $this->searchUserQuery = $user->lookup_name;
         $this->showUserDropdown = false;
     }
 
