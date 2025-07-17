@@ -19,7 +19,7 @@
             @endif
 
             @if ($selectedUserId)
-            <p class="mt-1 text-xs text-gray-500">User terpilih: {{ \App\Models\User::find($selectedUserId)?->lookup_name }}</p>
+            <p class="mt-1 text-xs text-gray-500">User terpilih: {{ \App\Models\User::find($selectedUserId)?->name }}</p>
             @endif
         </div>
     </div>
