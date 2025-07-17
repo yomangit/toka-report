@@ -15,10 +15,19 @@ class HrGrapf extends Component
 
     public function mount()
     {
-        $reports = HazardReport::select('division_id', DB::raw('count(*) as total'))
+        $user = auth()->user();
+        
+        $query = HazardReport::select('division_id', DB::raw('count(*) as total'))
             ->with('division')
-            ->groupBy('division_id')
-            ->get();
+            ->groupBy('division_id');
+
+        if ($user->role_user_permit_id == 1) {
+            $reports = $query->get(); // admin bisa lihat semua
+        } elseif ($user->canViewOwnDivision()) {
+            $reports = $query->where('division_id', $user->division_id)->get();
+        } else {
+            $reports = collect(); // user biasa yang tidak diizinkan => kosong
+        }
 
         $this->divisionLabels = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
         $this->divisionCounts = $reports->pluck('total')->toArray();

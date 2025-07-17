@@ -36,6 +36,6 @@ class ManageDivisionAccess extends Component
     }
     public function render()
     {
-        return view('livewire.admin.manage-division-access');
+        return view('livewire.admin.manage-division-access')->extends('base.index', ['header' => 'Akeses Divisi', 'title' => 'Akeses Divisi'])->section('content');
     }
 }
