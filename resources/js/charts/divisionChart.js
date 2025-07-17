@@ -1,12 +1,14 @@
 import ApexCharts from 'apexcharts';
 
+let divisionChartInstance = null;
+
 export function renderDivisionChart() {
     const el = document.querySelector('#divisionChart');
     if (!el) return;
 
     const labels = JSON.parse(el.dataset.labels || "[]");
     const counts = JSON.parse(el.dataset.counts || "[]");
-    const color = JSON.parse(el.dataset.colors || "[]");
+    const colors = JSON.parse(el.dataset.colors || "[]");
 
     const options = {
         chart: {
@@ -20,10 +22,10 @@ export function renderDivisionChart() {
         xaxis: {
             categories: labels
         },
-        colors: color,
+        colors: colors,
         plotOptions: {
             bar: {
-                distributed: true, // ✅ INI BAGIAN PENTINGNYA
+                distributed: true,
                 borderRadius: 4,
                 horizontal: false
             }
@@ -34,6 +36,25 @@ export function renderDivisionChart() {
         }
     };
 
-    const chart = new ApexCharts(el, options);
-    chart.render();
+    divisionChartInstance = new ApexCharts(el, options);
+    divisionChartInstance.render();
 }
+
+// ✅ Listen event Livewire → update chart
+document.addEventListener('update-division-chart', (e) => {
+    if (!divisionChartInstance) return;
+
+    const { labels, counts, colors } = e.detail;
+
+    divisionChartInstance.updateOptions({
+        xaxis: {
+            categories: labels
+        },
+        colors: colors
+    });
+
+    divisionChartInstance.updateSeries([{
+        name: 'Jumlah Laporan',
+        data: counts
+    }]);
+});

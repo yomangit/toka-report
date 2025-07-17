@@ -470,6 +470,7 @@ class Create extends Component
         }
 
         $this->clearFields();
+        $this->dispatch('refreshChartHazard');
         // $this->redirectRoute('hazardReportCreate', ['workflow_template_id' => $this->workflow_template_id]);
 
     }

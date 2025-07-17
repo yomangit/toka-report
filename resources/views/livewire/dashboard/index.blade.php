@@ -108,7 +108,6 @@
 </script>
 <script type="text/javascript" nonce="{{ csp_nonce() }}">
     const chartData = JSON.parse('<?php echo $Incident; ?>');
-
     var all_injury_vs_ltifr = {
         series: [{
             name: 'LTI',
