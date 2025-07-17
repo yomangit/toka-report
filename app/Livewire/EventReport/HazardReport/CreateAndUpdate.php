@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Livewire\EventReport\HazardReport;
 
 use DateTime;
@@ -307,11 +308,11 @@ class CreateAndUpdate extends Component
     }
     public function render()
     {
-          $this->realTimeFunc();
+        $this->realTimeFunc();
         $this->ReportByAndReportTo();
 
         return view('livewire.event-report.hazard-report.create-and-update', [
-             'Report_By'  => User::searchNama(trim($this->report_byName))->paginate(100, ['*'], 'Report_By'),
+            'Report_By'  => User::searchNama(trim($this->report_byName))->paginate(100, ['*'], 'Report_By'),
             'Report_To'  => EventUserSecurity::searchName(trim($this->workgroup_name))->where('responsible_role_id', 2)->paginate(100, ['*'], 'Report_To'),
             'Division'   => $this->divisi_search,
             'EventType'  => $this->Event_type,
@@ -320,7 +321,7 @@ class CreateAndUpdate extends Component
             'Location'   => LocationEvent::all(),
         ])->extends('base.index', ['header' => 'Hazard Report', 'title' => 'Hazard Report'])->section('content');
     }
- public function store()
+    public function store()
     {
         // Format tanggal untuk referensi
         $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $this->date);
@@ -414,9 +415,8 @@ class CreateAndUpdate extends Component
                 $approval->save();              // simpan ke database
                 $approval->approve();
             }
-        }
-        else{
-            Approval::whereIn('new_data->token',$this->token)->delete();
+        } else {
+            Approval::whereIn('new_data->token', $this->token)->delete();
         }
         // Pop-up sukses
         $this->dispatch('alert', [
@@ -463,7 +463,7 @@ class CreateAndUpdate extends Component
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
             ]));
         }
-
+        $this->dispatch('refreshChartHazard');
         $this->clearFields();
         // $this->redirectRoute('hazardReportCreate', ['workflow_template_id' => $this->workflow_template_id]);
 
