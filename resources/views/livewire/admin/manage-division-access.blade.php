@@ -10,19 +10,19 @@
     </button>
 
     {{-- Tabel User & Akses --}}
-    <table class="w-full mt-4 border">
-        <thead class="bg-gray-100">
+    <table class="table table-xs">
+        <thead >
             <tr>
-                <th class="p-2">User</th>
-                <th class="p-2">Divisi</th>
-                <th class="p-2">Aksi</th>
+                <th >User</th>
+                <th >Divisi</th>
+                <th >Aksi</th>
             </tr>
         </thead>
         <tbody>
             @foreach($users as $user)
             <tr class="border-t">
-                <td class="p-2">{{ $user->lookup_name }}</td>
-                <td class="p-2">
+                <td >{{ $user->lookup_name }}</td>
+                <td >
                     @foreach($user->divisions as $div)
                     <span class="inline-block px-2 py-1 mr-1 text-sm text-blue-800 bg-blue-100 rounded">
                         {{ $div->formatWorkgroupName() }}
@@ -47,12 +47,12 @@
         <div class="space-y-4">
             <div>
                 <label for="user" class="block font-semibold">Pilih User:</label>
-                <select wire:model="selectedUserId" class="w-full border rounded">
+                <x-select wire:model="selectedUserId">
                     <option value="">-- Pilih User --</option>
                     @foreach($users as $user)
                     <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
                     @endforeach
-                </select>
+                </x-select>
             </div>
 
             <div>
