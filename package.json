@@ -18,7 +18,7 @@
         "vite-plugin-manifest-sri": "^0.2.0"
     },
     "dependencies": {
-        "apexcharts": "^3.52.0",
+        "apexcharts": "^3.54.1",
         "ckeditor5": "^43.2.0",
         "ckeditor5-premium-features": "^43.1.0",
         "flatpickr": "^4.6.13",

@@ -80,8 +80,6 @@
     var data_table = JSON.parse('<?php echo $key_state; ?>');
     const tableBody = document.querySelector("#dataGrid tbody");
 
-
-
     for (var i = 0; i < data_table.group.length; i++) {
 
         const row = `

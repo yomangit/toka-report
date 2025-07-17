@@ -51,6 +51,7 @@ use App\Livewire\EventReport\IncidentReport\Detail as incidentReportDetail;
 use App\Livewire\Admin\WorkflowAdministration\Index as workflowAdministration;
 use App\Livewire\Administration\KondisiTidakAman\Kta;
 use App\Livewire\Administration\TindakanTidakAman\Tta;
+use App\Livewire\Dashboard\HazardGrap\HrGrapf;
 use App\Livewire\EventReport\HazardReport\CreateAndUpdate as hazardReportform;
 use App\Livewire\EventReport\HazardReport\TableExcel;
 use App\Livewire\EventReport\HazardReportGuest\Create as HazardReportGuestCreate;
@@ -85,6 +86,7 @@ Route::get('eventReport/hazardReportExcel', TableExcel::class)->name('TableExcel
 Route::middleware(['auth', 'auth.session'])->group(function () {
 
     Route::get('/', dashoard::class)->name('dashboard');
+    Route::get('/hazard/dashboard', HrGrapf::class)->name('dashboard-hazard-report');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
