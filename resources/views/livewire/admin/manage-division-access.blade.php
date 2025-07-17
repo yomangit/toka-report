@@ -3,25 +3,7 @@
     <x-notification />
     <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
     <div class="p-4">
-        <div class="relative w-full" wire:click.away="$set('showUserDropdown', false)">
-            <x-input wire:model.live="searchUserQuery" placeholder="Cari nama user..." :error="$errors->get('searchUserQuery')" />
 
-            @if ($showUserDropdown && strlen($searchUserQuery) > 1)
-            <ul class="absolute z-10 w-full mt-1 overflow-auto text-sm bg-white border border-gray-300 rounded shadow max-h-60">
-                @forelse ($searchResults as $user)
-                <li wire:click="selectUserFromDropdown({{ $user->id }})" class="px-3 py-2 cursor-pointer hover:bg-sky-100">
-                    {{ $user->lookup_name }}
-                </li>
-                @empty
-                <li class="px-3 py-2 text-gray-400">Tidak ditemukan</li>
-                @endforelse
-            </ul>
-            @endif
-
-            @if ($selectedUserId)
-            <p class="mt-1 text-xs text-gray-500">User terpilih: {{ \App\Models\User::find($selectedUserId)?->name }}</p>
-            @endif
-        </div>
     </div>
     {{-- Tabel User & Akses --}}
     <div class="overflow-x-auto">
@@ -62,12 +44,21 @@
         <div class="space-y-4">
             <div>
                 <label for="user" class="block font-semibold">Pilih User:</label>
-                <x-select wire:model="selectedUserId" id="select-user" :error="$errors->get('selectedUserId')">
-                    <option value="">-- Pilih User --</option>
-                    @foreach ($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
-                    @endforeach
-                </x-select>
+                <div class="relative w-full" wire:click.away="$set('showUserDropdown', false)">
+                    <x-input wire:model.live="searchUserQuery" placeholder="Cari nama user..." :error="$errors->get('searchUserQuery')" />
+
+                    @if ($showUserDropdown && strlen($searchUserQuery) > 1)
+                    <ul class="absolute z-10 w-full mt-1 overflow-auto text-sm bg-white border border-gray-300 rounded shadow max-h-60">
+                        @forelse ($searchResults as $user)
+                        <li wire:click="selectUserFromDropdown({{ $user->id }})" class="px-3 py-2 cursor-pointer hover:bg-sky-100">
+                            {{ $user->lookup_name }}
+                        </li>
+                        @empty
+                        <li class="px-3 py-2 text-gray-400">Tidak ditemukan</li>
+                        @endforelse
+                    </ul>
+                    @endif
+                </div>
 
             </div>
             <div>
