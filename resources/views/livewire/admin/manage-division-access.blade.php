@@ -42,11 +42,13 @@
         <div>{{ $users->links() }}</div>
     </div>
 
-    <x-modal name="edit-user" :show="$showEditModal">
-        <div class="p-6">
-            <h2 class="mb-4 text-lg font-semibold">Edit Akses Divisi</h2>
+    <x-modal wire:model="showEditModal">
+        <x-slot name="title">
+            Edit Akses Divisi
+        </x-slot>
 
-            <div class="mb-4">
+        <div class="space-y-3">
+            <div>
                 <p><strong>Nama:</strong> {{ $editUserName }}</p>
                 <p><strong>Email:</strong> {{ $editUserEmail }}</p>
             </div>
@@ -55,12 +57,11 @@
                 <input type="checkbox" wire:model="editCanView" class="form-checkbox">
                 <span>Boleh melihat divisinya sendiri</span>
             </label>
-
-            <div class="flex justify-end gap-2 mt-4">
-                <button wire:click="updateAccess" class="px-3 py-1 text-white bg-green-600 rounded">Simpan</button>
-                <button x-on:click="$dispatch('close-modal', 'edit-user')" class="px-3 py-1 bg-gray-300 rounded">Tutup</button>
-            </div>
         </div>
-    </x-modal>
 
+        <x-slot name="footer">
+            <button wire:click="updateAccess" class="px-3 py-1 text-white bg-green-600 rounded">Simpan</button>
+            <button wire:click="$set('showEditModal', false)" class="px-3 py-1 bg-gray-300 rounded">Tutup</button>
+        </x-slot>
+    </x-modal>
 </div>

@@ -12,30 +12,24 @@ class ManageDivisionAccess extends Component
     public $search_nama;
     public $showEditModal = false;
     public $editUserId;
-    public $editCanView = false;
+    public $editCanView;
     public $editUserName;
     public $editUserEmail;
-
-
-
     public function edit($id)
     {
         $user = User::findOrFail($id);
-
+        $this->editUserId = $user->id;
         $this->editUserName = $user->lookup_name;
         $this->editUserEmail = $user->email;
         $this->editCanView = $user->can_view_own_division;
 
         $this->showEditModal = true;
     }
-
     public function updateAccess()
     {
-        $user = User::where('email', $this->editUserEmail)->first(); // Atau simpan ID
-
+        $user = User::findOrFail($this->editUserId);
         $user->can_view_own_division = $this->editCanView;
         $user->save();
-
         $this->showEditModal = false;
         session()->flash('success', 'Akses berhasil diperbarui.');
     }
