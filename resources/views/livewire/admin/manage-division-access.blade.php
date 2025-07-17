@@ -21,11 +21,11 @@
         <tbody>
             @foreach($users as $user)
             <tr class="border-t">
-                <td class="p-2">{{ $user->name }}</td>
+                <td class="p-2">{{ $user->lookup_name }}</td>
                 <td class="p-2">
                     @foreach($user->divisions as $div)
                     <span class="inline-block px-2 py-1 mr-1 text-sm text-blue-800 bg-blue-100 rounded">
-                        {{ $div->name }}
+                        {{ $div->formatWorkgroupName() }}
                     </span>
                     @endforeach
                 </td>
