@@ -59,6 +59,10 @@ class HazardReport extends Model
     {
         return $this->belongsTo(RiskLikelihood::class);
     }
+    public function division()
+{
+    return $this->belongsTo(Division::class);
+}
     public function eventType()
     {
         return $this->belongsTo(TypeEventReport::class, 'event_type_id');
