@@ -314,7 +314,8 @@ class Create extends Component
         $this->ReportByAndReportTo();
         return view('livewire.event-report.hazard-report-guest.create', [
             'Report_By'  => User::searchNama(trim($this->report_byName))->paginate(100, ['*'], 'Report_By'),
-            'Report_To'  => User::searchNama(trim($this->report_toName))->paginate(100, ['*'], 'Report_To'),
+            // 'Report_To'  => User::searchNama(trim($this->report_toName))->paginate(100, ['*'], 'Report_To'),
+            'Report_To'  => EventUserSecurity::searchName(trim($this->workgroup_name))->where('responsible_role_id',2)->paginate(100, ['*'], 'Report_To'),
             'Division'   => $this->divisi_search,
             'EventType'  => $this->Event_type,
             'KTA' => Kondisitidakaman::get(),
@@ -475,8 +476,6 @@ class Create extends Component
         // $this->redirectRoute('hazardReportCreate', ['workflow_template_id' => $this->workflow_template_id]);
 
     }
-
-
     public function clearFields()
     {
         $this->report_byName               = "";

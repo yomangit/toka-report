@@ -88,6 +88,13 @@ class EventUserSecurity extends Model
             fn($q, $t) => $q->where('division_id', 'LIKE', $t)
         );
     }
+    public function scopeSearchName($q, $t)
+    {
+        $q->when(
+            $t ?? false,
+            fn($q, $t) => $q->where('name', 'LIKE', "%$t%")
+        );
+    }
     
    
 }
