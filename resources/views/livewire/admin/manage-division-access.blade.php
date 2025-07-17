@@ -1,18 +1,6 @@
 <div>
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
-    @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
-    <script>
-        new TomSelect("#select-beast", {
-            create: true
-            , sortField: {
-                field: "text"
-                , direction: "asc"
-            }
-        });
 
-    </script>
-    @endpush
     <h2 class="text-xl font-bold">Kelola Akses Divisi</h2>
     <x-notification />
     <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
@@ -61,7 +49,19 @@
                     <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
                     @endforeach
                 </x-select>
+                @push('scripts')
+                <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
+                <script>
+                    new TomSelect("#select-beast", {
+                        create: true
+                        , sortField: {
+                            field: "text"
+                            , direction: "asc"
+                        }
+                    });
 
+                </script>
+                @endpush
             </div>
             <div>
                 <label class="block font-semibold">Pilih Divisi:</label>
