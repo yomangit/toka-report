@@ -1,7 +1,8 @@
 <div>
     <h2 class="mb-4 text-lg font-bold">Kelola Akses Divisi</h2>
 
-    <table class="w-full text-sm border">
+   <div>
+     <table class="w-full text-sm border">
         <thead class="bg-gray-200">
             <tr>
                 <th class="p-2">Nama</th>
@@ -31,6 +32,8 @@
             @endforeach
         </tbody>
     </table>
+    <div>{{ $users->links() }}</div>
+   </div>
 
     @if ($editUserId)
         <div class="p-4 mt-6 bg-gray-100 rounded">

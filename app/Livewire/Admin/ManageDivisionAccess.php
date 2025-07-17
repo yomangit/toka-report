@@ -4,9 +4,11 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\User;
+use Livewire\WithPagination;
 
 class ManageDivisionAccess extends Component
 {
+    use WithPagination;
     public $users;
     public $editUserId;
     public $editCanView = false;
@@ -17,7 +19,7 @@ class ManageDivisionAccess extends Component
     }
     public function loadUsers()
     {
-        $this->users = User::get();
+        $this->users = User::paginate(20);
     }
     public function edit($userId)
     {
