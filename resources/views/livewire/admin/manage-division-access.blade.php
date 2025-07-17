@@ -4,7 +4,7 @@
     <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
     <div class="p-4">
         <div class="relative w-full" wire:click.away="$set('showUserDropdown', false)">
-            <input type="text" wire:model.live="searchUserQuery" class="w-full input input-bordered input-sm" placeholder="Cari nama user...">
+            <x-inputsearch. type="text" wire:model.live="searchUserQuery"  placeholder="Cari nama user...">
 
             @if ($showUserDropdown && strlen($searchUserQuery) > 1)
             <ul class="absolute z-10 w-full mt-1 overflow-auto text-sm bg-white border border-gray-300 rounded shadow max-h-60">
@@ -19,7 +19,7 @@
             @endif
 
             @if ($selectedUserId)
-            <p class="mt-1 text-xs text-gray-500">User terpilih: {{ \App\Models\User::find($selectedUserId)?->name }}</p>
+            <p class="mt-1 text-xs text-gray-500">User terpilih: {{ \App\Models\User::find($selectedUserId)?->lookup_name }}</p>
             @endif
         </div>
     </div>
