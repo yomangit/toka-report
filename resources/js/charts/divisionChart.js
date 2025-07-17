@@ -6,6 +6,7 @@ export function renderDivisionChart() {
 
     const labels = JSON.parse(el.dataset.labels || "[]");
     const counts = JSON.parse(el.dataset.counts || "[]");
+    const color = JSON.parse(el.dataset.colors || "[]");
 
     const options = {
         chart: {
@@ -19,7 +20,7 @@ export function renderDivisionChart() {
         xaxis: {
             categories: labels
         },
-        colors: ['#3B82F6'],
+        colors: color,
         title: {
             text: 'Laporan Hazard per Divisi',
             align: 'center'
