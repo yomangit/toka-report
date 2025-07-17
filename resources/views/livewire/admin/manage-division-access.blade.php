@@ -4,7 +4,7 @@
     <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
     <div class="p-4">
         <div class="relative w-full" wire:click.away="$set('showUserDropdown', false)">
-            <x-inputsearch wire:model.live="searchUserQuery" placeholder="Cari nama user...">
+            <x-input wire:model.live="searchUserQuery" placeholder="Cari nama user..." :error="$errors->get('searchUserQuery')" />
 
             @if ($showUserDropdown && strlen($searchUserQuery) > 1)
             <ul class="absolute z-10 w-full mt-1 overflow-auto text-sm bg-white border border-gray-300 rounded shadow max-h-60">
