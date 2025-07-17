@@ -29,7 +29,7 @@
   padding: calc(8px - 2px - 0) 8px calc(8px - 2px - 3px - 0);
 }
 .full .ts-control {
-  background-color: #fff;
+  background-color: #ffffff00;
 }
 .disabled .ts-control, .disabled .ts-control * {
   cursor: default !important;
