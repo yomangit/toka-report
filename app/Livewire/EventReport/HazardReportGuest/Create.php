@@ -421,7 +421,10 @@ class Create extends Component
                 $approval->approve();
             }
         } else {
-            Approval::whereIn('new_data->token', $this->token)->delete();
+             $exists = Approval::where('new_data->token', $this->token)->exists();
+            if ($exists) {
+                Approval::whereIn('new_data->token', $this->token)->delete();
+            }
         }
         // Pop-up sukses
         $this->dispatch('alert', [

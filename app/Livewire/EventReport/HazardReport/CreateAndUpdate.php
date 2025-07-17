@@ -416,7 +416,10 @@ class CreateAndUpdate extends Component
                 $approval->approve();
             }
         } else {
-            Approval::whereIn('new_data->token', $this->token)->delete();
+            $exists = Approval::where('new_data->token', $this->token)->exists();
+            if ($exists) {
+                Approval::whereIn('new_data->token', $this->token)->delete();
+            }
         }
         // Pop-up sukses
         $this->dispatch('alert', [
@@ -463,7 +466,7 @@ class CreateAndUpdate extends Component
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
             ]));
         }
-        $this->dispatch('refreshChartHazard');
+        $this->dispatch('hazardChartShouldRefresh');
         $this->clearFields();
         // $this->redirectRoute('hazardReportCreate', ['workflow_template_id' => $this->workflow_template_id]);
 

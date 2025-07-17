@@ -32,7 +32,7 @@ class HrGrapf extends Component
             return $stringToColor($label);
         }, $this->divisionLabels);
     }
-    #[On('refreshChartHazard')]
+    #[On('hazardChartShouldRefresh')]
     public function refreshChart()
     {
         $reports = HazardReport::select('division_id', DB::raw('count(*) as total'))
