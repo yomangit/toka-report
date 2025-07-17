@@ -75,9 +75,12 @@ class User extends Authenticatable implements LdapAuthenticatable
     }
     public function Dept()
     {
-        return $this->belongsTo(Department::class,'department');
+        return $this->belongsTo(Department::class, 'department');
     }
-
+    protected $casts = [
+        // ...
+        'can_view_own_division' => 'boolean',
+    ];
 
     public function scopeSearchFor($query, $term)
     {
@@ -101,7 +104,7 @@ class User extends Authenticatable implements LdapAuthenticatable
     {
         $query->when(
             $t ?? false,
-            fn($query, $t) => $query->where('id', 'LIKE',$t)
+            fn($query, $t) => $query->where('id', 'LIKE', $t)
         );
     }
     public function ResponsibleRole()

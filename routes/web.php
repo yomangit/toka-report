@@ -2,27 +2,32 @@
 
 use Illuminate\Support\Str;
 use Spatie\Csp\AddCspHeaders;
+use App\Livewire\Manhours\WebAccess;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Livewire\Admin\Site\Index as site;
 use App\Http\Controllers\ProfileController;
+use App\Livewire\Admin\ManageDivisionAccess;
 use App\Livewire\Admin\People\Index as people;
-use App\Livewire\Admin\People\Show as peopleShow;
+use App\Livewire\Dashboard\HazardGrap\HrGrapf;
 use App\Livewire\Dashboard\Index  as dashoard;
 use App\Livewire\Admin\Company\Index as company;
 use App\Livewire\Admin\Section\Index as section;
 use App\Livewire\Admin\Division\Inde as division;
+use App\Livewire\Admin\People\Show as peopleShow;
 use App\Livewire\Admin\DeptByBU\Index as DeptByBU;
 use App\Livewire\Admin\JobClass\Index as JobClass;
 use App\Livewire\Admin\Location\Index as Location;
+
 use App\Livewire\Admin\DeptGroup\Index as deptGroup;
+
 use App\Livewire\Admin\Workgroup\Index as workgroup;
 use App\Livewire\Manhours\Index as manhoursRegister;
-
-use App\Livewire\Manhours\WebAccess;
-
 use App\Livewire\ManhoursSite\Index as manhoursSite;
+use App\Livewire\Administration\KondisiTidakAman\Kta;
+use App\Livewire\EventReport\HazardReport\TableExcel;
 use App\Livewire\Admin\Department\Index as department;
+use App\Livewire\Administration\TindakanTidakAman\Tta;
 use App\Livewire\Admin\SubConDept\Index as subContDept;
 use App\Livewire\Admin\StatusEvent\Index as StatusEvent;
 use App\Livewire\EventReport\PtoReport\Create as PTOForm;
@@ -32,10 +37,10 @@ use App\Livewire\EventReport\PtoReport\Index as ptoReport;
 use App\Livewire\Admin\KeywordMaintenance\Index as keyWord;
 use App\Livewire\EventReport\PtoReport\Detail as ptoDetail;
 use App\Livewire\Admin\EventCategory\Index as EventCategory;
+use App\Livewire\Admin\ChoseEventType\Index as choseEventType;
 use App\Livewire\Admin\RiskAssessment\Index as RiskAssessment;
 use App\Livewire\Admin\RiskLikelihood\Index as RiskLikelihood;
 use App\Livewire\Admin\RouteRequest\Index as routeRequestEvent;
-use App\Livewire\Admin\ChoseEventType\Index as choseEventType;
 use App\Livewire\Admin\CompanyCategory\Index as categoryCompany;
 use App\Livewire\Admin\ResponsibleRole\Index as responsibleRole;
 use App\Livewire\Admin\RiskConsequence\Index as RiskConsequence;
@@ -43,17 +48,13 @@ use App\Livewire\Admin\TypeEventReport\Index as typeEventReport;
 use App\Livewire\Admin\TypeInvolvement\Index as typeInvolvement;
 use App\Livewire\EventReport\HazardReport\Index as hazardReport;
 use App\Livewire\Admin\EventUserSecurity\Index as eventUserSecurity;
+use App\Livewire\Admin\UserInputManhours\Index as userInputManhours;
 use App\Livewire\EventReport\IncidentReport\Index as IncidentReport;
 use App\Livewire\EventReport\HazardReport\Detail as hazardReportDetail;
 use App\Livewire\Admin\TableRiskAssessment\Index as TableRiskAssessment;
-use App\Livewire\Admin\UserInputManhours\Index as userInputManhours;
 use App\Livewire\EventReport\IncidentReport\Detail as incidentReportDetail;
 use App\Livewire\Admin\WorkflowAdministration\Index as workflowAdministration;
-use App\Livewire\Administration\KondisiTidakAman\Kta;
-use App\Livewire\Administration\TindakanTidakAman\Tta;
-use App\Livewire\Dashboard\HazardGrap\HrGrapf;
 use App\Livewire\EventReport\HazardReport\CreateAndUpdate as hazardReportform;
-use App\Livewire\EventReport\HazardReport\TableExcel;
 use App\Livewire\EventReport\HazardReportGuest\Create as HazardReportGuestCreate;
 use App\Livewire\EventReport\IncidentReport\CreateAndUpdate as CreateAndUpdateIncidentReport;
 
@@ -91,6 +92,8 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::group(['middleware' => 'admin'], function () {
+        Route::get('admin/parent/event/akses-divisi', ManageDivisionAccess::class)
+            ->name('akses-divisi');
         Route::get('admin/parent/companyCategory', categoryCompany::class)->name('categoryCompany');
         Route::get('admin/parent/company', company::class)->name('company');
         Route::get('admin/parent/businnesUnit', businnesUnit::class)->name('businnesUnit');
