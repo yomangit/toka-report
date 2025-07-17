@@ -5,7 +5,7 @@
     {{-- <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet"> --}}
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
     <div class="p-4">
-        <x-select id="select-beast" :error="$errors->get('selectedUserId')" placeholder="Select a person..." autocomplete="off">
+        <x-select id="select-beast" class="tom-select" :error="$errors->get('selectedUserId')" placeholder="Select a person..." autocomplete="off">
             <option value="">-- Pilih User --</option>
             @foreach ($user_select as $user)
             <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
