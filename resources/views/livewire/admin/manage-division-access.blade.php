@@ -2,6 +2,12 @@
     <h2 class="text-xl font-bold">Kelola Akses Divisi</h2>
     <x-notification />
     <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
+    <x-select wire:model="selectedUserId" :error="$errors->get('selectedUserId')">
+                    <option value="">-- Pilih User --</option>
+                    @foreach ($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
+                    @endforeach
+                </x-select>
     {{-- Tabel User & Akses --}}
     <div class="overflow-x-auto">
         <table class="table table-zebra table-xs">
