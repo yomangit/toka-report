@@ -3,11 +3,11 @@ namespace App\Livewire\EventReport\HazardReport;
 
 use DateTime;
 use App\Models\User;
-use App\Models\Company;
 use Livewire\Component;
-use App\Models\DeptByBU;
+use App\Models\Approval;
 use App\Models\Division;
-use App\Models\BusinesUnit;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use App\Models\Eventsubtype;
