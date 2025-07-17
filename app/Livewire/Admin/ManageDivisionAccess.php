@@ -106,7 +106,7 @@ class ManageDivisionAccess extends Component
     {
         return view('livewire.admin.manage-division-access', [
             'users' => User::searchNama($this->search_nama)->paginate(20),
-            'user_select' => User::get(),
+            'user_select' => User::take(20)->get(),
             'divisions' => Division::all()
         ])->extends('base.index', ['header' => 'Akeses Divisi', 'title' => 'Akeses Divisi'])->section('content');
     }
