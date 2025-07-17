@@ -11,18 +11,18 @@
 
     {{-- Tabel User & Akses --}}
     <table class="table table-xs">
-        <thead >
+        <thead>
             <tr>
-                <th >User</th>
-                <th >Divisi</th>
-                <th >Aksi</th>
+                <th>User</th>
+                <th>Divisi</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
             @foreach($users as $user)
             <tr class="border-t">
-                <td >{{ $user->lookup_name }}</td>
-                <td >
+                <td>{{ $user->lookup_name }}</td>
+                <td>
                     @foreach($user->divisions as $div)
                     <span class="inline-block px-2 py-1 mr-1 text-sm text-blue-800 bg-blue-100 rounded">
                         {{ $div->formatWorkgroupName() }}
@@ -47,7 +47,7 @@
         <div class="space-y-4">
             <div>
                 <label for="user" class="block font-semibold">Pilih User:</label>
-                <x-select wire:model="selectedUserId">
+                <x-select wire:model.live='selectedUserId' :error="$errors->get('selectedUserId')">
                     <option value="">-- Pilih User --</option>
                     @foreach($users as $user)
                     <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
@@ -60,7 +60,7 @@
                 <div class="p-2 overflow-y-auto border rounded max-h-48">
                     @foreach($divisions as $division)
                     <label class="block">
-                        <input type="checkbox" wire:model="selectedDivisionIds" value="{{ $division->id }}">
+                        <input type="checkbox" wire:model="selectedDivisionIds" class="checkbox checkbox-xs" value="{{ $division->id }}">
                         {{ $division->formatWorkgroupName() }}
                     </label>
                     @endforeach
