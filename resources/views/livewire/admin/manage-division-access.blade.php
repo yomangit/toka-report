@@ -9,7 +9,7 @@
     <div class="overflow-x-auto">
         <table class="table table-zebra table-xs">
             <thead>
-                <tr>
+              <tr class="text-center">
                     <th>User</th>
                     <th>Divisi</th>
                     <th>Aksi</th>
@@ -17,11 +17,11 @@
             </thead>
             <tbody>
                 @foreach($users as $user)
-                <tr class="border-t">
+                <tr class="text-center">
                     <td>{{ $user->lookup_name }}</td>
                     <td>
                         @foreach($user->divisions as $div)
-                        <span class="inline-block px-2 py-1 mr-1 text-sm text-blue-800 bg-blue-100 rounded">
+                        <span class="inline-block px-2 mr-1 text-sm text-blue-800 bg-blue-100 rounded">
                             {{ $div->formatWorkgroupName() }}
                         </span>
                         @endforeach
