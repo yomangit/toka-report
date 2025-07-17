@@ -21,6 +21,13 @@ export function renderDivisionChart() {
             categories: labels
         },
         colors: color,
+        plotOptions: {
+            bar: {
+                distributed: true, // ✅ INI BAGIAN PENTINGNYA
+                borderRadius: 4,
+                horizontal: false
+            }
+        },
         title: {
             text: 'Laporan Hazard per Divisi',
             align: 'center'
