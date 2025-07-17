@@ -1,10 +1,10 @@
 <div>
     <h2 class="text-xl font-bold">Kelola Akses Divisi</h2>
     <x-notification />
-    <x-btn-add wire:click="openCreateModal" class="px-4 py-2 text-white bg-green-600 rounded" />
+    <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
     {{-- Tabel User & Akses --}}
     <div class="overflow-x-auto">
-        <table class="table table-xs">
+        <table class="table table-zebra table-xs">
             <thead>
                 <tr>
                     <th>User</th>
@@ -32,7 +32,7 @@
             </tbody>
         </table>
     </div>
-    <div class="mt-4">{{ $users->links() }}</div>
+    <div class="mt-2">{{ $users->links() }}</div>
 
     <x-modal wire:model="showModal">
         <x-slot name="title">
