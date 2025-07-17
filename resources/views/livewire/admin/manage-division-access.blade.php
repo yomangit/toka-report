@@ -1,28 +1,16 @@
 <div>
-    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
-
     <h2 class="text-xl font-bold">Kelola Akses Divisi</h2>
     <x-notification />
     <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
-     <x-select wire:model="selectedUserId" id="select-beast" :error="$errors->get('selectedUserId')">
-                    <option value="">-- Pilih User --</option>
-                    @foreach ($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
-                    @endforeach
-                </x-select>
-                @push('scripts')
-                <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
-                <script>
-                    new TomSelect("#select-beast", {
-                        create: true
-                        , sortField: {
-                            field: "text"
-                            , direction: "asc"
-                        }
-                    });
-
-                </script>
-                @endpush
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
+    <div class="p-4"><select id="select-beast" placeholder="Select a person..." autocomplete="off">
+            <option value="">Select a person...</option>
+            <option value="4">Thomas Edison</option>
+            <option value="1">Nikola</option>
+            <option value="3">Nikola Tesla</option>
+            <option value="5">Arnold Schwarzenegger</option>
+        </select></div>
     {{-- Tabel User & Akses --}}
     <div class="overflow-x-auto">
         <table class="table table-zebra table-xs">
@@ -62,7 +50,13 @@
         <div class="space-y-4">
             <div>
                 <label for="user" class="block font-semibold">Pilih User:</label>
-               
+                <x-select wire:model="selectedUserId" id="select-user" :error="$errors->get('selectedUserId')">
+                    <option value="">-- Pilih User --</option>
+                    @foreach ($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
+                    @endforeach
+                </x-select>
+             
             </div>
             <div>
                 <label class="block font-semibold">Pilih Divisi:</label>
