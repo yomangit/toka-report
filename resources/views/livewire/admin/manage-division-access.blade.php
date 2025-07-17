@@ -82,9 +82,9 @@
                 </div>
             </div>
         </div>
-        <x-slot name="footer">
+        <div class="modal-action">
             <button wire:click="resetForm" class="px-4 py-2 bg-gray-300 rounded">Batal</button>
             <button wire:click="store" class="px-4 py-2 text-white bg-blue-600 rounded">Simpan</button>
-        </x-slot>
+        </div>
     </x-modal>
 </div>
