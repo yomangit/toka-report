@@ -15,9 +15,9 @@
         <tbody>
             @foreach ($users as $user)
                 <tr class="border-t">
-                    <td class="p-2">{{ $user->name }}</td>
+                    <td class="p-2">{{ $user->lookup_name }}</td>
                     <td class="p-2">{{ $user->email }}</td>
-                    <td class="p-2">{{ optional($user->division)->formatWorkgroupName() }}</td>
+                    {{-- <td class="p-2">{{ optional($user->division)->formatWorkgroupName() }}</td> --}}
                     <td class="p-2 text-center">
                         @if ($user->can_view_own_division)
                             ✅

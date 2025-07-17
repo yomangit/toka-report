@@ -78,7 +78,7 @@ class User extends Authenticatable implements LdapAuthenticatable
         return $this->belongsTo(Department::class, 'department');
     }
     protected $casts = [
-        // ...
+        
         'can_view_own_division' => 'boolean',
     ];
 
