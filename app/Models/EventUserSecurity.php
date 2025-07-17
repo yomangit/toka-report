@@ -92,7 +92,7 @@ class EventUserSecurity extends Model
     {
         $q->when(
             $t ?? false,
-            fn($q, $t) => $q->where('name', 'LIKE', "%$t%")
+            fn($q, $t) => $q->where('name', 'like', '%' . $t . '%')
         );
     }
     
