@@ -9,6 +9,7 @@ use Livewire\Attributes\On;
 use App\Models\HazardReport;
 use App\Models\ClassHierarchy;
 use App\Models\WorkflowDetail;
+use App\Models\HazardReportLog;
 use App\Models\EventUserSecurity;
 use App\Models\WorkflowApplicable;
 use App\Notifications\toModerator;
@@ -167,6 +168,7 @@ class Index extends Component
                 ->first();
 
             $this->workflow_detail_id = optional($WorkflowDetail)->id;
+            $newStatus = optional($WorkflowDetail)->Status->status_name;
         }
 
         // Siapkan field untuk update
@@ -179,9 +181,18 @@ class Index extends Component
             'also_assign_to'     => $this->also_assign_to,
             'closed_by'          => $isClosed ? $closed_by : '',
         ];
-
+        $old = $this->status;
         // Update hazard report
         HazardReport::whereId($this->data_id)->update($fields);
+        HazardReportLog::create([
+            'hazard_report_id' => $this->hazardReport->id,
+            'user_id' => auth()->id(),
+            'action' => 'updated_status',
+            'description' => "Status changed from $old to $newStatus",
+            'old_values' => ['status' => $old],
+            'new_values' => ['status' => $newStatus],
+        ]);
+
 
         // Notifikasi ke Moderator jika role 1
         if ($this->responsible_role_id == 1) {
