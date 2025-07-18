@@ -100,7 +100,7 @@
                 <div class="mt-8">
                     <h3 class="mb-4 text-lg font-bold text-gray-800">📜 Riwayat Perubahan</h3>
 
-                    @foreach ($hazardReport->logs as $log)
+                    @forelse  ($hazardReport->logs as $log)
                     <div class="p-4 mb-3 transition duration-200 border rounded-md shadow-sm bg-base-100 hover:bg-base-200">
                         <div class="flex flex-col sm:flex-row sm:justify-between">
                             <div class="text-sm text-gray-700">
