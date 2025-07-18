@@ -149,7 +149,7 @@
 
             <div>
                 <x-label-req :value="__('Hazard Details')" />
-                <div class="@error('description') border border-rose-500 rounded-xs @enderror">
+                <div class="@error('description') border border-rose-500 rounded-sm @enderror">
                     <div wire:ignore class="w-full form-control">
                         <textarea id="description" class="w-full"></textarea>
                     </div>
@@ -172,7 +172,7 @@
             </div>
             <div>
                 <x-label-req :value="__('immediate corrective action')" />
-                <div class="@error('immediate_corrective_action') border border-rose-500 rounded-xs @enderror">
+                <div class="@error('immediate_corrective_action') border border-rose-500 rounded-sm @enderror">
                     <div wire:ignore wire:ignore class="w-full form-control">
                         <textarea id="immediate_corrective_action"></textarea>
                     </div>
