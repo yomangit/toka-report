@@ -188,12 +188,12 @@
                         <div class="flex items-center gap-4 mt-2">
                             <label class="flex items-center space-x-1">
                                 <input x-model="status" value="kta" id="draft" type="radio" name="status" class="radio radio-sm radio-primary" />
-                                <span class="text-xs font-semibold">KTA</span>
+                                <span class="text-xs font-semibold">Kondisi Tidak Aman</span>
                             </label>
 
                             <label class="flex items-center space-x-1">
                                 <input x-model="status" value="tta" id="published" type="radio" name="status" class="radio radio-sm radio-accent" />
-                                <span class="text-xs font-semibold">TTA</span>
+                                <span class="text-xs font-semibold">Tindakan Tidak Aman</span>
                             </label>
                         </div>
                         <x-label-error :messages="$errors->get('key_word')" />
