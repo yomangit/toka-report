@@ -99,7 +99,7 @@ class Tta extends Component
     {
         return view('livewire.administration.tindakan-tidak-aman.tta', [
             'TTA' => Tindakantidakaman::paginate(30)
-        ])->extends('base.index', ['header' => 'KTA', 'title' => 'KTA'])->section('content');
+        ])->extends('base.index', ['header' => 'TTA', 'title' => 'TTA'])->section('content');
     }
     public function paginationView()
     {
