@@ -72,8 +72,8 @@
             </div>
         </div>
         <x-slot name="footer">
-            <x-btn-save wire:click="store" class="px-4 py-2 text-white bg-blue-600 rounded">Simpan</x-btn-save>
-            <x-btn-close wire:click="resetForm" class="px-4 py-2 bg-gray-300 rounded">Batal</x-btn-close>
+            <x-btn-save wire:click="store" >Simpan</x-btn-save>
+            <x-btn-close wire:click="resetForm" >Batal</x-btn-close>
         </x-slot>
     </x-modal>
 </div>
