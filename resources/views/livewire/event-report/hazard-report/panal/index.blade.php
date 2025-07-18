@@ -112,7 +112,7 @@
                             </div>
                         </div>
 
-                        @if ($log->old_value || $log->new_value)
+                       
                         <div class="mt-2 text-sm">
                             <div class="text-red-500">
                                 <strong>Dari:</strong>{{$log->old_value['status'] ??'-'}}
@@ -121,7 +121,7 @@
                                  <strong>Dari:</strong>{{$log->new_value['status'] ??'-'}}
                             </div>
                         </div>
-                        @endif
+                     
                     </div>
                     @empty
                     <div class="text-sm italic text-gray-500">Belum ada perubahan yang tercatat.</div>
