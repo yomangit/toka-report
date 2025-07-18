@@ -20,7 +20,7 @@
             @csrf
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 <!-- contoh 1 kolom -->
-                <div class="w-full max-w-md xl:max-w-xl form-control">
+                <div class="w-full max-w-md bg-red-200 xl:max-w-xl form-control">
                     <x-label-req :value="__('tipe bahaya')" />
                     <x-select wire:model.live='event_type_id' :error="$errors->get('event_type_id')">
                         <option value="">Select an option</option>
