@@ -35,7 +35,7 @@
     </div>
     <div class="mt-2">{{ $users->links() }}</div>
 
-    {{-- <x-modal wire:model="showModal">
+    <x-modal wire:model="showModal">
         <x-slot name="title">
             {{ $this->modalTitle }}
         </x-slot>
@@ -75,5 +75,5 @@
             <x-btn-save wire:click="store" class="px-4 py-2 text-white bg-blue-600 rounded">Simpan</x-btn-save>
             <x-btn-close wire:click="resetForm" class="px-4 py-2 bg-gray-300 rounded">Batal</x-btn-close>
         </x-slot>
-    </x-modal> --}}
+    </x-modal>
 </div>
