@@ -112,16 +112,17 @@
                             </div>
                         </div>
 
-                       
+                        @if ($log->old_values || $log->new_values)
                         <div class="mt-2 text-sm">
                             <div class="text-red-500">
-                                <strong>Dari:</strong>{{$log->old_value['status'] ??'-'}}
+                                <strong>Dari:</strong> {!! nl2br(e($log->old_values ?? '-')) !!}
+                                
                             </div>
                             <div class="mt-1 text-green-600">
-                                 <strong>Dari:</strong>{{$log->new_value['status'] ??'-'}}
+                                <strong>Menjadi:</strong> {!! nl2br(e($log->new_values ?? '-')) !!}
                             </div>
                         </div>
-                     
+                        @endif
                     </div>
                     @empty
                     <div class="text-sm italic text-gray-500">Belum ada perubahan yang tercatat.</div>
