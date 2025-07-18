@@ -18,7 +18,7 @@
 
         <form wire:target="store" wire:loading.class="skeleton" wire:submit.prevent='store' enctype="multipart/form-data" class="space-y-6">
             @csrf
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 <!-- contoh 1 kolom -->
                 <div class="form-control">
                     <x-label-req :value="__('tipe bahaya')" />
