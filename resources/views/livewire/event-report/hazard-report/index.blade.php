@@ -4,7 +4,7 @@
     @endsection
 
     @push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
     @endpush
 
     <x-notification />
@@ -128,7 +128,7 @@
 
     <div class="mt-2">{{ $HazardReport->links() }}</div>
 
-    @push('scripts')
+   
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
          flatpickr("#rangeDate", {
@@ -180,9 +180,8 @@
                 el.classList.add(isMobile ? 'tooltip-top' : 'tooltip-right');
             });
         }
-
         window.addEventListener('DOMContentLoaded', updateTooltipPosition);
         window.addEventListener('resize', updateTooltipPosition);
     </script>
-    @endpush
+   
 </div>
