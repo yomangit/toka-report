@@ -182,18 +182,17 @@
             <div class="grid grid-cols-1 gap-6 mt-4 transition-all duration-300 ease-in-out border divide-y border-base-200 divide-base-200 rounded-xl md:grid-cols-3 md:divide-y-0 md:divide-x md:p-6">
                 <!-- KEYWORD (KTA / TTA) -->
                 <div class="px-4 py-2 space-y-3 md:px-0">
-                    <fieldset x-data="{ status: '' }" class="space-y-3">
+                    <fieldset x-data="{ status: @entangle('key_word') }" class="space-y-3">
                         <x-label-req :value="__('Key Word')" />
 
-                        <!-- Radio Buttons -->
                         <div class="flex items-center gap-4 mt-2">
                             <label class="flex items-center space-x-1">
-                                <input x-model="status" wire:model.live='key_word' value="kta" id="draft" type="radio" name="status" class="radio radio-sm radio-primary" />
+                                <input x-model="status" value="kta" id="draft" type="radio" name="status" class="radio radio-sm radio-primary" />
                                 <span class="text-xs font-semibold">KTA</span>
                             </label>
 
                             <label class="flex items-center space-x-1">
-                                <input x-model="status" wire:model.live='key_word' value="tta" id="published" type="radio" name="status" class="radio radio-sm radio-accent" />
+                                <input x-model="status" value="tta" id="published" type="radio" name="status" class="radio radio-sm radio-accent" />
                                 <span class="text-xs font-semibold">TTA</span>
                             </label>
                         </div>
@@ -277,6 +276,7 @@
                     @this.set('immediate_corrective_action', editor.getData());
                 });
             });
+
         </script>
     </div>
 </div>
