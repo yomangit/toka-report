@@ -1,12 +1,14 @@
 <div>
     <x-notification />
-    <div class="flex flex-col sm:flex-row sm:justify-between ">
-        <div>
-            <x-btn-add data-tip="Add data" wire:click="$dispatch('openModal', { component: 'admin.business-unit.create-and-update' })" />
-           
-        </div>
-        <div class="w-max-xs">
-            <x-inputsearch name='search' wire:model.live='search' />
+    <div>
+        <div class="flex flex-col sm:flex-row sm:justify-between ">
+            <div>
+                <x-btn-add data-tip="Add data" wire:click="$dispatch('openModal', { component: 'admin.business-unit.create-and-update' })" />
+
+            </div>
+            <div class="w-max-xs">
+                <x-inputsearch name='search' wire:model.live='search' />
+            </div>
         </div>
     </div>
     <div class="overflow-x-auto">
@@ -20,23 +22,20 @@
                 </tr>
             </thead>
             <tbody>
-               
+
                 @forelse ($BusinessUnit as $no => $bc)
-                    <tr class="text-center">
-                        <th>{{ $BusinessUnit->firstItem() + $no }}</th>
-                        <td>{{ $bc->Company->name_company }}</td>
-                        <td class="flex flex-row gap-1 justify-center">
-                            <x-icon-btn-edit data-tip="Edit"
-                                wire:click="$dispatch('openModal', { component: 'admin.business-unit.create-and-update', arguments: { bu: {{ $bc->id }} }})" />
-                            <x-icon-btn-delete wire:click="delete({{ $bc->id }})"
-                                wire:confirm.prompt="Are you sure delete {{ $bc->Company->name_company }}?\n\nType DELETE to confirm|DELETE"
-                                data-tip="Delete" />
-                        </td>
-                    </tr>
+                <tr class="text-center">
+                    <th>{{ $BusinessUnit->firstItem() + $no }}</th>
+                    <td>{{ $bc->Company->name_company }}</td>
+                    <td class="flex flex-row justify-center gap-1">
+                        <x-icon-btn-edit data-tip="Edit" wire:click="$dispatch('openModal', { component: 'admin.business-unit.create-and-update', arguments: { bu: {{ $bc->id }} }})" />
+                        <x-icon-btn-delete wire:click="delete({{ $bc->id }})" wire:confirm.prompt="Are you sure delete {{ $bc->Company->name_company }}?\n\nType DELETE to confirm|DELETE" data-tip="Delete" />
+                    </td>
+                </tr>
                 @empty
-                    <tr class="text-center">
-                        <th colspan="3" class="text-error">data not found!!! </th>
-                    </tr>
+                <tr class="text-center">
+                    <th colspan="3" class="text-error">data not found!!! </th>
+                </tr>
                 @endforelse
             </tbody>
         </table>
