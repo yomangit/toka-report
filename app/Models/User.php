@@ -81,6 +81,14 @@ class User extends Authenticatable implements LdapAuthenticatable
 
         'can_view_own_division' => 'boolean',
     ];
+    public function rolePermit()
+    {
+        return $this->belongsTo(RoleUserPermit::class, 'role_user_permit_id');
+    }
+    public function hasRolePermit(string $role): bool
+    {
+        return strtolower($this->rolePermit?->name) === strtolower($role);
+    }
     public function divisions()
     {
         return $this->belongsToMany(Division::class);

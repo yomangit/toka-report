@@ -13,13 +13,12 @@ class Index extends Component
     protected $listeners = ['responsible_role_create' => 'render'];
     public function render()
     {
-        return view('livewire.admin.responsible-role.index',[
+        return view('livewire.admin.responsible-role.index', [
             'ResponsibleRole' => ResponsibleRole::paginate(20)
         ])->extends('base.index', ['header' => 'Responsible Role', 'title' => 'Responsible Role'])->section('content');
     }
     public function updateData($id)
     {
-
         $this->dispatch('updateResponsibleRole', $id);
     }
     public function delete($id)
