@@ -23,6 +23,10 @@ class HrGrapf extends Component
         if ($user->hasRolePermit('administration')) {
             // Admin bisa lihat semua laporan
             $reports = $query->get();
+        } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
+            // Hanya user yang punya relasi dengan division_user
+            $divisionIds = $user->divisions->pluck('id')->toArray();
+            $reports = $query->whereIn('division_id', $divisionIds)->get();
         } else {
             // User tanpa relasi division_user tidak bisa lihat laporan
             $reports = collect();
