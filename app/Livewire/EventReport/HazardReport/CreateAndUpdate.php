@@ -174,7 +174,10 @@ class CreateAndUpdate extends Component
             'immediate_corrective_action.required'  => 'Kolom wajib diisi',
             'location_name.required'                => 'Kolom wajib diisi',
             'location_id.required'                  => 'Kolom wajib diisi',
+            'kondisitidakamen_id.required'                  => 'Kolom wajib diisi',
+            'tindakantidakamen_id.required'                  => 'Kolom wajib diisi',
             'tindakkan_selanjutnya.required'        => 'Kolom wajib dicentang',
+            'key_word.required'        => 'Kolom wajib dicentang',
         ];
     }
     #[On('closeAll')]
@@ -410,6 +413,10 @@ class CreateAndUpdate extends Component
             'report_to_nolist'            => $this->report_to_nolist,
             'workflow_detail_id'          => $this->workflow_detail_id,
             'workflow_template_id'        => $this->workflow_template_id,
+            'key_word'                    => $this->key_word,
+            'kondisitidakamen_id'         => $this->kondisitidakamen_id,
+            'tindakantidakamen_id'        => $this->tindakantidakamen_id,
+            'tindakantidakamen_id'        => $this->tindakantidakamen_id,
             'closed_by'                   => $closed_by,
         ];
 

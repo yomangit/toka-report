@@ -45,8 +45,9 @@ class HazardReport extends Model
         'assign_to',
         'also_assign_to',
         'comments',
-        'kondisi_tidak_aman',
-        'tindakan_tidak_aman',
+        'key_word',
+        'kondisitidakamen_id',
+        'tindakantidakamen_id',
         'tindakkan_selanjutnya',
         'show_immidiate',
         'submitter'
@@ -60,9 +61,9 @@ class HazardReport extends Model
         return $this->belongsTo(RiskLikelihood::class);
     }
     public function division()
-{
-    return $this->belongsTo(Division::class);
-}
+    {
+        return $this->belongsTo(Division::class);
+    }
     public function eventType()
     {
         return $this->belongsTo(TypeEventReport::class, 'event_type_id');
@@ -143,15 +144,14 @@ class HazardReport extends Model
     }
     public function scopeFindSubmitter($q, $term)
     {
-       if($term)
-       {
-        $dept_name = User::where('id',$term)->first()->department_name;
-       }
+        if ($term) {
+            $dept_name = User::where('id', $term)->first()->department_name;
+        }
         $q->when(
             $term ?? false,
             fn($q, $term) => $q->where('submitter', $term)
-            ->orWhere('assign_to', $term)->orWhere('assign_to', $term)
-            ->orWhereHas('reportBy', function ($q) use ($dept_name) {
+                ->orWhere('assign_to', $term)->orWhere('assign_to', $term)
+                ->orWhereHas('reportBy', function ($q) use ($dept_name) {
                     $q->where('department_name', 'like', '%' . $dept_name . '%');
                 })
         );

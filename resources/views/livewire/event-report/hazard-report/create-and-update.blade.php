@@ -18,7 +18,7 @@
 
         <form wire:target="store" wire:loading.class="skeleton" wire:submit.prevent='store' enctype="multipart/form-data" class="space-y-6">
             @csrf
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
                 <!-- contoh 1 kolom -->
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <x-label-req :value="__('tipe bahaya')" />
@@ -262,7 +262,7 @@
         <!-- Flatpickr dan CKEditor -->
         <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        <script nonce="{{ csp_nonce() }}">
+        <script>
             ClassicEditor.create(document.querySelector('#description'), {
                 toolbar: ['undo', 'redo', 'bold', 'italic', 'numberedList', 'bulletedList', 'link']
             }).then(editor => {
@@ -270,7 +270,6 @@
                     @this.set('description', editor.getData());
                 });
             });
-
             ClassicEditor.create(document.querySelector('#immediate_corrective_action'), {
                 toolbar: ['undo', 'redo', 'bold', 'italic', 'numberedList', 'bulletedList', 'link']
             }).then(editor => {
@@ -278,27 +277,6 @@
                     @this.set('immediate_corrective_action', editor.getData());
                 });
             });
-
         </script>
     </div>
-    {{-- <style>
-        @media (max-width: 640px) {
-            .form-control {
-                padding: 0.5rem;
-            }
-        }
-
-        @media (min-width: 641px) and (max-width: 1024px) {
-            .form-control {
-                padding: 1rem;
-            }
-        }
-
-        @media (min-width: 1025px) {
-            .form-control {
-                padding: 1.25rem;
-            }
-        }
-
-    </style> --}}
 </div>

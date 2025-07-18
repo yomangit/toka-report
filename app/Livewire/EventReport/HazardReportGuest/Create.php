@@ -147,8 +147,12 @@ class Create extends Component
             'tindakkan_selanjutnya' => ['required'],
         ];
 
-        if ($this->show_immidiate === 'yes') {
-            $baseRules['immediate_corrective_action'] = ['required'];
+        if ($this->key_word === 'kta') {
+            $baseRules['kondisitidakamen_id'] = ['required'];
+        } elseif ($this->key_word === 'tta') {
+            $baseRules['tindakantidakamen_id'] = ['required'];
+        } else {
+            $baseRules['key_word'] = ['required'];
         }
 
         return $baseRules;
@@ -168,7 +172,10 @@ class Create extends Component
             'immediate_corrective_action.required'  => 'Kolom wajib diisi',
             'location_name.required'                => 'Kolom wajib diisi',
             'location_id.required'                  => 'Kolom wajib diisi',
+            'kondisitidakamen_id.required'                  => 'Kolom wajib diisi',
+            'tindakantidakamen_id.required'                  => 'Kolom wajib diisi',
             'tindakkan_selanjutnya.required'        => 'Kolom wajib dicentang',
+            'key_word.required'        => 'Kolom wajib dicentang',
         ];
     }
     #[On('closeAll')]
@@ -407,6 +414,10 @@ class Create extends Component
             'report_to_nolist'            => $this->report_to_nolist,
             'workflow_detail_id'          => $this->workflow_detail_id,
             'workflow_template_id'        => $this->workflow_template_id,
+            'key_word'                    => $this->key_word,
+            'kondisitidakamen_id'         => $this->kondisitidakamen_id,
+            'tindakantidakamen_id'        => $this->tindakantidakamen_id,
+            'tindakantidakamen_id'        => $this->tindakantidakamen_id,
             'closed_by'                   => $closed_by,
         ];
 
