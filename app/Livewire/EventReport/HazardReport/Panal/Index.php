@@ -66,7 +66,8 @@ class Index extends Component
         $this->realtimeUpdate();
         $this->userSecurity();
         return view('livewire.event-report.hazard-report.panal.index', [
-            "Workflow" => $this->Workflows
+            "Workflow" => $this->Workflows,
+            'hazardReport' => HazardReport::whereId($this->data_id)->logs()->latest()->get()
         ]);
     }
     public function userSecurity()
