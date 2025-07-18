@@ -11,7 +11,7 @@
     width: 100%;
 }
 .modal-action {
-    display: flex;
+    /* display: flex; */
     margin-top: 10px /* 24px */;
     justify-content: flex-end;
 }

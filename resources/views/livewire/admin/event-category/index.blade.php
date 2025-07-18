@@ -1,4 +1,4 @@
-<div class="flex flex-col p-2 sm:p-4">
+<div class="p-2  sm:p-4">
     <x-notification />
 
     {{-- Tombol & Pencarian Responsif --}}
