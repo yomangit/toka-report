@@ -17,7 +17,7 @@ class RoleUserPermit
         }
 
         // Ambil nama role dari tabel relasi (misal: 'admin', 'moderator')
-        $userRoleName = strtolower($user->rolePermit->name);
+        $userRoleName = strtolower($user->rolePermit->name_role_user);
 
         if (!in_array($userRoleName, $roles)) {
             return $this->redirectToForbiddenPage($userRoleName);
