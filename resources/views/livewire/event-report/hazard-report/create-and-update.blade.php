@@ -272,7 +272,7 @@
 
         </script>
     </div>
-    <style>
+    {{-- <style>
         @media (max-width: 640px) {
             .form-control {
                 padding: 0.5rem;
@@ -291,5 +291,5 @@
             }
         }
 
-    </style>
+    </style> --}}
 </div>
