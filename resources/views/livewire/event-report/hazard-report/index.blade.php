@@ -171,8 +171,9 @@
                 }
             }
         });
-
-        function updateTooltipPosition() {
+    </script>
+    <script>
+         function updateTooltipPosition() {
             const isMobile = window.innerWidth < 640;
             document.querySelectorAll('.tooltip').forEach((el) => {
                 el.classList.remove('tooltip-top', 'tooltip-right', 'tooltip-left', 'tooltip-bottom');
