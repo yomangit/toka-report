@@ -147,7 +147,7 @@
 
             <!-- Textarea description -->
 
-            <div wire:ignore class="w-full max-w-md xl:max-w-xl form-control">
+            <div wire:ignore class="w-full form-control">
                 <x-label-req :value="__('Hazard Details')" />
                 <textarea id="description" class="w-full"></textarea>
                 <x-label-error :messages="$errors->get('description')" />
@@ -166,7 +166,7 @@
                 </div>
                 <x-label-error :messages="$errors->get('documentation')" />
             </div>
-                       <div wire:ignore class="w-full max-w-md xl:max-w-xl form-control">
+            <div wire:ignore class="w-full form-control">
                 <x-label-req :value="__('immediate corrective action')" />
                 <textarea id="immediate_corrective_action"></textarea>
                 <x-label-error :messages="$errors->get('immediate_corrective_action')" />
