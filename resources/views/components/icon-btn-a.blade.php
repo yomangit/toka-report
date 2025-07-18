@@ -1,4 +1,4 @@
-<a {{$slot}} {{ $attributes->merge(['class' => 'btn btn-xs btn-success btn-square btn-outline tooltip tooltip-right tooltip-success']) }}>
+<a {{$slot}} {{ $attributes->merge(['class' => 'btn btn-xs btn-success btn-square btn-outline tooltip tooltip-top sm:tooltip-right tooltip-success']) }}>
 
     
 
