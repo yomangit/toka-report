@@ -315,9 +315,12 @@ class Create extends Component
             $this->workflow_detail_id = $workflow->id;
             $this->ResponsibleRole = $workflow->responsible_role_id;
         }
-        if ($this->key_word === 'kta') {
+    }
+    public function updatedKeyWord($value)
+    {
+        if ($value === 'kta') {
             $this->reset('tindakantidakamen_id');
-        } elseif ($this->key_word === 'tta') {
+        } elseif ($value === 'tta') {
             $this->reset('kondisitidakamen_id');
         } else {
             $this->reset('kondisitidakamen_id', 'tindakantidakamen_id');
