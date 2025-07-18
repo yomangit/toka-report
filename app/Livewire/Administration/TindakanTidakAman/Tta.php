@@ -8,9 +8,9 @@ use App\Models\Tindakantidakaman;
 
 class Tta extends Component
 {
-     use WithPagination;
+    use WithPagination;
     public $name;
-    public $kta_id, $modal = 'modal', $divider, $search = '';
+    public $tta_id, $modal = 'modal', $divider, $search = '';
 
     public function modalOpen()
     {
@@ -20,16 +20,17 @@ class Tta extends Component
     public function closeModal()
     {
         $this->reset('modal');
+        $this->reset('name', 'tta_id');
     }
     public function createKta()
     {
         $this->modalOpen();
     }
-    public function updateData(Tindakantidakaman $kta)
+    public function updateData(Tindakantidakaman $tta)
     {
         $this->modalOpen();
-        $this->kta_id = $kta->id;
-        $this->name = $kta->name;
+        $this->tta_id = $tta->id;
+        $this->name = $tta->name;
         $this->divider = 'Edit KTA';
     }
     public function rules()
@@ -48,10 +49,10 @@ class Tta extends Component
     public function store()
     {
         Tindakantidakaman::updateOrCreate(
-            ['id' => $this->kta_id],
+            ['id' => $this->tta_id],
             ['name' => $this->name]
         );
-        if ($this->kta_id) {
+        if ($this->tta_id) {
             $this->dispatch(
                 'alert',
                 [
@@ -75,7 +76,7 @@ class Tta extends Component
                     'backgroundColor' => "linear-gradient(to right, #00b09b, #96c93d)",
                 ]
             );
-            $this->reset('name');
+            $this->reset('name', 'tta_id');
         }
     }
     public function delete($id)
@@ -100,7 +101,7 @@ class Tta extends Component
             'TTA' => Tindakantidakaman::paginate(30)
         ])->extends('base.index', ['header' => 'KTA', 'title' => 'KTA'])->section('content');
     }
-     public function paginationView()
+    public function paginationView()
     {
         return 'pagination.masterpaginate';
     }
