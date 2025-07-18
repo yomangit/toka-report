@@ -20,13 +20,9 @@ class HrGrapf extends Component
         $query = HazardReport::select('division_id', DB::raw('count(*) as total'))
             ->with('division')
             ->groupBy('division_id');
-        if ($user->hasRolePermit('administrator')) {
+        if ($user->hasRolePermit('administration')) {
             // Admin bisa lihat semua laporan
             $reports = $query->get();
-        } elseif ($user->divisions()->exists()) {
-            // Hanya user yang punya relasi dengan division_user
-            $divisionIds = $user->divisions->pluck('id')->toArray();
-            $reports = $query->whereIn('division_id', $divisionIds)->get();
         } else {
             // User tanpa relasi division_user tidak bisa lihat laporan
             $reports = collect();
