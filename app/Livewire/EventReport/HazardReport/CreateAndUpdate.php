@@ -316,11 +316,11 @@ class CreateAndUpdate extends Component
             $this->ResponsibleRole = $workflow->responsible_role_id;
         }
         if ($this->key_word === 'kta') {
-            $this->tindakantidakamen_id = null;
+            $this->reset('tindakantidakamen_id');
         } elseif ($this->key_word === 'tta') {
+            $this->reset('kondisitidakamen_id');
         } else {
-            $this->kondisitidakamen_id = null;
-            $this->tindakantidakamen_id = null;
+            $this->reset('kondisitidakamen_id', 'tindakantidakamen_id');
         }
     }
     public function render()
