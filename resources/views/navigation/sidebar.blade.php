@@ -20,7 +20,7 @@
                 Dashboard</a>
         </li>
         @auth
-        @if (uth()->user()->hasRolePermit('Administrator', 'Auth'))
+        @if (auth()->user()->hasRolePermit('Administrator', 'Auth'))
         <li>
             <details {{ Request::is('eventReport/*') ? ' open' : '' }}>
                 <summary class="{{ Request::is('eventReport*') ? ' text-primary-muted font-semibold' : '' }}">
