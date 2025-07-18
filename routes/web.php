@@ -91,7 +91,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::middleware('role.permit:Administration')->group(function () {
+    Route::middleware('role.permit:administration')->group(function () {
         Route::get('admin/parent/event/akses-divisi', ManageDivisionAccess::class)
             ->name('akses-divisi');
         Route::get('admin/parent/companyCategory', categoryCompany::class)->name('categoryCompany');

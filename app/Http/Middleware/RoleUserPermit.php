@@ -29,8 +29,8 @@ class RoleUserPermit
     protected function redirectToForbiddenPage(string $role)
     {
         return match ($role) {
-            'Administration' => redirect('/')->with('error', 'Tidak diizinkan'),
-            'Auth' => redirect('/')->with('error', 'Akses dibatasi'),
+            'administration' => redirect('/')->with('error', 'Tidak diizinkan'),
+            'auth' => redirect('/')->with('error', 'Akses dibatasi'),
             default => abort(403, 'Unauthorized'),
         };
     }

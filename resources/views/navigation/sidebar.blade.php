@@ -20,7 +20,7 @@
                 Dashboard</a>
         </li>
         @auth
-        @if (auth()->user()->hasRolePermit('Administrator', 'Auth'))
+        @if (auth()->user()->hasRolePermit('administration', 'auth'))
         <li>
             <details {{ Request::is('eventReport/*') ? ' open' : '' }}>
                 <summary class="{{ Request::is('eventReport*') ? ' text-primary-muted font-semibold' : '' }}">
@@ -65,7 +65,7 @@
             </details>
         </li>
         @endif
-        @if (auth()->user()->hasRolePermit('Administrator'))
+        @if (auth()->user()->hasRolePermit('administration'))
         <li>
             <details {{ Request::is('admin*') ? ' open' : '' }}>
                 <summary class="{{ Request::is('admin*') ? ' text-primary-muted font-semibold' : '' }}">
