@@ -127,7 +127,10 @@ class HazardReport extends Model
             })
         );
     }
-
+    public function logs()
+    {
+        return $this->hasMany(HazardReportLog::class);
+    }
     public function scopeSearchEventType($q, $term)
     {
         $q->when(
