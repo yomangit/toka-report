@@ -20,6 +20,7 @@ class Kta extends Component
     public function closeModal()
     {
         $this->reset('modal');
+        $this->reset('name', 'kta_id');
     }
     public function createKta()
     {
