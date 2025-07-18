@@ -1,5 +1,5 @@
 <div>
-    <div class="p-4 ">
+    <div>
         <x-notification />
 
         @section('bradcrumbs')
