@@ -1,12 +1,12 @@
 <div>
     <x-notification />
-    <div class="flex flex-col sm:flex-row sm:justify-between ">
+    <div>
+        <div class="flex flex-col sm:flex-row sm:justify-between ">
         <div>  <x-btn-add data-tip="Add data" wire:click="$dispatch('openModal', { component: 'admin.event-category.create-and-update' })" /></div>
         <div>
             <x-inputsearch name='search' wire:model.live='search' />
         </div>
     </div>
-
     <div class="overflow-x-auto">
         <table class="table table-zebra table-xs">
             <!-- head -->
@@ -23,7 +23,7 @@
                     <tr class="text-center">
                         <th>{{ $EventCategory->firstItem() + $no }}</th>
                         <td>{{ $cc->event_category_name }}</td>
-                        <td class="flex flex-row gap-1 justify-center">
+                        <td class="flex flex-row justify-center gap-1">
                             <x-icon-btn-edit data-tip="Edit"
                                 wire:click="$dispatch('openModal', { component: 'admin.event-category.create-and-update', arguments: { event_category: {{ $cc->id }} }})" />
                             <x-icon-btn-delete wire:click="delete({{ $cc->id }})"
@@ -39,5 +39,6 @@
             </tbody>
         </table>
         <div>{{ $EventCategory->links() }}</div>
+    </div>
     </div>
 </div>
