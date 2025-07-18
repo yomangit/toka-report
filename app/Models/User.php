@@ -85,10 +85,19 @@ class User extends Authenticatable implements LdapAuthenticatable
     {
         return $this->belongsTo(RoleUserPermit::class, 'role_user_permit_id');
     }
-    public function hasRolePermit(string $role): bool
+    public function hasRolePermit(...$roles): bool
     {
-        return strtolower($this->rolePermit?->name) === strtolower($role);
+        $userRole = strtolower($this->rolePermit?->name ?? '');
+
+        foreach ($roles as $role) {
+            if (strtolower($role) === $userRole) {
+                return true;
+            }
+        }
+
+        return false;
     }
+
     public function divisions()
     {
         return $this->belongsToMany(Division::class);
