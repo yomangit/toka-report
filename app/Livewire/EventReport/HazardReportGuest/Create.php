@@ -347,7 +347,7 @@ class Create extends Component
     }
     public function store()
     {
-        if ($this->data) {
+        if ($this->date) {
             $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $this->date);
             $dateForRef = $dateObj->format('Y/m/d');
             $dateForDB  = $dateObj->format('Y-m-d : H:i');
