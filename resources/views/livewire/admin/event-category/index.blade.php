@@ -1,41 +1,64 @@
-<div>
+<div class="p-2 sm:p-4">
     <x-notification />
-    <div class="flex flex-col sm:flex-row sm:justify-between ">
+
+    {{-- Tombol & Pencarian Responsif --}}
+    <div class="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <x-btn-add data-tip="Add data" wire:click="$dispatch('openModal', { component: 'admin.event-category.create-and-update' })" />
+            <x-btn-add 
+                class="w-full sm:w-auto"
+                data-tip="Add data" 
+                wire:click="$dispatch('openModal', { component: 'admin.event-category.create-and-update' })" 
+            />
         </div>
-        <div>
-            <x-inputsearch name='search' wire:model.live='search' />
+        <div class="w-full sm:w-64">
+            <x-inputsearch 
+                name='search' 
+                wire:model.live='search'
+                class="w-full"
+            />
         </div>
     </div>
-    <div class="overflow-x-auto">
-        <table class="table table-zebra table-xs">
-            <!-- head -->
+
+    {{-- Table --}}
+    <div class="overflow-x-auto bg-white rounded shadow">
+        <table class="table w-full text-sm table-zebra table-xs">
             <thead>
-                <tr class="text-center">
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Action</th>
+                <tr class="text-center text-gray-700 bg-gray-100">
+                    <th class="px-2 py-3">#</th>
+                    <th class="px-2 py-3">Name</th>
+                    <th class="px-2 py-3">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- row 1 -->
                 @forelse ($EventCategory as $no => $cc)
                 <tr class="text-center">
-                    <th>{{ $EventCategory->firstItem() + $no }}</th>
-                    <td>{{ $cc->event_category_name }}</td>
-                    <td class="flex flex-row justify-center gap-1">
-                        <x-icon-btn-edit data-tip="Edit" wire:click="$dispatch('openModal', { component: 'admin.event-category.create-and-update', arguments: { event_category: {{ $cc->id }} }})" />
-                        <x-icon-btn-delete wire:click="delete({{ $cc->id }})" wire:confirm.prompt="Are you sure delete  ?\n\nType DELETE to confirm|DELETE" data-tip="Delete" />
+                    <th class="px-2 py-2">{{ $EventCategory->firstItem() + $no }}</th>
+                    <td class="px-2 py-2">{{ $cc->event_category_name }}</td>
+                    <td class="px-2 py-2">
+                        <div class="flex flex-wrap justify-center gap-1">
+                            <x-icon-btn-edit 
+                                data-tip="Edit" 
+                                wire:click="$dispatch('openModal', { component: 'admin.event-category.create-and-update', arguments: { event_category: {{ $cc->id }} }})" 
+                            />
+                            <x-icon-btn-delete 
+                                wire:click="delete({{ $cc->id }})" 
+                                wire:confirm.prompt="Are you sure delete  ?\n\nType DELETE to confirm|DELETE" 
+                                data-tip="Delete" 
+                            />
+                        </div>
                     </td>
                 </tr>
                 @empty
                 <tr class="text-center">
-                    <th colspan="3" class="text-error">data not found!!! </th>
+                    <td colspan="3" class="py-4 text-error">Data not found!!!</td>
                 </tr>
                 @endforelse
             </tbody>
         </table>
-        <div>{{ $EventCategory->links() }}</div>
+
+        {{-- Pagination --}}
+        <div class="mt-4">
+            {{ $EventCategory->links() }}
+        </div>
     </div>
 </div>
