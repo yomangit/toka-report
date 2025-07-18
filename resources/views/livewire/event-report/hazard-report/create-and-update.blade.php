@@ -154,7 +154,7 @@
             </div>
 
             <!-- Upload dokumen -->
-            <div class="w-full max-w-md xl:max-w-xl form-control">
+            <div wire:ignore class="w-full max-w-md xl:max-w-xl form-control">
                 <x-label-no-req :value="__('documentation')" />
                 <div class="relative">
                     <x-input-file wire:model.live='documentation' :error="$errors->get('documentation')" />
@@ -166,7 +166,7 @@
                 </div>
                 <x-label-error :messages="$errors->get('documentation')" />
             </div>
-            <div wire:ignore class="w-full form-control">
+            <div wire:ignore wire:ignore class="w-full form-control">
                 <x-label-req :value="__('immediate corrective action')" />
                 <textarea id="immediate_corrective_action"></textarea>
                 <x-label-error :messages="$errors->get('immediate_corrective_action')" />

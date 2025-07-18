@@ -144,12 +144,8 @@ class CreateAndUpdate extends Component
             'location_id'           => ['required'],
             'location_name'         => ['required'],
             'tindakkan_selanjutnya' => ['required'],
+            'immediate_corrective_action' => ['required'],
         ];
-
-        if ($this->show_immidiate === 'yes') {
-            $baseRules['immediate_corrective_action'] = ['required'];
-        }
-
         return $baseRules;
     }
 
