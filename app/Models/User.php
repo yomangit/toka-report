@@ -87,7 +87,7 @@ class User extends Authenticatable implements LdapAuthenticatable
     }
     public function hasRolePermit(...$roles): bool
     {
-        $userRole = strtolower($this->rolePermit?->name ?? '');
+        $userRole = strtolower($this->rolePermit?->name_role_user ?? '');
 
         foreach ($roles as $role) {
             if (strtolower($role) === $userRole) {
