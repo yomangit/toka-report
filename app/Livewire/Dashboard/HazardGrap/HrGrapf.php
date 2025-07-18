@@ -20,8 +20,7 @@ class HrGrapf extends Component
         $query = HazardReport::select('division_id', DB::raw('count(*) as total'))
             ->with('division')
             ->groupBy('division_id');
-
-        if ($user->role_user_permit_id == 1) {
+        if ($user->hasRolePermit('administrator')) {
             $reports = $query->get(); // admin bisa lihat semua
         } elseif ($user->canViewOwnDivision()) {
             // Ambil ID semua divisi yang dimiliki user dari tabel pivot
