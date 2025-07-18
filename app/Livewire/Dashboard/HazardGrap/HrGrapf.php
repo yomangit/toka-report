@@ -16,7 +16,7 @@ class HrGrapf extends Component
     public function mount()
     {
         $user = auth()->user();
-        
+
         $query = HazardReport::select('division_id', DB::raw('count(*) as total'))
             ->with('division')
             ->groupBy('division_id');
@@ -24,11 +24,12 @@ class HrGrapf extends Component
         if ($user->role_user_permit_id == 1) {
             $reports = $query->get(); // admin bisa lihat semua
         } elseif ($user->canViewOwnDivision()) {
-            $reports = $query->where('division_id', $user->division_id)->get();
+            // Ambil ID semua divisi yang dimiliki user dari tabel pivot
+            $divisionIds = $user->divisions->pluck('id')->toArray();
+            $reports = $query->whereIn('division_id', $divisionIds)->get();
         } else {
             $reports = collect(); // user biasa yang tidak diizinkan => kosong
         }
-
         $this->divisionLabels = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
         $this->divisionCounts = $reports->pluck('total')->toArray();
         // Fungsi untuk generate warna berdasarkan nama
