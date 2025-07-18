@@ -196,10 +196,8 @@
                                 <input x-model="status" wire:model.live='key_word' value="tta" id="published" type="radio" name="status" class="radio radio-sm radio-accent" />
                                 <span class="text-xs font-semibold">TTA</span>
                             </label>
-                            <x-label-error :messages="$errors->get('key_word')" />
-                            <x-label-error :messages="$errors->get('kondisitidakamen_id')" />
-                            <x-label-error :messages="$errors->get('tindakantidakamen_id')" />
                         </div>
+                        <x-label-error :messages="$errors->get('key_word')" />
 
                         <!-- KTA Select -->
                         <div x-show="status === 'kta'" x-transition.opacity.duration.300ms class="mt-2">
