@@ -188,20 +188,23 @@
                         <!-- Radio Buttons -->
                         <div class="flex items-center gap-4 mt-2">
                             <label class="flex items-center space-x-1">
-                                <input x-model="status" value="kta" id="draft" type="radio" name="status" class="radio radio-sm radio-primary" />
+                                <input x-model="status" wire:model.live='key_word' value="kta" id="draft" type="radio" name="status" class="radio radio-sm radio-primary" />
                                 <span class="text-xs font-semibold">KTA</span>
                             </label>
 
                             <label class="flex items-center space-x-1">
-                                <input x-model="status" value="tta" id="published" type="radio" name="status" class="radio radio-sm radio-accent" />
+                                <input x-model="status" wire:model.live='key_word' value="tta" id="published" type="radio" name="status" class="radio radio-sm radio-accent" />
                                 <span class="text-xs font-semibold">TTA</span>
                             </label>
+                            <x-label-error :messages="$errors->get('key_word')" />
+                            <x-label-error :messages="$errors->get('kondisitidakamen_id')" />
+                            <x-label-error :messages="$errors->get('tindakantidakamen_id')" />
                         </div>
 
                         <!-- KTA Select -->
                         <div x-show="status === 'kta'" x-transition.opacity.duration.300ms class="mt-2">
                             <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')">
-                                <option value="" selected>Select an option</option>
+                                <option value="" selected>Pilih KTA...</option>
                                 @forelse ($KTA as $kta)
                                 <option value="{{ $kta->id }}">{{ $kta->name }}</option>
                                 @endforeach
@@ -212,7 +215,7 @@
                         <!-- TTA Select -->
                         <div x-show="status === 'tta'" x-transition.opacity.duration.300ms class="mt-2">
                             <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
-                                <option value="" selected>Select an option</option>
+                                <option value="" selected>Pilih TTA</option>
                                 @forelse ($TTA as $tta)
                                 <option value="{{ $tta->id }}">{{ $tta->name }}</option>
                                 @endforeach

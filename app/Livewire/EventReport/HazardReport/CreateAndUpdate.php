@@ -70,6 +70,9 @@ class CreateAndUpdate extends Component
     public $workgroup_id;
     public $select_divisi;
     public $token;
+    public $key_word;
+    public $kondisitidakamen_id;
+    public $tindakantidakamen_id;
 
     // Names and Labels
     public $location_name;
@@ -146,6 +149,14 @@ class CreateAndUpdate extends Component
             'tindakkan_selanjutnya' => ['required'],
             'immediate_corrective_action' => ['required'],
         ];
+        if ($this->key_word === 'kta') {
+            $baseRules['kondisitidakamen_id'] = ['required'];
+        } elseif ($this->key_word === 'tta') {
+            $baseRules['tindakantidakamen_id'] = ['required'];
+        } else {
+            $baseRules['key_word'] = ['required'];
+        }
+
         return $baseRules;
     }
 
