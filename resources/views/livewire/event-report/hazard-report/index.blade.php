@@ -19,7 +19,7 @@
             </div>
             <div class="flex flex-row form-control">
                 <label class="gap-4 cursor-pointer label">
-                    <span class="label-text font-spicy_rice">My Tray</span>
+                    <span class="label-text font-spicy_rice ">My Tray</span>
                     <input type="checkbox" wire:model.live='in_tray' checked="checked"
                         class="checkbox [--chkbg:oklch(var(--a))] [--chkfg:oklch(var(--p))] checkbox-xs" />
                 </label>
