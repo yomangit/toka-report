@@ -1,7 +1,7 @@
 @props(['value', 'name','placeholder'])
 
 
-<div class="relative block w-full ">
+<label class="relative block w-full ">
     <span class="absolute inset-y-0 left-0 flex items-center pl-2">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
             <path fill-rule="evenodd"
