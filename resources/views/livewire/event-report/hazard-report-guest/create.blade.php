@@ -179,55 +179,84 @@
             </div>
             <x-label-error :messages="$errors->get('immediate_corrective_action')" />
         </div>
-        <div class="grid grid-rows-3 mt-2 border divide-y-2 md:grid-rows-1 md:grid-cols-3 md:content-center md:gap-4 md:divide-y-0 md:divide-x-2 divide-base-200 border-base-200 rounded-box">
-            <div class='px-4 '>
-                <fieldset class="w-full max-w-md xl:max-w-xl ">
-                    <x-label-req :value="__('key word')" />
-                    <input id="draft" class="peer/draft radio radio-xs radio-primary" type="radio" name="status" />
-                    <label for="draft" class="text-xs font-semibold peer-checked/draft:text-primary">KTA</label>
-                    <input id="published" class="peer/published radio radio-accent radio-xs" type="radio" name="status" />
-                    <label for="published" class="text-xs font-semibold peer-checked/published:text-accent">TTA</label>
-                    <div class="hidden peer-checked/draft:block">
+        <div class="grid grid-cols-1 gap-6 mt-4 transition-all duration-300 ease-in-out border divide-y border-base-200 divide-base-200 rounded-xl md:grid-cols-3 md:divide-y-0 md:divide-x md:p-6">
+            <!-- KEYWORD (KTA / TTA) -->
+            <div class="px-4 py-2 space-y-3 md:px-0">
+                <fieldset>
+                    <x-label-req :value="__('Key Word')" />
+                    <div class="flex flex-wrap gap-4 mt-2">
+                        <!-- KTA -->
+                        <label class="flex items-center space-x-1 transition-transform duration-200 ease-in-out transform hover:scale-105">
+                            <input id="draft" class="peer/draft radio radio-sm radio-primary" type="radio" name="status" />
+                            <span class="text-xs font-semibold peer-checked/draft:text-primary">KTA</span>
+                        </label>
+
+                        <!-- TTA -->
+                        <label class="flex items-center space-x-1 transition-transform duration-200 ease-in-out transform hover:scale-105">
+                            <input id="published" class="peer/published radio radio-sm radio-accent" type="radio" name="status" />
+                            <span class="text-xs font-semibold peer-checked/published:text-accent">TTA</span>
+                        </label>
+                    </div>
+
+                    <!-- KTA Select -->
+                    <div x-data="{ showKTA: false }" x-init="$watch(() => document.getElementById('draft').checked, val => showKTA = val)" x-show="showKTA" x-transition.opacity.duration.300ms class="mt-3">
                         <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')">
                             <option value="" selected>Select an option</option>
                             @forelse ($KTA as $kta)
-                            <option value="{{ $kta->id }}" selected>{{ $kta->name }}</option>
+                            <option value="{{ $kta->id }}">{{ $kta->name }}</option>
                             @endforeach
                         </x-select>
                         <x-label-error :messages="$errors->get('kondisitidakamen_id')" />
                     </div>
-                    <div class="hidden peer-checked/published:block">
+
+                    <!-- TTA Select -->
+                    <div x-data="{ showTTA: false }" x-init="$watch(() => document.getElementById('published').checked, val => showTTA = val)" x-show="showTTA" x-transition.opacity.duration.300ms class="mt-3">
                         <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
                             <option value="" selected>Select an option</option>
                             @forelse ($TTA as $tta)
-                            <option value="{{ $tta->id }}" selected>{{ $tta->name }}</option>
+                            <option value="{{ $tta->id }}">{{ $tta->name }}</option>
                             @endforeach
                         </x-select>
                         <x-label-error :messages="$errors->get('tindakantidakamen_id')" />
                     </div>
                 </fieldset>
             </div>
-            <div class='px-4 md:place-self-center'>
-                <fieldset class="w-40 max-w-sm fieldset rounded-box">
-                    <x-label-req :value="__('perbaikan tingkat lanjut')" />
-                    <input wire:click="$dispatch('modalActionHazardNew')" wire:model.live="tindakkan_selanjutnya" value='1' name="tingkat_lanjut" id="yes_lanjut" class="radio-xs peer/yes_lanjut checked:bg-rose-500 radio" type="radio" />
-                    <label wire:click="$dispatch('modalActionHazardNew')" for="yes_lanjut" class="text-xs font-semibold peer-checked/yes_lanjut:text-rose-500">{{ __('Yes') }}</label>
-                    <input wire:model.live="tindakkan_selanjutnya" value="0" id="no_lanjut" class="peer/no_lanjut checked:bg-emerald-500 radio-xs radio" type="radio" name="tingkat_lanjut" />
-                    <label for="no_lanjut" class="text-xs font-semibold peer-checked/no_lanjut:text-emerald-500">{{ __('No') }}</label>
+
+            <!-- Divider untuk mobile -->
+            <div class="border-t md:hidden border-base-200"></div>
+
+            <!-- PERBAIKAN TINGKAT LANJUT -->
+            <div class="px-4 py-2 md:px-6 md:col-span-2">
+                <fieldset class="space-y-2">
+                    <x-label-req :value="__('Perbaikan Tingkat Lanjut')" />
+                    <div class="flex flex-wrap gap-4 mt-2">
+                        <!-- YES -->
+                        <label class="flex items-center space-x-1 transition-transform duration-200 ease-in-out transform hover:scale-105">
+                            <input wire:click="$dispatch('modalActionHazardNew')" wire:model.live="tindakkan_selanjutnya" value="1" name="tingkat_lanjut" id="yes_lanjut" class="radio radio-sm radio-error peer/yes_lanjut" type="radio" />
+                            <span class="text-xs font-semibold peer-checked/yes_lanjut:text-error">Yes</span>
+                        </label>
+
+                        <!-- NO -->
+                        <label class="flex items-center space-x-1 transition-transform duration-200 ease-in-out transform hover:scale-105">
+                            <input wire:model.live="tindakkan_selanjutnya" value="0" name="tingkat_lanjut" id="no_lanjut" class="radio radio-sm radio-success peer/no_lanjut" type="radio" />
+                            <span class="text-xs font-semibold peer-checked/no_lanjut:text-success">No</span>
+                        </label>
+                    </div>
+                    <x-label-error :messages="$errors->get('tindakkan_selanjutnya')" />
                 </fieldset>
-                <x-label-error :messages="$errors->get('tindakkan_selanjutnya')" />
             </div>
         </div>
+
         @isset($date)
         <div class="mt-2">
             <livewire:event-report.hazard-report-guest.action-index :token="$token" :tgl="$date">
         </div>
-            @endisset
+        @endisset
 
-            <div class="modal-action ">
-                <x-btn-save-active wire:target="documentation" wire:loading.class="btn-disabled">{{ __('Submit') }}
-                </x-btn-save-active>
-            </div>
+        <div class="modal-action ">
+            <x-btn-save-active wire:target="documentation" wire:loading.class="btn-disabled">{{ __('Submit') }}
+            </x-btn-save-active>
+        </div>
     </form>
     <livewire:event-report.hazard-report-guest.action :token="$token" :tgl="$date" />
     <script nonce="{{ csp_nonce() }}">

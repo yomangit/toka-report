@@ -20,7 +20,7 @@
             @csrf
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 <!-- contoh 1 kolom -->
-                <div class="form-control">
+                <div class="w-full max-w-md xl:max-w-xl form-control">
                     <x-label-req :value="__('tipe bahaya')" />
                     <x-select wire:model.live='event_type_id' :error="$errors->get('event_type_id')">
                         <option value="">Select an option</option>
@@ -146,14 +146,15 @@
             </div>
 
             <!-- Textarea description -->
-            <div wire:ignore class="form-control">
+
+            <div wire:ignore class="w-full max-w-md xl:max-w-xl form-control">
                 <x-label-req :value="__('Hazard Details')" />
                 <textarea id="description" class="w-full"></textarea>
                 <x-label-error :messages="$errors->get('description')" />
             </div>
 
             <!-- Upload dokumen -->
-            <div class="form-control">
+            <div class="w-full max-w-md xl:max-w-xl form-control">
                 <x-label-no-req :value="__('documentation')" />
                 <div class="relative">
                     <x-input-file wire:model.live='documentation' :error="$errors->get('documentation')" />
@@ -164,6 +165,78 @@
                     <span wire:target="documentation" wire:loading.class="absolute right-0 transform -translate-y-1/2 top-1/2 loading loading-spinner text-warning"></span>
                 </div>
                 <x-label-error :messages="$errors->get('documentation')" />
+            </div>
+                       <div wire:ignore class="w-full max-w-md xl:max-w-xl form-control">
+                <x-label-req :value="__('immediate corrective action')" />
+                <textarea id="immediate_corrective_action"></textarea>
+                <x-label-error :messages="$errors->get('immediate_corrective_action')" />
+            </div>
+            <div class="grid grid-cols-1 gap-6 mt-4 transition-all duration-300 ease-in-out border divide-y border-base-200 divide-base-200 rounded-xl md:grid-cols-3 md:divide-y-0 md:divide-x md:p-6">
+                <!-- KEYWORD (KTA / TTA) -->
+                <div class="px-4 py-2 space-y-3 md:px-0">
+                    <fieldset>
+                        <x-label-req :value="__('Key Word')" />
+                        <div class="flex flex-wrap gap-4 mt-2">
+                            <!-- KTA -->
+                            <label class="flex items-center space-x-1 transition-transform duration-200 ease-in-out transform hover:scale-105">
+                                <input id="draft" class="peer/draft radio radio-sm radio-primary" type="radio" name="status" />
+                                <span class="text-xs font-semibold peer-checked/draft:text-primary">KTA</span>
+                            </label>
+
+                            <!-- TTA -->
+                            <label class="flex items-center space-x-1 transition-transform duration-200 ease-in-out transform hover:scale-105">
+                                <input id="published" class="peer/published radio radio-sm radio-accent" type="radio" name="status" />
+                                <span class="text-xs font-semibold peer-checked/published:text-accent">TTA</span>
+                            </label>
+                        </div>
+
+                        <!-- KTA Select -->
+                        <div x-data="{ showKTA: false }" x-init="$watch(() => document.getElementById('draft').checked, val => showKTA = val)" x-show="showKTA" x-transition.opacity.duration.300ms class="mt-3">
+                            <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')">
+                                <option value="" selected>Select an option</option>
+                                @forelse ($KTA as $kta)
+                                <option value="{{ $kta->id }}">{{ $kta->name }}</option>
+                                @endforeach
+                            </x-select>
+                            <x-label-error :messages="$errors->get('kondisitidakamen_id')" />
+                        </div>
+
+                        <!-- TTA Select -->
+                        <div x-data="{ showTTA: false }" x-init="$watch(() => document.getElementById('published').checked, val => showTTA = val)" x-show="showTTA" x-transition.opacity.duration.300ms class="mt-3">
+                            <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
+                                <option value="" selected>Select an option</option>
+                                @forelse ($TTA as $tta)
+                                <option value="{{ $tta->id }}">{{ $tta->name }}</option>
+                                @endforeach
+                            </x-select>
+                            <x-label-error :messages="$errors->get('tindakantidakamen_id')" />
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- Divider untuk mobile -->
+                <div class="border-t md:hidden border-base-200"></div>
+
+                <!-- PERBAIKAN TINGKAT LANJUT -->
+                <div class="px-4 py-2 md:px-6 md:col-span-2">
+                    <fieldset class="space-y-2">
+                        <x-label-req :value="__('Perbaikan Tingkat Lanjut')" />
+                        <div class="flex flex-wrap gap-4 mt-2">
+                            <!-- YES -->
+                            <label class="flex items-center space-x-1 transition-transform duration-200 ease-in-out transform hover:scale-105">
+                                <input wire:click="$dispatch('modalActionHazardNew')" wire:model.live="tindakkan_selanjutnya" value="1" name="tingkat_lanjut" id="yes_lanjut" class="radio radio-sm radio-error peer/yes_lanjut" type="radio" />
+                                <span class="text-xs font-semibold peer-checked/yes_lanjut:text-error">Yes</span>
+                            </label>
+
+                            <!-- NO -->
+                            <label class="flex items-center space-x-1 transition-transform duration-200 ease-in-out transform hover:scale-105">
+                                <input wire:model.live="tindakkan_selanjutnya" value="0" name="tingkat_lanjut" id="no_lanjut" class="radio radio-sm radio-success peer/no_lanjut" type="radio" />
+                                <span class="text-xs font-semibold peer-checked/no_lanjut:text-success">No</span>
+                            </label>
+                        </div>
+                        <x-label-error :messages="$errors->get('tindakkan_selanjutnya')" />
+                    </fieldset>
+                </div>
             </div>
 
             <!-- Tombol Simpan -->
@@ -185,6 +258,14 @@
             }).then(editor => {
                 editor.model.document.on('change:data', () => {
                     @this.set('description', editor.getData());
+                });
+            });
+
+            ClassicEditor.create(document.querySelector('#immediate_corrective_action'), {
+                toolbar: ['undo', 'redo', 'bold', 'italic', 'numberedList', 'bulletedList', 'link']
+            }).then(editor => {
+                editor.model.document.on('change:data', () => {
+                    @this.set('immediate_corrective_action', editor.getData());
                 });
             });
 
