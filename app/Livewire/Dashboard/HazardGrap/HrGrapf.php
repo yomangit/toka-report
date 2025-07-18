@@ -21,13 +21,15 @@ class HrGrapf extends Component
             ->with('division')
             ->groupBy('division_id');
         if ($user->hasRolePermit('administrator')) {
-            $reports = $query->get(); // admin bisa lihat semua
-        } elseif ($user->canViewOwnDivision()) {
-            // Ambil ID semua divisi yang dimiliki user dari tabel pivot
+            // Admin bisa lihat semua laporan
+            $reports = $query->get();
+        } elseif ($user->divisions()->exists()) {
+            // Hanya user yang punya relasi dengan division_user
             $divisionIds = $user->divisions->pluck('id')->toArray();
             $reports = $query->whereIn('division_id', $divisionIds)->get();
         } else {
-            $reports = collect(); // user biasa yang tidak diizinkan => kosong
+            // User tanpa relasi division_user tidak bisa lihat laporan
+            $reports = collect();
         }
         $this->divisionLabels = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
         $this->divisionCounts = $reports->pluck('total')->toArray();
