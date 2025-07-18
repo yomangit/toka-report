@@ -328,15 +328,16 @@ class Create extends Component
     }
     public function store()
     {
-        // Format tanggal untuk referensi
-        $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $this->date);
-        $dateForRef = $dateObj->format('Y/m/d');
-        $dateForDB  = $dateObj->format('Y-m-d : H:i');
+        if ($this->data) {
+            $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $this->date);
+            $dateForRef = $dateObj->format('Y/m/d');
+            $dateForDB  = $dateObj->format('Y-m-d : H:i');
 
-        // Generate reference number
-        $count = HazardReport::count() + 1;
-        $refNumber = str_pad($count, 4, '0', STR_PAD_LEFT);
-        $this->reference = "HR/TOKA/{$dateForRef}/{$refNumber}";
+            // Generate reference number
+            $count = HazardReport::count() + 1;
+            $refNumber = str_pad($count, 4, '0', STR_PAD_LEFT);
+            $this->reference = "HR/TOKA/{$dateForRef}/{$refNumber}";
+        }
         // Validasi input
         $this->validate();
 
@@ -421,7 +422,7 @@ class Create extends Component
                 $approval->approve();
             }
         } else {
-             $exists = Approval::where('new_data->token', $this->token)->exists();
+            $exists = Approval::where('new_data->token', $this->token)->exists();
             if ($exists) {
                 Approval::whereIn('new_data->token', $this->token)->delete();
             }
