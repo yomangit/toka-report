@@ -174,24 +174,24 @@
             <div class="grid grid-cols-1 gap-6 mt-4 transition-all duration-300 ease-in-out border divide-y border-base-200 divide-base-200 rounded-xl md:grid-cols-3 md:divide-y-0 md:divide-x md:p-6">
                 <!-- KEYWORD (KTA / TTA) -->
                 <div class="px-4 py-2 space-y-3 md:px-0">
-                    <fieldset>
+                    <fieldset x-data="{ status: '' }" class="space-y-3">
                         <x-label-req :value="__('Key Word')" />
-                        <div class="flex flex-wrap gap-4 mt-2">
-                            <!-- KTA -->
-                            <label class="flex items-center space-x-1 transition-transform duration-200 ease-in-out transform hover:scale-105">
-                                <input id="draft" class="peer/draft radio radio-sm radio-primary" type="radio" name="status" />
-                                <span class="text-xs font-semibold peer-checked/draft:text-primary">KTA</span>
+
+                        <!-- Radio Buttons -->
+                        <div class="flex items-center gap-4 mt-2">
+                            <label class="flex items-center space-x-1">
+                                <input x-model="status" value="kta" id="draft" type="radio" name="status" class="radio radio-sm radio-primary" />
+                                <span class="text-xs font-semibold">KTA</span>
                             </label>
 
-                            <!-- TTA -->
-                            <label class="flex items-center space-x-1 transition-transform duration-200 ease-in-out transform hover:scale-105">
-                                <input id="published" class="peer/published radio radio-sm radio-accent" type="radio" name="status" />
-                                <span class="text-xs font-semibold peer-checked/published:text-accent">TTA</span>
+                            <label class="flex items-center space-x-1">
+                                <input x-model="status" value="tta" id="published" type="radio" name="status" class="radio radio-sm radio-accent" />
+                                <span class="text-xs font-semibold">TTA</span>
                             </label>
                         </div>
 
                         <!-- KTA Select -->
-                        <div x-data="{ showKTA: false }" x-init="$watch(() => document.getElementById('draft').checked, val => showKTA = val)" x-show="showKTA" x-transition.opacity.duration.300ms class="mt-3">
+                        <div x-show="status === 'kta'" x-transition.opacity.duration.300ms class="mt-2">
                             <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')">
                                 <option value="" selected>Select an option</option>
                                 @forelse ($KTA as $kta)
@@ -202,7 +202,7 @@
                         </div>
 
                         <!-- TTA Select -->
-                        <div x-data="{ showTTA: false }" x-init="$watch(() => document.getElementById('published').checked, val => showTTA = val)" x-show="showTTA" x-transition.opacity.duration.300ms class="mt-3">
+                        <div x-show="status === 'tta'" x-transition.opacity.duration.300ms class="mt-2">
                             <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
                                 <option value="" selected>Select an option</option>
                                 @forelse ($TTA as $tta)
@@ -212,6 +212,7 @@
                             <x-label-error :messages="$errors->get('tindakantidakamen_id')" />
                         </div>
                     </fieldset>
+
                 </div>
 
                 <!-- Divider untuk mobile -->
