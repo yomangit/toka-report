@@ -129,8 +129,8 @@
     <div class="mt-2">{{ $HazardReport->links() }}</div>
 
     @push('scripts')
-    <script nonce="{{ csp_nonce() }}" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script nonce="{{ csp_nonce() }}">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
         flatpickr("#rangeDate", {
             mode: 'range',
             dateFormat: "d-m-Y",
