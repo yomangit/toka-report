@@ -149,7 +149,7 @@
 
             <div>
                 <x-label-req :value="__('Hazard Details')" />
-                <div class="@error('description') border border-rose-500 @enderror">
+                <div class="@error('description') border border-rose-500 rounded-xs @enderror">
                     <div wire:ignore class="w-full form-control">
                         <textarea id="description" class="w-full"></textarea>
                     </div>
@@ -171,9 +171,11 @@
                 <x-label-error :messages="$errors->get('documentation')" />
             </div>
             <div>
-                <div wire:ignore wire:ignore class="w-full form-control">
-                    <x-label-req :value="__('immediate corrective action')" />
-                    <textarea id="immediate_corrective_action"></textarea>
+                <x-label-req :value="__('immediate corrective action')" />
+                <div class="@error('immediate_corrective_action') border border-rose-500 rounded-xs @enderror">
+                    <div wire:ignore wire:ignore class="w-full form-control">
+                        <textarea id="immediate_corrective_action"></textarea>
+                    </div>
                 </div>
                 <x-label-error :messages="$errors->get('immediate_corrective_action')" />
             </div>
