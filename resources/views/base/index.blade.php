@@ -57,7 +57,7 @@
 <body class="static antialiased">
     @include('navigation.sidebar')
     <!-- start: Main -->
-    <main class="min-h-screen w-full md:w-[calc(100%-256px)] md:ml-64 transition-all">
+    <main class="min-h-screen w-full md:w-[calc(100%-256px)] md:ml-64 transition-all main">
         @include('navigation.navbar')
 
         <div class="w-full max-w-screen-xl px-4 py-4 mx-auto">
