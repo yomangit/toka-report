@@ -97,16 +97,16 @@
                 </div>
             </div>
             <div>
-                <!-- Tombol untuk membuka modal -->
-                <button onclick="document.getElementById('historyModal').showModal()" class="btn btn-sm btn-outline">
+                <x-btn-show wire:click="$set('showHistoryModal', true)">
                     📜 Lihat Riwayat Perubahan
-                </button>
+                </x-btn-show>
 
-                <!-- Modal -->
-                <dialog id="historyModal" class="modal">
-                    <div class="max-w-2xl modal-box">
-                        <h3 class="mb-4 text-lg font-bold text-gray-800">📜 Riwayat Perubahan</h3>
+                <x-modal wire:model="showHistoryModal" maxWidth="2xl">
+                    <x-slot name="title">
+                        📜 Riwayat Perubahan
+                    </x-slot>
 
+                    <x-slot name="content">
                         @forelse ($hazardReport->logs as $log)
                         <div class="p-4 mb-3 transition duration-200 border rounded-md shadow-sm bg-base-100 hover:bg-base-200">
                             <div class="flex flex-col sm:flex-row sm:justify-between">
@@ -118,6 +118,7 @@
                                     {{ $log->created_at->format('d M Y H:i') }}
                                 </div>
                             </div>
+
                             @if ($log->old_values || $log->new_values)
                             <div class="mt-2 text-sm">
                                 <div class="text-red-500">
@@ -132,14 +133,14 @@
                         @empty
                         <div class="text-sm italic text-gray-500">Belum ada perubahan yang tercatat.</div>
                         @endforelse
-                        <div class="modal-action">
-                            <form method="dialog">
-                                <button class="btn">Tutup</button>
-                            </form>
-                        </div>
-                    </div>
-                </dialog>
+                    </x-slot>
 
+                    <x-slot name="footer">
+                        <x-button secondary wire:click="$set('showHistoryModal', false)">
+                            Tutup
+                        </x-button>
+                    </x-slot>
+                </x-modal>
 
             </div>
         </div>
