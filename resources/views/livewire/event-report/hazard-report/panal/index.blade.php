@@ -136,9 +136,9 @@
                     </x-slot>
 
                     <x-slot name="footer">
-                        <x-button secondary wire:click="$set('showHistoryModal', false)">
+                        <x-btn-close secondary wire:click="$set('showHistoryModal', false)">
                             Tutup
-                        </x-button>
+                        </x-btn-close>
                     </x-slot>
                 </x-modal>
 
