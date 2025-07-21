@@ -327,6 +327,7 @@ class Detail extends Component
         $this->risk_consequence_id = $risk_consequence_id;
         $this->risk_likelihood_id  = $risk_likelihood_id;
         $this->risk_assessment_id  = $risk_assessment_id;
+        $this->TableRiskFunction();
     }
     public function TableRiskFunction()
     {
