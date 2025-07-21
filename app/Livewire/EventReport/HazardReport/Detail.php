@@ -330,21 +330,23 @@ class Detail extends Component
     }
     public function TableRiskFunction()
     {
-        $this->RiskAssessment = TableRiskAssessment::with(['RiskAssessment'])->where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->get();
-
-        if ($this->risk_consequence_id) {
-            $this->risk_consequence_doc = RiskConsequence::where('id', $this->risk_consequence_id)->first()->description;
-        }
-        if ($this->risk_likelihood_id) {
-            $this->risk_likelihood_notes = RiskLikelihood::where('id', $this->risk_likelihood_id)->first()->notes;
-        }
-        if ($this->risk_consequence_id && $this->risk_likelihood_id) {
-            $RiskAssessments = TableRiskAssessment::where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->first()->risk_assessment_id;
-
-            $this->tablerisk_id = TableRiskAssessment::where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->where('risk_assessment_id', $RiskAssessments)->first()->id;
-        }
+        // Load seluruh tabel penilaian risiko (untuk matrix table)
         $this->TableRisk = TableRiskAssessment::with(['RiskAssessment', 'RiskConsequence', 'RiskLikelihood'])->get();
+
+        // Kalau likelihood & consequence diisi
+        if ($this->risk_consequence_id && $this->risk_likelihood_id) {
+            $selectedRisk = $this->TableRisk->firstWhere('risk_likelihood_id', $this->risk_likelihood_id)
+                ?->where('risk_consequence_id', $this->risk_consequence_id);
+
+            // Ambil data deskripsi/notes langsung dari relasi
+            $this->risk_consequence_doc = optional($selectedRisk?->RiskConsequence)->description;
+            $this->risk_likelihood_notes = optional($selectedRisk?->RiskLikelihood)->notes;
+
+            $this->tablerisk_id = $selectedRisk->id ?? null;
+            $this->RiskAssessment = collect([$selectedRisk])->filter(); // hanya satu yang dipakai
+        }
     }
+
     public function download()
     {
         return response()->download(public_path('/storage/documents/hzd/' . $this->documentation));
@@ -379,7 +381,7 @@ class Detail extends Component
         if ($this->show_immidiate === 'no') {
             $this->immediate_corrective_action = null;
         }
-        HazardReport::whereId($this->data_id)->update([
+        $filds = [
             'reference'                   => $this->reference,
             'event_type_id'               => $this->event_type_id,
             'sub_event_type_id'           => $this->sub_event_type_id,
@@ -407,7 +409,8 @@ class Detail extends Component
             'submitter'                   => $this->submitter,
             'comment'                     => $this->comment,
             'show_immidiate'              => $this->show_immidiate,
-        ]);
+        ];
+        HazardReport::whereId($this->data_id)->update($filds);
         HazardReportLog::create([
             'hazard_report_id' => $this->data_id,
             'user_id' => auth()->id(),
