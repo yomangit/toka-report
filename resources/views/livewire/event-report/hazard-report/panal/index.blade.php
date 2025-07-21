@@ -13,7 +13,7 @@
                 </div>
                 {{-- Status --}}
                 <div class="flex items-start gap-x-2">
-                    <div class="w-32 font-semibold md:w-auto">Status</div>
+                    <div class="w-32 font-semibold">Status</div>
                     <div>:</div>
                     <div>{{ $status }}</div>
                 </div>
@@ -21,7 +21,7 @@
                 <div class="flex flex-col pt-2 gap-y-2 lg:flex-row lg:items-center lg:gap-x-4">
                     {{-- Proceed To --}}
                     <div class="flex items-center gap-x-2">
-                        <div class="w-32 font-semibold md:w-auto">Proceed To</div>
+                        <div class="w-32 font-semibold">Proceed To</div>
                         <div>:</div>
                         <div>
                             @if ($muncul)
@@ -45,7 +45,7 @@
                     {{-- Assign To --}}
                     @if ($show)
                     <div class="flex items-center gap-x-2">
-                        <div class="font-semibold">Assign To</div>
+                        <div class="w-32 font-semibold md:w-auto">Assign To</div>
                         <div>:</div>
                         <div>
                             <x-select wire:model.live='assign_to' :error="$errors->get('assign_to')" class="w-full">
@@ -60,7 +60,7 @@
 
                     {{-- Also Assign To --}}
                     <div class="flex items-center gap-x-2">
-                        <div class="font-semibold">Also Assign To</div>
+                        <div class="w-32 font-semibold md:w-auto">Also Assign To</div>
                         <div>:</div>
                         <div>
                             <x-select wire:model.live='also_assign_to' :error="$errors->get('also_assign_to')" class="w-full">
