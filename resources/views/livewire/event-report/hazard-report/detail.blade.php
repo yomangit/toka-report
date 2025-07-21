@@ -306,7 +306,7 @@
                                         </th>
                                         @foreach ($risk_likelihood->RiskAssessment()->get() as $risk_assessment)
                                         <th class=" p-0 text-xs font-semibold text-center border-2 border-black {{ $risk_assessment->colour }}">
-                                            {{ $risk_assessment->risk_assessments_name }}
+                                           
                                         </th>
                                         @endforeach
                                     </tr>
