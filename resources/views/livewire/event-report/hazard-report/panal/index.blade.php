@@ -12,19 +12,17 @@
                     <div>:</div>
                     <div>{{ $current_step }}</div>
                 </div>
-
                 {{-- Status --}}
                 <div class="flex items-start gap-x-2">
                     <div class="w-32 font-semibold">Status</div>
                     <div>:</div>
                     <div>{{ $status }}</div>
                 </div>
-
                 {{-- Proceed + Assign To --}}
                 <div class="flex flex-col pt-2 gap-y-2 lg:flex-row lg:items-center lg:gap-x-4">
                     {{-- Proceed To --}}
                     <div class="flex items-center gap-x-2">
-                        <div class="font-semibold">Proceed To</div>
+                        <div class="w-32 font-semibold">Proceed To</div>
                         <div>:</div>
                         <div>
                             @if ($muncul)
@@ -78,7 +76,6 @@
                     @endif
                 </div>
             </div>
-
             {{-- Kolom Kanan --}}
             <div class="flex items-center justify-center p-4 text-center lg:w-64">
                 <x-btn-show wire:click="$set('showHistoryModal', true)">
@@ -86,10 +83,6 @@
                 </x-btn-show>
             </div>
         </div>
-
-
-
-        
     </form>
     <x-modal wire:model="showHistoryModal" maxWidth="2xl">
         <x-slot name="title">
