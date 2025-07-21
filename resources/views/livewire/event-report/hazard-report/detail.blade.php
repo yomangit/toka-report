@@ -305,8 +305,11 @@
                                             {{ $risk_likelihood->risk_likelihoods_name }}
                                         </th>
                                         @foreach ($risk_likelihood->RiskAssessment()->get() as $risk_assessment)
-                                        <th class=" p-0 text-xs font-semibold text-center border-2 border-black {{ $risk_assessment->colour }}">
-                                            {{ $risk_assessment->risk_assessments_name }}
+                                        <th wire:click="riskId({{ $risk_likelihood->id }},
+											{{ $risk_consequence->id }},
+											{{ $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $risk_consequence->id)->first()->risk_assessment_id }})
+											" class=" p-0 text-xs font-semibold text-center border-2 border-black {{ $risk_assessment->colour }}">
+                                            {{-- {{ $risk_assessment->risk_assessments_name }} --}}
                                         </th>
                                         @endforeach
                                     </tr>
