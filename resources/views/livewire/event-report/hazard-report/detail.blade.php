@@ -301,29 +301,14 @@
                                 <tbody>
                                     @foreach ($RiskLikelihood as $risk_likelihood)
                                     <tr>
-                                        <th class="p-1 text-[10px] font-semibold text-center border border-black bg-gray-50">
+                                        <th class="p-0 text-xs font-semibold text-left border-2 border-black">
                                             {{ $risk_likelihood->risk_likelihoods_name }}
                                         </th>
-
-                                        @foreach ($RiskConsequence as $risk_consequence)
-                                        @php
-                                        $cell = $TableRisk->first(fn ($item) =>
-                                        $item->risk_likelihood_id === $risk_likelihood->id &&
-                                        $item->risk_consequence_id === $risk_consequence->id
-                                        );
-                                        @endphp
-
-                                        <td class="p-0 text-center border border-black">
-                                            @if ($cell)
-                                            <label @if (!in_array($currentStep, ['Closed', 'Cancelled' ])) wire:click="riskId({{ $risk_likelihood->id }}, {{ $risk_consequence->id }}, {{ $cell->risk_assessment_id }})" @endif class="btn btn-xs btn-block m-[2px] p-0 cursor-pointer transition-all duration-200 ease-in-out
-                                    {{ in_array($currentStep, ['Closed', 'Cancelled']) ? 'cursor-not-allowed opacity-40 bg-gray-400' : '' }}
-                                    {{ $tablerisk_id === $cell->id ? 'border-4 border-neutral scale-105 ring ring-offset-1' : '' }}
-                                    {{ $cell->RiskAssessment->colour }}" title="{{ $cell->RiskAssessment->risk_assessments_name }}">
-                                            </label>
-                                            @else
-                                            <span class="block w-full h-6 bg-gray-100"></span>
-                                            @endif
-                                        </td>
+                                        @foreach ($risk_likelihood->RiskAssessment()->get() as $risk_assessment)
+                                        <th class=" p-0 text-xs font-semibold text-center border-2 border-black {{ $risk_assessment->colour }}">
+                                            {{ strtoupper(Str::substr($risk_assessment->risk_assessments_name, 0, 1)) }}
+                                            
+                                        </th>
                                         @endforeach
                                     </tr>
                                     @endforeach
