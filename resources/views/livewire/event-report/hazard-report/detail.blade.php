@@ -302,7 +302,7 @@
                                         @endphp
                                         <td class="text-center {{ $cell?->RiskAssessment->colour ?? 'bg-gray-100' }}">
                                             @if ($cell)
-                                            {{ $cell->RiskAssessment->risk_assessments_name }}
+                                            {{ $cell->id }}
                                             @else
                                             -
                                             @endif
