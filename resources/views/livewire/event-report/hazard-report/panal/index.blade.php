@@ -45,7 +45,7 @@
                     {{-- Assign To --}}
                     @if ($show)
                     <div class="flex items-center gap-x-2">
-                        <div class="w-32 font-semibold md:w-4">Assign To</div>
+                        <div class="font-semibold">Assign To</div>
                         <div>:</div>
                         <div>
                             <x-select wire:model.live='assign_to' :error="$errors->get('assign_to')" class="w-full">
@@ -60,7 +60,7 @@
 
                     {{-- Also Assign To --}}
                     <div class="flex items-center gap-x-2">
-                        <div class="w-32 font-semibold md:w-4">Also Assign To</div>
+                        <div class="font-semibold">Also Assign To</div>
                         <div>:</div>
                         <div>
                             <x-select wire:model.live='also_assign_to' :error="$errors->get('also_assign_to')" class="w-full">
