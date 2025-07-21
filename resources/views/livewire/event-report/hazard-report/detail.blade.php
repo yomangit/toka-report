@@ -295,10 +295,11 @@
                                         <td>{{ $likelihood->risk_likelihoods_name }}</td>
                                         @foreach ($RiskConsequence as $consequence)
                                         @php
-                                        $cell = $TableRisk->first(fn ($item) =>
-                                        $item->risk_likelihood_id == $likelihood->id &&
-                                        $item->risk_consequence_id == $consequence->id
-                                        );
+                                        $cell = $TableRisk->first(function ($item) use ($risk_likelihood, $risk_consequence) {
+                                        return $item->risk_likelihood_id == $risk_likelihood->id &&
+                                        $item->risk_consequence_id == $risk_consequence->id;
+                                        });
+
                                         @endphp
                                         <td class="text-center {{ $cell?->RiskAssessment->colour ?? 'bg-gray-100' }}">
                                             @if ($cell)
