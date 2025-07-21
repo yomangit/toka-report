@@ -276,56 +276,45 @@
                     </div>
                     <div class="flex-none md:w-72 ">
                         <div class="m-1 overflow-x-auto ">
-                            <table class="w-full text-xs border border-black table-auto bg-base-300 md:table-fixed">
-                                <caption class="mb-2 text-sm font-bold caption-top">Table Initial Risk Assessment</caption>
-
+                            <table class="table bg-base-300 table-xs">
+                                <caption class="caption-top">
+                                    Table Initial Risk Assessment
+                                </caption>
                                 <thead>
-                                    <tr>
-                                        <th colspan="2" class="p-1 text-center bg-gray-200 border border-black">Legend</th>
+                                    <tr class="">
+                                        <th colspan="2" class="p-0 text-center border-2 border-black">Legand</th>
                                         @foreach ($RiskAssessments as $risk_assessment)
-                                        <th class="p-1 text-xs text-center rotate_text border border-black {{ $risk_assessment->colour }}">
+                                        <td class="rotate_text text-start text-xs border-2 border-black   {{ $risk_assessment->colour }}">
                                             {{ $risk_assessment->risk_assessments_name }}
-                                        </th>
-                                        @endforeach
-                                    </tr>
-                                    <tr>
-                                        <th class="text-center bg-gray-100 border border-black">Likelihood</th>
-                                        @foreach ($RiskConsequence as $risk_consequence)
-                                        <th class="text-center bg-gray-100 border border-black rotate_text">
-                                            {{ $risk_consequence->risk_consequence_name }}
-                                        </th>
-                                        @endforeach
-                                    </tr>
-                                </thead>
 
-                                <tbody>
-                                    @foreach ($RiskLikelihood as $risk_likelihood)
-                                    <tr>
-                                        <th class="p-1 text-[10px] font-semibold text-center border border-black bg-gray-50">
-                                            {{ $risk_likelihood->risk_likelihoods_name }}
-                                        </th>
-
-                                        @foreach ($RiskConsequence as $risk_consequence)
-                                        @php
-                                        $cell = $TableRisk->firstWhere(fn ($item) =>
-                                        $item->risk_likelihood_id === $risk_likelihood->id &&
-                                        $item->risk_consequence_id === $risk_consequence->id
-                                        );
-                                        @endphp
-                                        <td class="p-0 text-center border border-black">
-                                            @if ($cell)
-                                            <label @if (!in_array($currentStep, ['Closed', 'Cancelled' ])) wire:click="riskId({{ $risk_likelihood->id }}, {{ $risk_consequence->id }}, {{ $cell->risk_assessment_id }})" @endif class="btn btn-xs btn-block m-[2px] p-0 transition-all duration-200 ease-in-out
-                                {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'cursor-not-allowed opacity-40 bg-gray-400' : '' }}
-                                @if ($tablerisk_id === $cell->id) border-4 border-neutral scale-105 ring ring-offset-1 @endif
-                                {{ $cell->RiskAssessment->colour }}">
-                                            </label>
-                                            @else
-                                            <span class="block w-full h-6 bg-gray-100"></span>
-                                            @endif
                                         </td>
                                         @endforeach
                                     </tr>
+                                    <tr class="">
+                                        <th class="text-center border-2 border-black">Likelihood</th>
+                                        @foreach ($RiskConsequence as $risk_consequence)
+                                        <th class="border-2 border-black rotate_text text-start">
+                                            {{ $risk_consequence->risk_consequence_name }}</th>
+                                        @endforeach
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($RiskLikelihood as $risk_likelihood)
+                                    <tr>
+                                        <th class=" p-0 text-[10px] font-semibold border-2 border-black">
+                                            {{ $risk_likelihood->risk_likelihoods_name }}
+                                        </th>
+                                        @foreach ($risk_likelihood->RiskConsequence()->get() as $risk_consequence)
+                                        <th class="p-0 text-xs font-semibold text-center border-2 border-black {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? ' opacity-35 bg-gray-500' : '' }}">
+                                            <label @if ($currentStep==='Closed' || $currentStep==='Cancelled' ) @else wire:click="riskId({{ $risk_likelihood->id }}, {{ $risk_consequence->id }},{{ $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $risk_consequence->id)->first()->risk_assessment_id }})" @endif class="btn p-0 mt-1 btn-block btn-xs {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'cursor-not-allowed' : '' }}  @if (
+                                                            $tablerisk_id ==
+                                                                $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $risk_consequence->id)->first()->id) border-4 border-neutral @endif {{ $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $risk_consequence->id)->first()->RiskAssessment->colour }}">
+                                            </label>
+                                        </th>
+                                        @endforeach
+                                    </tr>
                                     @endforeach
+
                                 </tbody>
                             </table>
                         </div>
