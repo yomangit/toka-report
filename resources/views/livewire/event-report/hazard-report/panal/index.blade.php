@@ -13,7 +13,7 @@
                 </div>
                 {{-- Status --}}
                 <div class="flex items-start gap-x-2">
-                    <div class="w-32 font-semibold">Status</div>
+                    <div class="w-32 font-semibold md:w-auto">Status</div>
                     <div>:</div>
                     <div>{{ $status }}</div>
                 </div>
@@ -21,7 +21,7 @@
                 <div class="flex flex-col pt-2 gap-y-2 lg:flex-row lg:items-center lg:gap-x-4">
                     {{-- Proceed To --}}
                     <div class="flex items-center gap-x-2">
-                        <div class="w-32 font-semibold">Proceed To</div>
+                        <div class="w-32 font-semibold md:w-auto">Proceed To</div>
                         <div>:</div>
                         <div>
                             @if ($muncul)
