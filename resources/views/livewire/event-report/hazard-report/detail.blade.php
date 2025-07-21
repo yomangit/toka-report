@@ -304,15 +304,15 @@
                                             <th class=" p-0 text-[10px] font-semibold border-2 border-black">
                                                 {{ $risk_likelihood->risk_likelihoods_name }}
                                             </th>
-                                            @foreach ($risk_likelihood->RiskConsequence()->get() as $risk_consequence)
+                                            @foreach ($risk_likelihood->RiskAssessment()->get() as $risk_assessment)
                                                 <th
                                                     class=" p-0 text-xs font-semibold text-center border-2 border-black {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? ' opacity-35 bg-gray-500' : '' }}">
                                                     <label
                                                         @if ($currentStep === 'Closed' || $currentStep === 'Cancelled') @else
-                                                wire:click="riskId({{ $risk_likelihood->id }}, {{ $risk_consequence->id }},{{ $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $risk_consequence->id)->first()->risk_assessment_id }})" @endif
-                                                        class="btn p-0 mt-1 btn-block btn-xs {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'cursor-not-allowed' : '' }}  @if (
+                                                wire:click="riskId({{ $risk_likelihood->id }}, {{ $risk_assessment->id }},{{ $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_assessment_id', $risk_assessment->id)->first()->risk_consequence_id }})" @endif
+                                                        class="btn p-0 mt-1 btn-block btn-xs {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'cursor-not-allowed' : '' }}  @if (risk_assessment_id
                                                             $tablerisk_id ==
-                                                                $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $risk_consequence->id)->first()->id) border-4 border-neutral @endif {{ $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $risk_consequence->id)->first()->RiskAssessment->colour }}">
+                                                                $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_assessment_id', $risk_assessment->id)->first()->id) border-4 border-neutral @endif {{ $risk_assessment->colour }}">
                                                     </label>
                                                 </th>
                                             @endforeach
