@@ -308,7 +308,7 @@
                                         @php
                                         $cell = $TableRisk->first(function ($item) use ($likelihood, $risk_assessment) {
                                         return $item->risk_likelihood_id == $likelihood->id &&
-                                        $item->risk_assessment_id == $assessment->id &&
+                                        $item->risk_assessment_id == $risk_assessment->id &&
                                         $item->risk_consequence_id == $risk_consequence_id ;
                                         });
                                         @endphp
