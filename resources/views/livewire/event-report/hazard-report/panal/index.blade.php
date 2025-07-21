@@ -100,13 +100,10 @@
                 <x-btn-show wire:click="$set('showHistoryModal', true)">
                     📜 Lihat Riwayat Perubahan
                 </x-btn-show>
-
                 <x-modal wire:model="showHistoryModal" maxWidth="2xl">
                     <x-slot name="title">
                         📜 Riwayat Perubahan
                     </x-slot>
-
-                    <x-slot name="content">
                         @forelse ($hazardReport->logs as $log)
                         <div class="p-4 mb-3 transition duration-200 border rounded-md shadow-sm bg-base-100 hover:bg-base-200">
                             <div class="flex flex-col sm:flex-row sm:justify-between">
@@ -133,15 +130,12 @@
                         @empty
                         <div class="text-sm italic text-gray-500">Belum ada perubahan yang tercatat.</div>
                         @endforelse
-                    </x-slot>
-
                     <x-slot name="footer">
                         <x-btn-close secondary wire:click="$set('showHistoryModal', false)">
                             Tutup
                         </x-btn-close>
                     </x-slot>
                 </x-modal>
-
             </div>
         </div>
     </form>
