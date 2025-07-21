@@ -322,7 +322,7 @@ class Detail extends Component
         }
     }
 
-    public function riskId($risk_likelihood_id, $risk_consequence_id, $risk_assessment_id)
+    public function riskId($risk_likelihood_id, $risk_assessment_id, $risk_consequence_id)
     {
         $this->risk_consequence_id = $risk_consequence_id;
         $this->risk_likelihood_id  = $risk_likelihood_id;
@@ -379,7 +379,7 @@ class Detail extends Component
         if ($this->show_immidiate === 'no') {
             $this->immediate_corrective_action = null;
         }
-        $filds =[
+        $filds = [
             'reference'                   => $this->reference,
             'event_type_id'               => $this->event_type_id,
             'sub_event_type_id'           => $this->sub_event_type_id,
