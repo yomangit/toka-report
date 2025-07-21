@@ -191,34 +191,72 @@
                         <x-label-error :messages="$errors->get('immediate_corrective_action')" />
                     </fieldset>
                 </div>
-                <div class="grid grid-rows-3 mt-2 border divide-y-2 md:grid-rows-1 md:grid-cols-3 md:content-center md:gap-4 md:divide-y-0 md:divide-x-2 divide-base-200 border-base-200 rounded-box">
-                    <div class='px-4 md:place-self-center '>
-                        <fieldset class="self-center w-40 max-w-sm fieldset rounded-box">
-                            <label class="relative px-0 text-xs font-semibold capitalize label label-text-alt ">
-                                {{ __('kondisi tidak aman') }}
-                                <input type="checkbox" wire:model.live="kondisi_tidak_aman" {{ $kondisi_tidak_aman = 1 ? 'checked="checked"' : '' }} class="checkbox border-rose-600 bg-base-300 checked:border-emerald-500 checked:bg-emerald-400 checked:text-emerald-800 checkbox-xs" />
-                            </label>
-                        </fieldset>
-                    </div>
-                    <div class='px-4 md:place-self-center'>
-                        <fieldset class="self-center w-40 max-w-sm fieldset rounded-box">
-                            <label class="relative px-0 text-xs font-semibold capitalize label label-text-alt ">
-                                {{ __('Tindakan tidak aman') }}
-                                <input type="checkbox" wire:model.live="tindakan_tidak_aman" {{ $tindakan_tidak_aman = 1 ? 'checked="checked"' : '' }} class="checkbox border-rose-600 bg-base-300 checked:border-emerald-500 checked:bg-emerald-400 checked:text-emerald-800 checkbox-xs" />
-                            </label>
-                        </fieldset>
-                    </div>
-                    <div class='px-4 md:place-self-center'>
-                        <fieldset class="w-40 max-w-sm fieldset rounded-box">
+                <div class="grid grid-cols-1 gap-6 mt-4 transition-all duration-300 ease-in-out border divide-y border-base-200 divide-base-200 rounded-xl md:grid-cols-3 md:divide-y-0 md:divide-x md:p-6">
+                    <!-- KEYWORD (KTA / TTA) -->
+                    <div class="px-4 py-2 space-y-3 md:px-0">
+                        <fieldset x-data="{ status: @entangle('key_word') }" class="space-y-3">
+                            <x-label-req :value="__('Key Word')" />
 
-                            <x-label-req :value="__('perbaikan tingkat lanjut')" />
+                            <div class="flex items-center gap-4 mt-2">
+                                <label class="flex items-center space-x-1">
+                                    <input x-model="status" value="kta" id="draft" type="radio" name="status" class="radio radio-sm radio-primary" />
+                                    <span class="text-xs font-semibold">Kondisi Tidak Aman</span>
+                                </label>
 
-                            <input wire:model.live="tindakkan_selanjutnya" value='1' name="tingkat_lanjut" id="yes_lanjut" class="radio-xs peer/yes_lanjut checked:bg-rose-500 radio" type="radio" />
-                            <label for="yes_lanjut" class="text-xs font-semibold peer-checked/yes_lanjut:text-rose-500">{{ __('Yes') }}</label>
-                            <input wire:model.live="tindakkan_selanjutnya" value="0" id="no_lanjut" class="peer/no_lanjut checked:bg-emerald-500 radio-xs radio" type="radio" name="tingkat_lanjut" />
-                            <label for="no_lanjut" class="text-xs font-semibold peer-checked/no_lanjut:text-emerald-500">{{ __('No') }}</label>
+                                <label class="flex items-center space-x-1">
+                                    <input x-model="status" value="tta" id="published" type="radio" name="status" class="radio radio-sm radio-accent" />
+                                    <span class="text-xs font-semibold">Tindakan Tidak Aman</span>
+                                </label>
+                            </div>
+                            <x-label-error :messages="$errors->get('key_word')" />
+
+                            <!-- KTA Select -->
+                            <div x-show="status === 'kta'" x-transition.opacity.duration.300ms class="mt-2">
+                                <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')">
+                                    <option value="" selected>Pilih KTA...</option>
+                                    @forelse ($KTA as $kta)
+                                    <option value="{{ $kta->id }}">{{ $kta->name }}</option>
+                                    @endforeach
+                                </x-select>
+                                <x-label-error :messages="$errors->get('kondisitidakamen_id')" />
+                            </div>
+
+                            <!-- TTA Select -->
+                            <div x-show="status === 'tta'" x-transition.opacity.duration.300ms class="mt-2">
+                                <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
+                                    <option value="" selected>Pilih TTA</option>
+                                    @forelse ($TTA as $tta)
+                                    <option value="{{ $tta->id }}">{{ $tta->name }}</option>
+                                    @endforeach
+                                </x-select>
+                                <x-label-error :messages="$errors->get('tindakantidakamen_id')" />
+                            </div>
                         </fieldset>
-                        <x-label-error :messages="$errors->get('tindakkan_selanjutnya')" />
+
+                    </div>
+
+                    <!-- Divider untuk mobile -->
+                    <div class="border-t md:hidden border-base-200"></div>
+
+                    <!-- PERBAIKAN TINGKAT LANJUT -->
+                    <div class="px-4 py-2 md:px-6 md:col-span-2">
+                        <fieldset class="space-y-2">
+                            <x-label-req :value="__('Perbaikan Tingkat Lanjut')" />
+                            <div class="flex flex-wrap gap-4 mt-2">
+                                <!-- YES -->
+                                <label class="flex items-center space-x-1 transition-transform duration-200 ease-in-out transform hover:scale-105">
+                                    <input wire:click="$dispatch('modalActionHazardNew')" wire:model.live="tindakkan_selanjutnya" value="1" name="tingkat_lanjut" id="yes_lanjut" class="radio radio-sm radio-error peer/yes_lanjut" type="radio" />
+                                    <span class="text-xs font-semibold peer-checked/yes_lanjut:text-error">Yes</span>
+                                </label>
+
+                                <!-- NO -->
+                                <label class="flex items-center space-x-1 transition-transform duration-200 ease-in-out transform hover:scale-105">
+                                    <input wire:model.live="tindakkan_selanjutnya" value="0" name="tingkat_lanjut" id="no_lanjut" class="radio radio-sm radio-success peer/no_lanjut" type="radio" />
+                                    <span class="text-xs font-semibold peer-checked/no_lanjut:text-success">No</span>
+                                </label>
+                            </div>
+                            <x-label-error :messages="$errors->get('tindakkan_selanjutnya')" />
+                        </fieldset>
                     </div>
                 </div>
 
@@ -299,24 +337,20 @@
                                 </thead>
 
                                 <tbody>
-                                     @foreach ($RiskLikelihood as $risk_likelihood)
-                                        <tr>
-                                            <th class=" p-0 text-[10px] font-semibold border-2 border-black">
-                                                {{ $risk_likelihood->risk_likelihoods_name }}
-                                            </th>
-                                            @foreach ($risk_likelihood->RiskConsequence()->get() as $risk_consequence)
-                                                <th
-                                                    class=" p-0 text-xs font-semibold text-center border-2 border-black {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? ' opacity-35 bg-gray-500' : '' }}">
-                                                    <label
-                                                        @if ($currentStep === 'Closed' || $currentStep === 'Cancelled') @else
-                                                wire:click="riskId({{ $risk_likelihood->id }}, {{ $risk_consequence->id }},{{ $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $risk_consequence->id)->first()->risk_assessment_id }})" @endif
-                                                        class="btn p-0 mt-1 btn-block btn-xs {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'cursor-not-allowed' : '' }}  @if (
+                                    @foreach ($RiskLikelihood as $risk_likelihood)
+                                    <tr>
+                                        <th class=" p-0 text-[10px] font-semibold border-2 border-black">
+                                            {{ $risk_likelihood->risk_likelihoods_name }}
+                                        </th>
+                                        @foreach ($risk_likelihood->RiskConsequence()->get() as $risk_consequence)
+                                        <th class=" p-0 text-xs font-semibold text-center border-2 border-black {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? ' opacity-35 bg-gray-500' : '' }}">
+                                            <label @if ($currentStep==='Closed' || $currentStep==='Cancelled' ) @else wire:click="riskId({{ $risk_likelihood->id }}, {{ $risk_consequence->id }},{{ $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $risk_consequence->id)->first()->risk_assessment_id }})" @endif class="btn p-0 mt-1 btn-block btn-xs {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'cursor-not-allowed' : '' }}  @if (
                                                             $tablerisk_id ==
                                                                 $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $risk_consequence->id)->first()->id) border-4 border-neutral @endif {{ $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $risk_consequence->id)->first()->RiskAssessment->colour }}">
-                                                    </label>
-                                                </th>
-                                            @endforeach
-                                        </tr>
+                                            </label>
+                                        </th>
+                                        @endforeach
+                                    </tr>
                                     @endforeach
 
 

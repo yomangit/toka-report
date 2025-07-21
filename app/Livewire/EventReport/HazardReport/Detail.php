@@ -23,8 +23,10 @@ use App\Models\CompanyCategory;
 use App\Models\HazardReportLog;
 use App\Models\RiskConsequence;
 use App\Models\TypeEventReport;
+use App\Models\Kondisitidakaman;
 use App\Models\EventParticipants;
 use App\Models\EventUserSecurity;
+use App\Models\Tindakantidakaman;
 use App\Models\WorkflowApplicable;
 use App\Notifications\toModerator;
 use App\Models\HazardDocumentation;
@@ -42,6 +44,9 @@ class Detail extends Component
     public $corrective_action_suggested_temp;
     public $comment_temp, $divisi_search, $Event_type;
     public $description_temp;
+    public $key_word;
+    public $kondisitidakamen_id;
+    public $tindakantidakamen_id;
     public $location_name, $search, $show_immidiate = 'yes', $procced_to, $location_id, $divider = 'Details Hazard Report', $TableRisk = [], $RiskAssessment = [], $EventSubType = [], $ResponsibleRole, $EventUserSecurity = [];
     public $searchLikelihood                        = '', $searchConsequence                        = '', $tablerisk_id, $risk_assessment_id, $reference, $workflow_detail_id, $division_id, $division, $parent_Company, $business_unit, $dept;
     public $risk_likelihood_id, $risk_likelihood_notes, $event_category, $select_divisi;
@@ -109,46 +114,34 @@ class Detail extends Component
 
     public function rules()
     {
-        if ($this->show_immidiate === 'yes') {
-
-            return [
-                'event_type_id'               => ['required'],
-                'sub_event_type_id'           => ['required'],
-                'workgroup_name'              => ['required'],
-                'report_byName'               => ['required'],
-                'report_toName'               => ['required'],
-                'date'                        => ['required'],
-                'site_id'                     => ['nullable'],
-                'file_doc'                    => 'nullable|mimes:jpg,jpeg,png,svg,gif,xlsx,pdf,docx',
-                'description'                 => ['required'],
-                'immediate_corrective_action' => ['required'],
-                'location_id'               => ['required'],
-                'location_name'               => ['required'],
-                'risk_consequence_id'         => ['required'],
-                'risk_likelihood_id'          => ['required'],
-                'report_by_nolist'            => ['nullable'],
-                'comment'                     => ['nullable'],
-            ];
+        $baseRules = [
+            'event_type_id'         => ['required'],
+            'sub_event_type_id'     => ['required'],
+            'workgroup_name'        => ['required'],
+            'report_byName'         => ['required'],
+            'report_toName'         => ['required'],
+            'date'                  => ['required'],
+            'file_doc'              => 'nullable|mimes:jpg,jpeg,png,svg,gif,xlsx,pdf,docx',
+            'description'           => ['required'],
+            'location_id'           => ['required'],
+            'location_name'         => ['required'],
+            'risk_consequence_id'   => ['required'],
+            'risk_likelihood_id'    => ['required'],
+            'tindakkan_selanjutnya' => ['required'],
+            'immediate_corrective_action' => ['required'],
+            'report_by_nolist'            => ['nullable'],
+        ];
+        if ($this->key_word === 'kta') {
+            $baseRules['kondisitidakamen_id'] = ['required'];
+        } elseif ($this->key_word === 'tta') {
+            $baseRules['tindakantidakamen_id'] = ['required'];
         } else {
-            return [
-                'event_type_id'               => ['required'],
-                'sub_event_type_id'           => ['required'],
-                'workgroup_name'              => ['required'],
-                'report_byName'               => ['required'],
-                'report_toName'               => ['required'],
-                'date'                        => ['required'],
-                'site_id'                     => ['nullable'],
-                'file_doc'                    => 'nullable|mimes:jpg,jpeg,png,svg,gif,xlsx,pdf,docx',
-                'description'                 => ['required'],
-                'immediate_corrective_action' => ['nullable'],
-                'location_id'               => ['required'],
-                'location_name'               => ['required'],
-                'risk_consequence_id'         => ['required'],
-                'risk_likelihood_id'          => ['required'],
-                'report_by_nolist'            => ['nullable'],
-                'comment'                     => ['nullable'],
-            ];
+            $baseRules['key_word'] = ['required'];
         }
+
+        return $baseRules;
+        
+        
     }
     public function messages()
     {
@@ -231,6 +224,8 @@ class Detail extends Component
             'EventType'       => $this->Event_type,
             'RiskLikelihood'  => RiskLikelihood::get(),
             'Site'            => Site::get(),
+            'KTA' => Kondisitidakaman::get(),
+            'TTA' => Tindakantidakaman::get(),
             'Company'         => Company::get(),
             'ParentCompany'   => CompanyCategory::whereId(1)->get(),
             'BusinessUnit'    => BusinesUnit::with(['Department', 'Company'])->get(),
