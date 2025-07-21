@@ -293,6 +293,9 @@
                                     <tr class="">
                                         <th class="text-center border-2 border-black">Likelihood</th>
                                         @foreach ($RiskConsequence as $risk_consequence)
+                                        @php
+                                            $rc=$risk_consequence->id;
+                                        @endphp
                                         <th class="border-2 border-black rotate_text text-start">
                                             {{ $risk_consequence->risk_consequence_name }}</th>
                                         @endforeach
@@ -305,7 +308,7 @@
                                             {{ $risk_likelihood->risk_likelihoods_name }}
                                         </th>
                                         @foreach ($risk_likelihood->RiskAssessment()->get() as $risk_assessment)
-                                        @php $data = App\Models\TableRiskAssessment::where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $risk_consequence->id)->first()->risk_assessment_id ; @endphp
+                                        @php $data = App\Models\TableRiskAssessment::where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $rc)->first()->risk_assessment_id ; @endphp
                                         <th wire:click="riskId({{ $risk_likelihood->id }},
 											{{ $risk_consequence->id }},
 											{{$data}})
