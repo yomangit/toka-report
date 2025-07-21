@@ -36,14 +36,15 @@ class Detail extends Component
 {
     use WithFileUploads;
     use WithPagination;
-
+    public $RiskAssessmentList = [];
+    public $tablerisk_id;
     public $immediate_corrective_action_temp;
     public $suggested_corrective_action_temp;
     public $corrective_action_suggested_temp;
     public $comment_temp, $divisi_search, $Event_type;
     public $description_temp;
     public $location_name, $search, $show_immidiate = 'yes', $procced_to, $location_id, $divider = 'Details Hazard Report', $TableRisk = [], $RiskAssessment = [], $EventSubType = [], $ResponsibleRole, $EventUserSecurity = [];
-    public $searchLikelihood                        = '', $searchConsequence                        = '', $tablerisk_id, $risk_assessment_id, $reference, $workflow_detail_id, $division_id, $division, $parent_Company, $business_unit, $dept;
+    public $searchLikelihood                        = '', $searchConsequence                        = '', $risk_assessment_id, $reference, $workflow_detail_id, $division_id, $division, $parent_Company, $business_unit, $dept;
     public $risk_likelihood_id, $risk_likelihood_notes, $event_category, $select_divisi;
     public $risk_consequence_id, $risk_consequence_doc, $risk_probability_doc;
     public $workgroup_id, $workgroup_name, $assign_to, $also_assign_to, $comment = '', $workflow_administration_id, $responsible_role_id, $show = false;
@@ -330,31 +331,23 @@ class Detail extends Component
     }
     public function TableRiskFunction()
     {
-        // Ambil semua data table risk untuk menampilkan matrix
+        // Load semua data risk untuk table
         $this->TableRisk = TableRiskAssessment::with(['RiskAssessment', 'RiskConsequence', 'RiskLikelihood'])->get();
 
-        // Ambil satu entri yang cocok dengan kombinasi likelihood + assessment (jika ada)
-        $selectedRisk = $this->TableRisk->first(function ($item) {
-            return $item->risk_likelihood_id == $this->risk_likelihood_id
-                && $item->risk_assessment_id == $this->risk_assessment_id
-                && $item->risk_consequence_id == $this->risk_consequence_id;
-        });
+        // Load semua assessment yang digunakan
+        $this->RiskAssessmentList = RiskAssessment::all();
 
-        if ($selectedRisk) {
-            // Set data dari relasi (dengan optional() untuk aman)
-            $this->risk_consequence_id = $selectedRisk->risk_consequence_id;
-            $this->risk_consequence_doc = optional($selectedRisk->RiskConsequence)->description;
-            $this->risk_likelihood_notes = optional($selectedRisk->RiskLikelihood)->notes;
-            $this->tablerisk_id = $selectedRisk->id;
+        if ($this->risk_consequence_id && $this->risk_likelihood_id) {
+            $selected = $this->TableRisk->first(function ($item) {
+                return $item->risk_likelihood_id === $this->risk_likelihood_id &&
+                    $item->risk_consequence_id === $this->risk_consequence_id;
+            });
 
-            // Set info ringkasan untuk ditampilkan di bawah table
-            $this->RiskAssessment = collect([$selectedRisk]);
-        } else {
-            // Reset jika tidak ada
-            $this->tablerisk_id = null;
-            $this->risk_consequence_doc = null;
-            $this->risk_likelihood_notes = null;
-            $this->RiskAssessment = collect();
+            $this->tablerisk_id = $selected->id ?? null;
+            $this->risk_consequence_doc = optional($selected?->RiskConsequence)->description;
+            $this->risk_likelihood_notes = optional($selected?->RiskLikelihood)->notes;
+
+            $this->RiskAssessment = collect([$selected])->filter();
         }
     }
 

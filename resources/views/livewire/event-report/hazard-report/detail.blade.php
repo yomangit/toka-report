@@ -304,24 +304,29 @@
                                         <th class="p-0 text-xs font-semibold text-left border-2 border-black">
                                             {{ $risk_likelihood->risk_likelihoods_name }}
                                         </th>
-                                        @foreach ($risk_likelihood->RiskAssessment()->get() as $risk_assessment)
+
+                                        @foreach ($RiskAssessmentList as $assessment)
                                         @php
-                                        $cell = $TableRisk->first(function ($item) use ($likelihood, $risk_assessment) {
-                                        return $item->risk_likelihood_id == $likelihood->id &&
-                                        $item->risk_assessment_id == $risk_assessment->id &&
-                                        $item->risk_consequence_id == $risk_consequence_id ;
+                                        $cell = $TableRisk->first(function ($item) use ($risk_likelihood, $assessment) {
+                                        return $item->risk_likelihood_id == $risk_likelihood->id &&
+                                        $item->risk_assessment_id == $assessment->id;
                                         });
                                         @endphp
 
-                                        <th wire:click="riskId({{ $risk_likelihood->id }},
-											{{ $risk_assessment->id }},
-											{{ $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_assessment_id', $risk_assessment->id)->first()->risk_consequence_id }})
-											" class=" p-0 text-xs font-semibold text-center border-2 border-black cursor-pointer {{ $tablerisk_id === $cell->id ? 'border-4 border-neutral scale-105 ring ring-offset-1' : '' }} {{ $risk_assessment->colour }}">
-                                            {{-- {{ $risk_assessment->risk_assessments_name }} --}}
-                                        </th>
+                                        <td class="p-0 text-center border border-black">
+                                            @if ($cell)
+                                            <label wire:click="riskId({{ $risk_likelihood->id }}, {{ $cell->risk_assessment_id }}, {{ $cell->risk_consequence_id }})" class="btn btn-xs btn-block m-[2px] p-0 cursor-pointer transition-all duration-200 ease-in-out
+                {{ $tablerisk_id === $cell->id ? 'border-4 border-neutral scale-105 ring ring-offset-1' : '' }}
+                {{ $cell->RiskAssessment->colour }}">
+                                            </label>
+                                            @else
+                                            <span class="block w-full h-6 bg-gray-100"></span>
+                                            @endif
+                                        </td>
                                         @endforeach
                                     </tr>
                                     @endforeach
+
 
                                 </tbody>
                             </table>
