@@ -305,12 +305,12 @@
                                             {{ $risk_likelihood->risk_likelihoods_name }}
                                         </th>
                                         @foreach ($risk_likelihood->RiskAssessment()->get() as $risk_assessment)
-                                        @php
-                                        $selectedRisk = $TableRisk->first(function ($item) {
+                                        {{ $selectedRisk = $TableRisk->first(function ($item) {
                                         return $item->risk_likelihood_id == $risk_likelihood->id
                                         && $item->risk_assessment_id == $this->risk_assessment->id;
                                         })->risk_consequence_id;
-                                        @endphp
+                                          }}
+                                        
                                         <th wire:click="{{ $risk_likelihood->id }},{{ $selectedRisk }},{{ $risk_assessment->id }}" class=" p-0 text-xs font-semibold text-center border-2 border-black {{ $risk_assessment->colour }}">
                                             {{ strtoupper(Str::substr($risk_assessment->risk_assessments_name, 0, 1)) }}
 
