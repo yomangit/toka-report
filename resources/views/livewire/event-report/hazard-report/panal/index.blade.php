@@ -27,7 +27,7 @@
                 <div class="space-y-4">
                     @if ($muncul)
                     <div>
-                        <x-label value="Procced To" class="font-mono text-sm font-semibold" />
+                        <x-label-no-req value="Procced To" class="font-mono text-sm font-semibold" />
                         <x-select wire:model.live='procced_to' :error="$errors->get('procced_to')" class="w-full">
                             <option value="">Select an option</option>
                             @forelse ($Workflow as $value)
@@ -46,7 +46,7 @@
                     @if ($show)
                     <div class="grid gap-4 md:grid-cols-2">
                         <div>
-                            <x-label value="Assign To" class="font-mono text-sm font-semibold" />
+                            <x-label-no-req value="Assign To" class="font-mono text-sm font-semibold" />
                             <x-select wire:model.live='assign_to' :error="$errors->get('assign_to')" class="w-full">
                                 <option value="">Select an option</option>
                                 @foreach ($EventUserSecurity as $user)
@@ -57,7 +57,7 @@
                         </div>
 
                         <div>
-                            <x-label value="Also Assign To" class="font-mono text-sm font-semibold" />
+                            <x-label-no-req value="Also Assign To" class="font-mono text-sm font-semibold" />
                             <x-select wire:model.live='also_assign_to' :error="$errors->get('also_assign_to')" class="w-full">
                                 <option value="">Select an option</option>
                                 @foreach ($EventUserSecurity as $user)
