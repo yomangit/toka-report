@@ -276,44 +276,59 @@
                     </div>
                     <div class="flex-none md:w-72 ">
                         <div class="m-1 overflow-x-auto ">
-                            <table class="table bg-base-300 table-xs">
-                                <caption class="caption-top">
-                                    Table Initial Risk Assessment
-                                </caption>
+                            <table class="w-full text-xs border border-black table-auto bg-base-300 md:table-fixed">
+                                <caption class="mb-2 text-sm font-bold caption-top">Table Initial Risk Assessment</caption>
+
                                 <thead>
                                     <tr>
-                                        <th>Likelihood</th>
-                                        @foreach ($RiskConsequence as $consequence)
-                                        <th>{{ $consequence->risk_consequence_name }}</th>
+                                        <th colspan="2" class="p-1 text-center bg-gray-200 border border-black">Legend</th>
+                                        @foreach ($RiskAssessments as $risk_assessment)
+                                        <th class="p-1 text-xs text-center rotate_text border border-black {{ $risk_assessment->colour }}">
+                                            {{ $risk_assessment->risk_assessments_name }}
+                                        </th>
+                                        @endforeach
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center bg-gray-100 border border-black">Likelihood</th>
+                                        @foreach ($RiskConsequence as $risk_consequence)
+                                        <th class="text-center bg-gray-100 border border-black rotate_text">
+                                            {{ $risk_consequence->risk_consequence_name }}
+                                        </th>
                                         @endforeach
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($RiskLikelihood as $likelihood)
+                                    @foreach ($RiskLikelihood as $risk_likelihood)
                                     <tr>
-                                        <td>{{ $likelihood->risk_likelihoods_name }}</td>
-                                        @foreach ($RiskConsequence as $consequence)
-                                        @php
-                                        $cell = $TableRisk->first(function ($item) use ($risk_likelihood->id, $risk_consequence->id) {
-                                        return $item->risk_likelihood_id == $risk_likelihood->id &&
-                                        $item->risk_consequence_id == $risk_consequence->id;
-                                        });
+                                        <th class="p-1 text-[10px] font-semibold text-center border border-black bg-gray-50">
+                                            {{ $risk_likelihood->risk_likelihoods_name }}
+                                        </th>
 
+                                        @foreach ($RiskConsequence as $risk_consequence)
+                                        @php
+                                        $cells = $TableRisk->filter(fn ($item) =>
+                                        $item->risk_likelihood_id == $risk_likelihood->id &&
+                                        $item->risk_consequence_id == $risk_consequence->id
+                                        );
                                         @endphp
-                                        <td class="text-center {{ $cell?->RiskAssessment->colour ?? 'bg-gray-100' }}">
-                                            @if ($cell)
-                                            {{ $cell->id }}
-                                            @else
-                                            -
-                                            @endif
+                                        <td class="p-1 text-center border border-black">
+                                            @forelse ($cells as $cell)
+                                            <label @if (!in_array($currentStep, ['Closed', 'Cancelled' ])) wire:click="riskId({{ $risk_likelihood->id }}, {{ $risk_consequence->id }}, {{ $cell->risk_assessment_id }})" @endif class="btn btn-xs m-1 p-0 w-6 h-6 transition-all duration-150 ease-in-out
+                        {{ in_array($currentStep, ['Closed', 'Cancelled']) ? 'cursor-not-allowed opacity-40 bg-gray-400' : '' }}
+                        {{ $tablerisk_id === $cell->id ? 'border-4 border-neutral scale-110 ring ring-offset-1' : '' }}
+                        {{ $cell->RiskAssessment->colour }}" title="{{ $cell->RiskAssessment->risk_assessments_name }}">
+                                            </label>
+                                            @empty
+                                            <span class="block w-full h-6 bg-gray-100"></span>
+                                            @endforelse
                                         </td>
                                         @endforeach
                                     </tr>
                                     @endforeach
                                 </tbody>
-
                             </table>
+
                         </div>
                     </div>
                 </div>
