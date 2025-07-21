@@ -330,21 +330,34 @@ class Detail extends Component
     }
     public function TableRiskFunction()
     {
-        $this->RiskAssessment = TableRiskAssessment::with(['RiskAssessment'])->where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->get();
-
-        if ($this->risk_consequence_id) {
-            $this->risk_consequence_doc = RiskConsequence::where('id', $this->risk_consequence_id)->first()->description;
-        }
-        if ($this->risk_likelihood_id) {
-            $this->risk_likelihood_notes = RiskLikelihood::where('id', $this->risk_likelihood_id)->first()->notes;
-        }
-        if ($this->risk_consequence_id && $this->risk_likelihood_id) {
-            $RiskAssessments = TableRiskAssessment::where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->first()->risk_assessment_id;
-
-            $this->tablerisk_id = TableRiskAssessment::where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->where('risk_assessment_id', $RiskAssessments)->first()->id;
-        }
+        // Ambil semua data table risk untuk menampilkan matrix
         $this->TableRisk = TableRiskAssessment::with(['RiskAssessment', 'RiskConsequence', 'RiskLikelihood'])->get();
+
+        // Ambil satu entri yang cocok dengan kombinasi likelihood + assessment (jika ada)
+        $selectedRisk = $this->TableRisk->first(function ($item) {
+            return $item->risk_likelihood_id == $this->risk_likelihood_id
+                && $item->risk_assessment_id == $this->risk_assessment_id
+                && $item->risk_consequence_id == $this->risk_consequence_id;
+        });
+
+        if ($selectedRisk) {
+            // Set data dari relasi (dengan optional() untuk aman)
+            $this->risk_consequence_id = $selectedRisk->risk_consequence_id;
+            $this->risk_consequence_doc = optional($selectedRisk->RiskConsequence)->description;
+            $this->risk_likelihood_notes = optional($selectedRisk->RiskLikelihood)->notes;
+            $this->tablerisk_id = $selectedRisk->id;
+
+            // Set info ringkasan untuk ditampilkan di bawah table
+            $this->RiskAssessment = collect([$selectedRisk]);
+        } else {
+            // Reset jika tidak ada
+            $this->tablerisk_id = null;
+            $this->risk_consequence_doc = null;
+            $this->risk_likelihood_notes = null;
+            $this->RiskAssessment = collect();
+        }
     }
+
     public function download()
     {
         return response()->download(public_path('/storage/documents/hzd/' . $this->documentation));

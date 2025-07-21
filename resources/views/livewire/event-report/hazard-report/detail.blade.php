@@ -276,61 +276,55 @@
                     </div>
                     <div class="flex-none md:w-72 ">
                         <div class="m-1 overflow-x-auto ">
-                            <table class="table bg-base-300 table-xs">
-                                <caption class="caption-top">
-                                    Table Initial Risk Assessment
-                                </caption>
-                                <thead>
-                                    <tr class="">
-                                        <th colspan="2" class="p-0 text-center border-2 border-black">Legand</th>
-                                        @foreach ($RiskAssessments as $risk_assessment)
-                                        <td class="rotate_text text-start text-xs border-2 border-black   {{ $risk_assessment->colour }}">
-                                            {{ $risk_assessment->risk_assessments_name }}
+                            <table class="w-full text-xs border border-black table-auto bg-base-300 md:table-fixed">
+                                <caption class="mb-2 text-sm font-bold caption-top">Table Initial Risk Assessment</caption>
 
-                                        </td>
-                                        @endforeach
-                                    </tr>
-                                    <tr class="">
-                                        <th class="text-center border-2 border-black">Likelihood</th>
-                                        @foreach ($RiskConsequence as $risk_consequence)
-                                        <th class="border-2 border-black rotate_text text-start">
-                                            {{ $risk_consequence->risk_consequence_name }}</th>
+                                <thead>
+                                    <tr>
+                                        <th class="text-center bg-gray-100 border border-black">Likelihood \ Assessment</th>
+                                        @foreach ($RiskAssessmentList as $assessment)
+                                        <th class="rotate_text border border-black text-center {{ $assessment->colour }}">
+                                            {{ $assessment->risk_assessments_name }}
+                                        </th>
                                         @endforeach
                                     </tr>
                                 </thead>
+
                                 <tbody>
-                                    @foreach ($RiskLikelihood as $risk_likelihood)
+                                    @foreach ($RiskLikelihood as $likelihood)
                                     <tr>
-                                        <th class="p-0 text-xs font-semibold text-left border-2 border-black">
-                                            {{ $risk_likelihood->risk_likelihoods_name }}
+                                        <th class="text-center bg-gray-100 border border-black">
+                                            {{ $likelihood->risk_likelihoods_name }}
                                         </th>
 
-                                        @foreach ($risk_likelihood->RiskAssessment()->get() as $risk_assessment)
+                                        @foreach ($RiskAssessmentList as $assessment)
                                         @php
-                                        $selectedRisk = $TableRisk
-                                        ->firstWhere('risk_likelihood_id', $risk_likelihood->id)
-                                        ?->where('risk_assessment_id', $risk_assessment->id);
-
-                                        $isActive = $selectedRisk && $selectedRisk->id === $tablerisk_id;
+                                        $cell = $TableRisk->first(function ($item) use ($likelihood, $assessment) {
+                                        return $item->risk_likelihood_id == $likelihood->id &&
+                                        $item->risk_assessment_id == $assessment->id &&
+                                        $item->risk_consequence_id == $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_assessment_id', $risk_assessment->id)->first()->risk_consequence_id;
+                                        });
                                         @endphp
 
-                                        <th wire:click="riskId(
-                    {{ $risk_likelihood->id }},
-                    {{ $risk_assessment->id }},
-                    {{ $selectedRisk?->risk_consequence_id ?? 'null' }}
-                )" class="p-0 text-xs font-semibold text-center border-2 border-black cursor-pointer transition-all duration-150 ease-in-out
-                    {{ $risk_assessment->colour }}
-                    {{ $isActive ? 'border-4 border-neutral scale-105 ring ring-offset-2' : '' }}">
-                                            {{-- Optional: tampilkan label kecil --}}
-                                            {{-- {{ $risk_assessment->risk_assessments_name }} --}}
-                                        </th>
+                                        <td class="p-0 text-center border border-black">
+                                            @if ($cell)
+                                            <label wire:click="riskId({{ $risk_likelihood->id }},
+											{{ $risk_assessment->id }},
+											{{ $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_assessment_id', $risk_assessment->id)->first()->risk_consequence_id }})
+											" class="btn btn-xs btn-block m-[2px] p-0 cursor-pointer transition-all duration-200 ease-in-out
+                                    {{ $tablerisk_id === $cell->id ? 'border-4 border-neutral scale-105 ring ring-offset-1' : '' }}
+                                    {{ $cell->RiskAssessment->colour }}">
+                                            </label>
+                                            @else
+                                            <span class="block w-full h-6 bg-gray-100"></span>
+                                            @endif
+                                        </td>
                                         @endforeach
                                     </tr>
                                     @endforeach
-
-
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>
