@@ -309,7 +309,7 @@
 											{{ $risk_assessment->id }},
 											{{ $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_assessment_id', $risk_assessment->id)->first()->risk_consequence_id }})
 											" class=" p-0 text-xs font-semibold text-center border-2 border-black cursor-pointer {{ $risk_assessment->colour }}">
-                                            {{-- {{ $risk_assessment->risk_assessments_name }} --}}
+                                            {{ strtoupper(Str::substr($risk_assessment->risk_assessments_name, 0, 1)) }}
                                         </th>
                                         @endforeach
                                     </tr>
