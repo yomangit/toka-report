@@ -275,45 +275,59 @@
                         </div>
                     </div>
                     <div class="flex-none md:w-72 ">
-                        <div class="m-1 overflow-x-auto ">
-                            <table class="table bg-base-300 table-xs">
-                                <caption class="caption-top">
-                                    Table Initial Risk Assessment
-                                </caption>
-                                <thead>
+                        <div class="w-full overflow-x-auto">
+                            <table class="min-w-[700px] text-xs table-fixed border border-black bg-white">
+                                <thead class="bg-gray-100">
                                     <tr>
-                                        <th>Likelihood</th>
+                                        <th rowspan="2" class="p-2 text-center align-middle bg-gray-100 border border-black">
+                                            Likelihood
+                                        </th>
+                                        <th colspan="{{ $RiskConsequence->count() }}" class="p-2 text-center bg-gray-100 border border-black">
+                                            Consequence
+                                        </th>
+                                    </tr>
+                                    <tr>
                                         @foreach ($RiskConsequence as $consequence)
-                                        <th>{{ $consequence->risk_consequence_name }}</th>
+                                        <th class="p-1 text-center border border-black bg-gray-50">
+                                            <div class="rotate-90 origin-left whitespace-nowrap text-[10px] font-semibold">
+                                                {{ $consequence->risk_consequence_name }}
+                                            </div>
+                                        </th>
                                         @endforeach
                                     </tr>
                                 </thead>
-
                                 <tbody>
                                     @foreach ($RiskLikelihood as $likelihood)
                                     <tr>
-                                        <td>{{ $likelihood->risk_likelihoods_name }}</td>
+                                        <th class="p-1 font-semibold text-left border border-black bg-gray-50">
+                                            {{ $likelihood->risk_likelihoods_name }}
+                                        </th>
+
                                         @foreach ($RiskConsequence as $consequence)
                                         @php
-                                        $cell = $TableRisk->first(fn ($item) =>
-                                        $item->risk_likelihood_id == $likelihood->id &&
-                                        $item->risk_consequence_id == $consequence->id
+                                        $cellAssessments = $TableRisk->filter(fn($item) =>
+                                        $item->risk_likelihood_id === $likelihood->id &&
+                                        $item->risk_consequence_id === $consequence->id
                                         );
                                         @endphp
-                                        <td class="text-center {{ $cell?->RiskAssessment->colour ?? 'bg-gray-100' }}">
-                                            @if ($cell)
-                                            {{ $cell->id }}
-                                            @else
-                                            -
-                                            @endif
+                                        <td class="p-1 text-center align-top border border-black">
+                                            @forelse ($cellAssessments as $assessment)
+                                            <button wire:click="$emit('openRiskModal', {{ $assessment->id }})" class="tooltip tooltip-top text-[10px] m-[1px] px-2 py-1 font-semibold text-white rounded shadow-sm hover:scale-105 transition-all duration-150 ease-in-out
+                                        {{ $assessment->RiskAssessment->colour }}
+                                        @if ($tablerisk_id === $assessment->id) ring-2 ring-black scale-105 @endif" data-tip="{{ $assessment->RiskAssessment->reporting_obligation ?? 'No notes' }}">
+                                                {{ $assessment->RiskAssessment->risk_assessments_name }}
+                                            </button>
+                                            @empty
+                                            <span class="block text-gray-300 text-[10px] italic">—</span>
+                                            @endforelse
                                         </td>
                                         @endforeach
                                     </tr>
                                     @endforeach
                                 </tbody>
-
                             </table>
                         </div>
+
                     </div>
                 </div>
                 <table class="table table-xs">
