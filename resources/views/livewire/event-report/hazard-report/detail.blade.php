@@ -305,10 +305,18 @@
                                             {{ $risk_likelihood->risk_likelihoods_name }}
                                         </th>
                                         @foreach ($risk_likelihood->RiskAssessment()->get() as $risk_assessment)
+                                        @php
+                                        $cell = $TableRisk->first(function ($item) use ($likelihood, $assessment) {
+                                        return $item->risk_likelihood_id == $likelihood->id &&
+                                        $item->risk_assessment_id == $assessment->id &&
+                                        $item->risk_assessment_id == $risk_consequence_id ;
+                                        });
+                                        @endphp
+
                                         <th wire:click="riskId({{ $risk_likelihood->id }},
 											{{ $risk_assessment->id }},
 											{{ $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_assessment_id', $risk_assessment->id)->first()->risk_consequence_id }})
-											" class=" p-0 text-xs font-semibold text-center border-2 border-black cursor-pointer {{ $risk_assessment->colour }}">
+											" class=" p-0 text-xs font-semibold text-center border-2 border-black cursor-pointer {{ $tablerisk_id === $cell->id ? 'border-4 border-neutral scale-105 ring ring-offset-1' : '' }} {{ $risk_assessment->colour }}">
                                             {{-- {{ $risk_assessment->risk_assessments_name }} --}}
                                         </th>
                                         @endforeach
