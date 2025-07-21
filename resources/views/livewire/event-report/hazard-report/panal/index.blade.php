@@ -2,7 +2,6 @@
     <form wire:submit.prevent='store'>
         @csrf
         @method('PATCH')
-
         <div wire:target="store" wire:loading.class="skeleton" class="flex flex-col w-full text-sm border lg:flex-row">
             {{-- Kolom Kiri --}}
             <div class="flex-1 p-4 space-y-1 border-b lg:border-b-0 lg:border-r">
@@ -46,7 +45,7 @@
                     {{-- Assign To --}}
                     @if ($show)
                     <div class="flex items-center gap-x-2">
-                        <div class="font-semibold">Assign To</div>
+                        <div class="w-32 font-semibold md:w-4">Assign To</div>
                         <div>:</div>
                         <div>
                             <x-select wire:model.live='assign_to' :error="$errors->get('assign_to')" class="w-full">
@@ -61,7 +60,7 @@
 
                     {{-- Also Assign To --}}
                     <div class="flex items-center gap-x-2">
-                        <div class="font-semibold">Also Assign To</div>
+                        <div class="w-32 font-semibold md:w-4">Also Assign To</div>
                         <div>:</div>
                         <div>
                             <x-select wire:model.live='also_assign_to' :error="$errors->get('also_assign_to')" class="w-full">
