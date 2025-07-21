@@ -379,7 +379,7 @@ class Detail extends Component
         if ($this->show_immidiate === 'no') {
             $this->immediate_corrective_action = null;
         }
-        $filds = [
+        $filds =[
             'reference'                   => $this->reference,
             'event_type_id'               => $this->event_type_id,
             'sub_event_type_id'           => $this->sub_event_type_id,
