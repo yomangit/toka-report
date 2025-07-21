@@ -305,7 +305,7 @@
                                             {{ $risk_likelihood->risk_likelihoods_name }}
                                         </th>
                                         @foreach ($risk_likelihood->RiskAssessment()->get() as $risk_assessment)
-                                        <th class=" p-0 text-xs font-semibold text-center border-2 border-black {{ $risk_assessment->colour }}">
+                                        <th class=" p-0 text-xs font-semibold text-center border-2 border-black {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? ' opacity-35 bg-gray-500' : $risk_assessment->colour }}">
                                            
                                         </th>
                                         @endforeach
