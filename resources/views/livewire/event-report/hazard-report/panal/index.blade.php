@@ -76,9 +76,8 @@
                 </div>
             </div>
             {{-- Kolom Kanan --}}
-            <div class="flex items-center justify-center p-4 text-center lg:w-64">
-                <x-btn-show wire:click="$set('showHistoryModal', true)">
-                    📜 View History
+            <div class="flex items-center justify-center p-4 text-center lg:w-32">
+                <x-btn-show wire:click="$set('showHistoryModal', true)">📜 View History
                 </x-btn-show>
             </div>
         </div>
