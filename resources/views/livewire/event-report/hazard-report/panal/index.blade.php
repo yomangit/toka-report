@@ -73,10 +73,15 @@
                         </div>
                     </div>
                     @endif
+                    @if ($muncul)
+                    <div class="flex item-center gap">
+                        <x-btn-panel data-tip="submit" />
+                    </div>
+                    @endif
                 </div>
             </div>
             {{-- Kolom Kanan --}}
-            <div class="flex items-center justify-center p-4 text-center lg:w-32">
+            <div class="flex items-center justify-center p-4 text-center lg:w-24">
                 <x-btn-show wire:click="$set('showHistoryModal', true)">📜 View History
                 </x-btn-show>
             </div>
