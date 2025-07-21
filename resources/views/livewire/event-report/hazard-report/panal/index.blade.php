@@ -15,7 +15,7 @@
                 <div class="flex items-start gap-x-2">
                     <div class="w-32 font-semibold">Status</div>
                     <div>:</div>
-                    <div>{{ $status }}</div>
+                    <div><span class="bg-clip-text text-transparent {{ $bg_status }}">{{ $status }}</span></div>
                 </div>
                 {{-- Proceed + Assign To --}}
                 <div class="flex flex-col pt-2 gap-y-2 lg:flex-row lg:items-center lg:gap-x-4">
