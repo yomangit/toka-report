@@ -306,10 +306,10 @@
                                         </th>
                                         @foreach ($risk_likelihood->RiskAssessment()->get() as $risk_assessment)
                                         @php
-                                        $cell = $TableRisk->first(function ($item) use ($likelihood, $assessment) {
+                                        $cell = $TableRisk->first(function ($item) use ($likelihood, $risk_assessment) {
                                         return $item->risk_likelihood_id == $likelihood->id &&
                                         $item->risk_assessment_id == $assessment->id &&
-                                        $item->risk_assessment_id == $risk_consequence_id ;
+                                        $item->risk_consequence_id == $risk_consequence_id ;
                                         });
                                         @endphp
 
