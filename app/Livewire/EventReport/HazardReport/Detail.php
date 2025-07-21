@@ -1,34 +1,36 @@
 <?php
+
 namespace App\Livewire\EventReport\HazardReport;
 
-use App\Models\BusinesUnit;
-use App\Models\choseEventType;
+use DateTime;
+use App\Models\Site;
+use App\Models\User;
 use App\Models\Company;
-use App\Models\CompanyCategory;
+use Livewire\Component;
 use App\Models\DeptByBU;
 use App\Models\Division;
+use App\Models\BusinesUnit;
 use App\Models\EventKeyword;
-use App\Models\EventParticipants;
 use App\Models\Eventsubtype;
-use App\Models\EventUserSecurity;
-use App\Models\HazardDocumentation;
 use App\Models\HazardReport;
+use Livewire\WithPagination;
 use App\Models\LocationEvent;
+use Livewire\WithFileUploads;
+use App\Models\choseEventType;
 use App\Models\RiskAssessment;
-use App\Models\RiskConsequence;
 use App\Models\RiskLikelihood;
-use App\Models\Site;
-use App\Models\TableRiskAssessment;
+use App\Models\CompanyCategory;
+use App\Models\HazardReportLog;
+use App\Models\RiskConsequence;
 use App\Models\TypeEventReport;
-use App\Models\User;
+use App\Models\EventParticipants;
+use App\Models\EventUserSecurity;
 use App\Models\WorkflowApplicable;
 use App\Notifications\toModerator;
-use DateTime;
+use App\Models\HazardDocumentation;
+use App\Models\TableRiskAssessment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
-use Livewire\Component;
-use Livewire\WithFileUploads;
-use Livewire\WithPagination;
 
 class Detail extends Component
 {
@@ -405,6 +407,12 @@ class Detail extends Component
             'submitter'                   => $this->submitter,
             'comment'                     => $this->comment,
             'show_immidiate'              => $this->show_immidiate,
+        ]);
+        HazardReportLog::create([
+            'hazard_report_id' => $this->data_id,
+            'user_id' => auth()->id(),
+            'action' => 'updated data hazard',
+            'description' => "memperbaharui data hazard",
         ]);
         $this->dispatch(
             'alert',
