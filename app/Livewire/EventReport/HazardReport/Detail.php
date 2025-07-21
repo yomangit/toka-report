@@ -335,8 +335,10 @@ class Detail extends Component
 
         // Kalau likelihood & consequence diisi
         if ($this->risk_consequence_id && $this->risk_likelihood_id) {
-            $selectedRisk = $this->TableRisk->firstWhere('risk_likelihood_id', $this->risk_likelihood_id)
-                ?->where('risk_consequence_id', $this->risk_consequence_id);
+            $selectedRisk = TableRiskAssessment::with(['RiskAssessment', 'RiskConsequence', 'RiskLikelihood'])
+                ->where('risk_likelihood_id', $this->risk_likelihood_id)
+                ->where('risk_consequence_id', $this->risk_consequence_id)
+                ->first();
 
             // Ambil data deskripsi/notes langsung dari relasi
             $this->risk_consequence_doc = optional($selectedRisk?->RiskConsequence)->description;
