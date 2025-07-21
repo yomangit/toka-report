@@ -330,25 +330,21 @@ class Detail extends Component
     }
     public function TableRiskFunction()
     {
-        // Load seluruh tabel penilaian risiko (untuk matrix table)
-        $this->TableRisk = TableRiskAssessment::with(['RiskAssessment', 'RiskConsequence', 'RiskLikelihood'])->get();
+        $this->RiskAssessment = TableRiskAssessment::with(['RiskAssessment'])->where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->get();
 
-        // Kalau likelihood & consequence diisi
-        if ($this->risk_consequence_id && $this->risk_likelihood_id) {
-            $selectedRisk = TableRiskAssessment::with(['RiskAssessment', 'RiskConsequence', 'RiskLikelihood'])
-                ->where('risk_likelihood_id', $this->risk_likelihood_id)
-                ->where('risk_consequence_id', $this->risk_consequence_id)
-                ->first();
-
-            // Ambil data deskripsi/notes langsung dari relasi
-            $this->risk_consequence_doc = optional($selectedRisk?->RiskConsequence)->description;
-            $this->risk_likelihood_notes = optional($selectedRisk?->RiskLikelihood)->notes;
-
-            $this->tablerisk_id = $selectedRisk->id ?? null;
-            $this->RiskAssessment = collect([$selectedRisk])->filter(); // hanya satu yang dipakai
+        if ($this->risk_consequence_id) {
+            $this->risk_consequence_doc = RiskConsequence::where('id', $this->risk_consequence_id)->first()->description;
         }
-    }
+        if ($this->risk_likelihood_id) {
+            $this->risk_likelihood_notes = RiskLikelihood::where('id', $this->risk_likelihood_id)->first()->notes;
+        }
+        if ($this->risk_consequence_id && $this->risk_likelihood_id) {
+            $RiskAssessments = TableRiskAssessment::where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->first()->risk_assessment_id;
 
+            $this->tablerisk_id = TableRiskAssessment::where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->where('risk_assessment_id', $RiskAssessments)->first()->id;
+        }
+        $this->TableRisk = TableRiskAssessment::with(['RiskAssessment', 'RiskConsequence', 'RiskLikelihood'])->get();
+    }
     public function download()
     {
         return response()->download(public_path('/storage/documents/hzd/' . $this->documentation));
