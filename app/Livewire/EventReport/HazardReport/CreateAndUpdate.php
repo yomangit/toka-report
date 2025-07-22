@@ -427,7 +427,6 @@ class CreateAndUpdate extends Component
             'key_word'                    => $this->key_word,
             'kondisitidakamen_id'         => $this->kondisitidakamen_id,
             'tindakantidakamen_id'        => $this->tindakantidakamen_id,
-            'tindakantidakamen_id'        => $this->tindakantidakamen_id,
             'closed_by'                   => $closed_by,
         ];
 

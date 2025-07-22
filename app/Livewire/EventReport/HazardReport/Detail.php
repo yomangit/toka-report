@@ -409,6 +409,9 @@ class Detail extends Component
             'workflow_detail_id'          => $this->workflow_detail_id,
             'submitter'                   => $this->submitter,
             'comment'                     => $this->comment,
+            'key_word'                    => $this->key_word,
+            'kondisitidakamen_id'         => $this->kondisitidakamen_id,
+            'tindakantidakamen_id'        => $this->tindakantidakamen_id,
             'show_immidiate'              => $this->show_immidiate,
         ];
         HazardReport::whereId($this->data_id)->update($filds);

@@ -8,4 +8,10 @@
     class="w-full h-64"
 ></div>
     @endif
+    <div
+    id="perbandinganPieChart"
+    data-labels='["Kondisi Tidak Aman", "Tindakan Tidak Aman"]'
+    data-counts='[0, 0]'
+    class="w-full h-96"
+></div>
 </div>

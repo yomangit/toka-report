@@ -13,10 +13,12 @@ class HrGrapf extends Component
     public $divisionCounts = [];
     public $divisionColors = [];
 
+    protected $listeners = ['refreshPerbandinganChart' => 'updatePerbandinganData'];
     public function mount()
     {
+        $this->updatePerbandinganData();
+       
         $user = auth()->user();
-
         $query = HazardReport::select('division_id', DB::raw('count(*) as total'))
             ->with('division')
             ->groupBy('division_id');
@@ -43,6 +45,16 @@ class HrGrapf extends Component
             return $stringToColor($label);
         }, $this->divisionLabels);
     }
+    public function updatePerbandinganData()
+    {
+        $totalKondisi = HazardReport::whereNotNull('kondisitidakaman_id')->count();
+        $totalTindakan = HazardReport::whereNotNull('tindakantidakaman_id')->count();
+
+        $this->dispatch('update-perbandingan-chart', [
+            'labels' => ['Kondisi Tidak Aman', 'Tindakan Tidak Aman'],
+            'counts' => [$totalKondisi, $totalTindakan],
+        ]);
+    }
     #[On('hazardChartShouldRefresh')]
     public function refreshChart()
     {
@@ -67,6 +79,7 @@ class HrGrapf extends Component
             'colors' => $this->divisionColors,
         ]);
     }
+
 
     public function render()
     {

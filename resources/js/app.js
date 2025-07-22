@@ -13,7 +13,11 @@ import "flatpickr/dist/themes/dark.css";
 import "flatpickr/dist/plugins/monthSelect/style.css";
 // Charts
 import { renderDivisionChart } from './charts/divisionChart';
+import { renderPerbandinganChart } from './charts/perbandinganChart';
 
+document.addEventListener('DOMContentLoaded', () => {
+    renderPerbandinganChart();
+});
 // Inisialisasi semua flatpickr jika elemen ada
 const initDatePickers = () => {
     const datePickers = [
