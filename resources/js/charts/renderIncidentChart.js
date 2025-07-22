@@ -14,38 +14,77 @@ export function renderIncidentChart(selector, data) {
 
     const options = {
         series: [{
-            name: 'Jumlah Insiden',
-            data: data.values, // asumsi: array angka
-        }],
-        chart: {
-            type: 'bar',
-            height: 400
-        },
-        title: {
-            text: 'Statistik Insiden Bulanan',
-            align: 'center',
-            style: {
-                fontSize: '14px',
-                fontWeight: 'bold',
-                color: '#1f2937'
+            name: 'LTI'
+            , type: 'column',
+
+            data: chartData.LTI
+        }, {
+            name: 'MTI'
+            , type: 'column'
+            , data: chartData.MTI
+        }, {
+            name: 'RDI'
+            , type: 'column'
+            , data: chartData.RDI
+        }, {
+            name: 'FAI'
+            , type: 'column',
+
+            data: chartData.FAI
+        }, {
+            name: 'LTIFR'
+            , type: 'line',
+
+            data: chartData.LTIFR
+        }, {
+            name: 'LTIFR Target'
+            , type: 'line',
+
+            data: chartData.LTIFR_Target
+        }]
+        , chart: {
+            height: 350
+            , type: 'line'
+            , stacked: false
+        }
+        , zoom: {
+            enabled: false
+        }
+        , colors: ['#8A0100', '#B89242', '#F1F500', '#006F26', '#F50400', '#8079C7']
+        , stroke: {
+            width: [1, 1, 1, 1, 3, 4]
+            , dashArray: [0, 0, 0, 0, 0, 4]
+            , curve: 'smooth'
+        }
+        , title: {
+            text: 'All Injury VS LTIFR (24MMA)'
+            , align: 'center'
+            , style: {
+                fontSize: '12px'
+                , fontWeight: 'bold'
+                , fontFamily: undefined
+                , color: '#fb7185'
             }
-        },
-        xaxis: {
-            categories: data.labels, // asumsi: array bulan
+        , }
+        , xaxis: {
+            categories: chartData.months
+        , }
+        , yaxis: {
             title: {
-                text: 'Bulan'
+                text: 'Points'
+            , }
+        }
+        , tooltip: {
+            fixed: {
+                enabled: true
+                , position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft
+                offsetY: 30
+                , offsetX: 60
             }
-        },
-        yaxis: {
-            title: {
-                text: 'Jumlah'
-            }
-        },
-        colors: ['#f97316'],
-        tooltip: {
-            y: {
-                formatter: val => `${val} insiden`
-            }
+        , }
+        , legend: {
+            horizontalAlign: 'center'
+            , offsetX: 40
         }
     };
 
