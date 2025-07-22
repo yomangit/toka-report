@@ -44,29 +44,37 @@ class HrGrapf extends Component
         }, $this->divisionLabels);
     }
     #[On('hazardChartShouldRefresh')]
-    public function refreshChart()
-    {
-        $reports = HazardReport::select('division_id', DB::raw('count(*) as total'))
-            ->with('division')
-            ->groupBy('division_id')
-            ->get();
+   public function refreshDivisionChart()
+{
+    $user = auth()->user();
 
-        $this->divisionLabels = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
-        $this->divisionCounts = $reports->pluck('total')->toArray();
+    $query = HazardReport::select('division_id', DB::raw('count(*) as total'))
+        ->with('division')
+        ->groupBy('division_id');
 
-        $stringToColor = function ($string) {
-            $hash = crc32($string);
-            return sprintf("#%06X", $hash & 0xFFFFFF);
-        };
-
-        $this->divisionColors = array_map(fn($label) => $stringToColor($label), $this->divisionLabels);
-
-        $this->dispatchBrowserEvent('update-division-chart', [
-            'labels' => $this->divisionLabels,
-            'counts' => $this->divisionCounts,
-            'colors' => $this->divisionColors,
-        ]);
+    if ($user->hasRolePermit('administration')) {
+        $reports = $query->get();
+    } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
+        $divisionIds = $user->divisions->pluck('id')->toArray();
+        $reports = $query->whereIn('division_id', $divisionIds)->get();
+    } else {
+        $reports = collect();
     }
+
+    $divisionLabels = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
+    $divisionCounts = $reports->pluck('total')->toArray();
+
+    $stringToColor = fn($string) => sprintf("#%06X", crc32($string) & 0xFFFFFF);
+    $divisionColors = array_map($stringToColor, $divisionLabels);
+
+    // Kirim data ke JavaScript (frontend)
+    $this->dispatchBrowserEvent('update-division-chart', [
+        'labels' => $divisionLabels,
+        'series' => $divisionCounts,
+        'colors' => $divisionColors,
+    ]);
+}
+
 
     public function render()
     {

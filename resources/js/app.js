@@ -12,8 +12,10 @@ import monthSelectPlugin from "flatpickr/dist/plugins/monthSelect";
 import "flatpickr/dist/themes/dark.css";
 import "flatpickr/dist/plugins/monthSelect/style.css";
 // Charts
-import { renderDivisionChart } from './apexchart/divisionChart';
-
+import { renderDivisionChart } from './charts/divisionChart';
+document.addEventListener('livewire:load', () => {
+    renderDivisionChart();
+});
 // Inisialisasi semua flatpickr jika elemen ada
 const initDatePickers = () => {
     const datePickers = [
