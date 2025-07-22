@@ -18,15 +18,24 @@ export function renderKondisiBarChart() {
             name: 'Jumlah Laporan',
             data: counts
         }],
-        xaxis: {
-            categories: labels
-        },
+
         title: {
             text: 'Laporan per Kondisi Tidak Aman',
             align: 'center',
             style: {
-                fontSize: '14px'
+                fontSize: '10px'
             }
+        },
+        xaxis: {
+            categories: labels,
+            labels: {
+                style: {
+                    fontSize: '10px'
+                },
+                formatter: function (value) {
+                    return value.length > 15 ? value.substring(0, 12) + '…' : value;
+                },
+            },
         },
         plotOptions: {
             bar: {
