@@ -106,12 +106,7 @@
         renderHazardTable(@json($key_state));
     });
 </script>
-{{-- Inject data chart ke dalam JS --}}
-<script>
-     const chartData = JSON.parse('<?php echo $Incident; ?>');
-    window.chartData = {!! json_encode($Incident) !!};
-</script>
-{{-- <script type="text/javascript" nonce="{{ csp_nonce() }}">
+<script type="text/javascript" nonce="{{ csp_nonce() }}">
     const chartData = JSON.parse('<?php echo $Incident; ?>');
     var all_injury_vs_ltifr = {
         series: [{
@@ -410,4 +405,4 @@
             opacity: 1
         }
     };
-</script> --}}
+</script>

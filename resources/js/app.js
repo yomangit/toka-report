@@ -13,12 +13,7 @@ import "flatpickr/dist/themes/dark.css";
 import "flatpickr/dist/plugins/monthSelect/style.css";
 // Charts
 import { renderDivisionChart } from './charts/divisionChart';
-import { renderInjuryChart } from './charts/renderInjuryChart';
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.chartData) {
-        renderInjuryChart('#all_injury_vs_ltifr', window.chartData);
-    }
-});
+
 // Inisialisasi semua flatpickr jika elemen ada
 const initDatePickers = () => {
     const datePickers = [
