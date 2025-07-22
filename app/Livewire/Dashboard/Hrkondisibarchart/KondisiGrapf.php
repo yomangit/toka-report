@@ -19,14 +19,24 @@ class KondisiGrapf extends Component
 
     public function loadChartData()
     {
-        $data = HazardReport::select('kondisitidakamen_id', DB::raw('COUNT(*) as total'))
+        $user = auth()->user();
+        $query = HazardReport::select('kondisitidakamen_id', DB::raw('COUNT(*) as total'))
             ->whereNotNull('kondisitidakamen_id')
             ->groupBy('kondisitidakamen_id')
-            ->with('kondisiTidakAman')
-            ->get();
-
-        $this->labels = $data->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
-        $this->counts = $data->pluck('total')->toArray();
+            ->with('kondisiTidakAman');
+        if ($user->hasRolePermit('administration')) {
+            // Admin bisa lihat semua laporan
+            $reports = $query->get();
+        } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
+            // Hanya user yang punya relasi dengan division_user
+            $divisionIds = $user->divisions->pluck('id')->toArray();
+            $reports = $query->whereIn('division_id', $divisionIds)->get();
+        } else {
+            // User tanpa relasi division_user tidak bisa lihat laporan
+            $reports = collect();
+        }
+        $this->labels = $reports->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
+        $this->counts = $reports->pluck('total')->toArray();
     }
     public function render()
     {
