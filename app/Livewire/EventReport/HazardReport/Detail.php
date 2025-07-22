@@ -75,6 +75,9 @@ class Detail extends Component
                 $this->risk_consequence_id   = $HazardReport->risk_consequence_id;
                 $this->risk_likelihood_id    = $HazardReport->risk_likelihood_id;
                 $this->report_by             = $HazardReport->report_by;
+                $this->key_word             = $HazardReport->key_word;
+                $this->kondisitidakamen_id             = $HazardReport->kondisitidakamen_id;
+                $this->tindakantidakamen_id             = $HazardReport->tindakantidakamen_id;
                 $this->report_to             = $HazardReport->report_to;
                 $this->location_id             = $HazardReport->event_location_id;
                 $this->submitter             = $HazardReport->submitter;
@@ -140,8 +143,6 @@ class Detail extends Component
         }
 
         return $baseRules;
-        
-        
     }
     public function messages()
     {
