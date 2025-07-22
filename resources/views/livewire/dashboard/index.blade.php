@@ -1,5 +1,5 @@
 <div>
-    
+    @vite(['resources/js/apexchart.js'])
 
     <div class="w-full my-2 shadow stats">
         <div class="stat">
@@ -109,7 +109,7 @@
 {{-- Inject data chart ke dalam JS --}}
 <script>
      const chartData = JSON.parse('<?php echo $Incident; ?>');
-    window.chartData = JSON.parse('<?php echo $Incident; ?>');
+    window.chartData = {!! json_encode($Incident) !!};
 </script>
 {{-- <script type="text/javascript" nonce="{{ csp_nonce() }}">
     const chartData = JSON.parse('<?php echo $Incident; ?>');
