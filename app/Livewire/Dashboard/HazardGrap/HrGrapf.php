@@ -45,16 +45,7 @@ class HrGrapf extends Component
             return $stringToColor($label);
         }, $this->divisionLabels);
     }
-    public function updatePerbandinganData()
-    {
-        $totalKondisi = HazardReport::whereNotNull('kondisitidakamen_id')->count();
-        $totalTindakan = HazardReport::whereNotNull('tindakantidakamen_id')->count();
-
-        $this->dispatch('update-perbandingan-chart', [
-            'labels' => ['Kondisi Tidak Aman', 'Tindakan Tidak Aman'],
-            'counts' => [$totalKondisi, $totalTindakan],
-        ]);
-    }
+    
     #[On('hazardChartShouldRefresh')]
     public function refreshChart()
     {
