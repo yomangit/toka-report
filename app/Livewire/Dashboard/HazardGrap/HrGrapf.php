@@ -16,7 +16,6 @@ class HrGrapf extends Component
     protected $listeners = ['refreshPerbandinganChart' => 'updatePerbandinganData'];
     public function mount()
     {
-        $this->updatePerbandinganData();
        
         $user = auth()->user();
         $query = HazardReport::select('division_id', DB::raw('count(*) as total'))
