@@ -12,76 +12,20 @@ import monthSelectPlugin from "flatpickr/dist/plugins/monthSelect";
 import "flatpickr/dist/themes/dark.css";
 import "flatpickr/dist/plugins/monthSelect/style.css";
 // Charts
-import {
-    renderDivisionChart
-} from './charts/divisionChart';
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.incidentData) {
-        console.log('Data dari Blade:', window.incidentData);
+import { renderDivisionChart } from './charts/divisionChart';
 
-        // Misalnya render chart pakai ApexCharts
-        // renderIncidentChart('#incident_chart', window.incidentData);
-    } else {
-        console.warn('incidentData belum didefinisikan.');
-    }
-});
 // Inisialisasi semua flatpickr jika elemen ada
 const initDatePickers = () => {
-    const datePickers = [{
-            selector: "#tanggal",
-            options: {
-                enableTime: true,
-                dateFormat: "d-m-Y : H:i"
-            }
-        },
-        {
-            selector: "#due_date",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
-        {
-            selector: "#completion_date",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
-        {
-            selector: "#due_date_guest",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
-        {
-            selector: "#completion_date_guest",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
-        {
-            selector: "#tanggal_komplite",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
-        {
-            selector: "#date_birth",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
-        {
-            selector: "#date_commenced",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
-        {
-            selector: "#end_date",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
+    const datePickers = [
+        { selector: "#tanggal", options: { enableTime: true, dateFormat: "d-m-Y : H:i" } },
+        { selector: "#due_date", options: { dateFormat: "d-m-Y" } },
+        { selector: "#completion_date", options: { dateFormat: "d-m-Y" } },
+        { selector: "#due_date_guest", options: { dateFormat: "d-m-Y" } },
+        { selector: "#completion_date_guest", options: { dateFormat: "d-m-Y" } },
+        { selector: "#tanggal_komplite", options: { dateFormat: "d-m-Y" } },
+        { selector: "#date_birth", options: { dateFormat: "d-m-Y" } },
+        { selector: "#date_commenced", options: { dateFormat: "d-m-Y" } },
+        { selector: "#end_date", options: { dateFormat: "d-m-Y" } },
         {
             selector: "#month",
             options: {
@@ -95,10 +39,7 @@ const initDatePickers = () => {
         }
     ];
 
-    datePickers.forEach(({
-        selector,
-        options
-    }) => {
+    datePickers.forEach(({ selector, options }) => {
         const el = document.querySelector(selector);
         if (el) {
             flatpickr(el, {
@@ -146,7 +87,7 @@ const initSidebarToggle = () => {
                 parent.classList.remove("selected");
             } else {
                 document.querySelectorAll(".sidebar-dropdown-toggle").forEach(function (i) {
-                    i.closest(".group") ? .classList.remove("selected");
+                    i.closest(".group")?.classList.remove("selected");
                 });
                 parent.classList.add("selected");
             }
@@ -163,9 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Service Worker
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js', {
-            scope: '/'
-        })
+    navigator.serviceWorker.register('sw.js', { scope: '/' })
         .then(() => {})
         .catch(() => {});
 }
