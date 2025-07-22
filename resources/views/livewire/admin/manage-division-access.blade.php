@@ -1,7 +1,8 @@
 <div>
     <x-notification />
-    <div class="">
+    <div class="flex justify-between">
         <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
+         <x-inputsearch name='search' wire:model.live='search_nama' />
     </div>
     {{-- Tabel User & Akses --}}
     <div class="overflow-x-auto">
