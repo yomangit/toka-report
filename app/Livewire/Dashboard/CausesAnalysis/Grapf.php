@@ -7,6 +7,8 @@ use App\Models\HazardReport;
 
 class Grapf extends Component
 {
+    public $labels = [];
+    public $counts = [];
     protected $listeners = ['refreshPerbandinganChart' => 'updatePerbandinganData'];
 
     public function mount()
@@ -19,10 +21,8 @@ class Grapf extends Component
         $totalKondisi = HazardReport::whereNotNull('kondisitidakamen_id')->count();
         $totalTindakan = HazardReport::whereNotNull('tindakantidakamen_id')->count();
 
-        $this->dispatch('update-perbandingan-chart', [
-            'labels' => ['Kondisi Tidak Aman', 'Tindakan Tidak Aman'],
-            'counts' => [$totalKondisi, $totalTindakan],
-        ]);
+        $this->labels = ['Kondisi Tidak Aman', 'Tindakan Tidak Aman'];
+        $this->counts = [$totalKondisi, $totalTindakan];
     }
 
     public function render()
