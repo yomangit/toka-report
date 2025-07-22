@@ -1,5 +1,5 @@
 <div>
-    @vite(['resources/js/apexchart.js'])
+    @vite('resources/js/charts/all_injury.js')
 
     <div class="w-full my-2 shadow stats">
         <div class="stat">
@@ -106,7 +106,12 @@
         renderHazardTable(@json($key_state));
     });
 </script>
-<script type="text/javascript" nonce="{{ csp_nonce() }}">
+{{-- Inject data chart ke dalam JS --}}
+<script>
+     const chartData = JSON.parse('<?php echo $Incident; ?>');
+    window.chartData = JSON.parse('<?php echo $Incident; ?>');
+</script>
+{{-- <script type="text/javascript" nonce="{{ csp_nonce() }}">
     const chartData = JSON.parse('<?php echo $Incident; ?>');
     var all_injury_vs_ltifr = {
         series: [{
@@ -405,4 +410,4 @@
             opacity: 1
         }
     };
-</script>
+</script> --}}

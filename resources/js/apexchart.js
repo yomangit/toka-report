@@ -28,3 +28,4 @@ ohs_incident_deptConts.render();
 cause_analysis_render.render();
 lagging_and_leading_indicator_statuss.render();
 // end:chart
+
