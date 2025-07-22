@@ -103,7 +103,7 @@
 </script>
 
 <script>
-    window.incidentData = JSON.parse('{!! json_encode($Incident) !!}');
+    window.incidentData = JSON.parse('<?php echo $Incident; ?>');
 
 </script>
 <script type="text/javascript" nonce="{{ csp_nonce() }}">
