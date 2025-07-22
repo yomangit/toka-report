@@ -103,7 +103,7 @@ class HazardReport extends Model
     }
     public function kondisiTidakAman()
     {
-        return $this->belongsTo(KondisiTidakAman::class, 'kondisitidakamen_id');
+        return $this->belongsTo(Kondisitidakaman::class, 'kondisitidakamen_id');
     }
     public function Assign_to()
     {
