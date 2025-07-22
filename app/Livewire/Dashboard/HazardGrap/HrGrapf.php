@@ -41,7 +41,7 @@ class HrGrapf extends Component
         $this->divisionColors = array_map($stringToColor, $this->divisionLabels);
 
         // Trigger event ke frontend
-        $this->dispatchBrowserEvent('update-division-chart', [
+        $this->dispatch('update-division-chart', [
             'labels' => $this->divisionLabels,
             'counts' => $this->divisionCounts,
             'colors' => $this->divisionColors,
