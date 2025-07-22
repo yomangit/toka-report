@@ -1,22 +1,25 @@
-import ApexCharts from "apexcharts";
+// resources/js/charts/renderInjuryChart.js
+import ApexCharts from 'apexcharts';
 
-
-// resources/js/charts/all_injury.js
-
-document.addEventListener('DOMContentLoaded', function () {
-    if (typeof window.chartData === 'undefined') {
-        console.warn("chartData tidak ditemukan di window scope.");
+/**
+ * Render All Injury vs LTIFR chart
+ * @param {string} selector - CSS selector for the chart container
+ * @param {object} chartData - Data object for ApexCharts (LTI, MTI, etc.)
+ */
+export function renderInjuryChart(selector, chartData) {
+    if (!chartData) {
+        console.warn("Chart data tidak tersedia.");
         return;
     }
 
-    const chartOptions = {
+    const options = {
         series: [
-            { name: 'LTI', type: 'column', data: window.chartData.LTI },
-            { name: 'MTI', type: 'column', data: window.chartData.MTI },
-            { name: 'RDI', type: 'column', data: window.chartData.RDI },
-            { name: 'FAI', type: 'column', data: window.chartData.FAI },
-            { name: 'LTIFR', type: 'line', data: window.chartData.LTIFR },
-            { name: 'LTIFR Target', type: 'line', data: window.chartData.LTIFR_Target },
+            { name: 'LTI', type: 'column', data: chartData.LTI },
+            { name: 'MTI', type: 'column', data: chartData.MTI },
+            { name: 'RDI', type: 'column', data: chartData.RDI },
+            { name: 'FAI', type: 'column', data: chartData.FAI },
+            { name: 'LTIFR', type: 'line', data: chartData.LTIFR },
+            { name: 'LTIFR Target', type: 'line', data: chartData.LTIFR_Target },
         ],
         chart: {
             height: 350,
@@ -42,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
         },
         xaxis: {
-            categories: window.chartData.months
+            categories: chartData.months
         },
         yaxis: {
             title: {
@@ -63,11 +66,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    const chartEl = document.querySelector("#all_injury_vs_ltifr");
+    const chartEl = document.querySelector(selector);
     if (chartEl) {
-        const chart = new ApexCharts(chartEl, chartOptions);
+        const chart = new ApexCharts(chartEl, options);
         chart.render();
     } else {
-        console.warn("#all_injury_vs_ltifr element not found");
+        console.warn(`Element '${selector}' tidak ditemukan`);
     }
-});
+}

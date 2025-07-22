@@ -1,5 +1,5 @@
 <div>
-    @vite('resources/js/charts/all_injury.js')
+    
 
     <div class="w-full my-2 shadow stats">
         <div class="stat">
