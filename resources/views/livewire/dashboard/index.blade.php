@@ -103,8 +103,7 @@
 </script>
 
 <script>
-    window.incidentData = JSON.parse('<?php echo $Incident; ?>');
-
+    window.incidentData = @json($Incident);
 </script>
 <script type="text/javascript" nonce="{{ csp_nonce() }}">
     const chartData = JSON.parse('<?php echo $Incident; ?>');
