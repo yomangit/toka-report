@@ -47,8 +47,8 @@ class HrGrapf extends Component
     }
     public function updatePerbandinganData()
     {
-        $totalKondisi = HazardReport::whereNotNull('kondisitidakaman_id')->count();
-        $totalTindakan = HazardReport::whereNotNull('tindakantidakaman_id')->count();
+        $totalKondisi = HazardReport::whereNotNull('kondisitidakamen_id')->count();
+        $totalTindakan = HazardReport::whereNotNull('tindakantidakamen_id')->count();
 
         $this->dispatch('update-perbandingan-chart', [
             'labels' => ['Kondisi Tidak Aman', 'Tindakan Tidak Aman'],
