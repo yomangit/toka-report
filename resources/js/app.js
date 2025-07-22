@@ -12,7 +12,7 @@ import monthSelectPlugin from "flatpickr/dist/plugins/monthSelect";
 import "flatpickr/dist/themes/dark.css";
 import "flatpickr/dist/plugins/monthSelect/style.css";
 // Charts
-import './apexchart';
+import { renderDivisionChart } from './apexchart/divisionChart';
 
 // Inisialisasi semua flatpickr jika elemen ada
 const initDatePickers = () => {

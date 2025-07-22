@@ -1,4 +1,6 @@
 <div>
+    @vite(['resources/js/apexchart.js'])
+
     <div class="w-full my-2 shadow stats">
         <div class="stat">
             <div class="stat-figure text-primary">
