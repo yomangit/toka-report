@@ -101,7 +101,10 @@ class HazardReport extends Model
     {
         return $this->belongsTo(WorkflowDetail::class, 'workflow_detail_id');
     }
-
+    public function kondisiTidakAman()
+    {
+        return $this->belongsTo(KondisiTidakAman::class, 'kondisitidakamen_id');
+    }
     public function Assign_to()
     {
         return $this->belongsTo(User::class, 'assign_to');
