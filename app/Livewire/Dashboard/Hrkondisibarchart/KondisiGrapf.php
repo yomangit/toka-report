@@ -25,7 +25,7 @@ class KondisiGrapf extends Component
             ->with('kondisiTidakAman')
             ->get();
 
-        $this->labels = $data->map(fn($item) => optional($item->kondisiTidakAman)?->nama ?? 'Unknown')->toArray();
+        $this->labels = $data->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
         $this->counts = $data->pluck('total')->toArray();
     }
     public function render()
