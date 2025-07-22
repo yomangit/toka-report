@@ -216,6 +216,16 @@ class Detail extends Component
         $this->TableRiskFunction();
         $this->EventSubType = (isset($this->event_type_id)) ? $this->EventSubType = Eventsubtype::where('event_type_id', $this->event_type_id)->get() : [];
     }
+    public function updatedKeyWord($value)
+    {
+        if ($value === 'kta') {
+            $this->reset('tindakantidakamen_id');
+        } elseif ($value === 'tta') {
+            $this->reset('kondisitidakamen_id');
+        } else {
+            $this->reset('kondisitidakamen_id', 'tindakantidakamen_id');
+        }
+    }
     public function render()
     {
         $this->realtimeData();
