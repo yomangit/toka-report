@@ -9,9 +9,9 @@
 ></div>
     @endif
     <div
-    id="perbandinganPieChart"
-    data-labels='["Kondisi Tidak Aman", "Tindakan Tidak Aman"]'
-    data-counts='[0, 0]'
+     id="perbandinganPieChart"
+    data-labels='@json(["Kondisi Tidak Aman", "Tindakan Tidak Aman"])'
+    data-counts='@json([$totalKondisi ?? 0, $totalTindakan ?? 0])'
     class="w-full h-96"
 ></div>
 </div>
