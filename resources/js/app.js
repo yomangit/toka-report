@@ -14,72 +14,18 @@ import "flatpickr/dist/plugins/monthSelect/style.css";
 // Charts
 import { renderDivisionChart } from './charts/divisionChart';
 
-document.addEventListener('livewire:load', () => {
-    renderDivisionChart();
-    // Setiap 10 detik, Livewire akan refresh data grafik
-    setInterval(() => {
-         window.Livewire.emit('refreshDivisionChart');
-    }, 10000);
-});
-
-
 // Inisialisasi semua flatpickr jika elemen ada
 const initDatePickers = () => {
-    const datePickers = [{
-            selector: "#tanggal",
-            options: {
-                enableTime: true,
-                dateFormat: "d-m-Y : H:i"
-            }
-        },
-        {
-            selector: "#due_date",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
-        {
-            selector: "#completion_date",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
-        {
-            selector: "#due_date_guest",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
-        {
-            selector: "#completion_date_guest",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
-        {
-            selector: "#tanggal_komplite",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
-        {
-            selector: "#date_birth",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
-        {
-            selector: "#date_commenced",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
-        {
-            selector: "#end_date",
-            options: {
-                dateFormat: "d-m-Y"
-            }
-        },
+    const datePickers = [
+        { selector: "#tanggal", options: { enableTime: true, dateFormat: "d-m-Y : H:i" } },
+        { selector: "#due_date", options: { dateFormat: "d-m-Y" } },
+        { selector: "#completion_date", options: { dateFormat: "d-m-Y" } },
+        { selector: "#due_date_guest", options: { dateFormat: "d-m-Y" } },
+        { selector: "#completion_date_guest", options: { dateFormat: "d-m-Y" } },
+        { selector: "#tanggal_komplite", options: { dateFormat: "d-m-Y" } },
+        { selector: "#date_birth", options: { dateFormat: "d-m-Y" } },
+        { selector: "#date_commenced", options: { dateFormat: "d-m-Y" } },
+        { selector: "#end_date", options: { dateFormat: "d-m-Y" } },
         {
             selector: "#month",
             options: {
@@ -93,10 +39,7 @@ const initDatePickers = () => {
         }
     ];
 
-    datePickers.forEach(({
-        selector,
-        options
-    }) => {
+    datePickers.forEach(({ selector, options }) => {
         const el = document.querySelector(selector);
         if (el) {
             flatpickr(el, {
@@ -136,23 +79,20 @@ const initSidebarToggle = () => {
         sidebarMenu.classList.add("-translate-x-full");
     });
 
-document.querySelectorAll(".sidebar-dropdown-toggle").forEach(function (item) {
-    item.addEventListener("click", function (e) {
-        e.preventDefault();
-        const parent = item.closest(".group");
-
-        if (parent.classList.contains("selected")) {
-            parent.classList.remove("selected");
-        } else {
-            document.querySelectorAll(".sidebar-dropdown-toggle").forEach(function (i) {
-                i.closest(".group")?.classList.remove("selected");
-                //        ✅ optional chaining benar di sini
-            });
-            parent.classList.add("selected");
-        }
+    document.querySelectorAll(".sidebar-dropdown-toggle").forEach(function (item) {
+        item.addEventListener("click", function (e) {
+            e.preventDefault();
+            const parent = item.closest(".group");
+            if (parent.classList.contains("selected")) {
+                parent.classList.remove("selected");
+            } else {
+                document.querySelectorAll(".sidebar-dropdown-toggle").forEach(function (i) {
+                    i.closest(".group")?.classList.remove("selected");
+                });
+                parent.classList.add("selected");
+            }
+        });
     });
-});
-
 };
 
 // Inisialisasi setelah DOM siap
@@ -164,9 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Service Worker
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js', {
-            scope: '/'
-        })
+    navigator.serviceWorker.register('sw.js', { scope: '/' })
         .then(() => {})
         .catch(() => {});
 }
