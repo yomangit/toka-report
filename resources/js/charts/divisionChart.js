@@ -40,16 +40,20 @@ export function renderDivisionChart() {
     divisionChartInstance.render();
 }
 
-// ✅ Listen event Livewire → update chart
+// Update chart saat Livewire kirim event
 document.addEventListener('update-division-chart', (e) => {
-    if (!divisionChartInstance) return;
+    const el = document.querySelector('#divisionChart');
+    if (!el) return;
 
     const { labels, counts, colors } = e.detail;
 
+    if (!divisionChartInstance) {
+        renderDivisionChart();
+        return;
+    }
+
     divisionChartInstance.updateOptions({
-        xaxis: {
-            categories: labels
-        },
+        xaxis: { categories: labels },
         colors: colors
     });
 
