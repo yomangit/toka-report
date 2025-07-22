@@ -101,12 +101,7 @@
     }
 
 </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        renderHazardTable(@json($key_state));
-    });
 
-</script>
 <script>
     window.incidentData = JSON.parse('{!! json_encode($Incident) !!}');
 
