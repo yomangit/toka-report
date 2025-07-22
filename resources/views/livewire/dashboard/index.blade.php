@@ -1,6 +1,4 @@
 <div>
-    @vite(['resources/js/apexchart.js'])
-
     <div class="w-full my-2 shadow stats">
         <div class="stat">
             <div class="stat-figure text-primary">
@@ -35,7 +33,7 @@
     <div class="my-2 overflow-x-auto">
         <div class="flex gap-2">
             <div class="grow">
-                <table class="table table-xs table-zebra" id="dataGrid">
+                <table class="table table-xs table-zebra"id="dataGrid">
                     <thead>
                         <tr class='text-center bg-slate-400 '>
                             <th></th>
@@ -57,7 +55,8 @@
             </div>
             <div class="shadow stats bg-accent text-accent-content">
                 <div class="stat">
-                    <div class="text-transparent stat-title font-signika bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
+                    <div
+                        class="text-transparent stat-title font-signika bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
                         Manhours LTI Free</div>
                     <div class="stat-value font-signika ">{{ $manhoursltifree }}</div>
                     <div class="font-semibold stat-desc">periode {{ $month }}</div>
@@ -73,8 +72,6 @@
         <div class="my-2 bg-slate-300 lg:my-0" id="lagging_and_leading_indicator_status"></div>
     </div>
 </div>
-
-
 <script>
     var data_table = JSON.parse('<?php echo $key_state; ?>');
     const tableBody = document.querySelector("#dataGrid tbody");
@@ -99,153 +96,148 @@
             `;
         tableBody.innerHTML += row;
     }
-
 </script>
-
-<script>
-    window.incidentData = @json($Incident);
-</script>
-{{-- <script type="text/javascript" nonce="{{ csp_nonce() }}">
+<script type="text/javascript" nonce="{{ csp_nonce() }}">
     const chartData = JSON.parse('<?php echo $Incident; ?>');
     var all_injury_vs_ltifr = {
         series: [{
-            name: 'LTI'
-            , type: 'column',
+            name: 'LTI',
+            type: 'column',
 
             data: chartData.LTI
         }, {
-            name: 'MTI'
-            , type: 'column'
-            , data: chartData.MTI
+            name: 'MTI',
+            type: 'column',
+            data: chartData.MTI
         }, {
-            name: 'RDI'
-            , type: 'column'
-            , data: chartData.RDI
+            name: 'RDI',
+            type: 'column',
+            data: chartData.RDI
         }, {
-            name: 'FAI'
-            , type: 'column',
+            name: 'FAI',
+            type: 'column',
 
             data: chartData.FAI
         }, {
-            name: 'LTIFR'
-            , type: 'line',
+            name: 'LTIFR',
+            type: 'line',
 
             data: chartData.LTIFR
         }, {
-            name: 'LTIFR Target'
-            , type: 'line',
+            name: 'LTIFR Target',
+            type: 'line',
 
             data: chartData.LTIFR_Target
-        }]
-        , chart: {
-            height: 350
-            , type: 'line'
-            , stacked: false
-        }
-        , zoom: {
+        }],
+        chart: {
+            height: 350,
+            type: 'line',
+            stacked: false
+        },
+        zoom: {
             enabled: false
-        }
-        , colors: ['#8A0100', '#B89242', '#F1F500', '#006F26', '#F50400', '#8079C7']
-        , stroke: {
-            width: [1, 1, 1, 1, 3, 4]
-            , dashArray: [0, 0, 0, 0, 0, 4]
-            , curve: 'smooth'
-        }
-        , title: {
-            text: 'All Injury VS LTIFR (24MMA)'
-            , align: 'center'
-            , style: {
-                fontSize: '12px'
-                , fontWeight: 'bold'
-                , fontFamily: undefined
-                , color: '#fb7185'
-            }
-        , }
-        , xaxis: {
-            categories: chartData.months
-        , }
-        , yaxis: {
+        },
+        colors: ['#8A0100', '#B89242', '#F1F500', '#006F26', '#F50400', '#8079C7'],
+        stroke: {
+            width: [1, 1, 1, 1, 3, 4],
+            dashArray: [0, 0, 0, 0, 0, 4],
+            curve: 'smooth'
+        },
+        title: {
+            text: 'All Injury VS LTIFR (24MMA)',
+            align: 'center',
+            style: {
+                fontSize: '12px',
+                fontWeight: 'bold',
+                fontFamily: undefined,
+                color: '#fb7185'
+            },
+        },
+        xaxis: {
+            categories: chartData.months,
+        },
+        yaxis: {
             title: {
-                text: 'Points'
-            , }
-        }
-        , tooltip: {
-            fixed: {
-                enabled: true
-                , position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft
-                offsetY: 30
-                , offsetX: 60
+                text: 'Points',
             }
-        , }
-        , legend: {
-            horizontalAlign: 'center'
-            , offsetX: 40
+        },
+        tooltip: {
+            fixed: {
+                enabled: true,
+                position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft
+                offsetY: 30,
+                offsetX: 60
+            },
+        },
+        legend: {
+            horizontalAlign: 'center',
+            offsetX: 40
         }
     };
     var lagging_and_leading = JSON.parse('<?php echo $Lead_vs_Lag; ?>');
     var lagging_and_leading_indicator_12Months = {
         series: [{
-                name: "Total Lead"
-                , data: lagging_and_leading.total_lead
+                name: "Total Lead",
+                data: lagging_and_leading.total_lead
+            },
+            {
+                name: "Incident",
+                data: lagging_and_leading.incident
             }
-            , {
-                name: "Incident"
-                , data: lagging_and_leading.incident
-            }
-        ]
-        , chart: {
-            height: 350
-            , type: 'line'
-            , dropShadow: {
-                enabled: true
-                , color: '#000'
-                , top: 18
-                , left: 7
-                , blur: 10
-                , opacity: 0.2
-            }
-            , zoom: {
+        ],
+        chart: {
+            height: 350,
+            type: 'line',
+            dropShadow: {
+                enabled: true,
+                color: '#000',
+                top: 18,
+                left: 7,
+                blur: 10,
+                opacity: 0.2
+            },
+            zoom: {
                 enabled: false
-            }
-            , toolbar: {
+            },
+            toolbar: {
                 show: false
             }
-        }
-        , colors: ['#77B6EA', '#545454']
-        , dataLabels: {
-            enabled: true
-        , }
-        , stroke: {
-            width: [2, 2]
-        , }
-        , title: {
-            text: '12 Months Lagging & Leading Indicator'
-            , align: 'center'
-            , style: {
-                fontSize: '12px'
-                , fontWeight: 'bold'
-                , fontFamily: undefined
-                , color: '#fb7185'
-            }
-        , }
-        , grid: {
-            borderColor: '#e7e7e7'
-            , row: {
+        },
+        colors: ['#77B6EA', '#545454'],
+        dataLabels: {
+            enabled: true,
+        },
+        stroke: {
+            width: [2, 2],
+        },
+        title: {
+            text: '12 Months Lagging & Leading Indicator',
+            align: 'center',
+            style: {
+                fontSize: '12px',
+                fontWeight: 'bold',
+                fontFamily: undefined,
+                color: '#fb7185'
+            },
+        },
+        grid: {
+            borderColor: '#e7e7e7',
+            row: {
                 colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
                 opacity: 0.5
-            }
-        , }
-        , markers: {
+            },
+        },
+        markers: {
             size: 1
-        }
-        , xaxis: {
+        },
+        xaxis: {
             categories: lagging_and_leading.date,
 
         },
 
         legend: {
-            position: 'bottom'
-            , horizontalAlign: 'center',
+            position: 'bottom',
+            horizontalAlign: 'center',
 
 
         }
@@ -253,59 +245,59 @@
     var incident_deptCont = JSON.parse('<?php echo $responsible_cont_dept; ?>');
     var ohs_incident_deptCont = {
         series: [{
-            name: 'Open'
-            , data: incident_deptCont.open
+            name: 'Open',
+            data: incident_deptCont.open
         }, {
-            name: 'Closed'
-            , data: incident_deptCont.closed
-        }]
-        , chart: {
-            type: 'bar'
-            , height: 350
-            , stacked: true
-            , toolbar: {
+            name: 'Closed',
+            data: incident_deptCont.closed
+        }],
+        chart: {
+            type: 'bar',
+            height: 350,
+            stacked: true,
+            toolbar: {
                 show: true
-            }
-            , zoom: {
+            },
+            zoom: {
                 enabled: false
             }
-        }
-        , responsive: [{
-            breakpoint: 480
-            , options: {
+        },
+        responsive: [{
+            breakpoint: 480,
+            options: {
                 legend: {
-                    position: 'bottom'
-                    , offsetX: -10
-                    , offsetY: -10
+                    position: 'bottom',
+                    offsetX: -10,
+                    offsetY: -10
                 }
             }
-        }]
-        , plotOptions: {
+        }],
+        plotOptions: {
             bar: {
-                horizontal: false
-                , borderRadius: 10
+                horizontal: false,
+                borderRadius: 10
 
-            }
-        , }
-        , xaxis: {
+            },
+        },
+        xaxis: {
 
-            categories: incident_deptCont.name
-        , }
-        , title: {
-            text: 'OHS Incidents Responsibility By Department & Contractor in ' + incident_deptCont.years
-            , align: 'left'
-            , style: {
-                fontSize: '12px'
-                , fontWeight: 'bold'
-                , fontFamily: undefined
-                , color: '#fb7185'
-            }
-        , }
-        , legend: {
+            categories: incident_deptCont.name,
+        },
+        title: {
+            text: 'OHS Incidents Responsibility By Department & Contractor in ' + incident_deptCont.years,
+            align: 'left',
+            style: {
+                fontSize: '12px',
+                fontWeight: 'bold',
+                fontFamily: undefined,
+                color: '#fb7185'
+            },
+        },
+        legend: {
             position: 'bottom',
 
-        }
-        , fill: {
+        },
+        fill: {
             opacity: 1
         }
     };
@@ -314,29 +306,29 @@
     console.log(condition);
 
     var cause_analysis = {
-        series: [action, condition, ]
-        , chart: {
-            width: 480
-            , type: 'pie'
-        , }
-        , title: {
-            text: '12 Months Leading Indicator Cause Analysis'
-            , align: 'center'
-            , style: {
-                fontSize: '12px'
-                , fontWeight: 'bold'
-                , fontFamily: undefined
-                , color: '#fb7185'
-            }
-        , }
-        , labels: ['Action', 'Condition']
-        , responsive: [{
-            breakpoint: 480
-            , options: {
+        series: [action, condition, ],
+        chart: {
+            width: 480,
+            type: 'pie',
+        },
+        title: {
+            text: '12 Months Leading Indicator Cause Analysis',
+            align: 'center',
+            style: {
+                fontSize: '12px',
+                fontWeight: 'bold',
+                fontFamily: undefined,
+                color: '#fb7185'
+            },
+        },
+        labels: ['Action', 'Condition'],
+        responsive: [{
+            breakpoint: 480,
+            options: {
                 chart: {
                     width: 200
-                }
-                , legend: {
+                },
+                legend: {
                     position: 'bottom'
                 }
             }
@@ -345,64 +337,63 @@
     var status_incident = JSON.parse('<?php echo $status_incident; ?>');
     var lagging_and_leading_indicator_status = {
         series: [{
-            name: 'Open'
-            , data: status_incident.open
+            name: 'Open',
+            data: status_incident.open
         }, {
-            name: 'Closed'
-            , data: status_incident.closed
-        }]
-        , chart: {
-            type: 'bar'
-            , height: 350
-            , stacked: true
-            , toolbar: {
+            name: 'Closed',
+            data: status_incident.closed
+        }],
+        chart: {
+            type: 'bar',
+            height: 350,
+            stacked: true,
+            toolbar: {
                 show: true
-            }
-            , zoom: {
+            },
+            zoom: {
                 enabled: false
             }
-        }
-        , responsive: [{
-            breakpoint: 480
-            , options: {
+        },
+        responsive: [{
+            breakpoint: 480,
+            options: {
                 legend: {
-                    position: 'bottom'
-                    , offsetX: -10
-                    , offsetY: 0
+                    position: 'bottom',
+                    offsetX: -10,
+                    offsetY: 0
                 }
             }
-        }]
-        , plotOptions: {
+        }],
+        plotOptions: {
             bar: {
-                horizontal: false
-                , borderRadius: 10
-                , borderRadiusApplication: 'end', // 'around', 'end'
-                borderRadiusWhenStacked: 'last'
-                , isFunnel: false
-                , isFunnel3d: true,
+                horizontal: false,
+                borderRadius: 10,
+                borderRadiusApplication: 'end', // 'around', 'end'
+                borderRadiusWhenStacked: 'last',
+                isFunnel: false,
+                isFunnel3d: true,
 
-            }
-        , }
-        , xaxis: {
+            },
+        },
+        xaxis: {
             categories: status_incident.date
-        }
-        , title: {
-            text: '12 Months Leading Indicator Status'
-            , align: 'center'
-            , style: {
-                fontSize: '12px'
-                , fontWeight: 'bold'
-                , fontFamily: undefined
-                , color: '#fb7185'
-            }
-        , }
-        , legend: {
+        },
+        title: {
+            text: '12 Months Leading Indicator Status',
+            align: 'center',
+            style: {
+                fontSize: '12px',
+                fontWeight: 'bold',
+                fontFamily: undefined,
+                color: '#fb7185'
+            },
+        },
+        legend: {
             position: 'bottom',
 
-        }
-        , fill: {
+        },
+        fill: {
             opacity: 1
         }
     };
-
-</script> --}}
+</script>
