@@ -12,13 +12,32 @@ export function renderPerbandinganChart() {
     const options = {
         chart: {
             type: 'pie',
-            height: 350
+            height: 350,
+            animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 800
+            },
+            dropShadow: {
+                enabled: true,
+                top: 2,
+                left: 2,
+                blur: 4,
+                opacity: 0.2
+            }
         },
         labels: labels,
         series: counts,
         title: {
             text: 'Perbandingan Kondisi vs Tindakan Tidak Aman',
             align: 'center'
+        },
+        colors: ['#00bcd4', '#ff5722'], // 🎨 Ganti warna sesuai selera
+        fill: {
+            type: 'gradient',
+        },
+        legend: {
+            position: 'bottom'
         }
     };
 
@@ -26,21 +45,13 @@ export function renderPerbandinganChart() {
     perbandinganChart.render();
 }
 
-// ✅ Update chart saat event dikirim dari Livewire
 document.addEventListener('update-perbandingan-chart', (e) => {
     const { labels, counts } = e.detail;
-
     if (!perbandinganChart) return;
 
-    perbandinganChart.updateOptions({ labels });
+    perbandinganChart.updateOptions({
+        labels: labels,
+        colors: ['#00bcd4', '#ff5722'], // gunakan warna konsisten
+    });
     perbandinganChart.updateSeries(counts);
-});
-
-// ✅ Emit Livewire setiap 10 detik
-document.addEventListener('livewire:load', () => {
-    renderPerbandinganChart();
-
-    setInterval(() => {
-        window.Livewire.emit('refreshPerbandinganChart');
-    }, 10000); // 10 detik
 });
