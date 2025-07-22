@@ -418,6 +418,7 @@ class Detail extends Component
             'action' => 'updated data hazard',
             'description' => "memperbaharui data hazard",
         ]);
+        $this->dispatch('hazardChartShouldRefresh');
         $this->dispatch(
             'alert',
             [

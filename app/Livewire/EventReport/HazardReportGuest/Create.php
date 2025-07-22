@@ -459,7 +459,7 @@ class Create extends Component
             'close'           => true,
             'backgroundColor' => "linear-gradient(to right, #06b6d4, #22c55e)",
         ]);
-
+        $this->dispatch('hazardChartShouldRefresh');
         $this->dispatch('buttonClicked', ['duration' => 4000]);
 
         // Kirim notifikasi ke moderator
