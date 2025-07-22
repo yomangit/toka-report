@@ -4,4 +4,5 @@
     @endif
 
      <livewire:dashboard.causes-analysis.grapf>
+     <livewire:dashboard.hrkondisibarchart.kondisi-grapf>
 </div>
