@@ -82,8 +82,6 @@ class Detail extends Component
                 $this->location_id             = $HazardReport->event_location_id;
                 $this->submitter             = $HazardReport->submitter;
                 $this->assign_to             = $HazardReport->assign_to;
-                $this->kondisi_tidak_aman    = $HazardReport->kondisi_tidak_aman;
-                $this->tindakan_tidak_aman    = $HazardReport->tindakan_tidak_aman;
                 $this->tindakkan_selanjutnya = $HazardReport->tindakkan_selanjutnya;
                 $this->also_assign_to        = $HazardReport->also_assign_to;
                 $this->division_id           = $HazardReport->division_id;
@@ -404,8 +402,6 @@ class Detail extends Component
             'date'                        => DateTime::createFromFormat('d-m-Y : H:i', $this->date)->format('Y-m-d : H:i'),
             'documentation'               => $this->documentation,
             'description'                 => $this->description,
-            'kondisi_tidak_aman'          => $this->kondisi_tidak_aman,
-            'tindakan_tidak_aman'          => $this->tindakan_tidak_aman,
             'tindakkan_selanjutnya'       => $this->tindakkan_selanjutnya,
             'immediate_corrective_action' => $this->immediate_corrective_action,
             'report_by_nolist'            => $this->report_to_nolist,
