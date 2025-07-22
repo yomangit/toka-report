@@ -173,23 +173,14 @@
                     </div>
                     <x-label-error :messages="$errors->get('description')" />
                 </div>
-
                 <div>
-                    <fieldset>
-                        @if ($show_immidiate === 'yes')
-                        <x-label-req :value="__('immediate corrective action')" />
-                        @else
-                        <x-label-no-req :value="__('immediate corrective action')" />
-                        @endif
-                        <input wire:model.live="show_immidiate" value='yes' name="status" id="draft" {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled ' : '' }} class="radio-xs peer/draft checked:bg-indigo-500 radio" type="radio" name="13" />
-                        <label for="draft" class="text-xs font-semibold peer-checked/draft:text-indigo-500">{{ __('Yes') }}</label>
-                        <input wire:model.live="show_immidiate" value="no" id="published" {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled ' : '' }} class="peer/published checked:bg-sky-500 radio-xs radio" type="radio" name="status" />
-                        <label for="published" class="text-xs font-semibold peer-checked/published:text-sky-500">{{ __('No') }}</label>
-                        <div wire:ignore class="hidden w-full peer-checked/draft:block form-control">
+                    <x-label-req :value="__('immediate corrective action')" />
+                    <div class="@error('immediate_corrective_action') border border-rose-500 rounded-sm @enderror">
+                        <div wire:ignore wire:ignore class="w-full form-control">
                             <textarea id="immediate_corrective_action">{{ $immediate_corrective_action_temp }}</textarea>
                         </div>
-                        <x-label-error :messages="$errors->get('immediate_corrective_action')" />
-                    </fieldset>
+                    </div>
+                    <x-label-error :messages="$errors->get('immediate_corrective_action')" />
                 </div>
                 <div class="grid grid-cols-1 gap-6 mt-4 transition-all duration-300 ease-in-out border divide-y border-base-200 divide-base-200 rounded-xl md:grid-cols-3 md:divide-y-0 md:divide-x md:p-6">
                     <!-- KEYWORD (KTA / TTA) -->
