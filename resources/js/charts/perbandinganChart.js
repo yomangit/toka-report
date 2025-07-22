@@ -29,8 +29,13 @@ export function renderPerbandinganChart() {
         labels: labels,
         series: counts,
         title: {
-            text: 'Perbandingan Kondisi vs Tindakan Tidak Aman',
-            align: 'center'
+            text: 'Leading Indicator Cause Analysis',
+            align: 'center',
+            style: {
+                fontSize: '10px', // 👈 ubah ukuran font di sini
+                fontWeight: 'bold',
+                color: '#333'
+            }
         },
         colors: ['#00bcd4', '#ff5722'], // 🎨 Ganti warna sesuai selera
         fill: {
@@ -46,7 +51,10 @@ export function renderPerbandinganChart() {
 }
 
 document.addEventListener('update-perbandingan-chart', (e) => {
-    const { labels, counts } = e.detail;
+    const {
+        labels,
+        counts
+    } = e.detail;
     if (!perbandinganChart) return;
 
     perbandinganChart.updateOptions({
