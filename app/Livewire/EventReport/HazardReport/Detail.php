@@ -418,7 +418,7 @@ class Detail extends Component
         HazardReport::whereId($this->data_id)->update($filds);
         HazardReportLog::create([
             'hazard_report_id' => $this->data_id,
-            'user_id' => auth()->id(),
+            'user_id' => auth()->user()->id,
             'action' => 'updated data hazard',
             'description' => "memperbaharui data hazard",
         ]);
