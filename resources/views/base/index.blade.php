@@ -72,6 +72,7 @@
         Memuat data...
     </div> --}}
     @livewire('wire-elements-modal')
+    @stack('scripts')
     @livewireScripts
 </body>
 
