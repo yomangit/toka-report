@@ -55,6 +55,7 @@ document.addEventListener('update-perbandingan-chart', (e) => {
         labels,
         counts
     } = e.detail;
+   
     if (!perbandinganChart) return;
 
     perbandinganChart.updateOptions({

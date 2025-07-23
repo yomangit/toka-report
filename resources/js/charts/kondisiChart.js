@@ -55,7 +55,7 @@ document.addEventListener('update-kondisi-chart', (e) => {
     if (!kondisiChart) return;
 
     const { labels, counts } = e.detail;
-
+ console.log('Updating chart:', e.detail);
     kondisiChart.updateOptions({
         xaxis: {
             categories: labels
