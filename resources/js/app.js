@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderKondisiBarChart();
 });
 document.addEventListener('livewire:load', () => {
-    // renderKondisiBarChart(); // render pertama
+    renderKondisiBarChart(); // render pertama
 
     // ⏱ Emit event Livewire setiap 10 detik
     setInterval(() => {
