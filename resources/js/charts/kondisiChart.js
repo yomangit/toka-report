@@ -1,3 +1,4 @@
+import ApexCharts from 'apexcharts';
 let kondisiChart = null;
 
 export function renderKondisiBarChart() {
