@@ -6,7 +6,6 @@ export function renderKondisiBarChart() {
     const el = document.querySelector('#kondisiBarChart');
     if (!el) return;
 
-    // Inisialisasi kosong
     const options = {
         chart: {
             type: 'bar',
@@ -17,10 +16,24 @@ export function renderKondisiBarChart() {
             data: []
         }],
         xaxis: {
-            categories: []
+            categories: [],
+            labels: {
+                style: {
+                    fontSize: '12px'
+                }
+            }
         },
         title: {
-            text: 'Kondisi Tidak Aman'
+            text: 'Kondisi Tidak Aman',
+            style: {
+                fontSize: '16px'
+            }
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 4,
+                distributed: true
+            }
         }
     };
 
@@ -28,11 +41,11 @@ export function renderKondisiBarChart() {
     chart.render();
 }
 
-// Realtime update via Livewire dispatch
+// Update via Livewire event
 document.addEventListener('update-kondisi-chart', (e) => {
-    if (!chart) return;
-
     const { labels, counts } = e.detail;
+
+    if (!chart) return;
 
     chart.updateOptions({
         xaxis: {

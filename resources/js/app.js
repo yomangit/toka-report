@@ -22,20 +22,19 @@ import {
 document.addEventListener('DOMContentLoaded', () => {
     renderPerbandinganChart();
 });
-import {
-    renderKondisiBarChart
-} from './charts/kondisiChart';
+import { renderKondisiBarChart } from './charts/kondisiChart';
 
 document.addEventListener('DOMContentLoaded', () => {
     renderKondisiBarChart();
 
-    // Realtime trigger via Livewire dispatch
+    // Emit Livewire event setiap 10 detik
     setInterval(() => {
         if (window.Livewire) {
             window.Livewire.dispatch('refreshKondisiChart');
         }
     }, 3000);
 });
+
 
 // Inisialisasi semua flatpickr jika elemen ada
 const initDatePickers = () => {

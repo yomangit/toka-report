@@ -5,4 +5,3 @@
         class="w-full h-96"
     ></div>
 </div>
-
