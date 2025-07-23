@@ -39,7 +39,7 @@ document.addEventListener('livewire:load', () => {
         } else {
             console.warn('Livewire belum siap');
         }
-    }, 10000);
+    }, 3000);
 });
 // Inisialisasi semua flatpickr jika elemen ada
 const initDatePickers = () => {
