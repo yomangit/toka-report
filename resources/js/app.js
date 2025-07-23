@@ -26,13 +26,16 @@ import {
     renderKondisiBarChart
 } from './charts/kondisiChart';
 
-document.addEventListener('livewire:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
     renderKondisiBarChart();
-
+    // ⏱ Emit tiap 10 detik
     setInterval(() => {
         window.livewire.dispatch('refreshKondisiChart');
     }, 10000);
 });
+// document.addEventListener('livewire:load', () => {
+//     renderKondisiBarChart(); // render ulang chart dari awal
+// });
 // Inisialisasi semua flatpickr jika elemen ada
 const initDatePickers = () => {
     const datePickers = [{
