@@ -1,45 +1,26 @@
-<div wire:init="loadChartData" wire:poll.10s="loadChartData">
+   @vite(['resources/js/charts/kondisiChart.js'])
+<div wire:init="loadChartData">
     <div id="kondisiChart" wire:ignore></div>
 </div>
-
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        let kondisiChart;
-        const chartEl = document.querySelector("#kondisiChart");
+    // Passing PHP Livewire data ke JS
+    const labels = @json($labels);
+    const counts = @json($counts);
 
-        function initChart(labels, counts) {
-            if (kondisiChart) {
-                kondisiChart.destroy(); // 🔥 Penting: Hapus chart lama dulu
-            }
+    console.log('Labels:', labels);
+    console.log('Counts:', counts);
 
-            const options = {
-                chart: {
-                    type: 'bar',
-                    height: 350
-                },
-                series: [{
-                    name: 'Jumlah',
-                    data: counts
-                }],
-                xaxis: {
-                    categories: labels
-                }
-            };
-
-            kondisiChart = new ApexCharts(chartEl, options);
-            kondisiChart.render();
+    const chartOptions = {
+        chart: {
+            type: 'bar'
+            , height: 350
         }
-
-        // Pertama kali render chart
-        initChart(@json($labels), @json($counts));
-
-        // Update chart saat Livewire component re-render
-        Livewire.hook('message.processed', () => {
-            initChart(@json($labels), @json($counts));
-        });
-    });
+        , series: [{
+            name: 'Jumlah'
+            , data: counts
+        }]
+        , xaxis: {
+            categories: labels
+        }
+    };
 </script>
-@endpush
-
