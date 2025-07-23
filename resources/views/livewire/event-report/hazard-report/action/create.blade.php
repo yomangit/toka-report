@@ -34,21 +34,21 @@
                             <div tabindex="0"
                                 class="dropdown-content card card-compact  bg-base-300 text-primary-content z-[1] w-full  p-2 shadow {{ $hiddenResponsibility }}">
                                 <div class="relative">
-                                    <ul class="overflow-auto scroll-smooth focus:scroll-auto h-28 pt-2 mb-2"
+                                    <ul class="pt-2 mb-2 overflow-auto scroll-smooth focus:scroll-auto h-28"
                                         wire:target='responsibility_name' wire:loading.class='hidden'>
                                         @forelse ($Report_By as $spv_area)
                                             <div wire:click="reportedBy({{ $spv_area->id }})"
-                                                class="border-b border-base-200 flex flex-col cursor-pointer active:bg-gray-400">
+                                                class="flex flex-col border-b cursor-pointer border-base-200 active:bg-gray-400">
                                                 <strong
                                                     class="text-[10px] text-slate-800">{{ $spv_area->lookup_name }}</strong>
                                             </div>
                                         @empty
                                             <strong
-                                                class="text-xs bg-clip-text text-transparent bg-gradient-to-r from-rose-400 to-rose-800">Name
+                                                class="text-xs text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-rose-800">Name
                                                 Not Found!!!</strong>
                                         @endforelse
                                         </ul>
-                                    <div class="hidden text-center pt-5" wire:target='name'
+                                    <div class="hidden pt-5 text-center" wire:target='name'
                                         wire:loading.class.remove='hidden'> <x-loading-spinner /></div>
                                 </div>
                             </div>
@@ -56,12 +56,12 @@
                         <x-label-error :messages="$errors->get('responsibility_name')" />
                     </div>
                 <div class="w-full max-w-xs sm:max-w-sm xl:max-w-xl form-control">
-                    <x-label-no-req :value="__('Due Date')" />
+                    <x-label-no-req :value="__('Tenggat Waktu')" />
                     <x-input-date id="due_date" wire:model.live='due_date' readonly :error="$errors->get('due_date')" />
                     <x-label-error :messages="$errors->get('due_date')" />
                 </div>
                 <div class="w-full max-w-xs sm:max-w-sm xl:max-w-xl form-control">
-                    <x-label-no-req :value="__('Completion Date')" />
+                    <x-label-no-req :value="__('Selesai')" />
                     <x-input-date id="completion_date" wire:model.live='completion_date' readonly :error="$errors->get('completion_date')" />
                     <x-label-error :messages="$errors->get('completion_date')" />
                 </div>
