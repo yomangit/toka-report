@@ -35,6 +35,7 @@ class KondisiGrapf extends Component
             // User tanpa relasi division_user tidak bisa lihat laporan
             $reports = collect();
         }
+
         $this->labels = $reports->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
         $this->counts = $reports->pluck('total')->toArray();
     }

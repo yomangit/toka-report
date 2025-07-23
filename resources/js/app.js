@@ -18,9 +18,6 @@ import {
 import {
     renderPerbandinganChart
 } from './charts/perbandinganChart';
-import {
-    renderKondisiBarChart 
-} from './charts/kondisiChart';
 
 import { initPageLoader } from './pageLoader';
 initPageLoader();
@@ -28,7 +25,6 @@ initPageLoader();
 document.addEventListener('DOMContentLoaded', () => {
     renderDivisionChart
     renderPerbandinganChart();
-    renderKondisiBarChart();
 });
 // Inisialisasi semua flatpickr jika elemen ada
 const initDatePickers = () => {
