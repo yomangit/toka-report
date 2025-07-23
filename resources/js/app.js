@@ -26,11 +26,16 @@ import {
     renderKondisiBarChart
 } from './charts/kondisiChart';
 
-document.addEventListener('DOMContentLoaded', () => {
-    renderKondisiBarChart();
-    // ⏱ Emit tiap 10 detik
+document.addEventListener('livewire:load', () => {
+    renderKondisiBarChart(); // render pertama
+
+    // ⏱ Emit event Livewire setiap 10 detik
     setInterval(() => {
-        window.livewire.dispatch('refreshKondisiChart');
+        if (window.livewire) {
+            window.livewire.dispatch('refreshKondisiChart');
+        } else {
+            console.warn('Livewire belum siap');
+        }
     }, 10000);
 });
 // document.addEventListener('livewire:load', () => {
