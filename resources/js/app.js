@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderKondisiBarChart();
     // ⏱ Emit tiap 10 detik
     setInterval(() => {
-        window.Livewire.emit('refreshKondisiChart');
+        window.Livewire.dispatch('refreshKondisiChart');
     }, 10000);
 });
 

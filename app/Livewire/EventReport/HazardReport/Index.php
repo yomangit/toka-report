@@ -105,7 +105,7 @@ class Index extends Component
             Log::info("Tidak ada data EventParticipants atau EventKeyword dengan reference: {$reference}");
         }
 
-        return redirect()->route('hazardReport');
+        // return redirect()->route('hazardReport');
         $this->dispatch(
             'alert',
             [
