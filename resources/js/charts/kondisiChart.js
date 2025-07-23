@@ -50,3 +50,20 @@ export function renderKondisiBarChart() {
     kondisiChart = new ApexCharts(el, options);
     kondisiChart.render();
 }
+// 🔄 Listen Livewire event
+document.addEventListener('update-kondisi-chart', (e) => {
+    if (!kondisiChart) return;
+
+    const { labels, counts } = e.detail;
+
+    kondisiChart.updateOptions({
+        xaxis: {
+            categories: labels
+        }
+    });
+
+    kondisiChart.updateSeries([{
+        name: 'Jumlah Laporan',
+        data: counts
+    }]);
+});

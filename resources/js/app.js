@@ -28,6 +28,10 @@ import {
 
 document.addEventListener('DOMContentLoaded', () => {
     renderKondisiBarChart();
+    // ⏱ Emit tiap 10 detik
+    setInterval(() => {
+        window.Livewire.emit('refreshKondisiChart');
+    }, 10000);
 });
 
 // Inisialisasi semua flatpickr jika elemen ada
