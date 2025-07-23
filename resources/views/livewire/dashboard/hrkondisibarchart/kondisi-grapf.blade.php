@@ -1,7 +1,7 @@
 <div>
     <div id="kondisiBarChart"></div>
 
-    <script>
+    <script type="text/javascript">
         import ApexCharts from 'apexcharts';
 
         const labels = JSON.parse('<?php echo $labels; ?>');
