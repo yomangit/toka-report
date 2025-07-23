@@ -26,7 +26,7 @@ import {
     renderKondisiBarChart
 } from './charts/kondisiChart';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('livewire:load', () => {
     renderKondisiBarChart(); // render pertama
 
     // ⏱ Emit event Livewire setiap 10 detik
