@@ -33,7 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
         window.Livewire.dispatch('refreshKondisiChart');
     }, 10000);
 });
-
+document.addEventListener('livewire:navigated', () => {
+    renderKondisiBarChart(); // render ulang chart dari awal
+});
 // Inisialisasi semua flatpickr jika elemen ada
 const initDatePickers = () => {
     const datePickers = [{
