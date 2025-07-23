@@ -1,10 +1,25 @@
 <div>
     <div id="kondisiBarChart"></div>
+    <script type="module">
+        import ApexCharts from 'apexcharts';
+        const labels = @json($labels);
+        const counts = @json($counts);
 
-    <script>
+        const options = {
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            series: [{
+                name: 'Jumlah Laporan',
+                data: counts
+            }],
+            xaxis: {
+                categories: labels
+            }
+        };
 
-        const labels = {!! json_encode($labels) !!};
-        const counts = {!! json_encode($counts) !!};
-        window.renderKondisiChart(labels, counts);
+        const chart = new ApexCharts(document.querySelector("#kondisiBarChart"), options);
+        chart.render();
     </script>
 </div>

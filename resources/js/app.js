@@ -18,10 +18,6 @@ import {
 import {
     renderPerbandinganChart
 } from './charts/perbandinganChart';
-import {
-    renderKondisiChart 
-} from './charts/kondisiChart';
-window.renderKondisiChart = renderKondisiChart;
 import { initPageLoader } from './pageLoader';
 initPageLoader();
 
