@@ -5,7 +5,7 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-    document.addEventListener("livewire:load", () => {
+    document.addEventListener("DOMContentLoaded", () => {
         const chartEl = document.querySelector("#kondisiChart");
 
         let kondisiChart = new ApexCharts(chartEl, {
