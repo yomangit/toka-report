@@ -1,5 +1,3 @@
-import ApexCharts from 'apexcharts';
-
 let kondisiChart = null;
 
 export function renderKondisiBarChart() {
@@ -12,50 +10,30 @@ export function renderKondisiBarChart() {
     const options = {
         chart: {
             type: 'bar',
-            height: 350
+            height: 350,
         },
         series: [{
             name: 'Jumlah Laporan',
-            data: counts
+            data: counts,
         }],
-
-        title: {
-            text: 'Laporan per Kondisi Tidak Aman',
-            align: 'center',
-            style: {
-                fontSize: '10px'
-            }
-        },
         xaxis: {
             categories: labels,
-            labels: {
-                style: {
-                    fontSize: '10px'
-                },
-                formatter: function (value) {
-                    return value.length > 15 ? value.substring(0, 12) + '…' : value;
-                },
-            },
         },
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                borderRadius: 4,
-                distributed: true
-            }
+        title: {
+            text: 'Kondisi Tidak Aman',
         },
-        colors: ['#3f51b5', '#00bcd4', '#8bc34a', '#ff9800', '#e91e63']
     };
 
     kondisiChart = new ApexCharts(el, options);
     kondisiChart.render();
 }
-// 🔄 Listen Livewire event
+
+// Update dari Livewire
 document.addEventListener('update-kondisi-chart', (e) => {
+    const { labels, counts } = e.detail;
+
     if (!kondisiChart) return;
 
-    const { labels, counts } = e.detail;
- console.log('Updating chart:', e.detail);
     kondisiChart.updateOptions({
         xaxis: {
             categories: labels
