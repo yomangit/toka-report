@@ -1,27 +1,21 @@
 <div>
-    <div id="kondisiBarChart"></div>
-    
-{{-- CDN ApexCharts --}}
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <div id="kondisiBarChart" wire:poll.10s></div>
+
     <script type="module">
+        import { renderKondisiBarChart } from '/resources/js/charts/renderKondisiBarChart.js';
+
+        // Ambil data dari Livewire property
         const labels = @json($labels);
         const counts = @json($counts);
 
-        const options = {
-            chart: {
-                type: 'bar',
-                height: 350
-            },
-            series: [{
-                name: 'Jumlah Laporan',
-                data: counts
-            }],
-            xaxis: {
-                categories: labels
-            }
-        };
+        // Delay render untuk pastikan element sudah siap
+        setTimeout(() => {
+            renderKondisiBarChart(labels, counts);
+        }, 300);
 
-        const chart = new ApexCharts(document.querySelector("#kondisiBarChart"), options);
-        chart.render();
+        // Optional: event listener dari Livewire untuk update manual
+        window.addEventListener('updateKondisiChart', event => {
+            renderKondisiBarChart(event.detail.labels, event.detail.counts);
+        });
     </script>
 </div>

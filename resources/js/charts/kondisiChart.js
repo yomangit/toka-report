@@ -1,50 +1,33 @@
 import ApexCharts from 'apexcharts';
 
-let kondisiChart = null;
+let chart = null;
 
-export function renderKondisiChart(labels, counts) {
-    const el = document.querySelector('#kondisiBarChart');
+export function renderKondisiBarChart(labels, counts) {
+    const el = document.querySelector("#kondisiBarChart");
+
     if (!el) return;
-
 
     const options = {
         chart: {
             type: 'bar',
-            height: 350
+            height: 300,
+            toolbar: { show: false },
         },
         series: [{
-            name: 'Jumlah Laporan',
-            data: counts
+            name: 'Jumlah',
+            data: counts,
         }],
-
-        title: {
-            text: 'Laporan per Kondisi Tidak Aman',
-            align: 'center',
-            style: {
-                fontSize: '10px'
-            }
-        },
         xaxis: {
             categories: labels,
-            labels: {
-                style: {
-                    fontSize: '10px'
-                },
-                formatter: function (value) {
-                    return value.length > 15 ? value.substring(0, 12) + '…' : value;
-                },
-            },
         },
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                borderRadius: 4,
-                distributed: true
-            }
-        },
-        colors: ['#3f51b5', '#00bcd4', '#8bc34a', '#ff9800', '#e91e63']
+        colors: ['#10b981'],
     };
 
-    kondisiChart = new ApexCharts(el, options);
-    kondisiChart.render();
+    // Destroy previous chart if exists
+    if (chart) {
+        chart.destroy();
+    }
+
+    chart = new ApexCharts(el, options);
+    chart.render();
 }
