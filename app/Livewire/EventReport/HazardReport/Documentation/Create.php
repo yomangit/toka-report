@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use App\Models\HazardReport;
 use Livewire\WithFileUploads;
+use App\Models\HazardReportLog;
 use Livewire\Attributes\Validate;
 use App\Models\HazardDocumentation;
 use LivewireUI\Modal\ModalComponent;
@@ -55,6 +56,12 @@ class Create extends ModalComponent
                 'hazard_id' => $this->hazard_id
             ]
         );
+        HazardReportLog::create([
+            'hazard_report_id' => $this->data_id,
+            'user_id' => auth()->user()->id,
+            'action' => 'updated documentation hazard',
+            'description' => "memperbaharui data hazard",
+        ]);
         if ($doc) {
             $this->file_doc->storeAs('public/documents/hazard', $file_name);
         }

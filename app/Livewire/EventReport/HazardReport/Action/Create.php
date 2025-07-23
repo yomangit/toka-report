@@ -7,11 +7,12 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use App\Models\ActionHazard;
 use App\Models\HazardReport;
+use App\Models\HazardReportLog;
 use App\Models\EventUserSecurity;
 use Livewire\Attributes\Validate;
 use App\Notifications\toModerator;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class Create extends Component
 {
@@ -86,6 +87,12 @@ class Create extends Component
                 'completion_date'  => $this->completion_date,
             ]
         );
+        HazardReportLog::create([
+            'hazard_report_id' => $this->data_id,
+            'user_id' => auth()->user()->id,
+            'action' => 'updated action hazard',
+            'description' => "memperbaharui data hazard",
+        ]);
         if ($this->action_id) {
             $this->dispatch(
                 'alert',
