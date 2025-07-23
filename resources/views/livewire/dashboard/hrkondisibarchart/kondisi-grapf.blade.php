@@ -4,8 +4,8 @@
     <script>
         import ApexCharts from 'apexcharts';
 
-        const labels = @json($labels);
-        const counts = @json($counts);
+        const labels = JSON.parse('<?php echo $labels; ?>');
+        const counts = JSON.parse('<?php echo $counts; ?>');
 
         const options = {
             chart: {
