@@ -1,12 +1,10 @@
 <div>
     <div id="kondisiBarChart"></div>
 
-<script type="module">
+    <script type="module">
         import ApexCharts from 'apexcharts';
-        console.log('Labels:', @json($labels));
-        console.log('Counts:', @json($counts));
-        const labels = @json($labels);
-        const counts = @json($counts);
+        const labels = {!! json_encode($labels) !!};
+        const counts = {!! json_encode($counts) !!};
 
         const options = {
             chart: {
