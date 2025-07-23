@@ -128,7 +128,6 @@
 
     <div class="mt-2">{{ $HazardReport->links() }}</div>
 
-   
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
          flatpickr("#rangeDate", {
@@ -177,7 +176,7 @@
             const isMobile = window.innerWidth < 640;
             document.querySelectorAll('.tooltip').forEach((el) => {
                 el.classList.remove('tooltip-top', 'tooltip-right', 'tooltip-left', 'tooltip-bottom');
-                el.classList.add(isMobile ? 'tooltip-top' : 'tooltip-right');
+                el.classList.add(isMobile ? 'tooltip-top' : 'tooltip-left');
             });
         }
         window.addEventListener('DOMContentLoaded', updateTooltipPosition);
