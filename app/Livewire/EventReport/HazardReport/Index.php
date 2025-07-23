@@ -15,6 +15,7 @@ use App\Models\TypeEventReport;
 use App\Models\EventParticipants;
 use App\Models\EventUserSecurity;
 use App\Models\HazardDocumentation;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
@@ -56,13 +57,13 @@ class Index extends Component
                 'WorkflowDetails',
                 'subEventType',
                 'eventType'
-            ])->findSubmitter(trim($this->nilai))->searchStatus(trim($this->search_status))->searchEventType(trim($this->search_eventType))->searchEventSubType(trim($this->search_eventSubType))->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->search(trim($this->searching))->orderBy('created_at','DESC')->paginate(30);
+            ])->findSubmitter(trim($this->nilai))->searchStatus(trim($this->search_status))->searchEventType(trim($this->search_eventType))->searchEventSubType(trim($this->search_eventSubType))->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->search(trim($this->searching))->orderBy('created_at', 'DESC')->paginate(30);
         } else {
             $Hazard = HazardReport::with([
                 'WorkflowDetails',
                 'subEventType',
                 'eventType'
-            ])->findSubmitter(trim($this->nilai))->searchStatus(trim($this->search_status))->searchEventType(trim($this->search_eventType))->searchEventSubType(trim($this->search_eventSubType))->search(trim($this->searching))->orderBy('created_at','DESC')->paginate(30);
+            ])->findSubmitter(trim($this->nilai))->searchStatus(trim($this->search_status))->searchEventType(trim($this->search_eventType))->searchEventSubType(trim($this->search_eventSubType))->search(trim($this->searching))->orderBy('created_at', 'DESC')->paginate(30);
         }
 
         if (choseEventType::where('route_name', 'LIKE', '%' . '/eventReport/hazardReport' . '%')->exists()) {
@@ -89,8 +90,21 @@ class Index extends Component
         }
         $reference = $HazardReport->first()->reference;
         $HazardReport->delete();
-        EventParticipants::where('reference', $reference)->delete();
-        EventKeyword::where('reference', $this->reference)->delete();
+
+        $EventParticipants = EventParticipants::where('reference', $reference)->exists();
+        $EventKeyword = EventKeyword::where('reference', $this->reference)->exists();
+        if ($EventParticipants) {
+            // Hapus data di EventParticipants jika ditemukan
+            EventParticipants::where('reference', $reference)->delete();
+        } elseif ($EventKeyword) {
+            // Hapus data di EventKeyword jika ditemukan
+            EventKeyword::where('reference', $reference)->delete();
+        } else {
+            // Tidak ditemukan data apapun
+            // Bisa tambahkan log atau feedback jika perlu
+            Log::info("Tidak ada data EventParticipants atau EventKeyword dengan reference: {$reference}");
+        }
+
         return redirect()->route('hazardReport');
         $this->dispatch(
             'alert',
@@ -104,7 +118,7 @@ class Index extends Component
             ]
         );
     }
-     public function paginationView()
+    public function paginationView()
     {
         return 'pagination.masterpaginate';
     }

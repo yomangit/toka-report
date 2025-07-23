@@ -31,6 +31,7 @@ use App\Models\WorkflowApplicable;
 use App\Notifications\toModerator;
 use App\Models\HazardDocumentation;
 use App\Models\TableRiskAssessment;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 
@@ -462,8 +463,19 @@ class Detail extends Component
             unlink(storage_path('app/public/documents/hazard/' . $files->first()->name_doc));
         }
         $HazardReport->delete();
-        EventParticipants::where('reference', $this->reference)->delete();
-        EventKeyword::where('reference', $this->reference)->delete();
+        $EventParticipants = EventParticipants::where('reference', $this->reference)->exists();
+        $EventKeyword = EventKeyword::where('reference', $this->reference)->exists();
+        if ($EventParticipants) {
+            // Hapus data di EventParticipants jika ditemukan
+            EventParticipants::where('reference',$this->reference)->delete();
+        } elseif ($EventKeyword) {
+            // Hapus data di EventKeyword jika ditemukan
+            EventKeyword::where('reference',$this->reference)->delete();
+        } else {
+            // Tidak ditemukan data apapun
+            // Bisa tambahkan log atau feedback jika perlu
+            Log::info("Tidak ada data EventParticipants atau EventKeyword dengan reference: {$this->reference}");
+        }
         return redirect()->route('hazardReport');
         $this->dispatch(
             'alert',
