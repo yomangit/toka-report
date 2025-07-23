@@ -1,18 +1,12 @@
 import ApexCharts from 'apexcharts';
-let kondisiChart = null;
+
+let chart = null;
 
 export function renderKondisiBarChart() {
     const el = document.querySelector('#kondisiBarChart');
     if (!el) return;
 
-    // Hapus chart sebelumnya kalau ada
-    if (window.kondisiChart) {
-        window.kondisiChart.destroy();
-    }
-
-    const labels = JSON.parse(el.dataset.labels || "[]");
-    const counts = JSON.parse(el.dataset.counts || "[]");
-
+    // Inisialisasi kosong
     const options = {
         chart: {
             type: 'bar',
@@ -20,34 +14,33 @@ export function renderKondisiBarChart() {
         },
         series: [{
             name: 'Jumlah Laporan',
-            data: counts,
+            data: []
         }],
         xaxis: {
-            categories: labels,
+            categories: []
         },
         title: {
-            text: 'Kondisi Tidak Aman',
-        },
+            text: 'Kondisi Tidak Aman'
+        }
     };
 
-    window.kondisiChart = new ApexCharts(el, options);
-    window.kondisiChart.render();
+    chart = new ApexCharts(el, options);
+    chart.render();
 }
 
-
-// Update dari Livewire
+// Realtime update via Livewire dispatch
 document.addEventListener('update-kondisi-chart', (e) => {
-    const { labels, counts } = e.detail;
- console.log('[Livewire update] chart data:', e.detail);
-    if (!kondisiChart) return;
+    if (!chart) return;
 
-    kondisiChart.updateOptions({
+    const { labels, counts } = e.detail;
+
+    chart.updateOptions({
         xaxis: {
             categories: labels
         }
     });
 
-    kondisiChart.updateSeries([{
+    chart.updateSeries([{
         name: 'Jumlah Laporan',
         data: counts
     }]);
