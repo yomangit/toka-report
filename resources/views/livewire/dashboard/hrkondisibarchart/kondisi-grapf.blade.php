@@ -1,7 +1,7 @@
 <div>
     <div id="kondisiBarChart"></div>
 
-    <script>
+<script type="module">
         import ApexCharts from 'apexcharts';
         console.log('Labels:', @json($labels));
         console.log('Counts:', @json($counts));
