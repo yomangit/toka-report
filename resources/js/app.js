@@ -28,13 +28,6 @@ import {
 
 document.addEventListener('DOMContentLoaded', () => {
     renderKondisiBarChart();
-
-    // Realtime trigger via Livewire dispatch
-    setInterval(() => {
-        if (window.Livewire) {
-            window.Livewire.dispatch('refreshKondisiChart');
-        }
-    }, 3000);
 });
 
 // Inisialisasi semua flatpickr jika elemen ada

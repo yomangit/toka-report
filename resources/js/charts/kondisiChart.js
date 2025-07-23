@@ -1,61 +1,52 @@
 import ApexCharts from 'apexcharts';
 
-let chart = null;
+let kondisiChart = null;
 
 export function renderKondisiBarChart() {
     const el = document.querySelector('#kondisiBarChart');
     if (!el) return;
 
+    const labels = JSON.parse(el.dataset.labels || "[]");
+    const counts = JSON.parse(el.dataset.counts || "[]");
+
     const options = {
         chart: {
             type: 'bar',
-            height: 350,
+            height: 350
         },
         series: [{
             name: 'Jumlah Laporan',
-            data: []
+            data: counts
         }],
-        xaxis: {
-            categories: [],
-            labels: {
-                style: {
-                    fontSize: '12px'
-                }
+
+        title: {
+            text: 'Laporan per Kondisi Tidak Aman',
+            align: 'center',
+            style: {
+                fontSize: '10px'
             }
         },
-        title: {
-            text: 'Kondisi Tidak Aman',
-            style: {
-                fontSize: '16px'
-            }
+        xaxis: {
+            categories: labels,
+            labels: {
+                style: {
+                    fontSize: '10px'
+                },
+                formatter: function (value) {
+                    return value.length > 15 ? value.substring(0, 12) + '…' : value;
+                },
+            },
         },
         plotOptions: {
             bar: {
+                horizontal: false,
                 borderRadius: 4,
                 distributed: true
             }
-        }
+        },
+        colors: ['#3f51b5', '#00bcd4', '#8bc34a', '#ff9800', '#e91e63']
     };
 
-    chart = new ApexCharts(el, options);
-    chart.render();
+    kondisiChart = new ApexCharts(el, options);
+    kondisiChart.render();
 }
-
-// Update via Livewire event
-
-document.addEventListener('update-kondisi-chart', (e) => {
-    const { labels, counts } = e.detail;
-
-    if (!chart) return;
-
-    chart.updateOptions({
-        xaxis: {
-            categories: labels
-        }
-    });
-
-    chart.updateSeries([{
-        name: 'Jumlah Laporan',
-        data: counts
-    }]);
-});
