@@ -46,6 +46,8 @@ document.addEventListener('update-kondisi-chart', (e) => {
     const { labels, counts } = e.detail;
 
     if (!chart) return;
+    if (!Array.isArray(labels) || !Array.isArray(counts)) return;
+    if (labels.length === 0 || counts.length === 0) return;
 
     chart.updateOptions({
         xaxis: {
@@ -58,3 +60,4 @@ document.addEventListener('update-kondisi-chart', (e) => {
         data: counts
     }]);
 });
+
