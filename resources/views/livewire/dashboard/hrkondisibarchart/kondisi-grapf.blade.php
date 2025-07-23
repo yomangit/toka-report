@@ -15,10 +15,10 @@
                 },
                 series: [{
                     name: 'Jumlah',
-                    data: @json($counts)
+                    data: {!! json_encode($counts) !!}
                 }],
                 xaxis: {
-                    categories: @json($labels)
+                    categories: {!! json_encode($labels) !!}
                 }
             };
             chart = new ApexCharts(document.querySelector("#barChart"), options);
