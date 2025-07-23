@@ -2,12 +2,10 @@ import ApexCharts from 'apexcharts';
 
 let kondisiChart = null;
 
-export function renderKondisiBarChart() {
+export function renderKondisiChart(labels, counts) {
     const el = document.querySelector('#kondisiBarChart');
     if (!el) return;
 
-    const labels = JSON.parse(el.dataset.labels || "[]");
-    const counts = JSON.parse(el.dataset.counts || "[]");
 
     const options = {
         chart: {
