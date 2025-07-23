@@ -18,18 +18,15 @@ import {
 import {
     renderPerbandinganChart
 } from './charts/perbandinganChart';
-
-document.addEventListener('DOMContentLoaded', () => {
-    renderPerbandinganChart();
-});
 import {
     renderKondisiBarChart
 } from './charts/kondisiChart';
 
 document.addEventListener('DOMContentLoaded', () => {
+    renderDivisionChart
+    renderPerbandinganChart();
     renderKondisiBarChart();
 });
-
 // Inisialisasi semua flatpickr jika elemen ada
 const initDatePickers = () => {
     const datePickers = [{
