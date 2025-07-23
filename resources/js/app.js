@@ -22,6 +22,9 @@ import {
     renderKondisiBarChart
 } from './charts/kondisiChart';
 
+import { initPageLoader } from './pageLoader';
+initPageLoader();
+
 document.addEventListener('DOMContentLoaded', () => {
     renderDivisionChart
     renderPerbandinganChart();
