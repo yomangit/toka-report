@@ -1,5 +1,5 @@
 <!-- start: Sidebar -->
-<div class="fixed top-0 left-0 z-40 w-64 h-full overflow-y-auto transition-transform bg-base-400 text-neutral-content sidebar-menu">
+<div class="fixed top-0 left-0 z-50 w-64 h-full overflow-y-auto transition-transform bg-base-400 text-neutral-content sidebar-menu">
     <a href="#" class="fixed top-0 z-50 flex items-center w-64 p-1 border-b shadow-md shadow-indigo-500/50 bg-base-400 border-b-gray-800">
         <div class="avatar ">
             <div class="w-8 rounded">

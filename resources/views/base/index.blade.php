@@ -55,7 +55,7 @@
     @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
 <body class="static antialiased">
-    <div id="page-loader" class="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-500 opacity-100 bg-white/80">
+    <div id="page-loader" class="fixed inset-0 z-[1000] flex items-center justify-center transition-opacity duration-500 opacity-100 bg-white/80">
         <div class="w-16 h-16 border-4 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
     </div>
     @include('navigation.sidebar')
