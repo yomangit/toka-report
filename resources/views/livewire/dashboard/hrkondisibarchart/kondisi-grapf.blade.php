@@ -6,35 +6,40 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
+        let kondisiChart;
         const chartEl = document.querySelector("#kondisiChart");
 
-        let kondisiChart = new ApexCharts(chartEl, {
-            chart: {
-                type: 'bar',
-                height: 350
-            },
-            series: [{
-                name: 'Jumlah',
-                data: @json($counts)
-            }],
-            xaxis: {
-                categories: @json($labels)
+        function initChart(labels, counts) {
+            if (kondisiChart) {
+                kondisiChart.destroy(); // 🔥 Penting: Hapus chart lama dulu
             }
-        });
 
-        kondisiChart.render();
-
-        // Perbarui chart ketika Livewire me-refresh
-        Livewire.hook('message.processed', (message, component) => {
-            kondisiChart.updateOptions({
+            const options = {
+                chart: {
+                    type: 'bar',
+                    height: 350
+                },
                 series: [{
-                    data: @json($counts)
+                    name: 'Jumlah',
+                    data: counts
                 }],
                 xaxis: {
-                    categories: @json($labels)
+                    categories: labels
                 }
-            });
+            };
+
+            kondisiChart = new ApexCharts(chartEl, options);
+            kondisiChart.render();
+        }
+
+        // Pertama kali render chart
+        initChart(@json($labels), @json($counts));
+
+        // Update chart saat Livewire component re-render
+        Livewire.hook('message.processed', () => {
+            initChart(@json($labels), @json($counts));
         });
     });
 </script>
 @endpush
+
