@@ -4,7 +4,6 @@
 {{-- CDN ApexCharts --}}
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script type="module">
-        import ApexCharts from 'apexcharts';
         const labels = @json($labels);
         const counts = @json($counts);
 
