@@ -32,8 +32,9 @@ document.addEventListener('livewire:load', () => {
         if (window.livewire) {
             window.livewire.dispatch('refreshKondisiChart');
         }
-    }, 10000);
+    }, 3000);
 });
+
 // Inisialisasi semua flatpickr jika elemen ada
 const initDatePickers = () => {
     const datePickers = [{
