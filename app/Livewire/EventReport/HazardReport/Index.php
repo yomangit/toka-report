@@ -92,7 +92,7 @@ class Index extends Component
         $HazardReport->delete();
 
         $EventParticipants = EventParticipants::where('reference', $reference)->exists();
-        $EventKeyword = EventKeyword::where('reference', $this->reference)->exists();
+        $EventKeyword = EventKeyword::where('reference', $reference)->exists();
         if ($EventParticipants) {
             // Hapus data di EventParticipants jika ditemukan
             EventParticipants::where('reference', $reference)->delete();
