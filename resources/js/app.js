@@ -25,14 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
 import {
     renderKondisiBarChart
 } from './charts/kondisiChart';
-document.addEventListener('livewire:load', () => {
-    renderKondisiBarChart();
 
+document.addEventListener('DOMContentLoaded', () => {
+    renderKondisiBarChart();
+console.log(window.Livewire);
     setInterval(() => {
-        if (window.livewire) {
-            window.livewire.dispatch('refreshKondisiChart');
+        if (window.Livewire) {
+            window.Livewire.dispatch('refreshKondisiChart');
+        } else {
+            console.warn('Livewire belum siap');
         }
-    }, 3000);
+    }, 10000);
 });
 
 // Inisialisasi semua flatpickr jika elemen ada
