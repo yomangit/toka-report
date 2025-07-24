@@ -22,7 +22,6 @@ import {
 
 import { initPageLoader } from './pageLoader';
 initPageLoader();
-import "./charts/kondisiChart"
 document.addEventListener('DOMContentLoaded', () => {
     renderDivisionChart
     renderPerbandinganChart();

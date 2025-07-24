@@ -1,8 +1,5 @@
 <div>
-    {{-- @vite(['resources/js/charts/kondisiChart.js']) --}}
-    <div>
-        <div id="kondisiChart" wire:ignore></div>
-    </div>
+    <div id="kondisiChart"></div>
     <script>
         // Passing PHP Livewire data ke JS
         const labels = @json($labels);
