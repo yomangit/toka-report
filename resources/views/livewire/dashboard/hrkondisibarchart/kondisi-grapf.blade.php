@@ -1,6 +1,7 @@
 <div wire:init="loadChartData" wire:poll.10s="loadChartData">
-    @vite(['resources/js/kondisichart.js'])
+    {{-- @vite(['resources/js/kondisichart.js']) --}}
     <div wire:ignore id="kondisiCharts"></div>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script type="text/javascript">
         const labels = @json($labels);
         const counts = @json($counts);
@@ -57,7 +58,11 @@
                 }
             }
         };
-
+        var kondisiChart = new ApexCharts(
+            document.querySelector("#kondisiCharts")
+            , chartKondisi
+        );
+        kondisiChart.render();
         // Livewire event listener for realtime update
         window.addEventListener('livewire:kondisiChartUpdated', (event) => {
             const updatedLabels = event.detail.labels;
