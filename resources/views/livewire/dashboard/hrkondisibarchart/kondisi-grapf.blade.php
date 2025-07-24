@@ -19,7 +19,18 @@
             , series: [{
                 name: 'Jumlah'
                 , data: counts
-            }]
+            }],
+
+            title: {
+                text: 'Kondisi Tidak Aman'
+                , align: 'center'
+                , style: {
+                    fontSize: '12px'
+                    , fontWeight: 'bold'
+                    , fontFamily: undefined
+                    , color: '#fb7185'
+                }
+            , }
             , xaxis: {
                 categories: shortLabels
                 , labels: {
