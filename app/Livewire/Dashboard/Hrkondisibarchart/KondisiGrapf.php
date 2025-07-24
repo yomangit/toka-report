@@ -11,7 +11,7 @@ class KondisiGrapf extends Component
 {
     public $labels = [];
     public $counts = [];
-
+    protected $listeners = ['hazardChartShouldRefresh' => 'loadChartData'];
     public function mount()
     {
         $this->loadChartData();
