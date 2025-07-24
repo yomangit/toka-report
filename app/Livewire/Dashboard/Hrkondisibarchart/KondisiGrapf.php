@@ -39,9 +39,6 @@ class KondisiGrapf extends Component
     {
         $this->loadChartData();
 
-        return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf', [
-            'labels' => $this->labels,
-            'counts' => $this->counts
-        ]);
+        return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf');
     }
 }
