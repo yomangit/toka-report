@@ -74,7 +74,6 @@
             console.warn('Data kosong:', data);
             return;
         }
-
         const updatedLabels = data.labels;
         const updatedCounts = data.counts;
 
