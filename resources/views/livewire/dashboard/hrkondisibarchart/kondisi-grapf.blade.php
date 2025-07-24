@@ -1,6 +1,6 @@
 <div>
     @vite(['resources/js/kondisichart.js'])
-    <div id="kondisiChart"></div>
+    <div id="kondisiCharts"></div>
     <script type="text/javascript">
         var chartKondisi = {
             series: [{

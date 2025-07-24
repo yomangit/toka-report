@@ -1,7 +1,7 @@
 import ApexCharts from "apexcharts";
 
 var kondisiChart = new ApexCharts(
-    document.querySelector("#kondisiChart"),
+    document.querySelector("#kondisiCharts"),
     chartKondisi
 );
 kondisiChart.render();
