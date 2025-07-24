@@ -82,7 +82,7 @@
     window.addEventListener('kondisiChartUpdated', (event) => {
         const data = event.detail;
         // console.log(data); // → ["Label 1", "Label 2", ...]
-        if (!data || !data.labels || !data.counts) {
+        if (!data || !data.labels[0] || !data.counts[0]) {
             console.warn('Data kosong atau tidak valid:', data);
             return;
         }
