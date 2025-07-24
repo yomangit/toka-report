@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/js/apexchart.js',
+                'resources/js/kondisichart.js',
             ],
             refresh: true,
         }),

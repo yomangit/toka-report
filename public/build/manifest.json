@@ -28,5 +28,14 @@
     "css": [
       "assets/app-puXvd4I0.css"
     ]
+  },
+  "resources/js/kondisichart.js": {
+    "file": "assets/kondisichart-DsjaelNW.js",
+    "name": "kondisichart",
+    "src": "resources/js/kondisichart.js",
+    "isEntry": true,
+    "imports": [
+      "_apexcharts.common-DdDBkiWh.js"
+    ]
   }
 }
