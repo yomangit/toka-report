@@ -9,7 +9,7 @@
         console.log('Labels:', labels);
         console.log('Counts:', counts);
 
-        const chartOptions = {
+        var chartOptions = {
             chart: {
                 type: 'bar'
                 , height: 350
