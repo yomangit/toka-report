@@ -39,6 +39,6 @@ class KondisiGrapf extends Component
 
     public function render()
     {
-        return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf'a);
+        return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf');
     }
 }
