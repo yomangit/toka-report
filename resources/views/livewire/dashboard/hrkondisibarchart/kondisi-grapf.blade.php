@@ -72,7 +72,7 @@
     const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
 
-    Livewire.on('kondisiChartUpdated', ({
+    window.addEventListener('kondisiChartUpdated', ({
         labels
         , counts
     }) => {
