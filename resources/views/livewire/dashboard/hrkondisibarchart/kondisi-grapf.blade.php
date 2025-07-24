@@ -18,78 +18,65 @@
 
     function generateColors(length) {
         const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
-        return Array.from({ length }, (_, i) => colorList[i % colorList.length]);
+        return Array.from({
+            length
+        }, (_, i) => colorList[i % colorList.length]);
     }
 
     const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), {
         chart: {
-            type: 'bar',
-            height: 350
-        },
-        series: [{
-            name: 'Jumlah',
-            data: initialCounts
-        }],
-        colors: generateColors(initialLabels.length),
-        title: {
-            text: 'Kondisi Tidak Aman',
-            align: 'center',
-            style: {
-                fontSize: '12px',
-                fontWeight: 'bold',
-                color: '#fb7185'
+            type: 'bar'
+            , height: 350
+        }
+        , series: [{
+            name: 'Jumlah'
+            , data: initialCounts
+        }]
+        , colors: generateColors(initialLabels.length)
+        , title: {
+            text: 'Kondisi Tidak Aman'
+            , align: 'center'
+            , style: {
+                fontSize: '12px'
+                , fontWeight: 'bold'
+                , color: '#fb7185'
             }
-        },
-        xaxis: {
-            categories: shortenLabels(initialLabels),
-            labels: {
-                rotate: -45,
-                style: {
+        }
+        , xaxis: {
+            categories: shortenLabels(initialLabels)
+            , labels: {
+                rotate: -45
+                , style: {
                     fontSize: '09px'
                 }
             }
-        },
-        plotOptions: {
+        }
+        , plotOptions: {
             bar: {
-                borderRadius: 4,
-                distributed: true
+                borderRadius: 4
+                , distributed: true
             }
-        },
-        fill: {
-            type: 'gradient',
-            gradient: {
-                shade: 'light',
-                type: 'vertical',
-                shadeIntensity: 0.25,
-                inverseColors: true,
-                opacityFrom: 0.9,
-                opacityTo: 1,
-                stops: [50, 100]
+        }
+        , fill: {
+            type: 'gradient'
+            , gradient: {
+                shade: 'light'
+                , type: 'vertical'
+                , shadeIntensity: 0.25
+                , inverseColors: true
+                , opacityFrom: 0.9
+                , opacityTo: 1
+                , stops: [50, 100]
             }
         }
     });
 
     kondisiChart.render();
+    setInterval(() => {
+        window.Livewire.dispatch('hazardChartShouldRefresh')
+        console.log('test');
+        
+    }, 3000); // setiap 5000ms / 5 detik
 
-    window.addEventListener('kondisiChartUpdated', (event) => {
-        const data = event.detail;
-
-        if (!data || !data.labels || !data.counts) {
-            console.warn('Data tidak valid:', data);
-            return;
-        }
-
-        kondisiChart.updateOptions({
-            xaxis: {
-                categories: shortenLabels(data.labels)
-            },
-            colors: generateColors(data.labels.length)
-        });
-
-        kondisiChart.updateSeries([{
-            name: 'Jumlah',
-            data: data.counts
-        }]);
-    });
 </script>
 @endpush
