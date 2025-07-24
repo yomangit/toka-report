@@ -1,7 +1,8 @@
 <div>
-    <div wire:init="loadChartData">
-        <div wire:ignore id="kondisiCharts"></div>
-    </div>
+<div wire:init="loadChartData" wire:poll.3s="loadChartData">
+    <div wire:ignore id="kondisiCharts"></div>
+</div>
+
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script type="text/javascript">
         const labels = @json($labels);
@@ -88,9 +89,7 @@
             }]);
         });
 
-        setInterval(() => {
-            Livewire.dispatchEvent('hazardChartShouldRefresh');
-        }, 3000); // setiap 10 detik
+
 
     </script>
 
