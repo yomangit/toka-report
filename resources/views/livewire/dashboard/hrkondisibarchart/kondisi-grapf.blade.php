@@ -72,23 +72,23 @@
 
     window.addEventListener('kondisiChartUpdated', (event) => {
         const data = event.detail[0];
-        console.log(data);
+        // console.log(data);
         
-        // const newLabels = shortenLabels(data.labels);
-        // const newCounts = data.counts;
-        // const newColors = generateColors(newLabels.length);
+        const newLabels = shortenLabels(data.labels);
+        const newCounts = data.counts;
+        const newColors = generateColors(newLabels.length);
 
-        // kondisiChart.updateOptions({
-        //     xaxis: {
-        //         categories: newLabels
-        //     },
-        //     colors: newColors
-        // });
+        kondisiChart.updateOptions({
+            xaxis: {
+                categories: newLabels
+            },
+            colors: newColors
+        });
 
-        // kondisiChart.updateSeries([{
-        //     name: 'Jumlah',
-        //     data: newCounts
-        // }]);
+        kondisiChart.updateSeries([{
+            name: 'Jumlah',
+            data: newCounts
+        }]);
     });
 </script>
 @endpush
