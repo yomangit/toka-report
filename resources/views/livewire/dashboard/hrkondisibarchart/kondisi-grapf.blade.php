@@ -1,4 +1,4 @@
-<div >
+<div wire:init="loadChartData" wire:poll.10s="loadChartData">
     @vite(['resources/js/kondisichart.js'])
     <div wire:ignore id="kondisiCharts"></div>
    <script type="text/javascript">
