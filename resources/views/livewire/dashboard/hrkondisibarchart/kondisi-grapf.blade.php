@@ -81,11 +81,12 @@
     // Event listener: update chart when Livewire dispatches event
     window.addEventListener('kondisiChartUpdated', (event) => {
         const data = event.detail;
-
-        if (!data || !data.labels || !data.counts) {
-            console.warn('Data kosong atau tidak valid:', data);
-            return;
-        }
+        console.log(data.labels); // → ["Label 1", "Label 2", ...]
+        console.log(data.counts);
+        // if (!data || !data.labels || !data.counts) {
+        //     console.warn('Data kosong atau tidak valid:', data);
+        //     return;
+        // }
 
         const updatedLabels = data.labels;
         const updatedCounts = data.counts;
