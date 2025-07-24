@@ -67,40 +67,33 @@
     );
     kondisiChart.render();
     // Livewire event listener for realtime update
-   window.addEventListener('kondisiChartUpdated', (event) => {
-    const detail = event.detail;
-    const data = Array.isArray(detail) ? detail[0] : detail;
-
-    if (!data.labels || !data.counts) {
-        console.warn('Data kosong:', data);
-        return;
-    }
-
-    const updatedLabels = data.labels;
-    const updatedCounts = data.counts;
-
-    const shortLabels = updatedLabels.map(label =>
-        label.length > 20 ? label.slice(0, 20) + '…' : label
-    );
-
-    kondisiChart.updateOptions({
-        xaxis: {
-            categories: shortLabels
-        },
-        colors: updatedLabels.map((_, i) => {
-            const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
-            return colorList[i % colorList.length];
-        })
-    });
-
-    kondisiChart.updateSeries([
-        {
-            name: 'Jumlah',
-            data: updatedCounts
+   window.addEventListener('kondisiChartUpdated', ({ detail: data }) => {
+        if (!data.labels || !data.counts) {
+            console.warn('Data kosong:', data);
+            return;
         }
-    ]);
-});
 
+        const updatedLabels = data.labels;
+        const updatedCounts = data.counts;
+        const shortLabels = updatedLabels.map(label =>
+            label.length > 20 ? label.slice(0, 20) + '…' : label
+        );
+
+        kondisiChart.updateOptions({
+            xaxis: {
+                categories: shortLabels
+            }
+            , colors: updatedLabels.map((_, i) => {
+                const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
+                return colorList[i % colorList.length];
+            })
+        });
+
+        kondisiChart.updateSeries([{
+            name: 'Jumlah'
+            , data: updatedCounts
+        }]);
+    });
 
 </script>
 @endpush
