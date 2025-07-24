@@ -4,16 +4,14 @@ namespace App\Livewire\Dashboard\Hrkondisibarchart;
 
 
 use Livewire\Component;
-use Livewire\Attributes\On;
 use App\Models\HazardReport;
 use Illuminate\Support\Facades\DB;
 
 class KondisiGrapf extends Component
 {
-    public array $labels = [];
-    public array $counts = [];
-
-    #[On('hazardChartShouldRefresh')] //
+    public $labels = [];
+    public $counts = [];
+    protected $listeners = ['hazardChartShouldRefresh' => 'loadChartData'];
     public function loadChartData()
     {
         $user = auth()->user();
@@ -37,17 +35,15 @@ class KondisiGrapf extends Component
         $this->counts = $reports->pluck('total')->toArray();
         // Pastikan tidak mengirim event kalau kosong
         if (!empty($this->labels) && !empty($this->counts)) {
-            $this->dispatch('kondisiChartUpdated', object: [
+            $this->dispatch('kondisiChartUpdated', [
                 'labels' => $this->labels,
-                'counts' => $this->counts,
+                'counts' => $this->counts
             ]);
         }
     }
     public function render()
     {
-        return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf', [
-            'labels' => $this->labels,
-            'counts' => $this->counts,
-        ]);
+        $this->loadChartData();
+        return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf');
     }
 }

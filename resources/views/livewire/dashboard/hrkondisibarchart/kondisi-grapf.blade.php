@@ -1,68 +1,107 @@
 <div>
-    <div wire:init="loadChartData" wire:poll.5s="loadChartData">
-        <div wire:ignore id="chartContainer"></div>
+    <div wire:init="loadChartData" wire:poll.3s="loadChartData">
+        <div wire:ignore id="kondisiCharts"></div>
     </div>
 </div>
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script>
-    let chart;
+<script type="text/javascript">
+    // Initial data from backend
+    const initialLabels = @json($labels);
+    const initialCounts = @json($counts);
 
-    function initChart(labels, counts) {
-        const options = {
-            chart: { type: 'bar', height: 350 },
-            series: [{
-                name: 'Jumlah',
-                data: counts
-            }],
-            xaxis: {
-                categories: labels.map(label =>
-                    label.length > 20 ? label.slice(0, 20) + '…' : label
-                ),
-                labels: { rotate: -45 }
-            },
-            colors: labels.map((_, i) => {
-                const baseColors = ['#FF4560', '#008FFB', '#00E396', '#FEB019'];
-                return baseColors[i % baseColors.length];
-            }),
-            plotOptions: {
-                bar: { distributed: true, borderRadius: 4 }
-            }
-        };
-
-        chart = new ApexCharts(document.querySelector("#chartContainer"), options);
-        chart.render();
+    function shortenLabels(labels) {
+        return labels.map(label =>
+            label.length > 20 ? label.slice(0, 20) + '…' : label
+        );
     }
 
-    window.addEventListener('livewire:load', () => {
-        initChart(@json($labels), @json($counts));
-    });
+    function generateColors(length) {
+        const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
+        return Array.from({
+            length
+        }, (_, i) => colorList[i % colorList.length]);
+    }
 
-    window.addEventListener('chartDataUpdated', (event) => {
+    const chartKondisi = {
+        chart: {
+            type: 'bar'
+            , height: 350
+        }
+        , series: [{
+            name: 'Jumlah'
+            , data: initialCounts
+        }]
+        , colors: generateColors(initialLabels.length)
+        , title: {
+            text: 'Kondisi Tidak Aman'
+            , align: 'center'
+            , style: {
+                fontSize: '12px'
+                , fontWeight: 'bold'
+                , color: '#fb7185'
+            }
+        }
+        , xaxis: {
+            categories: shortenLabels(initialLabels)
+            , labels: {
+                rotate: -45
+                , style: {
+                    fontSize: '09px'
+                }
+            }
+        }
+        , plotOptions: {
+            bar: {
+                borderRadius: 4
+                , distributed: true
+            }
+        }
+        , fill: {
+            type: 'gradient'
+            , gradient: {
+                shade: 'light'
+                , type: 'vertical'
+                , shadeIntensity: 0.25
+                , inverseColors: true
+                , opacityFrom: 0.9
+                , opacityTo: 1
+                , stops: [50, 100]
+            }
+        }
+    };
+
+    const kondisiChart = new ApexCharts(
+        document.querySelector("#kondisiCharts")
+        , chartKondisi
+    );
+    kondisiChart.render();
+
+    // Event listener: update chart when Livewire dispatches event
+    window.addEventListener('kondisiChartUpdated', (event) => {
         const data = event.detail;
 
         if (!data || !data.labels || !data.counts) {
-            console.warn('Data kosong atau rusak:', data);
+            console.warn('Data kosong atau tidak valid:', data);
             return;
         }
 
-        chart.updateOptions({
+        const updatedLabels = data.labels;
+        const updatedCounts = data.counts;
+
+        kondisiChart.updateOptions({
             xaxis: {
-                categories: data.labels.map(label =>
-                    label.length > 20 ? label.slice(0, 20) + '…' : label
-                )
-            },
-            colors: data.labels.map((_, i) => {
-                const baseColors = ['#FF4560', '#008FFB', '#00E396', '#FEB019'];
-                return baseColors[i % baseColors.length];
-            })
+                categories: shortenLabels(updatedLabels)
+            }
+            , colors: generateColors(updatedLabels.length)
         });
 
-        chart.updateSeries([{
-            name: 'Jumlah',
-            data: data.counts
+        kondisiChart.updateSeries([{
+            name: 'Jumlah'
+            , data: updatedCounts
         }]);
     });
+
 </script>
 @endpush
