@@ -77,7 +77,7 @@
         , chartKondisi
     );
     kondisiChart.render();
-
+  window.Livewire.dispatch('hazardChartShouldRefresh')
 
     setInterval(() => {
         // Initial data from backend
