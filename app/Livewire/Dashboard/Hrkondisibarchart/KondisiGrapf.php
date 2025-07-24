@@ -24,11 +24,11 @@ class KondisiGrapf extends Component
         $query = HazardReport::select(
             'kondisitidakamen_id',
             DB::raw('COUNT(*) as total'),
-            'kondisi_tidak_amans.name as kondisi_name'
+            'kondisiTidakAman.name as kondisi_name'
         )
             ->whereNotNull('kondisitidakamen_id')
-            ->join('kondisi_tidak_amans', 'hazard_reports.kondisitidakamen_id', '=', 'kondisi_tidak_amans.id')
-            ->groupBy('kondisitidakamen_id', 'kondisi_tidak_amans.name');
+            ->join('kondisiTidakAman', 'hazard_reports.kondisitidakamen_id', '=', 'kondisiTidakAman.id')
+            ->groupBy('kondisitidakamen_id', 'kondisiTidakAman.name');
 
         if ($user->hasRolePermit('administration')) {
             $reports = $query->get();
