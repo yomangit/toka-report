@@ -68,6 +68,7 @@
     kondisiChart.render();
     // Livewire event listener for realtime update
     window.addEventListener('kondisiChartUpdated', (event) => {
+        const dataArray = event.detail;
         const data = Array.isArray(dataArray) ? dataArray[0] : dataArray;
         console.log(data);
 
