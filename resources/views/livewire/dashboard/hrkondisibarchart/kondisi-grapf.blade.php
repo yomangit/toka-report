@@ -89,7 +89,7 @@
         });
 
         setInterval(() => {
-            Livewire.dispatch('refreshKondisiChart');
+            Livewire.dispatch('hazardChartShouldRefresh');
         }, 3000); // setiap 10 detik
 
     </script>
