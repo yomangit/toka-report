@@ -71,7 +71,7 @@
     kondisiChart.render();
 
     window.addEventListener('kondisiChartUpdated', (event) => {
-        const data = event.detail[0];
+        const data = event.detail;
         
         console.log(data.labels);
         const newLabels = shortenLabels(data.labels);
