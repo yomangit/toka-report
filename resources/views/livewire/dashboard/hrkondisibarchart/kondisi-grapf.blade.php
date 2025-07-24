@@ -72,14 +72,11 @@
     const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
 
-    window.addEventListener('kondisiChartUpdated', ({
-        labels
-        , counts
-    }) => {
-        console.log("Updated labels:", labels); // ✅ seharusnya tampil array string
+    Livewire.on('kondisiChartUpdated', (data) => {
+        console.log("Updated labels:", data.labels); // ✅ sekarang ini HARUS tampil
 
-        const newLabels = shortenLabels(labels);
-        const newCounts = counts;
+        const newLabels = shortenLabels(data.labels);
+        const newCounts = data.counts;
         const newColors = generateColors(newLabels.length);
 
         kondisiChart.updateOptions({
