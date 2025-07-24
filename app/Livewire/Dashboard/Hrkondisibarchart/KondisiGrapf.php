@@ -28,15 +28,15 @@ class KondisiGrapf extends Component
             $divisionIds = $user->divisions->pluck('id')->toArray();
             $reports = $query->whereIn('division_id', $divisionIds)->get();
         } else {
-            $reports = collect(); // kosong
+            $reports = collect();
         }
 
         $this->labels = $reports->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
         $this->counts = $reports->pluck('total')->toArray();
-       
-        // Kirim event ke browser jika datanya valid
-        if (!empty($this->labels) && !empty($this->counts) && count($this->labels) === count($this->counts)) {
-           $this->dispatch('kondisiChartUpdated', [
+
+        if (!empty($this->labels) && !empty($this->counts)) {
+            // Kirim sebagai array biasa (bukan object)
+            $this->dispatch('kondisiChartUpdated', [
                 array_values($this->labels),
                 array_values($this->counts)
             ]);
@@ -46,10 +46,6 @@ class KondisiGrapf extends Component
     public function render()
     {
         $this->loadChartData();
-
-        return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf', [
-            'labels' => $this->labels,
-            'counts' => $this->counts
-        ]);
+        return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf');
     }
 }

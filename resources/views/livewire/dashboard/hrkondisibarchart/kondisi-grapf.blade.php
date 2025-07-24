@@ -6,9 +6,10 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script type="text/javascript">
-    const initialLabels = @json($labels ?? []);
-    const initialCounts = @json($counts ?? []);
+<script>
+    // Data awal dari Livewire
+    const initialLabels = @json($labels);
+    const initialCounts = @json($counts);
 
     function shortenLabels(labels) {
         return labels.map(label =>
@@ -44,9 +45,7 @@
             categories: shortenLabels(initialLabels),
             labels: {
                 rotate: -45,
-                style: {
-                    fontSize: '09px'
-                }
+                style: { fontSize: '09px' }
             }
         },
         plotOptions: {
@@ -69,13 +68,10 @@
         }
     };
 
-    const kondisiChart = new ApexCharts(
-        document.querySelector("#kondisiCharts"),
-        chartKondisi
-    );
+    const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
 
-    / Realtime update
+    // Realtime update
     window.addEventListener('kondisiChartUpdated', (event) => {
         const [updatedLabels, updatedCounts] = event.detail;
 
@@ -96,6 +92,5 @@
             data: updatedCounts
         }]);
     });
-    
 </script>
 @endpush
