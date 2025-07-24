@@ -1,7 +1,7 @@
 <div wire:init="loadChartData" wire:poll.5s="loadChartData">
     @vite(['resources/js/kondisichart.js'])
     <div wire:ignore id="kondisiCharts"></div>
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         const labels = @json($labels);
         const counts = @json($counts);
 
@@ -60,32 +60,7 @@
             }
         };
 
-        Livewire.hook('message.processed', () => {
-            const updatedLabels = @json($labels);
-            const updatedCounts = @json($counts);
-            const shortUpdatedLabels = updatedLabels.map(label => label.length > 20 ? label.slice(0, 20) + '…' : label);
-            const updatedColors = updatedLabels.map((_, i) => {
-                const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
-                return colorList[i % colorList.length];
-            });
-
-            chart.updateOptions({
-                series: [{
-                    data: updatedCounts
-                }]
-                , xaxis: {
-                    categories: shortUpdatedLabels
-                    , labels: {
-                        rotate: -45
-                        , style: {
-                            fontSize: '9px'
-                        }
-                    }
-                }
-                , colors: updatedColors
-            });
-        });
-
-    </script>
+        
+    </script> --}}
 
 </div>
