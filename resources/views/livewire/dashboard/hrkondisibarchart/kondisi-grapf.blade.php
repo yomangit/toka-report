@@ -98,5 +98,8 @@
             data: updatedCounts
         }]);
     });
+     setInterval(() => {
+        Livewire.dispatch('hazardChartShouldRefresh');
+    }, 3000);
 </script>
 @endpush
