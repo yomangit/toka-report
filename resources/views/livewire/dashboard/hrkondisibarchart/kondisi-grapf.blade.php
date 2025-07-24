@@ -67,8 +67,7 @@
     );
     kondisiChart.render();
     // Livewire event listener for realtime update
-    window.addEventListener('kondisiChartUpdated', (event) => {
-        const data = event;
+    window.addEventListener('kondisiChartUpdated', (data) => {
         if (!data.labels || !data.counts) {
             console.warn('Data kosong:', data);
             return;
