@@ -1,6 +1,6 @@
-<div wire:init="loadChartData" wire:poll.5s="loadChartData">
+<div >
     @vite(['resources/js/kondisichart.js'])
-    <div wire:ignore id="kondisiChart"></div>
+    <div wire:ignore id="kondisiCharts"></div>
     <script type="text/javascript">
         const labels = @json($labels);
         const counts = @json($counts);
@@ -60,7 +60,6 @@
             }
         };
 
-        
     </script>
 
 </div>
