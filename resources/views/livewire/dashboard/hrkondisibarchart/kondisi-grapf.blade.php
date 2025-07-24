@@ -75,16 +75,14 @@
     );
     kondisiChart.render();
 
+    / Realtime update
     window.addEventListener('kondisiChartUpdated', (event) => {
-        const data = event.detail;
+        const [updatedLabels, updatedCounts] = event.detail;
 
-        if (!data || !Array.isArray(data.labels) || !Array.isArray(data.counts)) {
-            console.warn('Data tidak valid:', data);
+        if (!Array.isArray(updatedLabels) || !Array.isArray(updatedCounts)) {
+            console.warn('Data tidak valid:', event.detail);
             return;
         }
-
-        const updatedLabels = data.labels;
-        const updatedCounts = data.counts;
 
         kondisiChart.updateOptions({
             xaxis: {
