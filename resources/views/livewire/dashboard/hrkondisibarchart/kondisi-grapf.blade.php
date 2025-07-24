@@ -1,7 +1,7 @@
 <div>
-<div wire:init="loadChartData" wire:poll.3s="loadChartData">
-    <div wire:ignore id="kondisiCharts"></div>
-</div>
+    <div wire:init="loadChartData" wire:poll.3s="loadChartData">
+        <div wire:ignore id="kondisiCharts"></div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script type="text/javascript">
@@ -66,12 +66,14 @@
         );
         kondisiChart.render();
         // Livewire event listener for realtime update
-        window.addEventListener('livewire:kondisiChartUpdated', (event) => {
-            console.log(event.detail);
-
-            const updatedLabels = event.detail.labels;
-            const updatedCounts = event.detail.counts;
-            const updatedShortLabels = updatedLabels.map(label => label.length > 20 ? label.slice(0, 20) + '…' : label);
+        Livewire.on('kondisiChartUpdated', (event) => {
+            console.log(event);
+            
+            const updatedLabels = event.labels;
+            const updatedCounts = event.counts;
+            const updatedShortLabels = updatedLabels.map(label =>
+                label.length > 20 ? label.slice(0, 20) + '…' : label
+            );
 
             kondisiChart.updateOptions({
                 xaxis: {
@@ -81,15 +83,13 @@
                     const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
                     return colorList[i % colorList.length];
                 })
-            , });
+            });
 
             kondisiChart.updateSeries([{
                 name: 'Jumlah'
                 , data: updatedCounts
             }]);
         });
-
-
 
     </script>
 
