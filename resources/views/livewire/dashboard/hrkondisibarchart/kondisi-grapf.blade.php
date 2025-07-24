@@ -69,6 +69,7 @@
     // Livewire event listener for realtime update
     window.addEventListener('kondisiChartUpdated', (event) => {
         const data = Array.isArray(event.detail) ? event.detail[0] : event.detail;
+
         if (!data.labels || !data.counts) {
             console.warn('Data kosong:', data);
             return;
@@ -76,6 +77,7 @@
 
         const updatedLabels = data.labels;
         const updatedCounts = data.counts;
+
         const shortLabels = updatedLabels.map(label =>
             label.length > 20 ? label.slice(0, 20) + '…' : label
         );
