@@ -1,5 +1,5 @@
 <div>
-    @vite(['resources/js/charts/kondisiChart.js'])
+    {{-- @vite(['resources/js/charts/kondisiChart.js']) --}}
     <div wire:init="loadChartData">
         <div id="kondisiChart" wire:ignore></div>
     </div>

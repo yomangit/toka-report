@@ -6,6 +6,7 @@ import Toastify from "toastify-js";
 window.Toastify = Toastify;
 
 // Flatpickr
+import "./charts/kondisiChart"
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import monthSelectPlugin from "flatpickr/dist/plugins/monthSelect";
