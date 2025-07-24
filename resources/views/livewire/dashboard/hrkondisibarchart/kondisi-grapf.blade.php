@@ -36,7 +36,7 @@
                 , labels: {
                     rotate: -45
                     , style: {
-                        fontSize: '19px' // 👈 Ukuran kecil (ubah sesuai kebutuhan)
+                        fontSize: '09px' // 👈 Ukuran kecil (ubah sesuai kebutuhan)
                     }
                 , }
             }
