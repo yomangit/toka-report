@@ -7,6 +7,7 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script type="text/javascript">
+    // Initial data from backend
     const initialLabels = @json($labels);
     const initialCounts = @json($counts);
 
@@ -23,7 +24,7 @@
         }, (_, i) => colorList[i % colorList.length]);
     }
 
-    const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), {
+    const chartKondisi = {
         chart: {
             type: 'bar'
             , height: 350
@@ -69,14 +70,38 @@
                 , stops: [50, 100]
             }
         }
-    });
+    };
 
+    const kondisiChart = new ApexCharts(
+        document.querySelector("#kondisiCharts")
+        , chartKondisi
+    );
     kondisiChart.render();
-    setInterval(() => {
-        window.Livewire.dispatch('hazardChartShouldRefresh')
-        console.log('test');
-        
-    }, 3000); // setiap 5000ms / 5 detik
+
+    // Event listener: update chart when Livewire dispatches event
+    window.addEventListener('kondisiChartUpdated', (event) => {
+        const data = event.detail;
+        console.log(data.labels); // → ["Label 1", "Label 2", ...]
+        // if (!data || !data.labels[0] || !data.counts[0]) {
+        //     console.warn('Data kosong atau tidak valid:', data);
+        //     return;
+        // }
+
+        const updatedLabels = data.labels;
+        const updatedCounts = data.counts;
+
+        kondisiChart.updateOptions({
+            xaxis: {
+                categories: shortenLabels(updatedLabels)
+            }
+            , colors: generateColors(updatedLabels.length)
+        });
+
+        kondisiChart.updateSeries([{
+            name: 'Jumlah'
+            , data: updatedCounts
+        }]);
+    });
 
 </script>
 @endpush
