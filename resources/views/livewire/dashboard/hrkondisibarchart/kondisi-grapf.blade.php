@@ -89,7 +89,7 @@
         });
 
         setInterval(() => {
-            Livewire.dispatch('hazardChartShouldRefresh');
+            Livewire.dispatchEvent('hazardChartShouldRefresh');
         }, 3000); // setiap 10 detik
 
     </script>
