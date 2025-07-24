@@ -10,6 +10,7 @@ class KondisiGrapf extends Component
 {
     public $labels = [];
     public $counts = [];
+    public $kondisi;
 
     protected $listeners = ['hazardChartShouldRefresh' => 'loadChartData'];
 
@@ -33,12 +34,26 @@ class KondisiGrapf extends Component
 
         $this->labels = $reports->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
         $this->counts = $reports->pluck('total')->toArray();
+        $datas = [];
 
-       
+        foreach ($reports as $report) {
+            $datas[] = [
+                'labels' => $report->kondisiTidakAman->name ?? 'Tidak Diketahui',
+                'counts' => $report->total
+            ];
+        }
+        $this->kondisi = json_encode($datas);
+       $this->dispatch('kondisiChartUpdated', [
+                'data_kondisi' =>  $this->kondisi
+            ]);
     }
-
     public function render()
     {
-        return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf');
+        $this->loadChartData();
+
+        return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf', [
+            'labels' => $this->labels,
+            'counts' => $this->counts
+        ]);
     }
 }
