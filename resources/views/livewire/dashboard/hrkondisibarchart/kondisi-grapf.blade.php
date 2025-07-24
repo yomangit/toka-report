@@ -1,5 +1,5 @@
 <div>
-    <div wire:init="loadChartData" wire:poll.10s="loadChartData">
+    <div wire:init="loadChartData">
         <div wire:ignore id="kondisiCharts"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -67,7 +67,7 @@
         // Livewire event listener for realtime update
         window.addEventListener('livewire:kondisiChartUpdated', (event) => {
             console.log(event.detail);
-            
+
             const updatedLabels = event.detail.labels;
             const updatedCounts = event.detail.counts;
             const updatedShortLabels = updatedLabels.map(label => label.length > 20 ? label.slice(0, 20) + '…' : label);
@@ -87,6 +87,10 @@
                 , data: updatedCounts
             }]);
         });
+
+        setInterval(() => {
+            Livewire.dispatch('refreshKondisiChart');
+        }, 3000); // setiap 10 detik
 
     </script>
 
