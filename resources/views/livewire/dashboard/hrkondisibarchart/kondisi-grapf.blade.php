@@ -5,7 +5,7 @@
         const labels = @json($labels);
         const counts = @json($counts);
 
-        const shortLabels = labels.map(label => label.length > 20 ? label.slice(0, 10) + '…' : label);
+        const shortLabels = labels.map(label => label.length > 20 ? label.slice(0, 20) + '…' : label);
 
         const chartKondisi = {
             chart: {
