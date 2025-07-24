@@ -1,4 +1,5 @@
 import ApexCharts from "apexcharts";
-
-var kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"),chartKondisi);
-kondisiChart.render();
+const chartEl = document.querySelector("#kondisiChart");
+let chart;
+chart = new ApexCharts(chartEl,chartKondisi);
+chart.render();
