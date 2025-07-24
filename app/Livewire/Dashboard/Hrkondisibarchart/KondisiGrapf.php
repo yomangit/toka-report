@@ -34,6 +34,10 @@ class KondisiGrapf extends Component
 
         $this->labels = $reports->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
         $this->counts = $reports->pluck('total')->toArray();
+        $this->dispatch('kondisiChartUpdated', [
+            'labels' => $this->labels,
+            'counts' => $this->counts
+        ]);
     }
     public function render()
     {
