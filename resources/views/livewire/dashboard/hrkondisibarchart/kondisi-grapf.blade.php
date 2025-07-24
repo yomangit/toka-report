@@ -66,29 +66,29 @@
         );
         kondisiChart.render();
         // Livewire event listener for realtime update
-        Livewire.on('kondisiChartUpdated', (event) => {
-            console.log(event);
-            
-            const updatedLabels = event.labels;
-            const updatedCounts = event.counts;
-            const updatedShortLabels = updatedLabels.map(label =>
-                label.length > 20 ? label.slice(0, 20) + '…' : label
-            );
+        document.addEventListener('DOMContentLoaded', () => {
+            Livewire.on('kondisiChartUpdated', (event) => {
+                const updatedLabels = event.labels;
+                const updatedCounts = event.counts;
+                const updatedShortLabels = updatedLabels.map(label =>
+                    label.length > 20 ? label.slice(0, 20) + '…' : label
+                );
 
-            kondisiChart.updateOptions({
-                xaxis: {
-                    categories: updatedShortLabels
-                }
-                , colors: updatedLabels.map((_, i) => {
-                    const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
-                    return colorList[i % colorList.length];
-                })
+                kondisiChart.updateOptions({
+                    xaxis: {
+                        categories: updatedShortLabels
+                    }
+                    , colors: updatedLabels.map((_, i) => {
+                        const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
+                        return colorList[i % colorList.length];
+                    })
+                });
+
+                kondisiChart.updateSeries([{
+                    name: 'Jumlah'
+                    , data: updatedCounts
+                }]);
             });
-
-            kondisiChart.updateSeries([{
-                name: 'Jumlah'
-                , data: updatedCounts
-            }]);
         });
 
     </script>
