@@ -1,13 +1,10 @@
-<div>
-    <div wire:init="loadChartData" wire:poll.3s="loadChartData">
-        <div wire:ignore id="kondisiCharts"></div>
-    </div>
+<div wire:init="loadChartData" wire:poll.3s="loadChartData">
+    <div wire:ignore id="kondisiCharts"></div>
 </div>
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script type="text/javascript">
-    // Initial data from backend
+<script>
     const initialLabels = @json($labels);
     const initialCounts = @json($counts);
 
@@ -19,86 +16,77 @@
 
     function generateColors(length) {
         const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
-        return Array.from({
-            length
-        }, (_, i) => colorList[i % colorList.length]);
+        return Array.from({ length }, (_, i) => colorList[i % colorList.length]);
     }
 
     const chartKondisi = {
         chart: {
-            type: 'bar'
-            , height: 350
-        }
-        , series: [{
-            name: 'Jumlah'
-            , data: initialCounts
-        }]
-        , colors: generateColors(initialLabels.length)
-        , title: {
-            text: 'Kondisi Tidak Aman'
-            , align: 'center'
-            , style: {
-                fontSize: '12px'
-                , fontWeight: 'bold'
-                , color: '#fb7185'
+            type: 'bar',
+            height: 350
+        },
+        series: [{
+            name: 'Jumlah',
+            data: initialCounts
+        }],
+        colors: generateColors(initialLabels.length),
+        title: {
+            text: 'Kondisi Tidak Aman',
+            align: 'center',
+            style: {
+                fontSize: '12px',
+                fontWeight: 'bold',
+                color: '#fb7185'
             }
-        }
-        , xaxis: {
-            categories: shortenLabels(initialLabels)
-            , labels: {
-                rotate: -45
-                , style: {
+        },
+        xaxis: {
+            categories: shortenLabels(initialLabels),
+            labels: {
+                rotate: -45,
+                style: {
                     fontSize: '09px'
                 }
             }
-        }
-        , plotOptions: {
+        },
+        plotOptions: {
             bar: {
-                borderRadius: 4
-                , distributed: true
+                borderRadius: 4,
+                distributed: true
             }
-        }
-        , fill: {
-            type: 'gradient'
-            , gradient: {
-                shade: 'light'
-                , type: 'vertical'
-                , shadeIntensity: 0.25
-                , inverseColors: true
-                , opacityFrom: 0.9
-                , opacityTo: 1
-                , stops: [50, 100]
+        },
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shade: 'light',
+                type: 'vertical',
+                shadeIntensity: 0.25,
+                inverseColors: true,
+                opacityFrom: 0.9,
+                opacityTo: 1,
+                stops: [50, 100]
             }
         }
     };
 
-    const kondisiChart = new ApexCharts(
-        document.querySelector("#kondisiCharts")
-        , chartKondisi
-    );
+    const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
 
-    // Simulasi update chart tiap 5 detik
-    setInterval(() => {
-        // Fetch data baru dari backend di sini jika perlu pakai fetch/ajax
-        // Untuk contoh, kita pakai dummy data random
-        const newCounts = initialCounts.map(() => Math.floor(Math.random() * 10) + 1);
+    window.addEventListener('kondisiChartUpdated', (event) => {
+        const data = event.detail;
+        const newLabels = shortenLabels(data.labels);
+        const newCounts = data.counts;
+        const newColors = generateColors(newLabels.length);
+
+        kondisiChart.updateOptions({
+            xaxis: {
+                categories: newLabels
+            },
+            colors: newColors
+        });
 
         kondisiChart.updateSeries([{
-            name: 'Jumlah'
-            , data: newCounts
+            name: 'Jumlah',
+            data: newCounts
         }]);
-
-        // Jika juga mau update label (opsional)
-        // const newLabels = ['Label1', 'Label2', ...];
-        // kondisiChart.updateOptions({
-        //     xaxis: {
-        //         categories: shortenLabels(newLabels)
-        //     },
-        //     colors: generateColors(newLabels.length)
-        // });
-
-    }, 5000); // 5000 ms = 5 detik
-
+    });
 </script>
 @endpush

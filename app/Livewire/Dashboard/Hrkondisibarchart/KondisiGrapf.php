@@ -12,16 +12,23 @@ class KondisiGrapf extends Component
     public $counts = [];
     public $kondisi;
 
-    protected $listeners = ['hazardChartShouldRefresh' => 'loadChartData'];
+    public function mount()
+    {
+        $this->loadChartData(); // Initial load
+    }
 
     public function loadChartData()
     {
         $user = auth()->user();
 
-        $query = HazardReport::select('kondisitidakamen_id', DB::raw('COUNT(*) as total'))
+        $query = HazardReport::select(
+            'kondisitidakamen_id',
+            DB::raw('COUNT(*) as total'),
+            'kondisi_tidak_amans.name as kondisi_name'
+        )
             ->whereNotNull('kondisitidakamen_id')
-            ->groupBy('kondisitidakamen_id')
-            ->with('kondisiTidakAman');
+            ->join('kondisi_tidak_amans', 'hazard_reports.kondisitidakamen_id', '=', 'kondisi_tidak_amans.id')
+            ->groupBy('kondisitidakamen_id', 'kondisi_tidak_amans.name');
 
         if ($user->hasRolePermit('administration')) {
             $reports = $query->get();
@@ -29,16 +36,19 @@ class KondisiGrapf extends Component
             $divisionIds = $user->divisions->pluck('id')->toArray();
             $reports = $query->whereIn('division_id', $divisionIds)->get();
         } else {
-            $reports = collect(); // kosong
+            $reports = collect();
         }
 
-        $this->labels = $reports->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
+        $this->labels = $reports->pluck('kondisi_name')->toArray();
         $this->counts = $reports->pluck('total')->toArray();
+        $this->dispatch('kondisiChartUpdated', [
+            'labels' => $this->labels,
+            'counts' => $this->counts,
+        ]);
     }
+
     public function render()
     {
-        $this->loadChartData();
-
         return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf');
     }
 }
