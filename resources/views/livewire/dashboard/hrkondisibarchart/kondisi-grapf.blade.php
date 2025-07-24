@@ -6,10 +6,9 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script>
-    // Data awal dari Livewire
-    const initialLabels = @json($labels);
-    const initialCounts = @json($counts);
+<script type="text/javascript">
+    const initialLabels = @json($labels ?? []);
+    const initialCounts = @json($counts ?? []);
 
     function shortenLabels(labels) {
         return labels.map(label =>
@@ -45,7 +44,9 @@
             categories: shortenLabels(initialLabels),
             labels: {
                 rotate: -45,
-                style: { fontSize: '09px' }
+                style: {
+                    fontSize: '09px'
+                }
             }
         },
         plotOptions: {
@@ -68,17 +69,22 @@
         }
     };
 
-    const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
+    const kondisiChart = new ApexCharts(
+        document.querySelector("#kondisiCharts"),
+        chartKondisi
+    );
     kondisiChart.render();
 
-    // Realtime update
     window.addEventListener('kondisiChartUpdated', (event) => {
-        const [updatedLabels, updatedCounts] = event.detail;
+        const data = event.detail;
 
-        if (!Array.isArray(updatedLabels) || !Array.isArray(updatedCounts)) {
-            console.warn('Data tidak valid:', event.detail);
+        if (!data || !Array.isArray(data.labels) || !Array.isArray(data.counts)) {
+            console.warn('Data tidak valid:', data);
             return;
         }
+
+        const updatedLabels = data.labels;
+        const updatedCounts = data.counts;
 
         kondisiChart.updateOptions({
             xaxis: {
@@ -92,5 +98,6 @@
             data: updatedCounts
         }]);
     });
+    
 </script>
 @endpush
