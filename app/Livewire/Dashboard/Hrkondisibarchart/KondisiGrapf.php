@@ -34,17 +34,11 @@ class KondisiGrapf extends Component
         $this->labels = $reports->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
         $this->counts = $reports->pluck('total')->toArray();
 
-        $this->dispatch('kondisiChartUpdated', [
-            'labels' => $this->labels,
-            'counts' => $this->counts
-        ]);
+       
     }
 
     public function render()
     {
-        return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf', [
-            'labels' => $this->labels,
-            'counts' => $this->counts
-        ]);
+        return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf'a);
     }
 }
