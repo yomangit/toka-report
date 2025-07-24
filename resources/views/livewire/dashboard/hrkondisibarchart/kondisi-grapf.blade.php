@@ -67,7 +67,7 @@
                 , inverseColors: true
                 , opacityFrom: 0.9
                 , opacityTo: 1
-                , stops: [50, 100]-
+                , stops: [50, 100]
             }
         }
     };
@@ -81,11 +81,11 @@
     // Event listener: update chart when Livewire dispatches event
     window.addEventListener('kondisiChartUpdated', (event) => {
         const data = event.detail;
-        console.log(data); // → ["Label 1", "Label 2", ...]
-        // if (!data || !data.labels || !data.counts) {
-        //     console.warn('Data kosong atau tidak valid:', data);
-        //     return;
-        // }
+        // console.log(data); // → ["Label 1", "Label 2", ...]
+        if (!data || !data.labels || !data.counts) {
+            console.warn('Data kosong atau tidak valid:', data);
+            return;
+        }
 
         const updatedLabels = data.labels;
         const updatedCounts = data.counts;
