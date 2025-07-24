@@ -37,8 +37,8 @@ class KondisiGrapf extends Component
         // Kirim event ke browser jika datanya valid
         if (!empty($this->labels) && !empty($this->counts) && count($this->labels) === count($this->counts)) {
             $this->dispatch('kondisiChartUpdated', [
-                'labels' => $this->labels,
-                'counts' => $this->counts
+                'labels' => array_values($this->labels),
+                'counts' => array_values($this->counts)
             ]);
         }
     }
