@@ -84,14 +84,14 @@
 
         kondisiChart.updateOptions({
             xaxis: {
-                categories: newLabels
+                categories: response.data.map((val) => val.newLabels)
             }
-            , colors: newColors
+            , colors: response.data.map((val) => val.newColors)
         });
 
         kondisiChart.updateSeries([{
             name: 'Jumlah'
-            , data: newCounts
+            , data: response.data.map((val) => val.newCounts)
         }]);
     });
 
