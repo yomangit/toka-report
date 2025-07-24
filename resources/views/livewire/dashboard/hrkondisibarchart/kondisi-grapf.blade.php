@@ -77,31 +77,5 @@
         , chartKondisi
     );
     kondisiChart.render();
-
-    // Event listener: update chart when Livewire dispatches event
-    window.addEventListener('kondisiChartUpdated', (event) => {
-        const data = event.detail;
-        console.log(data); // → ["Label 1", "Label 2", ...]
-        // if (!data || !data.labels[0] || !data.counts[0]) {
-        //     console.warn('Data kosong atau tidak valid:', data);
-        //     return;
-        // }
-
-        const updatedLabels = data.labels;
-        const updatedCounts = data.counts;
-
-        kondisiChart.updateOptions({
-            xaxis: {
-                categories: shortenLabels(updatedLabels)
-            }
-            , colors: generateColors(updatedLabels.length)
-        });
-
-        kondisiChart.updateSeries([{
-            name: 'Jumlah'
-            , data: updatedCounts
-        }]);
-    });
-
 </script>
 @endpush
