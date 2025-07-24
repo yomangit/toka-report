@@ -24,23 +24,23 @@ class KondisiGrapf extends Component
             ->whereNotNull('kondisitidakamen_id')
             ->groupBy('kondisitidakamen_id')
             ->with('kondisiTidakAman');
+
         if ($user->hasRolePermit('administration')) {
-            // Admin bisa lihat semua laporan
             $reports = $query->get();
         } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
-            // Hanya user yang punya relasi dengan division_user
             $divisionIds = $user->divisions->pluck('id')->toArray();
             $reports = $query->whereIn('division_id', $divisionIds)->get();
         } else {
-            // User tanpa relasi division_user tidak bisa lihat laporan
             $reports = collect();
         }
 
         $this->labels = $reports->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
         $this->counts = $reports->pluck('total')->toArray();
-        $this->dispatch('kondisiChartUpdated', [
+
+        // ✅ INI YANG PENTING
+        $this->dispatch('kondisiChartUpdated')->detail([
             'labels' => $this->labels,
-            'counts' => $this->counts
+            'counts' => $this->counts,
         ]);
     }
     public function render()
