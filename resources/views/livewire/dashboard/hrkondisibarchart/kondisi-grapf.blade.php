@@ -1,4 +1,5 @@
 <div>
+    @vite(['resources/js/kondisichart.js'])
     <div id="kondisiChart"></div>
     <script>
         // Passing PHP Livewire data ke JS
