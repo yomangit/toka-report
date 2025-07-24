@@ -3,27 +3,37 @@
         <div wire:ignore id="kondisiCharts"></div>
     </div>
 </div>
+
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script type="text/javascript">
-    const labels = @json($labels);
-    const counts = @json($counts);
+    // Initial data from backend
+    const initialLabels = @json($labels);
+    const initialCounts = @json($counts);
 
-    const shortLabels = labels.map(label => label.length > 20 ? label.slice(0, 20) + '…' : label);
+    function shortenLabels(labels) {
+        return labels.map(label =>
+            label.length > 20 ? label.slice(0, 20) + '…' : label
+        );
+    }
+
+    function generateColors(length) {
+        const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
+        return Array.from({
+            length
+        }, (_, i) => colorList[i % colorList.length]);
+    }
 
     const chartKondisi = {
         chart: {
             type: 'bar'
             , height: 350
         }
-        , colors: labels.map((_, i) => {
-            const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
-            return colorList[i % colorList.length];
-        })
         , series: [{
             name: 'Jumlah'
-            , data: counts
+            , data: initialCounts
         }]
+        , colors: generateColors(initialLabels.length)
         , title: {
             text: 'Kondisi Tidak Aman'
             , align: 'center'
@@ -34,7 +44,7 @@
             }
         }
         , xaxis: {
-            categories: shortLabels
+            categories: shortenLabels(initialLabels)
             , labels: {
                 rotate: -45
                 , style: {
@@ -61,36 +71,30 @@
             }
         }
     };
-    var kondisiChart = new ApexCharts(
+
+    const kondisiChart = new ApexCharts(
         document.querySelector("#kondisiCharts")
         , chartKondisi
     );
     kondisiChart.render();
-    // Livewire event listener for realtime update
-    window.addEventListener('kondisiChartUpdated', (event) => {
-        const dataArray = event.detail;
-        const data = Array.isArray(dataArray) ? dataArray[0] : dataArray;
-        console.log(data);
 
-        // if (!data.labels || !data.counts) {
-        //     console.warn('Data kosong:', data);
-        //     return;
-        // }
+    // Event listener: update chart when Livewire dispatches event
+    window.addEventListener('kondisiChartUpdated', (event) => {
+        const data = event.detail;
+
+        if (!data || !data.labels || !data.counts) {
+            console.warn('Data kosong atau tidak valid:', data);
+            return;
+        }
+
         const updatedLabels = data.labels;
         const updatedCounts = data.counts;
 
-        const shortLabels = updatedLabels.map(label =>
-            label.length > 20 ? label.slice(0, 20) + '…' : label
-        );
-
         kondisiChart.updateOptions({
             xaxis: {
-                categories: shortLabels
+                categories: shortenLabels(updatedLabels)
             }
-            , colors: updatedLabels.map((_, i) => {
-                const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
-                return colorList[i % colorList.length];
-            })
+            , colors: generateColors(updatedLabels.length)
         });
 
         kondisiChart.updateSeries([{

@@ -40,9 +40,9 @@ class KondisiGrapf extends Component
         $this->counts = $reports->pluck('total')->toArray();
         // Pastikan tidak mengirim event kalau kosong
         if (!empty($this->labels) && !empty($this->counts)) {
-            $this->dispatch('kondisiChartUpdated', [
+            $this->dispatch('kondisiChartUpdated', object: [
                 'labels' => $this->labels,
-                'counts' => $this->counts
+                'counts' => $this->counts,
             ]);
         }
     }
