@@ -78,7 +78,7 @@
 
                 {{-- Pagination --}}
                 <div class="mt-2">
-                    {{ $users->links() }}
+                    {{ $users->links('pagination.minipaginate')  }}
                 </div>
 
                 {{-- Preview selected --}}
