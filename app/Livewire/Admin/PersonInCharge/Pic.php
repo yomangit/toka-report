@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 class Pic extends Component
 {
     public string $searchDivisionQuery = '';
+    public string $search_nama = '';
     public bool $showDivisionDropdown = false;
     public Collection $divisionSearchResults;
     public ?int $divisionId = null;
@@ -98,9 +99,13 @@ class Pic extends Component
     public function render()
     {
         return view('livewire.admin.person-in-charge.pic', [
-            'divisions' => Division::all(),
-            'users' => User::all(),
+            'divisions' => Division::paginate(20),
+            'users' => User::searchNama(trim($this->search_nama))->get(),
             'specialAccessList' => Division::with('users_pic')->get()
         ])->extends('base.index', ['header' => 'Akeses PIC', 'title' => 'Akeses PIC'])->section('content');
+    }
+     public function paginationView()
+    {
+        return 'pagination.masterpaginate';
     }
 }
