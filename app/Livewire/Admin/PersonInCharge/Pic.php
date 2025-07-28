@@ -93,7 +93,7 @@ class Pic extends Component
     }
     public function resetForm()
     {
-        $this->reset(['showModal', 'editMode', 'divisionId', 'selectedDivisionIds', 'searchResults', 'showUserDropdown']);
+        $this->reset(['showModal', 'editMode', 'divisionId', 'selectedUsers', 'searchResults', 'showUserDropdown']);
     }
     public function render()
     {
