@@ -5,6 +5,7 @@ use Spatie\Csp\AddCspHeaders;
 use App\Livewire\Manhours\WebAccess;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Livewire\Admin\PersonInCharge\Pic;
 use App\Livewire\Admin\Site\Index as site;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Admin\ManageDivisionAccess;
@@ -17,10 +18,10 @@ use App\Livewire\Admin\Division\Inde as division;
 use App\Livewire\Admin\People\Show as peopleShow;
 use App\Livewire\Admin\DeptByBU\Index as DeptByBU;
 use App\Livewire\Admin\JobClass\Index as JobClass;
+
 use App\Livewire\Admin\Location\Index as Location;
 
 use App\Livewire\Admin\DeptGroup\Index as deptGroup;
-
 use App\Livewire\Admin\Workgroup\Index as workgroup;
 use App\Livewire\Manhours\Index as manhoursRegister;
 use App\Livewire\ManhoursSite\Index as manhoursSite;
@@ -54,7 +55,6 @@ use App\Livewire\EventReport\HazardReport\Detail as hazardReportDetail;
 use App\Livewire\Admin\TableRiskAssessment\Index as TableRiskAssessment;
 use App\Livewire\EventReport\IncidentReport\Detail as incidentReportDetail;
 use App\Livewire\Admin\WorkflowAdministration\Index as workflowAdministration;
-use App\Livewire\Admini\PersonInCharge\Pic;
 use App\Livewire\EventReport\HazardReport\CreateAndUpdate as hazardReportform;
 use App\Livewire\EventReport\HazardReportGuest\Create as HazardReportGuestCreate;
 use App\Livewire\EventReport\IncidentReport\CreateAndUpdate as CreateAndUpdateIncidentReport;
@@ -93,10 +93,8 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::middleware('role.permit:administration')->group(function () {
-        Route::get('admin/parent/event/akses-divisi', ManageDivisionAccess::class)
-            ->name('akses-divisi');
-        Route::get('admin/parent/event/akses-pic', Pic::class)
-            ->name('akses-pic');
+        Route::get('admin/parent/event/akses-divisi', ManageDivisionAccess::class)->name('akses-divisi');
+        Route::get('admin/parent/event/akses-pic', Pic::class)->name('akses-pic');
         Route::get('admin/parent/companyCategory', categoryCompany::class)->name('categoryCompany');
         Route::get('admin/parent/company', company::class)->name('company');
         Route::get('admin/parent/businnesUnit', businnesUnit::class)->name('businnesUnit');
