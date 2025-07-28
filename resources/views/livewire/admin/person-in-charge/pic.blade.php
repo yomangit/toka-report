@@ -37,7 +37,7 @@
                     <select wire:model="divisionId" class="w-full px-3 py-2 border rounded" @if($editMode) disabled @endif>
                         <option value="">Pilih Divisi</option>
                         @foreach ($divisions as $division)
-                            <option value="{{ $division->id }}">{{ $division->name }}</option>
+                            <option value="{{ $division->id }}">{{ $division->formatWorkgroupName() }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -46,7 +46,7 @@
                     <label class="block mb-1">User</label>
                     <select wire:model="selectedUsers" multiple class="w-full h-40 px-3 py-2 border rounded">
                         @foreach ($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
                         @endforeach
                     </select>
                 </div>
