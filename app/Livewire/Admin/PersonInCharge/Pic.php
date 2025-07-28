@@ -6,6 +6,7 @@ use App\Models\User;
 use Livewire\Component;
 use App\Models\Division;
 use Illuminate\Support\Collection;
+
 class Pic extends Component
 {
     public string $searchDivisionQuery = '';
@@ -13,42 +14,42 @@ class Pic extends Component
     public Collection $divisionSearchResults;
     public ?int $divisionId = null;
     public array $selectedUsers = [];
-    public bool $editMode = false;
-
-    public function mount()
+    public $showModal = false;
+    public $showForm = false;
+    public $editMode = false;
+    public function openCreateModal()
     {
         $this->resetForm();
-        
+        $this->showModal = true;
     }
     public function updatedSearchDivisionQuery()
     {
         $this->showDivisionDropdown = true;
-
         $this->divisionSearchResults = Division::with(['DeptByBU.BusinesUnit.Company', 'DeptByBU.Department', 'Company', 'Section'])->get()
             ->filter(function ($division) {
                 return str($division->formatWorkgroupName())->lower()->contains(str($this->searchDivisionQuery)->lower());
             })->values();
     }
-
     public function selectDivisionFromDropdown($divisionId)
     {
         $this->divisionId = $divisionId;
         $this->searchDivisionQuery = Division::find($divisionId)?->formatWorkgroupName() ?? '';
         $this->showDivisionDropdown = false;
     }
-    public function resetForm()
-    {
-        $this->divisionId = 0; // Biar tetap masuk kondisi modal
-        $this->selectedUsers = [];
-        $this->editMode = false;
-    }
 
-    public function edit(int $divisionId)
+    public function openEditModal($division_Id)
     {
-        $division = Division::findOrFail($divisionId);
-        $this->divisionId = $divisionId;
-        $this->selectedUsers = $division->users_pic->pluck('id')->toArray();
+        $divisi = Division::with('users_pic')->findOrFail($division_Id);
+
+        $this->divisionId = $divisi->id;
+        $this->selectedUsers = $divisi->users_pic->pluck('id')->toArray();
+        $this->showModal = true;
         $this->editMode = true;
+        $this->dispatch('initTomSelect');
+    }
+    public function getModalTitleProperty()
+    {
+        return $this->editMode ? 'Edit PIC' : 'Tambah Akses Divisi';
     }
 
     public function save()
@@ -57,14 +58,43 @@ class Pic extends Component
             'divisionId' => 'required|exists:divisions,id',
             'selectedUsers' => 'array',
         ]);
-
         $division = Division::findOrFail($this->divisionId);
         $division->users_pic()->sync($this->selectedUsers);
-
+        $this->sendAlert($this->selectedUserId ? 'Data has been updated' : 'Data added Successfully!!');
         $this->dispatch('saved');
         $this->resetForm();
     }
-
+    protected function sendAlert($message)
+    {
+        $this->dispatch('alert', [
+            'text'            => $message,
+            'duration'        => 3000,
+            'destination'     => '/contact',
+            'newWindow'       => true,
+            'close'           => true,
+            'backgroundColor' => 'linear-gradient(to right, #00b09b, #96c93d)',
+        ]);
+    }
+    public function delete($division_Id)
+    {
+        $division = Division::findOrFail($division_Id);
+        $division->users_pic()->detach();
+        $this->dispatch(
+            'alert',
+            [
+                'text' => "Deleted Data Successfully!!",
+                'duration' => 3000,
+                'destination' => '/contact',
+                'newWindow' => true,
+                'close' => true,
+                'backgroundColor' => "linear-gradient(to right, #f97316, #ef4444)",
+            ]
+        );
+    }
+    public function resetForm()
+    {
+        $this->reset(['showModal', 'editMode', 'selectedUserId', 'selectedDivisionIds', 'searchUserQuery', 'searchResults', 'showUserDropdown']);
+    }
     public function render()
     {
         return view('livewire.admin.person-in-charge.pic', [
