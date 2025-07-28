@@ -380,16 +380,7 @@
 
                 <div class="flex flex-col w-full mt-4 border-opacity-50">
                     <div role="tablist" class="mb-4 tabs tabs-lifted">
-                        <input type="radio" name="my_tabs_1" class="font-semibold tab z-1 font-signika text-sky-500" aria-label="Final Documentation" checked="checked" />
-                        <div role="tabpanel" class="p-6 tab-content bg-base-100 border-base-300 rounded-box">
-                            <div class="mx-4 my-2">
-                                <x-btn-add data-tip="Add" class="{{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'btn-disabled ' : '' }}" wire:click="$dispatch('openModal', { component: 'event-report.hazard-report.documentation.create', arguments: { doc: {{ $data_id }} }})" />
-                                <livewire:event-report.hazard-report.documentation.index :id="$data_id">
-                            </div>
-                        </div>
-                    </div>
-                    <div role="tablist" class="mb-4 tabs tabs-lifted">
-                        <input type="radio" name="my_tabs_2" class="font-semibold tab z-1 font-signika text-sky-500" aria-label="Additional Action" checked="checked" />
+                        <input type="radio" name="my_tabs_1" class="font-semibold tab z-1 font-signika text-sky-500" aria-label="Additional Action" checked="checked" />
                         <div role="tabpanel" class="p-6 tab-content bg-base-100 border-base-300 rounded-box">
                             <div class="mx-4 my-2">
                                 <livewire:event-report.hazard-report.action.index :id="$data_id">
@@ -397,13 +388,23 @@
                         </div>
                     </div>
                     <div role="tablist" class="mb-4 tabs tabs-lifted">
+                        <input type="radio" name="my_tabs_2" class="font-semibold tab z-1 font-signika text-sky-500" aria-label="Final Documentation" checked="checked" />
+                        <div role="tabpanel" class="p-6 tab-content bg-base-100 border-base-300 rounded-box">
+                            <div class="mx-4 my-2">
+                                <x-btn-add data-tip="Add" class="{{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'btn-disabled ' : '' }}" wire:click="$dispatch('openModal', { component: 'event-report.hazard-report.documentation.create', arguments: { doc: {{ $data_id }} }})" />
+                                <livewire:event-report.hazard-report.documentation.index :id="$data_id">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {{-- <div role="tablist" class="mb-4 tabs tabs-lifted">
                         <input type="radio" name="my_tabs_3" class="font-semibold tab z-1 font-signika text-sky-500" aria-label="Event Keyword" checked="checked" />
                         <div role="tabpanel" class="p-6 tab-content bg-base-100 border-base-300 rounded-box">
                             <div class="mx-4 my-2">
                                 <livewire:event-report.event-keyword.index :data="$data_id">
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div>
                         <div wire:ignore class="w-full form-control">
                             <x-label-no-req :value="__('moderator comment')" />
@@ -415,6 +416,7 @@
             </div>
         </form>
         <livewire:event-report.hazard-report.action.create>
+
             <script nonce="{{ csp_nonce() }}" type="module">
                 ClassicEditor
                     .create(document.querySelector('#immediate_corrective_action'), {
