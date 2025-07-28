@@ -1,9 +1,7 @@
 <div>
     <h2 class="text-lg font-bold">Divisi - Akses Khusus</h2>
     <div class="flex justify-end mb-4">
-        <button wire:click="resetForm" class="px-4 py-2 text-white bg-green-600 rounded">
-            + Tambah Akses Khusus
-        </button>
+        <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
     </div>
     <table class="w-full mt-4 table-auto">
         <thead>
