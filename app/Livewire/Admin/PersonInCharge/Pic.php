@@ -52,6 +52,6 @@ class Pic extends Component
             'divisions' => Division::all(),
             'users' => User::all(),
             'specialAccessList' => Division::with('users_pic')->get()
-        ]);
+        ])->extends('base.index', ['header' => 'Akeses PIC', 'title' => 'Akeses PIC'])->section('content');
     }
 }
