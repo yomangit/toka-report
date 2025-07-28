@@ -50,7 +50,7 @@ class Pic extends Component
     }
     public function getModalTitleProperty()
     {
-        return $this->editMode ? 'Edit PIC' : 'Tambah Akses Divisi';
+        return $this->editMode ? 'Edit PIC' : 'Tambah PIC';
     }
 
     public function save()
@@ -98,13 +98,13 @@ class Pic extends Component
     }
     public function render()
     {
+        $users = $this->divisionId ? User::searchNama(trim($this->search_nama))->whereIn('id', $this->selectedUsers)->take(50)->get() : User::searchNama(trim($this->search_nama))->take(50)->get();
         return view('livewire.admin.person-in-charge.pic', [
-           
-            'users' => User::searchNama(trim($this->search_nama))->take(50)->get(),
+            'users' => $users,
             'specialAccessList' => Division::with('users_pic')->paginate(20),
         ])->extends('base.index', ['header' => 'Akeses PIC', 'title' => 'Akeses PIC'])->section('content');
     }
-     public function paginationView()
+    public function paginationView()
     {
         return 'pagination.masterpaginate';
     }
