@@ -5,9 +5,13 @@ namespace App\Livewire\Admin\PersonInCharge;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Division;
+use Illuminate\Database\Eloquent\Collection;
 
 class Pic extends Component
 {
+    public string $searchDivisionQuery = '';
+    public bool $showDivisionDropdown = false;
+    public Collection $divisionSearchResults;
     public ?int $divisionId = null;
     public array $selectedUsers = [];
     public bool $editMode = false;
@@ -15,14 +19,30 @@ class Pic extends Component
     public function mount()
     {
         $this->resetForm();
+         $this->divisionSearchResults = collect();
+    }
+    public function updatedSearchDivisionQuery()
+    {
+        $this->showDivisionDropdown = true;
+
+        $this->divisionSearchResults = Division::with(['DeptByBU.BusinesUnit.Company', 'DeptByBU.Department', 'Company', 'Section'])->get()
+            ->filter(function ($division) {
+                return str($division->formatWorkgroupName())->lower()->contains(str($this->searchDivisionQuery)->lower());
+            })->values();
     }
 
-public function resetForm()
-{
-    $this->divisionId = 0; // Biar tetap masuk kondisi modal
-    $this->selectedUsers = [];
-    $this->editMode = false;
-}
+    public function selectDivisionFromDropdown($divisionId)
+    {
+        $this->divisionId = $divisionId;
+        $this->searchDivisionQuery = Division::find($divisionId)?->formatWorkgroupName() ?? '';
+        $this->showDivisionDropdown = false;
+    }
+    public function resetForm()
+    {
+        $this->divisionId = 0; // Biar tetap masuk kondisi modal
+        $this->selectedUsers = [];
+        $this->editMode = false;
+    }
 
     public function edit(int $divisionId)
     {
