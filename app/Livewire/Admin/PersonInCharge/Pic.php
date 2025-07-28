@@ -100,7 +100,7 @@ class Pic extends Component
     {
         return view('livewire.admin.person-in-charge.pic', [
            
-            'users' => User::searchNama(trim($this->search_nama))->get(),
+            'users' => User::searchNama(trim($this->search_nama))->take(50)->get(),
             'specialAccessList' => Division::with('users_pic')->paginate(20),
         ])->extends('base.index', ['header' => 'Akeses PIC', 'title' => 'Akeses PIC'])->section('content');
     }
