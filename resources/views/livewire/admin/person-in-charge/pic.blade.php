@@ -81,4 +81,16 @@
             <x-btn-close wire:click="resetForm">Batal</x-btn-close>
         </x-slot>
     </x-modal>
+    <script>
+         function updateTooltipPosition() {
+            const isMobile = window.innerWidth < 640;
+            document.querySelectorAll('.tooltip').forEach((el) => {
+                el.classList.remove('tooltip-top', 'tooltip-right', 'tooltip-left', 'tooltip-bottom');
+                el.classList.add(isMobile ? 'tooltip-top' : 'tooltip-left');
+            });
+        }
+        window.addEventListener('DOMContentLoaded', updateTooltipPosition);
+        window.addEventListener('resize', updateTooltipPosition);
+    </script>
+   
 </div>
