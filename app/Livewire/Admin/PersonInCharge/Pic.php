@@ -60,7 +60,7 @@ class Pic extends Component
         ]);
         $division = Division::findOrFail($this->divisionId);
         $division->users_pic()->sync($this->selectedUsers);
-        $this->sendAlert($this->selectedUserId ? 'Data has been updated' : 'Data added Successfully!!');
+        $this->sendAlert($this->divisionId ? 'Data has been updated' : 'Data added Successfully!!');
         $this->dispatch('saved');
         $this->resetForm();
     }
@@ -93,7 +93,7 @@ class Pic extends Component
     }
     public function resetForm()
     {
-        $this->reset(['showModal', 'editMode', 'selectedUserId', 'selectedDivisionIds', 'searchUserQuery', 'searchResults', 'showUserDropdown']);
+        $this->reset(['showModal', 'editMode', 'divisionId', 'selectedDivisionIds', 'searchResults', 'showUserDropdown']);
     }
     public function render()
     {
