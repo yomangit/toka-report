@@ -57,12 +57,13 @@
             <label class="block font-semibold">Pilih User:</label>
             <x-inputsearch name='search' wire:model.live='search_nama' />
             <div class="p-2 overflow-y-auto border rounded max-h-48">
-                @foreach($users as $user)
-                <label class="block">
-                    <input type="checkbox" wire:model="selectedUsers" class="checkbox checkbox-xs"  value="{{ (string) $user->id }}">
-                    {{ $user->lookup_name }}
+                @foreach ($users as $user)
+                <label class="flex items-center space-x-2">
+                    <input type="checkbox" wire:model="selectedUsers" value="{{ (string) $user->id }}" class="checkbox checkbox-xs" />
+                    <span>{{ $user->lookup_name }}</span>
                 </label>
                 @endforeach
+
             </div>
         </div>
         <x-slot name="footer">
