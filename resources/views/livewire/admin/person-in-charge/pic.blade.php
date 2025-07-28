@@ -62,18 +62,17 @@
             <!-- User Checkbox -->
             <div>
                 {{-- Search input --}}
-                <x-inputsearch type="text" wire:model.debounce.500ms="search_nama" placeholder="Cari user..."  />
+                <x-inputsearch type="text" wire:model.live="search_nama" placeholder="Cari user..." />
 
                 {{-- Checkbox list --}}
                 <div class="p-2 space-y-2 overflow-y-auto border rounded max-h-48">
-                    @forelse ($users as $user)
+                    @foreach ($users as $user)
                     <label class="flex items-center space-x-2">
-                        <input type="checkbox" wire:model="selectedUsers" value="{{ (string) $user->id }}" class="checkbox checkbox-xs" />
-                        <span class="text-sm">{{ $user->lookup_name }}</span>
+                        <input type="checkbox" value="{{ $user->id }}" wire:click="toggleUserSelection({{ $user->id }})" {{ in_array($user->id, $selectedUsers) ? 'checked' : '' }} class="checkbox checkbox-xs" />
+                        <span>{{ $user->lookup_name }}</span>
                     </label>
-                    @empty
-                    <p class="text-sm text-gray-500">User tidak ditemukan.</p>
-                    @endforelse
+                    @endforeach
+
                 </div>
 
                 {{-- Pagination --}}
