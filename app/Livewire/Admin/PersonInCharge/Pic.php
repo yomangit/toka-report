@@ -40,7 +40,7 @@ class Pic extends Component
         ]);
 
         $division = Division::findOrFail($this->divisionId);
-        $division->specialUsers()->sync($this->selectedUsers);
+        $division->users_pic()->sync($this->selectedUsers);
 
         $this->dispatch('saved');
         $this->resetForm();
@@ -51,7 +51,7 @@ class Pic extends Component
         return view('livewire.admin.person-in-charge.pic', [
             'divisions' => Division::all(),
             'users' => User::all(),
-            'specialAccessList' => Division::with('specialUsers')->get()
+            'specialAccessList' => Division::with('users_pic')->get()
         ]);
     }
 }
