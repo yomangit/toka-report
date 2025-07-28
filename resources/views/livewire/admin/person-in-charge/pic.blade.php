@@ -16,9 +16,9 @@
         <tbody>
             @foreach ($specialAccessList as $division)
             <tr>
-                <td class="px-4 py-2">{{ $division->name }}</td>
+                <td class="px-4 py-2">{{ $division->formatWorkgroupName() }}</td>
                 <td class="px-4 py-2">
-                    {{ $division->users_pic->pluck('name')->join(', ') }}
+                    {{ $division->users_pic->pluck('lookup_name')->join(', ') }}
                 </td>
                 <td class="px-4 py-2 text-center">
                     <button wire:click="edit({{ $division->id }})" class="text-blue-600">Edit</button>
