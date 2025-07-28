@@ -59,9 +59,7 @@
             <div class="p-2 overflow-y-auto border rounded max-h-48">
                 @foreach($users as $user)
                 <label class="block">
-                    <input type="checkbox" wire:model="selectedUsers" class="checkbox checkbox-xs" @if ($selectedUsers ==$user->id)
-                        checked
-                    @endif value="{{ $user->id }}">
+                    <input type="checkbox" wire:model="selectedUsers" class="checkbox checkbox-xs"  value="{{ (string) $user->id }}">
                     {{ $user->lookup_name }}
                 </label>
                 @endforeach

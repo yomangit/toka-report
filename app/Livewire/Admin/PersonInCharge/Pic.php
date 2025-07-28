@@ -46,6 +46,7 @@ class Pic extends Component
 
         $this->divisionId = $divisi->id;
         $this->selectedUsers = $divisi->users_pic->pluck('id')->toArray();
+       
         $this->showModal = true;
         $this->editMode = true;
         $this->dispatch('initTomSelect');
