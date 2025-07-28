@@ -64,7 +64,7 @@
                 <label class="block font-semibold">Pilih User:</label>
                 <x-inputsearch name='search' wire:model.live='search_nama' class="w-full" />
 
-                <div class="p-2 mt-2 space-y-2 overflow-y-auto border rounded max-h-48">
+                <div wire:ignore class="p-2 mt-2 space-y-2 overflow-y-auto border rounded max-h-48">
                     @foreach ($users as $user)
                         <label class="flex items-center space-x-2">
                             <input type="checkbox" wire:model="selectedUsers" value="{{ (string) $user->id }}" class="checkbox checkbox-xs" />
