@@ -65,6 +65,7 @@
                 @endforeach
 
             </div>
+             <div class="pb-6">{{ $users->links('pagination.minipaginate') }}</div>
         </div>
         <x-slot name="footer">
             <x-btn-save wire:click="save">Simpan</x-btn-save>

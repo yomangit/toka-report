@@ -101,9 +101,8 @@ class Pic extends Component
     }
     public function render()
     {
-        $users = $this->divisionId ? User::searchNama(trim($this->search_nama))->whereIn('id', $this->selectedUsers)->take(50)->get() : User::searchNama(trim($this->search_nama))->take(50)->get();
         return view('livewire.admin.person-in-charge.pic', [
-            'users' => $users,
+            'users' => User::searchNama(trim($this->search_nama))->take(50)->paginate(100, ['*'], 'select_pic'),
             'specialAccessList' => Division::with('users_pic')->paginate(20),
         ])->extends('base.index', ['header' => 'Akeses PIC', 'title' => 'Akeses PIC'])->section('content');
     }
