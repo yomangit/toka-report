@@ -17,12 +17,12 @@ class Pic extends Component
         $this->resetForm();
     }
 
-    public function resetForm()
-    {
-        $this->divisionId = null;
-        $this->selectedUsers = [];
-        $this->editMode = false;
-    }
+public function resetForm()
+{
+    $this->divisionId = 0; // Biar tetap masuk kondisi modal
+    $this->selectedUsers = [];
+    $this->editMode = false;
+}
 
     public function edit(int $divisionId)
     {
