@@ -3,7 +3,7 @@
         'class' => '
             btn btn-xs btn-success btn-square btn-outline
             tooltip tooltip-success
-            tooltip-top sm:tooltip-right
+            tooltip-top sm:tooltip-top z-[1000]
         ',
         'data-tip' => 'Tambah',
     ]) }}>
