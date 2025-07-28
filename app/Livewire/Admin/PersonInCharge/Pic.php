@@ -5,8 +5,7 @@ namespace App\Livewire\Admin\PersonInCharge;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Division;
-use Illuminate\Database\Eloquent\Collection;
-
+use Illuminate\Support\Collection;
 class Pic extends Component
 {
     public string $searchDivisionQuery = '';
@@ -19,7 +18,7 @@ class Pic extends Component
     public function mount()
     {
         $this->resetForm();
-         $this->divisionSearchResults = collect();
+        
     }
     public function updatedSearchDivisionQuery()
     {
