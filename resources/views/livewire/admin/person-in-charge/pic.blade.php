@@ -16,16 +16,16 @@
             </thead>
             <tbody>
                 @foreach ($specialAccessList as $division)
-                    <tr class="border-b">
-                        <td class="px-4 py-2">{{ $division->formatWorkgroupName() }}</td>
-                        <td class="px-4 py-2">
-                            {{ $division->users_pic->pluck('lookup_name')->join(', ') }}
-                        </td>
-                        <td class="px-4 py-2 space-x-2 text-center">
-                            <x-icon-btn-edit data-tip="Edit" wire:click="openEditModal({{ $division->id }})" class="text-blue-600" />
-                            <x-icon-btn-delete data-tip="Hapus" wire:click="delete({{ $division->id }})" class="text-red-600" onclick="return confirm('Hapus semua akses divisi user ini?')" />
-                        </td>
-                    </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2">{{ $division->formatWorkgroupName() }}</td>
+                    <td class="px-4 py-2">
+                        {{ $division->users_pic->pluck('lookup_name')->join(', ') }}
+                    </td>
+                    <td class="px-4 py-2 space-x-2 text-center">
+                        <x-icon-btn-edit data-tip="Edit" wire:click="openEditModal({{ $division->id }})" class="text-blue-600" />
+                        <x-icon-btn-delete data-tip="Hapus" wire:click="delete({{ $division->id }})" class="text-red-600" onclick="return confirm('Hapus semua akses divisi user ini?')" />
+                    </td>
+                </tr>
                 @endforeach
             </tbody>
         </table>
@@ -46,34 +46,52 @@
                 <div class="relative w-full" wire:click.away="$set('showDivisionDropdown', false)">
                     <x-input wire:model.live="searchDivisionQuery" placeholder="Cari nama divisi..." :error="$errors->get('searchDivisionQuery')" />
                     @if ($showDivisionDropdown && strlen($searchDivisionQuery) > 1)
-                        <ul class="absolute z-10 w-full mt-1 overflow-auto text-sm bg-white border border-gray-300 rounded shadow max-h-60">
-                            @forelse ($divisionSearchResults as $division)
-                                <li wire:click="selectDivisionFromDropdown({{ $division->id }})" class="px-3 py-2 cursor-pointer hover:bg-sky-100">
-                                    {{ $division->formatWorkgroupName() }}
-                                </li>
-                            @empty
-                                <li class="px-3 py-2 text-gray-400">Tidak ditemukan</li>
-                            @endforelse
-                        </ul>
+                    <ul class="absolute z-10 w-full mt-1 overflow-auto text-sm bg-white border border-gray-300 rounded shadow max-h-60">
+                        @forelse ($divisionSearchResults as $division)
+                        <li wire:click="selectDivisionFromDropdown({{ $division->id }})" class="px-3 py-2 cursor-pointer hover:bg-sky-100">
+                            {{ $division->formatWorkgroupName() }}
+                        </li>
+                        @empty
+                        <li class="px-3 py-2 text-gray-400">Tidak ditemukan</li>
+                        @endforelse
+                    </ul>
                     @endif
                 </div>
             </div>
 
             <!-- User Checkbox -->
             <div>
-                <label class="block font-semibold">Pilih User:</label>
-                <x-inputsearch name='search' wire:model.live='search_nama' class="w-full" />
+                {{-- Search input --}}
+                <input type="text" wire:model.debounce.500ms="search" placeholder="Cari user..." class="w-full mb-3 input input-bordered input-sm" />
 
-                <div wire:ignore class="p-2 mt-2 space-y-2 overflow-y-auto border rounded max-h-48">
-                    @foreach ($users as $user)
-                        <label class="flex items-center space-x-2">
-                            <input type="checkbox" wire:model="selectedUsers" value="{{ (string) $user->id }}" class="checkbox checkbox-xs" />
-                            <span>{{ $user->lookup_name }}</span>
-                        </label>
-                    @endforeach
+                {{-- Checkbox list --}}
+                <div class="p-2 space-y-2 overflow-y-auto border rounded max-h-48">
+                    @forelse ($users as $user)
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" wire:model="selectedUsers" value="{{ (string) $user->id }}" class="checkbox checkbox-xs" />
+                        <span class="text-sm">{{ $user->lookup_name }}</span>
+                    </label>
+                    @empty
+                    <p class="text-sm text-gray-500">User tidak ditemukan.</p>
+                    @endforelse
                 </div>
-                <div class="pt-2">{{ $users->links('pagination.minipaginate') }}</div>
+
+                {{-- Pagination --}}
+                <div class="mt-2">
+                    {{ $users->links() }}
+                </div>
+
+                {{-- Preview selected --}}
+                <div class="mt-4">
+                    <h4 class="mb-1 text-sm font-bold">User Terpilih:</h4>
+                    @forelse ($selectedUsers as $id)
+                    <div class="text-sm">• {{ \App\Models\User::find($id)?->lookup_name ?? 'Tidak ditemukan' }}</div>
+                    @empty
+                    <div class="text-sm text-gray-500">Belum ada yang dipilih.</div>
+                    @endforelse
+                </div>
             </div>
+
         </div>
 
         <x-slot name="footer">
@@ -82,7 +100,7 @@
         </x-slot>
     </x-modal>
     <script>
-         function updateTooltipPosition() {
+        function updateTooltipPosition() {
             const isMobile = window.innerWidth < 640;
             document.querySelectorAll('.tooltip').forEach((el) => {
                 el.classList.remove('tooltip-top', 'tooltip-right', 'tooltip-left', 'tooltip-bottom');
@@ -91,6 +109,7 @@
         }
         window.addEventListener('DOMContentLoaded', updateTooltipPosition);
         window.addEventListener('resize', updateTooltipPosition);
+
     </script>
-   
+
 </div>
