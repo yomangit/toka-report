@@ -45,6 +45,7 @@ class Pic extends Component
         $divisi = Division::with('users_pic')->findOrFail($division_Id);
 
         $this->divisionId = $divisi->id;
+        $this->searchDivisionQuery = Division::find($division_Id)?->formatWorkgroupName() ?? '';
         $this->selectedUsers = $divisi->users_pic->pluck('id')->toArray();
        
         $this->showModal = true;
