@@ -28,7 +28,7 @@ class Pic extends Component
     {
         $division = Division::findOrFail($divisionId);
         $this->divisionId = $divisionId;
-        $this->selectedUsers = $division->specialUsers->pluck('id')->toArray();
+        $this->selectedUsers = $division->users_pic->pluck('id')->toArray();
         $this->editMode = true;
     }
 
