@@ -50,7 +50,6 @@ class Pic extends Component
        
         $this->showModal = true;
         $this->editMode = true;
-        $this->dispatch('initTomSelect');
     }
     public function getModalTitleProperty()
     {
