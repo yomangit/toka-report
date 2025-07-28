@@ -62,7 +62,7 @@
             <!-- User Checkbox -->
             <div>
                 {{-- Search input --}}
-                <input type="text" wire:model.debounce.500ms="search" placeholder="Cari user..." class="w-full mb-3 input input-bordered input-sm" />
+                <x-inputsearch type="text" wire:model.debounce.500ms="search_nama" placeholder="Cari user..."  />
 
                 {{-- Checkbox list --}}
                 <div class="p-2 space-y-2 overflow-y-auto border rounded max-h-48">
