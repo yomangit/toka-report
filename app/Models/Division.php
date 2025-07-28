@@ -28,7 +28,11 @@ class Division extends Model
     }
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class,'division_user');
+    }
+    public function users_pic()
+    {
+        return $this->belongsToMany(User::class,'person_in_charges');
     }
 
     public function Division()
@@ -119,5 +123,13 @@ class Division extends Model
         ]);
 
         return implode('-', $parts) ?: 'N/A';
+    }
+    public function scopeSearchByFormattedName($query, string $keyword)
+    {
+        return $query
+            ->whereHas('Section', fn($q) => $q->where('name', 'like', "%{$keyword}%"))
+            ->orWhereHas('Company', fn($q) => $q->where('name_company', 'like', "%{$keyword}%"))
+            ->orWhereHas('DeptByBU.Department', fn($q) => $q->where('department_name', 'like', "%{$keyword}%"))
+            ->orWhereHas('DeptByBU.BusinesUnit.Company', fn($q) => $q->where('name_company', 'like', "%{$keyword}%"));
     }
 }

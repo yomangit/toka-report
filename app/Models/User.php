@@ -100,7 +100,11 @@ class User extends Authenticatable implements LdapAuthenticatable
 
     public function divisions()
     {
-        return $this->belongsToMany(Division::class);
+        return $this->belongsToMany(Division::class,'division_user');
+    }
+    public function divisions_pic()
+    {
+        return $this->belongsToMany(Division::class,'person_in_charges');
     }
     public function scopeSearchFor($query, $term)
     {

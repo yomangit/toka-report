@@ -54,6 +54,7 @@ use App\Livewire\EventReport\HazardReport\Detail as hazardReportDetail;
 use App\Livewire\Admin\TableRiskAssessment\Index as TableRiskAssessment;
 use App\Livewire\EventReport\IncidentReport\Detail as incidentReportDetail;
 use App\Livewire\Admin\WorkflowAdministration\Index as workflowAdministration;
+use App\Livewire\Admini\PersonInCharge\Pic;
 use App\Livewire\EventReport\HazardReport\CreateAndUpdate as hazardReportform;
 use App\Livewire\EventReport\HazardReportGuest\Create as HazardReportGuestCreate;
 use App\Livewire\EventReport\IncidentReport\CreateAndUpdate as CreateAndUpdateIncidentReport;
@@ -94,6 +95,8 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::middleware('role.permit:administration')->group(function () {
         Route::get('admin/parent/event/akses-divisi', ManageDivisionAccess::class)
             ->name('akses-divisi');
+        Route::get('admin/parent/event/akses-pic', Pic::class)
+            ->name('akses-pic');
         Route::get('admin/parent/companyCategory', categoryCompany::class)->name('categoryCompany');
         Route::get('admin/parent/company', company::class)->name('company');
         Route::get('admin/parent/businnesUnit', businnesUnit::class)->name('businnesUnit');

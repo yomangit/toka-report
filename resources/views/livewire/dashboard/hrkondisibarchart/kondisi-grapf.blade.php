@@ -72,25 +72,26 @@
     const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
 
-    Livewire.on('kondisiChartUpdated', (data) => {
-        console.log("Data received:", data);
+// Livewire.on('kondisiChartUpdated', (data) => {
+//     console.log("Data received:", data);
 
-        const newLabels = shortenLabels(data.map(item => item.label));
-        const newCounts = data.map(item => item.count);
-        const newColors = generateColors(newLabels.length);
+//     const newLabels = shortenLabels(data.map(item => item.label));
+//     const newCounts = data.map(item => item.count);
+//     const newColors = generateColors(newLabels.length);
 
-        kondisiChart.updateOptions({
-            xaxis: {
-                categories: newLabels
-            }
-            , colors: newColors
-        });
+//     kondisiChart.updateOptions({
+//         xaxis: {
+//             categories: newLabels
+//         },
+//         colors: newColors
+//     });
 
-        kondisiChart.updateSeries([{
-            name: 'Jumlah'
-            , data: newCounts
-        }]);
-    });
+//     kondisiChart.updateSeries([{
+//         name: 'Jumlah',
+//         data: newCounts
+//     }]);
+// });
+
 
 </script>
 @endpush

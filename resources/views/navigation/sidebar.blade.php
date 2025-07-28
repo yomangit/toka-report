@@ -135,6 +135,9 @@
                                                 <a href="{{ route('eventUserSecurity') }}" class="{{ Request::is('admin/parent/event/eventUserSecurity') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Event User Security') }}</a>
                                             </li>
                                             <li>
+                                                <a href="{{ route('akses-pic') }}" class="{{ Request::is('admin/parent/event/akses-pic') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Akses PIC') }}</a>
+                                            </li>
+                                            <li>
                                                 <a href="{{ route('akses-divisi') }}" class="{{ Request::is('admin/parent/event/akses-divisi') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Akses Divisi') }}</a>
                                             </li>
                                             <li>
