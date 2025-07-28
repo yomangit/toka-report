@@ -53,14 +53,18 @@
                 </div>
             </div>
 
-            <div class="mb-4">
-                <label class="block mb-1">User</label>
-                <select wire:model="selectedUsers" multiple class="w-full h-40 px-3 py-2 border rounded">
-                    @foreach ($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->lookup_name }}</option>
+            <div>
+                <label class="block font-semibold">Pilih User:</label>
+                <div class="p-2 overflow-y-auto border rounded max-h-48">
+                    @foreach($users as $user)
+                    <label class="block">
+                        <input type="checkbox" wire:model="selectedUserIds" class="checkbox checkbox-xs" value="{{ $user->id }}">
+                        {{ $user->lookup_name }}
+                    </label>
                     @endforeach
-                </select>
+                </div>
             </div>
+
 
             <div class="flex justify-end gap-2">
                 <button wire:click="$set('divisionId', null)" class="text-gray-500">Batal</button>
