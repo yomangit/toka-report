@@ -6,9 +6,11 @@ use App\Models\User;
 use Livewire\Component;
 use App\Models\Division;
 use Illuminate\Support\Collection;
+use Livewire\WithPagination;
 
 class Pic extends Component
 {
+    use WithPagination;
     public string $searchDivisionQuery = '';
     public string $search_nama = '';
     public bool $showDivisionDropdown = false;
