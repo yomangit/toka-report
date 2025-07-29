@@ -80,31 +80,31 @@
     @stack('scripts')
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
     <script>
-        window.OneSignal = window.OneSignal || [];
-        OneSignal.push(function() {
-            OneSignal.init({
-                appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18"
-                , notifyButton: {
-                    enable: true
-                }
-                , allowLocalhostAsSecureOrigin: true
-                , serviceWorkerPath: '/OneSignalSDKWorker.js'
-                , serviceWorkerUpdaterPath: '/OneSignalSDKUpdaterWorker.js'
-            , });
-
-            OneSignal.on('subscriptionChange', function(isSubscribed) {
-                if (isSubscribed) {
-                    OneSignal.getUserId().then(function(playerId) {
-                        console.log('OneSignal Player ID:', playerId);
-                        window.Livewire.dispatch('userSubscribed', {
-                            playerId
-                        });
-                    });
-                }
-            });
+    window.OneSignal = window.OneSignal || [];
+    OneSignal.push(function () {
+        OneSignal.init({
+            appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18",
+            notifyButton: {
+                enable: true
+            },
+            allowLocalhostAsSecureOrigin: true,
+            serviceWorkerPath: '/OneSignalSDKWorker.js',
+            serviceWorkerUpdaterPath: '/OneSignalSDKUpdaterWorker.js'
         });
 
-    </script>
+        OneSignal.on('subscriptionChange', function (isSubscribed) {
+            if (isSubscribed) {
+                OneSignal.getUserId().then(function (playerId) {
+                    console.log('OneSignal Player ID:', playerId);
+                    window.Livewire.dispatch('userSubscribed', {
+                        playerId: playerId
+                    });
+                });
+            }
+        });
+    });
+</script>
+
 
 
 </body>
