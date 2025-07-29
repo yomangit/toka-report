@@ -55,7 +55,6 @@ class Pic extends Component
     {
         return $this->editMode ? 'Edit PIC' : 'Tambah PIC';
     }
-
     public function save()
     {
         $this->validate([
