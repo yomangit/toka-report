@@ -25,21 +25,7 @@ class Index extends Component
 {
 
     public  $Incident, $Lead_vs_Lag, $responsible_cont_dept, $status_incident, $count_pto, $count_incident, $count_hazard, $key_state, $manhoursltifree, $month, $condition, $action;
-    public function updatedPlayerId($value)
-    {
-        Auth::user()->update([
-            'onesignal_player_id' => $value
-        ]);
-    }
-
-    #[On('userSubscribed')]
-    public function userSubscribed($data)
-    {
-        // Simpan player ID ke user
-        Auth::user()->update([
-            'onesignal_player_id' => $data['playerId']
-        ]);
-    }
+   
     public function mount()
     {
 
