@@ -88,14 +88,16 @@
                     enable: true
                 }
                 , allowLocalhostAsSecureOrigin: true
-            });
+                , serviceWorkerPath: '/OneSignalSDKWorker.js'
+                , serviceWorkerUpdaterPath: '/OneSignalSDKUpdaterWorker.js'
+            , });
 
             OneSignal.on('subscriptionChange', function(isSubscribed) {
                 if (isSubscribed) {
                     OneSignal.getUserId().then(function(playerId) {
-                        OneSignal.getUserId().then(console.log)
-                        Livewire.dispatch('userSubscribed', {
-                            playerId: playerId
+                        console.log('OneSignal Player ID:', playerId);
+                        window.Livewire.dispatch('userSubscribed', {
+                            playerId
                         });
                     });
                 }
@@ -103,6 +105,7 @@
         });
 
     </script>
+
 
 </body>
 
