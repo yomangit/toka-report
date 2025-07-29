@@ -44,6 +44,7 @@ class User extends Authenticatable implements LdapAuthenticatable
         'department',
         'end_date',
         'role_user_permit_id',
+        'onesignal_player_id'
     ];
 
     /**
