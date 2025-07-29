@@ -11,6 +11,7 @@
         "cjmellor/approval": "^1.6",
         "diglactic/laravel-breadcrumbs": "^10.0",
         "directorytree/ldaprecord-laravel": "^3.3",
+        "guzzlehttp/guzzle": "^7.9",
         "hashids/hashids": "^5.0",
         "intervention/image": "^2.7",
         "laravel/framework": "^11.9",
@@ -38,7 +39,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/NotificationHelper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -49,7 +53,7 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi",
-             "@php artisan vendor:publish --force --tag=livewire:assets --ansi"
+            "@php artisan vendor:publish --force --tag=livewire:assets --ansi"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"

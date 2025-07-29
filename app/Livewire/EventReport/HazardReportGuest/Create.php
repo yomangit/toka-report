@@ -333,7 +333,7 @@ class Create extends Component
         $this->ReportByAndReportTo();
         return view('livewire.event-report.hazard-report-guest.create', [
             'Report_By'  => User::searchNama(trim($this->report_byName))->paginate(100, ['*'], 'Report_By'),
-            'Report_To'  =>  PersonInCharge::where('division_id',$this->division_id)->get(),
+            'Report_To'  =>  PersonInCharge::where('division_id', $this->division_id)->get(),
             'Division'   => $this->divisi_search,
             'EventType'  => $this->Event_type,
             'KTA' => Kondisitidakaman::get(),
@@ -482,6 +482,13 @@ class Create extends Component
                 'line3'     => 'Tetap waspada dan terima kasih atas perhatian Anda 🙏',
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
             ]));
+
+            sendOneSignalNotification(
+                $user->onesignal_player_id,
+                '⚠️ Laporan Bahaya: ' . $this->reference,
+                $this->report_byName . ' mengirimkan laporan. Klik untuk detail.',
+                url("/eventReport/hazardReportDetail/{$url}")
+            );
         }
 
         // Kirim notifikasi ke report_to

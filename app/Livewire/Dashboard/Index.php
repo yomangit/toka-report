@@ -3,32 +3,42 @@
 namespace App\Livewire\Dashboard;
 
 use DateTime;
+use DatePeriod;
+use DateInterval;
 use Carbon\Carbon;
 use App\Models\Group;
 use Livewire\Component;
 use App\Models\Division;
 use App\Models\Manhours;
 use App\Models\DeptGroup;
-use App\Models\EventKeyword;
 use App\Models\pto_report;
 use App\Models\SubConDept;
 use Illuminate\Support\Arr;
+use Livewire\Attributes\On;
+use App\Models\EventKeyword;
 use App\Models\HazardReport;
-use App\Models\IncidentReport;
 use App\Models\ManhoursSite;
+use App\Models\IncidentReport;
 use Illuminate\Support\Facades\Auth;
-use DatePeriod;
-use DateInterval;
 
 class Index extends Component
 {
 
     public  $Incident, $Lead_vs_Lag, $responsible_cont_dept, $status_incident, $count_pto, $count_incident, $count_hazard, $key_state, $manhoursltifree, $month, $condition, $action;
-    protected $listeners = ['saveOneSignalId'];
-
-    public function saveOneSignalId($id)
+    public function updatedPlayerId($value)
     {
-        auth()->user()->update(['onesignal_id' => $id]);
+        Auth::user()->update([
+            'onesignal_player_id' => $value
+        ]);
+    }
+
+    #[On('userSubscribed')]
+    public function userSubscribed($data)
+    {
+        // Simpan player ID ke user
+        Auth::user()->update([
+            'onesignal_player_id' => $data['playerId']
+        ]);
     }
     public function mount()
     {
