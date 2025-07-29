@@ -78,32 +78,43 @@
     @livewire('wire-elements-modal')
     @livewireScripts
     @stack('scripts')
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
-    <script>
-    window.OneSignal = window.OneSignal || [];
-    OneSignal.push(function () {
-        OneSignal.init({
-            appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18",
-            notifyButton: {
-                enable: true
-            },
-            allowLocalhostAsSecureOrigin: true,
-            serviceWorkerPath: '/OneSignalSDKWorker.js',
-            serviceWorkerUpdaterPath: '/OneSignalSDKUpdaterWorker.js'
-        });
-
-        OneSignal.on('subscriptionChange', function (isSubscribed) {
-            if (isSubscribed) {
-                OneSignal.getUserId().then(function (playerId) {
-                    console.log('OneSignal Player ID:', playerId);
-                    window.Livewire.dispatch('userSubscribed', {
-                        playerId: playerId
-                    });
-                });
-            }
-        });
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function (OneSignal) {
+    await OneSignal.init({
+      appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18",
+      notifyButton: {
+        enable: true
+      }
     });
+
+    // 🔁 Deteksi perubahan langganan
+    OneSignal.on('subscriptionChange', async function (isSubscribed) {
+      if (isSubscribed) {
+        const playerId = await OneSignal.user.getId();
+        console.log('✅ OneSignal Player ID:', playerId);
+
+        // 🔁 Dispatch ke Livewire
+        window.Livewire.dispatch('userSubscribed', {
+          playerId: playerId
+        });
+      }
+    });
+
+    // ✅ Optional: cek jika sudah langganan sebelumnya
+    const isSubscribed = await OneSignal.isPushNotificationsEnabled();
+    if (isSubscribed) {
+      const playerId = await OneSignal.user.getId();
+      console.log('🔁 Already subscribed, OneSignal Player ID:', playerId);
+
+      window.Livewire.dispatch('userSubscribed', {
+        playerId: playerId
+      });
+    }
+  });
 </script>
+
 
 
 
