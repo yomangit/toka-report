@@ -328,7 +328,7 @@ class Create extends Component
     public function getReportToUsersProperty()
 {
     return Division::with('users_pic')
-        ->searchByFormattedName(trim($this->workgroup_name))
+        ->searchByFormattedName($this->workgroup_name)
         ->get()
         ->flatMap->users_pic // menggabungkan semua user dari tiap division
         ->unique('id')       // hilangkan duplikat
