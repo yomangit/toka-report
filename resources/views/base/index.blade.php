@@ -53,8 +53,31 @@
         @endif
     </title>
     <!-- OneSignal SDK -->
+    @vite(['resources/css/app.css','resources/js/app.js'])
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-    <script>
+   
+</head>
+<body class="static antialiased">
+    <div id="page-loader" class="fixed inset-0 z-[1000] flex items-center justify-center transition-opacity duration-500 opacity-100 bg-white/80">
+        <div class="w-16 h-16 border-4 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
+    </div>
+    @include('navigation.sidebar')
+    <!-- start: Main -->
+    <main class="min-h-screen w-full md:w-[calc(100%-256px)] md:ml-64 transition-all main">
+        @include('navigation.navbar')
+
+        <div class="w-full max-w-screen-xl px-4 py-4 mx-auto">
+            @yield('content')
+        </div>
+    </main>
+    {{-- Livewire global loading --}}
+    {{-- <div wire:loading.delay.long class="fixed z-50 px-4 py-2 text-sm text-white bg-blue-600 rounded-lg shadow-lg bottom-5 right-5 animate-bounce">
+        Memuat data...
+    </div> --}}
+    @livewire('wire-elements-modal')
+    @livewireScripts
+    @stack('scripts')
+     <script>
         window.OneSignal = window.OneSignal || [];
         OneSignal.push(function() {
             OneSignal.init({
@@ -78,28 +101,6 @@
         });
 
     </script>
-    @vite(['resources/css/app.css','resources/js/app.js'])
-</head>
-<body class="static antialiased">
-    <div id="page-loader" class="fixed inset-0 z-[1000] flex items-center justify-center transition-opacity duration-500 opacity-100 bg-white/80">
-        <div class="w-16 h-16 border-4 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
-    </div>
-    @include('navigation.sidebar')
-    <!-- start: Main -->
-    <main class="min-h-screen w-full md:w-[calc(100%-256px)] md:ml-64 transition-all main">
-        @include('navigation.navbar')
-
-        <div class="w-full max-w-screen-xl px-4 py-4 mx-auto">
-            @yield('content')
-        </div>
-    </main>
-    {{-- Livewire global loading --}}
-    {{-- <div wire:loading.delay.long class="fixed z-50 px-4 py-2 text-sm text-white bg-blue-600 rounded-lg shadow-lg bottom-5 right-5 animate-bounce">
-        Memuat data...
-    </div> --}}
-    @livewire('wire-elements-modal')
-    @livewireScripts
-    @stack('scripts')
 </body>
 
 </html>
