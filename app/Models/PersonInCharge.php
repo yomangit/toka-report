@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class PersonInCharge extends Model
 {
-   
+   protected $table = 'person_in_charges';
+   protected $fillable = [
+       'user_id',
+      'division_id',
+    ];
 }

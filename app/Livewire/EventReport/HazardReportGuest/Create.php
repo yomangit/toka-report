@@ -333,7 +333,9 @@ class Create extends Component
         return view('livewire.event-report.hazard-report-guest.create', [
             'Report_By'  => User::searchNama(trim($this->report_byName))->paginate(100, ['*'], 'Report_By'),
             // 'Report_To'  => EventUserSecurity::searchName(trim($this->workgroup_name))->where('responsible_role_id', 2)->paginate(100, ['*'], 'Report_To'),
-            'Report_To'  => Division::with('users_pic')->searchByFormattedName(trim($this->workgroup_name))->get(),
+            'Report_To'  =>  Division::searchByFormattedName($this->workgroup_name)
+                ->with('DeptByBU.Department', 'DeptByBU.BusinesUnit.Company', 'Company', 'Section')
+                ->get(),
             'Division'   => $this->divisi_search,
             'EventType'  => $this->Event_type,
             'KTA' => Kondisitidakaman::get(),
