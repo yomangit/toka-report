@@ -90,7 +90,7 @@
             });
 
             // ✅ Cek apakah user sudah subscribe
-            const isSubscribed = await OneSignal.Notifications.isPushEnabled();
+            const isSubscribed = await OneSignal.User.PushSubscription.optedIn;
             if (isSubscribed) {
                 const playerId = await OneSignal.User.getId();
                 console.log("✅ Already subscribed. Player ID:", playerId);
@@ -99,18 +99,21 @@
                 });
             }
 
-            // ✅ Dengarkan event subscribe
-            OneSignal.Notifications.addEventListener('permissionChange', async (event) => {
-                if (event.to === 'granted') {
+            // ✅ Dengarkan perubahan status subscription
+            OneSignal.User.PushSubscription.addEventListener('change', async (state) => {
+                if (state.current.optedIn) {
                     const playerId = await OneSignal.User.getId();
-                    console.log("✅ New subscription. Player ID:", playerId);
+                    console.log("✅ Subscribed just now. Player ID:", playerId);
                     window.Livewire.dispatch('userSubscribed', {
                         playerId
                     });
+                } else {
+                    console.log("⛔️ Unsubscribed");
                 }
             });
         });
 
     </script>
+
 </body>
 </html>
