@@ -5,10 +5,7 @@ namespace App\Livewire\EventReport\HazardReport;
 use DateTime;
 use App\Models\User;
 use Livewire\Component;
-use Cjmellor\Approval\Models\Approval;
 use App\Models\Division;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use App\Models\Eventsubtype;
@@ -17,6 +14,7 @@ use Livewire\WithPagination;
 use App\Models\LocationEvent;
 use Livewire\WithFileUploads;
 use App\Models\choseEventType;
+use App\Models\PersonInCharge;
 use App\Models\WorkflowDetail;
 use App\Models\TypeEventReport;
 use App\Models\Kondisitidakaman;
@@ -24,7 +22,10 @@ use App\Models\EventUserSecurity;
 use App\Models\Tindakantidakaman;
 use App\Notifications\toModerator;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+use Cjmellor\Approval\Models\Approval;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
 
 class CreateAndUpdate extends Component
@@ -333,7 +334,7 @@ class CreateAndUpdate extends Component
 
         return view('livewire.event-report.hazard-report.create-and-update', [
             'Report_By'  => User::searchNama(trim($this->report_byName))->paginate(100, ['*'], 'Report_By'),
-            'Report_To'  => EventUserSecurity::searchName(trim($this->workgroup_name))->where('responsible_role_id', 2)->paginate(100, ['*'], 'Report_To'),
+            'Report_To'  =>  PersonInCharge::where('division_id',$this->division_id)->get(),
             'Division'   => $this->divisi_search,
 
             'EventType'  => $this->Event_type,

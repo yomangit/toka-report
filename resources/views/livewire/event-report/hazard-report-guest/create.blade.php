@@ -114,7 +114,7 @@
                                 <div class="hidden pt-5 text-center" wire:target='report_toName' wire:loading.class.remove='hidden'>
                                     <x-loading-spinner />
                                 </div>
-                                <div class="pb-6">{{ $Report_By->links('pagination.minipaginate') }}</div>
+                                
                                 <div class="fixed bottom-0 left-0 right-0 px-2 mb-1 bg-base-300 opacity-95 ">
                                     <x-input-no-req wire:model.live='report_to_nolist' placeholder="{{ __('name_notList') }}" />
                                 </div>

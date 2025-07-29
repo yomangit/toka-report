@@ -109,8 +109,8 @@
 
                                     <div class="h-40 mb-2 overflow-auto scroll-smooth focus:scroll-auto" wire:target='report_toName' wire:loading.class='hidden'>
                                         @forelse ($Report_To as $report_to)
-                                        <div wire:click="reportedTo({{ $report_to->id }})" class="flex flex-col border-b cursor-pointer border-base-200 ">
-                                            <strong class="text-[10px] text-slate-800">{{ $report_to->lookup_name }}</strong>
+                                        <div wire:click="reportedTo({{ $report_to->users_id }})" class="flex flex-col border-b cursor-pointer hover:bg-primary border-base-200 ">
+                                            <strong class="text-[10px] text-slate-800">{{ $report_to->users->lookup_name }}</strong>
                                         </div>
                                         @empty
                                         <strong class="text-xs text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-rose-800">Name
@@ -120,7 +120,7 @@
                                     <div class="hidden pt-5 text-center" wire:target='report_toName' wire:loading.class.remove='hidden'>
                                         <x-loading-spinner />
                                     </div>
-                                    <div class="pb-6">{{ $Report_To->links('pagination.minipaginate') }}</div>
+                                    
                                     <div class="fixed bottom-0 left-0 right-0 px-2 mb-1 bg-base-300 opacity-95 ">
                                         <x-input-no-req wire:model.live='report_to_nolist' placeholder="{{ __('name_notList') }}" />
                                     </div>
@@ -396,7 +396,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     {{-- <div role="tablist" class="mb-4 tabs tabs-lifted">
                         <input type="radio" name="my_tabs_3" class="font-semibold tab z-1 font-signika text-sky-500" aria-label="Event Keyword" checked="checked" />
                         <div role="tabpanel" class="p-6 tab-content bg-base-100 border-base-300 rounded-box">

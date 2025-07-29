@@ -103,8 +103,8 @@
                             <div class="relative">
                                 <div class="h-full mb-2 overflow-auto max-h-40 scroll-smooth focus:scroll-auto" wire:target='report_toName' wire:loading.class='hidden'>
                                     @forelse ($Report_To as $report_to)
-                                    <div wire:click="reportedTo({{ $report_to->user_id }})" class="flex flex-col border-b cursor-pointer hover:bg-primary border-base-200 ">
-                                        <strong class="text-[10px] text-slate-800">{{ $report_to->User->lookup_name }}</strong>
+                                    <div wire:click="reportedTo({{ $report_to->users_id }})" class="flex flex-col border-b cursor-pointer hover:bg-primary border-base-200 ">
+                                        <strong class="text-[10px] text-slate-800">{{ $report_to->users->lookup_name }}</strong>
                                     </div>
                                     @empty
                                     <strong class="text-xs text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-rose-800">Name
@@ -114,7 +114,7 @@
                                 <div class="hidden pt-5 text-center" wire:target='report_toName' wire:loading.class.remove='hidden'>
                                     <x-loading-spinner />
                                 </div>
-                                <div class="pb-6">{{ $Report_By->links('pagination.minipaginate') }}</div>
+                              
                                 <div class="fixed bottom-0 left-0 right-0 px-2 mb-1 bg-base-300 opacity-95 ">
                                     <x-input-no-req wire:model.live='report_to_nolist' placeholder="{{ __('name_notList') }}" />
                                 </div>

@@ -17,6 +17,7 @@ use Livewire\WithPagination;
 use App\Models\LocationEvent;
 use Livewire\WithFileUploads;
 use App\Models\choseEventType;
+use App\Models\PersonInCharge;
 use App\Models\RiskAssessment;
 use App\Models\RiskLikelihood;
 use App\Models\CompanyCategory;
@@ -243,7 +244,7 @@ class Detail extends Component
             'Divisi'          => Division::whereNotNull('company_id')->with(['DeptByBU.BusinesUnit.Company', 'DeptByBU.Department', 'Company'])->groupBy('company_id')->get(),
             'Division'        => $this->divisi_search,
             'Report_By'       => User::searchFor(trim($this->report_byName))->paginate(100, ['*'], 'Report_By'),
-            'Report_To'       => User::searchFor(trim($this->report_toName))->paginate(100, ['*'], 'Report_To'),
+            'Report_To'  =>  PersonInCharge::where('division_id',$this->division_id)->get(),
             'Location'        => LocationEvent::get(),
         ])->extends('base.index', ['header' => 'Hazard Report', 'title' => 'Hazard Report', 'id' => $this->data_id])->section('content');
     }
