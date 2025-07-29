@@ -124,12 +124,18 @@ class Division extends Model
 
         return implode('-', $parts) ?: 'N/A';
     }
-    public function scopeSearchByFormattedName($query, string $keyword)
-    {
-        return $query
-            ->whereHas('Section', fn($q) => $q->where('name', 'like', "%{$keyword}%"))
-            ->orWhereHas('Company', fn($q) => $q->where('name_company', 'like', "%{$keyword}%"))
-            ->orWhereHas('DeptByBU.Department', fn($q) => $q->where('department_name', 'like', "%{$keyword}%"))
-            ->orWhereHas('DeptByBU.BusinesUnit.Company', fn($q) => $q->where('name_company', 'like', "%{$keyword}%"));
+    public function scopeSearchByFormattedName($query, ?string $keyword)
+{
+    if (empty($keyword)) {
+        return $query; // return semua data jika keyword kosong/null
     }
+
+    return $query->where(function ($q) use ($keyword) {
+        $q->whereHas('Section', fn($q) => $q->where('name', 'like', "%{$keyword}%"))
+          ->orWhereHas('Company', fn($q) => $q->where('name_company', 'like', "%{$keyword}%"))
+          ->orWhereHas('DeptByBU.Department', fn($q) => $q->where('department_name', 'like', "%{$keyword}%"))
+          ->orWhereHas('DeptByBU.BusinesUnit.Company', fn($q) => $q->where('name_company', 'like', "%{$keyword}%"));
+    });
+}
+
 }
