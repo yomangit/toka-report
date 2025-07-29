@@ -72,9 +72,7 @@
                         <span>{{ $user->lookup_name }}</span>
                     </label>
                     @endforeach
-
                 </div>
-
                 {{-- Pagination --}}
                 <div class="mt-2">
                     {{ $users->links('pagination.minipaginate')  }}
@@ -90,9 +88,7 @@
                     @endforelse
                 </div>
             </div>
-
         </div>
-
         <x-slot name="footer">
             <x-btn-save wire:click="save">Simpan</x-btn-save>
             <x-btn-close wire:click="resetForm">Batal</x-btn-close>
