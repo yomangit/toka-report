@@ -54,8 +54,6 @@
     </title>
     <!-- OneSignal SDK -->
     @vite(['resources/css/app.css','resources/js/app.js'])
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-   
 </head>
 <body class="static antialiased">
     <div id="page-loader" class="fixed inset-0 z-[1000] flex items-center justify-center transition-opacity duration-500 opacity-100 bg-white/80">
@@ -80,18 +78,18 @@
     @livewire('wire-elements-modal')
     @livewireScripts
     @stack('scripts')
-     <script>
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+    <script>
         window.OneSignal = window.OneSignal || [];
         OneSignal.push(function() {
             OneSignal.init({
                 appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18"
-                notifyButton: {
+                , notifyButton: {
                     enable: true
-                , }
-                , allowLocalhostAsSecureOrigin: true, // untuk development di localhost
+                }
+                , allowLocalhostAsSecureOrigin: true
             });
 
-            // Optional: Simpan player_id ke Livewire
             OneSignal.on('subscriptionChange', function(isSubscribed) {
                 if (isSubscribed) {
                     OneSignal.getUserId().then(function(playerId) {
@@ -104,6 +102,7 @@
         });
 
     </script>
+
 </body>
 
 </html>
