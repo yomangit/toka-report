@@ -330,10 +330,7 @@ class Create extends Component
 {
     return Division::with('users_pic')
         ->searchByFormattedName(trim($this->workgroup_name ?? ''))
-        ->get()
-        ->flatMap->users_pic
-        ->unique('id')
-        ->values();
+        ->get();
 }
     public function render()
     {
