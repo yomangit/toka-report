@@ -11,4 +11,8 @@ class PersonInCharge extends Model
        'user_id',
       'division_id',
     ];
+    public function users()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
 }

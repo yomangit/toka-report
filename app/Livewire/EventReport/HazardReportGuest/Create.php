@@ -15,6 +15,7 @@ use App\Models\DocHazPelapor;
 use App\Models\LocationEvent;
 use Livewire\WithFileUploads;
 use App\Models\choseEventType;
+use App\Models\PersonInCharge;
 use App\Models\WorkflowDetail;
 use App\Models\TypeEventReport;
 use App\Models\Kondisitidakaman;
@@ -23,9 +24,9 @@ use App\Models\Tindakantidakaman;
 use App\Notifications\toModerator;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
 use Cjmellor\Approval\Models\Approval;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
 
 class Create extends Component
@@ -326,12 +327,6 @@ class Create extends Component
             $this->reset('kondisitidakamen_id', 'tindakantidakamen_id');
         }
     }
-    public function getReportToUsersProperty()
-{
-    return Division::with('users_pic')
-        ->searchByFormattedName(trim($this->workgroup_name ?? ''))
-        ->get();
-}
     public function render()
     {
         $this->realTimeFunc();
@@ -339,9 +334,7 @@ class Create extends Component
         return view('livewire.event-report.hazard-report-guest.create', [
             'Report_By'  => User::searchNama(trim($this->report_byName))->paginate(100, ['*'], 'Report_By'),
             // 'Report_To'  => EventUserSecurity::searchName(trim($this->workgroup_name))->where('responsible_role_id', 2)->paginate(100, ['*'], 'Report_To'),
-            // 'Report_To'  =>  Division::searchByFormattedName(trim($this->workgroup_name ?? ''))
-            //     ->with('DeptByBU.Department', 'DeptByBU.BusinesUnit.Company', 'Company', 'Section')
-            //     ->get(),
+            'Report_To'  =>  PersonInCharge::whereId($this->division_id)->get(),
             'Division'   => $this->divisi_search,
             'EventType'  => $this->Event_type,
             'KTA' => Kondisitidakaman::get(),
