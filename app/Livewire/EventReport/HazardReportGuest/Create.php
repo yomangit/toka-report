@@ -305,6 +305,7 @@ class Create extends Component
                 ->orderBy('dept_by_business_unit_id', 'asc')
                 ->get();
         }
+
         // Ambil workflow detail jika ada
         $workflow = $this->workflow_template_id
             ? WorkflowDetail::where('workflow_administration_id', $this->workflow_template_id)->first()
@@ -325,15 +326,6 @@ class Create extends Component
             $this->reset('kondisitidakamen_id', 'tindakantidakamen_id');
         }
     }
-    public function getReportToUsersProperty()
-{
-    return Division::with('users_pic')
-        ->whereId($this->division_id)
-        ->get()
-        ->flatMap->users_pic // menggabungkan semua user dari tiap division
-        ->unique('id')       // hilangkan duplikat
-        ->values();
-}
     public function render()
     {
         $this->realTimeFunc();
@@ -341,7 +333,7 @@ class Create extends Component
         return view('livewire.event-report.hazard-report-guest.create', [
             'Report_By'  => User::searchNama(trim($this->report_byName))->paginate(100, ['*'], 'Report_By'),
             // 'Report_To'  => EventUserSecurity::searchName(trim($this->workgroup_name))->where('responsible_role_id', 2)->paginate(100, ['*'], 'Report_To'),
-            // 'Report_To'  => Division::with('users_pic')->searchByFormattedName(trim($this->workgroup_name))->get(),
+            'Report_To'  => Division::with('users_pic')->searchByFormattedName(trim($this->workgroup_name))->get(),
             'Division'   => $this->divisi_search,
             'EventType'  => $this->Event_type,
             'KTA' => Kondisitidakaman::get(),
