@@ -93,6 +93,7 @@
             OneSignal.on('subscriptionChange', function(isSubscribed) {
                 if (isSubscribed) {
                     OneSignal.getUserId().then(function(playerId) {
+                        OneSignal.getUserId().then(console.log)
                         Livewire.dispatch('userSubscribed', {
                             playerId: playerId
                         });
