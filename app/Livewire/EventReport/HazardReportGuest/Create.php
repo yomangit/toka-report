@@ -305,7 +305,6 @@ class Create extends Component
                 ->orderBy('dept_by_business_unit_id', 'asc')
                 ->get();
         }
-
         // Ambil workflow detail jika ada
         $workflow = $this->workflow_template_id
             ? WorkflowDetail::where('workflow_administration_id', $this->workflow_template_id)->first()
