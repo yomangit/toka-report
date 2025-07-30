@@ -50,6 +50,7 @@
             OneSignal.Notifications.addEventListener('permissionChange', function(state) {
                 if (state === 'granted') {
                     OneSignal.getUserId().then(function(playerId) {
+                         console.log("✅ Already subscribed. Player ID:", playerId);
                         if (playerId) {
                             Livewire.dispatch('userSubscribed', {
                                 player_id: playerId
