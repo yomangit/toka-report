@@ -74,6 +74,8 @@
     </div> --}}
 
     <livewire:notification-manager />
+  
+
  
     @livewire('wire-elements-modal')
     @livewireScripts

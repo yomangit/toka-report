@@ -4,16 +4,18 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\Attributes\On;
-use Illuminate\Support\Facades\Auth;
 
 class NotificationManager extends Component
 {
-    public $onesignal_player_id;
-    public function mount()
+    #[On('userSubscribed')]
+    public function savePlayerId($data)
     {
-        dd($this->onesignal_player_id);
+        // Akses nilai dari payload JS
+        $playerId = $data['player_id'];
+
+        // Contoh: simpan ke user
         auth()->user()->update([
-            'onesignal_player_id' => $this->onesignal_player_id
+            'onesignal_player_id' => $playerId
         ]);
     }
     public function render()
