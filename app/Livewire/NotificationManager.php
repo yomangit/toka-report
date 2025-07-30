@@ -10,13 +10,9 @@ class NotificationManager extends Component
     #[On('userSubscribed')]
     public function simpanPlayerId($player_id)
     {
-        dd($player_id);
-        // Akses nilai dari payload JS
-        $playerId = $data['player_id'];
-
         // Contoh: simpan ke user
         auth()->user()->update([
-            'onesignal_player_id' => $playerId
+            'onesignal_player_id' => $player_id
         ]);
     }
     public function render()
