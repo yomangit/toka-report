@@ -3,6 +3,7 @@
 
     @push('scripts')
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+
     <script>
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function(OneSignal) {
@@ -11,16 +12,13 @@
                 , notifyButton: {
                     enable: true
                 }
+                , serviceWorkerPath: "/OneSignalSDKWorker.js"
+                , serviceWorkerUpdaterPath: "/OneSignalSDKUpdaterWorker.js"
             , });
 
             console.log("✅ OneSignal initialized");
 
-            if (!OneSignal.User || !OneSignal.User.PushSubscription) {
-                console.error("❌ OneSignal.User or PushSubscription not available");
-                return;
-            }
-
-            // ✅ Cek status awal
+            // 🔍 Cek apakah user sudah subscribe
             const isSubscribed = await OneSignal.User.PushSubscription.optedIn;
             console.log("🔍 Initial subscription status:", isSubscribed);
 
@@ -32,10 +30,8 @@
                 });
             }
 
-            // ✅ Listener perubahan
+            // 📡 Dengarkan event perubahan status langganan
             OneSignal.User.PushSubscription.addEventListener('change', async (state) => {
-                console.log("🔁 Subscription state changed:", state);
-
                 if (state.current.optedIn) {
                     const playerId = await OneSignal.User.getId();
                     console.log("✅ New subscription. Player ID:", playerId);
@@ -47,5 +43,6 @@
         });
 
     </script>
+
     @endpush
 </div>
