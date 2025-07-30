@@ -1,8 +1,8 @@
 <div>
     {{-- Komponen NotificationManager --}}
 
- <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-    <script>
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    {{-- <script>
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function(OneSignal) {
             await OneSignal.init({
@@ -32,6 +32,30 @@
                     const playerId = await OneSignal.User.PushSubscription.token;
                     console.log("✅ New subscription. Player ID:", playerId);
                      Livewire.dispatch('userSubscribed', { player_id: playerId });
+                }
+            });
+        });
+
+    </script> --}}
+    <script>
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(function(OneSignal) {
+            OneSignal.init({
+                appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18"
+                , notifyButton: {
+                    enable: true
+                }
+            , });
+
+            OneSignal.Notifications.addEventListener('permissionChange', function(state) {
+                if (state === 'granted') {
+                    OneSignal.getUserId().then(function(playerId) {
+                        if (playerId) {
+                            Livewire.dispatch('userSubscribed', {
+                                player_id: playerId
+                            });
+                        }
+                    });
                 }
             });
         });
