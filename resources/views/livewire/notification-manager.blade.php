@@ -23,7 +23,7 @@
             console.log("🔍 Initial subscription status:", isSubscribed);
 
             if (isSubscribed) {
-                const playerId = await OneSignal.User.getId();
+                const playerId = await OneSignal.User.PushSubscription.token;
                 console.log("✅ Already subscribed. Player ID:", playerId);
                 window.Livewire.dispatch('userSubscribed', {
                     playerId
@@ -33,7 +33,7 @@
             // 📡 Dengarkan event perubahan status langganan
             OneSignal.User.PushSubscription.addEventListener('change', async (state) => {
                 if (state.current.optedIn) {
-                    const playerId = await OneSignal.User.getId();
+                   const playerId = await OneSignal.User.PushSubscription.token;
                     console.log("✅ New subscription. Player ID:", playerId);
                     window.Livewire.dispatch('userSubscribed', {
                         playerId
