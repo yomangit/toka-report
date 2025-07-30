@@ -73,11 +73,49 @@
         Memuat data...
     </div> --}}
 
-    <livewire:notification-manager />
+    {{-- <livewire:notification-manager /> --}}
     @livewire('wire-elements-modal')
     @livewireScripts
     @stack('scripts')
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+    <script>
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(function(OneSignal) {
+            console.log("Initializing OneSignal...");
+            OneSignal.init({
+                appId: "{{ config('services.onesignal.app_id') }}"
+                , notifyButton: {
+                    enable: true
+                , }
+                , allowLocalhostAsSecureOrigin: true
+            });
 
+            OneSignal.on('subscriptionChange', function(isSubscribed) {
+                console.log("Subscription state changed to:", isSubscribed);
+
+                if (isSubscribed) {
+                    OneSignal.getUserId().then(function(playerId) {
+                        console.log("OneSignal Player ID:", playerId);
+
+                        // Kirim player ID ke backend Laravel
+                        fetch("{{ route('onesignal.save') }}", {
+                                method: "POST"
+                                , headers: {
+                                    "Content-Type": "application/json"
+                                    , "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                }
+                                , body: JSON.stringify({
+                                    player_id: playerId
+                                })
+                            }).then(res => res.json())
+                            .then(data => console.log("Saved to server:", data))
+                            .catch(err => console.error("Error saving player ID:", err));
+                    });
+                }
+            });
+        });
+
+    </script>
 </body>
 
 </html>
