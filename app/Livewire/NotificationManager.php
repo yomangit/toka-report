@@ -10,15 +10,9 @@ class NotificationManager extends Component
 {
 
     #[On('userSubscribed')]
-    public function savePlayerId($data = null)
+    public function savePlayerId($data)
     {
-        if (! is_array($data) || ! isset($data['playerId'])) {
-            logger('❌ Event userSubscribed: data tidak valid', compact('data'));
-            return;
-        }
-
         logger('✅ Event userSubscribed diterima', $data);
-
         auth()->user()->update([
             'onesignal_player_id' => $data['playerId'],
         ]);
