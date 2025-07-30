@@ -15,6 +15,7 @@ use App\Models\pto_report;
 use App\Models\SubConDept;
 use Illuminate\Support\Arr;
 use Livewire\Attributes\On;
+use Berkayk\OneSignal\OneSignalFacade as OneSignal;
 use App\Models\EventKeyword;
 use App\Models\HazardReport;
 use App\Models\ManhoursSite;
@@ -25,7 +26,7 @@ class Index extends Component
 {
 
     public  $Incident, $Lead_vs_Lag, $responsible_cont_dept, $status_incident, $count_pto, $count_incident, $count_hazard, $key_state, $manhoursltifree, $month, $condition, $action;
-   
+
     public function mount()
     {
 
@@ -267,6 +268,12 @@ class Index extends Component
     }
     public function render()
     {
+        OneSignal::sendNotificationToAll(
+            "Selamat datang di websitemu!",
+            route('dashboard'),
+            ["type" => "welcome"]
+        );
+
         return view('livewire.dashboard.index')->extends('base.index', ['header' => 'Dashboard', 'title' => 'Dashboard'])->section('content');
     }
 }

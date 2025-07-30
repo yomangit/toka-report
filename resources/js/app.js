@@ -26,6 +26,19 @@ document.addEventListener('DOMContentLoaded', () => {
     renderDivisionChart
     renderPerbandinganChart();
 });
+import OneSignal from 'onesignal';
+
+window.OneSignal = window.OneSignal || [];
+
+OneSignal.push(() => {
+    OneSignal.init({
+        appId: import.meta.env.VITE_ONESIGNAL_APP_ID,
+        notifyButton: {
+            enable: true,
+        },
+    });
+});
+
 // Inisialisasi semua flatpickr jika elemen ada
 const initDatePickers = () => {
     const datePickers = [{
