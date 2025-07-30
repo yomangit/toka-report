@@ -7,53 +7,54 @@
 
     @push('scripts')
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-<script>
-    window.OneSignal = window.OneSignal || [];
-    OneSignal.push(function () {
-        OneSignal.init({
-            appId: "{{ env('ONESIGNAL_APP_ID') }}",
-            notifyButton: {
-                enable: false
-            },
-            allowLocalhostAsSecureOrigin: true // optional: untuk dev
-        });
+    <script>
+        window.OneSignal = window.OneSignal || [];
+        OneSignal.push(function() {
+            OneSignal.init({
+                appId: "{{ env('ONESIGNAL_APP_ID') }}"
+                , notifyButton: {
+                    enable: false
+                }
+                , allowLocalhostAsSecureOrigin: true // optional: untuk dev
+            });
 
-        OneSignal.isPushNotificationsSupported().then(function (isSupported) {
-            if (!isSupported) {
-                alert("Browser tidak mendukung push notification.");
-                return;
-            }
-
-            OneSignal.getNotificationPermission().then(function (permission) {
-                console.log("Permission:", permission);
-
-                if (permission !== 'granted') {
-                    OneSignal.showSlidedownPrompt();
+            OneSignal.isPushNotificationsSupported().then(function(isSupported) {
+                if (!isSupported) {
+                    alert("Browser tidak mendukung push notification.");
+                    return;
                 }
 
-                OneSignal.isPushNotificationsEnabled().then(function (isEnabled) {
-                    console.log("isPushEnabled:", isEnabled);
+                OneSignal.getNotificationPermission().then(function(permission) {
+                    console.log("Permission:", permission);
 
-                    if (isEnabled) {
-                        OneSignal.getUserId().then(function (playerId) {
-                            console.log("Player ID:", playerId);
-
-                            if (playerId) {
-                                Livewire.dispatch('userSubscribed', {
-                                    player_id: playerId
-                                });
-                            } else {
-                                alert("Gagal mendapatkan Player ID");
-                            }
-                        });
-                    } else {
-                        console.log("User belum mengaktifkan push notifications");
+                    if (permission !== 'granted') {
+                        OneSignal.showSlidedownPrompt();
                     }
+
+                    OneSignal.isPushNotificationsEnabled().then(function(isEnabled) {
+                        console.log("isPushEnabled:", isEnabled);
+
+                        if (isEnabled) {
+                            OneSignal.getUserId().then(function(playerId) {
+                                console.log("Player ID:", playerId);
+
+                                if (playerId) {
+                                    Livewire.dispatch('userSubscribed', {
+                                        player_id: playerId
+                                    });
+                                } else {
+                                    alert("Gagal mendapatkan Player ID");
+                                }
+                            });
+                        } else {
+                            console.log("User belum mengaktifkan push notifications");
+                        }
+                    });
                 });
             });
         });
-    });
-</script>
+
+    </script>
 
 
 
