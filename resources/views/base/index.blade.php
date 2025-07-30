@@ -73,8 +73,7 @@
         Memuat data...
     </div> --}}
 
-    {{-- <livewire:notification-manager /> --}}
-
+    <livewire:notification-manager />
     @livewire('wire-elements-modal')
     @livewireScripts
     @stack('scripts')
