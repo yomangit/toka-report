@@ -8,9 +8,9 @@ use Livewire\Attributes\On;
 class NotificationManager extends Component
 {
     #[On('userSubscribed')]
-    public function savePlayerId($data)
+    public function savePlayerId($datas)
     {
-        dd($data);
+        dd($datas);
         // Akses nilai dari payload JS
         $playerId = $data['player_id'];
 
