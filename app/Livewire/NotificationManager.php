@@ -12,7 +12,8 @@ class NotificationManager extends Component
     #[On('userSubscribed')]
     public function savePlayerId($data)
     {
-        dd($data);
+        logger('✅ Event userSubscribed diterima');
+        logger($data);
         auth()->user()->update([
             'onesignal_player_id' => $data['playerId'],
         ]);
