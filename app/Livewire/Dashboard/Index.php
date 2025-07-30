@@ -15,7 +15,6 @@ use App\Models\pto_report;
 use App\Models\SubConDept;
 use Illuminate\Support\Arr;
 use Livewire\Attributes\On;
-use Berkayk\OneSignal\OneSignalFacade as OneSignal;
 use App\Models\EventKeyword;
 use App\Models\HazardReport;
 use App\Models\ManhoursSite;
