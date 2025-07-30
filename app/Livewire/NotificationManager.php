@@ -14,7 +14,7 @@ class NotificationManager extends Component
     {
         logger('✅ Event userSubscribed diterima', $data);
         auth()->user()->update([
-            'onesignal_player_id' => $data['playerId'],
+            'onesignal_player_id' => $data['player_id'],
         ]);
     }
 
