@@ -35,23 +35,34 @@
                 }
 
                 const permission = await OneSignal.Notifications.permissionNative();
-                if (permission !== 'granted') {
-                    await OneSignal.Notifications.requestPermission();
+                console.log("Permission:", permission);
+
+                const isSubscribed = await OneSignal.User.PushSubscription.isSubscribed();
+                console.log("isSubscribed:", isSubscribed);
+
+                if (!isSubscribed || permission !== 'granted') {
+                    console.log("Meminta user untuk mengaktifkan notifikasi...");
+                    await OneSignal.Notifications.showSlidedownPrompt();
                 }
 
-                const playerId = await OneSignal.User.getId();
+                // Tunggu sejenak agar OneSignal memproses subscription
+                setTimeout(async () => {
+                    const playerId = await OneSignal.User.getId();
+                    console.log("Player ID:", playerId);
 
-                if (playerId) {
-                    Livewire.dispatch('userSubscribed', {
-                        player_id: playerId
-                    });
-                } else {
-                    alert("Gagal mendapatkan Player ID");
-                }
+                    if (playerId) {
+                        Livewire.dispatch('userSubscribed', {
+                            player_id: playerId
+                        });
+                    } else {
+                        alert("Gagal mendapatkan Player ID setelah permintaan izin.");
+                    }
+                }, 3000); // kasih delay agar proses selesai
             });
         }
 
     </script>
+
     @endpush
 
 
