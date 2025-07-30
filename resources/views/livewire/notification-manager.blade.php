@@ -11,14 +11,16 @@
         const playerId = OneSignal.User.PushSubscription.id;
         console.log("Player ID:", playerId);
         if (playerId) {
-            // Livewire.dispatch('userSubscribed', {
-            //     // player_id: playerId
-            //     player_id: 'playerId'
-            // });
-              @this.set('description', playerId);
+            Livewire.dispatch('userSubscribed', {
+                player_id: 'playerId'
+            });
         } else {
             alert("Gagal mendapatkan Player ID setelah permintaan izin.");
         }
     });
+   
+
+
+
 </script>
 
