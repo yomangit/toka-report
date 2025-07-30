@@ -28,7 +28,7 @@ use Cjmellor\Approval\Models\Approval;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
-
+use Berkayk\OneSignal\OneSignalFacade as OneSignal;
 class Create extends Component
 {
     use WithFileUploads;
@@ -483,12 +483,13 @@ class Create extends Component
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
             ]));
 
-            sendOneSignalNotification(
+            OneSignal::sendNotificationToUser(
                 $user->onesignal_player_id,
                 '⚠️ Laporan Bahaya: ' . $this->reference,
                 $this->report_byName . ' mengirimkan laporan. Klik untuk detail.',
                 url("/eventReport/hazardReportDetail/{$url}")
             );
+           
         }
 
         // Kirim notifikasi ke report_to
@@ -502,6 +503,12 @@ class Create extends Component
                 'line3'     => 'Terima kasih atas perhatian dan kerjasamanya 🙏',
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
             ]));
+            OneSignal::sendNotificationToUser(
+                $reportTo->first()->onesignal_player_id,
+                '⚠️ Laporan Bahaya: ' . $this->reference,
+                $this->report_byName . ' mengirimkan laporan. Klik untuk detail.',
+                url("/eventReport/hazardReportDetail/{$url}")
+            );
         }
 
         $this->clearFields();

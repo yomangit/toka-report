@@ -23,9 +23,7 @@
             if (isSubscribed) {
                 const playerId = await OneSignal.User.PushSubscription.token;
                 console.log("✅ Already subscribed. Player ID:", playerId);
-                Livewire.dispatch('userSubscribed', {
-                    playerId
-                }, { global: true });
+                  Livewire.dispatch('userSubscribed', { player_id: playerId });
             }
 
             // 📡 Dengarkan event perubahan status langganan
@@ -33,9 +31,7 @@
                 if (state.current.optedIn) {
                     const playerId = await OneSignal.User.PushSubscription.token;
                     console.log("✅ New subscription. Player ID:", playerId);
-                    Livewire.dispatch('userSubscribed', {
-                        playerId
-                    }, { global: true });
+                     Livewire.dispatch('userSubscribed', { player_id: playerId });
                 }
             });
         });
