@@ -74,7 +74,7 @@
     </div> --}}
 
     {{-- <livewire:notification-manager /> --}}
-   <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+
     @livewire('wire-elements-modal')
     @livewireScripts
     @stack('scripts')
