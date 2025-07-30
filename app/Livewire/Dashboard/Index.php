@@ -268,11 +268,7 @@ class Index extends Component
     }
     public function render()
     {
-        OneSignal::sendNotificationToAll(
-            "Selamat datang di websitemu!",
-            route('dashboard'),
-            ["type" => "welcome"]
-        );
+
 
         return view('livewire.dashboard.index')->extends('base.index', ['header' => 'Dashboard', 'title' => 'Dashboard'])->section('content');
     }
