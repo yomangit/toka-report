@@ -1,7 +1,63 @@
 <div>
     {{-- Komponen NotificationManager --}}
 
+    <div class="p-4 border rounded shadow">
+        @if (auth()->user()->onesignal_player_id)
+        <p class="text-green-600">✅ Notifikasi sudah aktif untuk perangkat ini.</p>
+        @else
+        <button onclick="activateNotifications()" class="btn btn-primary">
+            🔔 Aktifkan Notifikasi
+        </button>
+        @endif
+
+        @if (session()->has('success'))
+        <p class="mt-2 text-green-500">{{ session('success') }}</p>
+        @endif
+    </div>
+
+    @push('scripts')
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+        function activateNotifications() {
+            window.OneSignalDeferred = window.OneSignalDeferred || [];
+            OneSignalDeferred.push(async function(OneSignal) {
+                await OneSignal.init({
+                    appId: "{{ env('ONESIGNAL_APP_ID') }}"
+                    , notifyButton: {
+                        enable: false
+                    }
+                });
+
+                const isPushSupported = await OneSignal.Notifications.isPushSupported();
+                if (!isPushSupported) {
+                    alert("Browser tidak mendukung push notification.");
+                    return;
+                }
+
+                const permission = await OneSignal.Notifications.permissionNative();
+                if (permission !== 'granted') {
+                    await OneSignal.Notifications.requestPermission();
+                }
+
+                const playerId = await OneSignal.User.getId();
+
+                if (playerId) {
+                    Livewire.dispatch('userSubscribed', {
+                        player_id: playerId
+                    });
+                } else {
+                    alert("Gagal mendapatkan Player ID");
+                }
+            });
+        }
+
+    </script>
+    @endpush
+
+
+
+
+    {{-- <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script> --}}
     {{-- <script>
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function(OneSignal) {
@@ -37,30 +93,7 @@
         });
 
     </script> --}}
-    <script>
-        window.OneSignalDeferred = window.OneSignalDeferred || [];
 
-        OneSignalDeferred.push(function(OneSignal) {
-            OneSignal.init({
-                appId: "{{ env('ONESIGNAL_APP_ID') }}"
-                , notifyButton: {
-                    enable: true
-                }
-            });
-
-            // ✅ Ambil player ID (user ID)
-            OneSignal.User.getId().then(function(playerId) {
-                console.log("Player ID:", playerId);
-
-                if (playerId) {
-                    Livewire.dispatch('userSubscribed', {
-                        player_id: playerId
-                    });
-                }
-            });
-        });
-
-    </script>
 
 
 </div>
