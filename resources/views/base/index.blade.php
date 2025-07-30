@@ -102,7 +102,7 @@
             if (isSubscribed) {
                 const playerId = await OneSignal.User.PushSubscription.token;
                 console.log("✅ Already subscribed. Player ID:", playerId);
-                window.Livewire.dispatch('userSubscribed', {
+                Livewire.dispatch('userSubscribed', {
                     playerId
                 });
             }
@@ -112,7 +112,7 @@
                 if (state.current.optedIn) {
                     const playerId = await OneSignal.User.PushSubscription.token;
                     console.log("✅ New subscription. Player ID:", playerId);
-                    window.Livewire.dispatch('userSubscribed', {
+                    Livewire.dispatch('userSubscribed', {
                         playerId
                     });
                 }
