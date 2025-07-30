@@ -74,7 +74,52 @@
     </div> --}}
 
     <livewire:notification-manager />
+ <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+        function activateNotifications() {
+            window.OneSignalDeferred = window.OneSignalDeferred || [];
+            OneSignalDeferred.push(async function(OneSignal) {
+                await OneSignal.init({
+                    appId: "{{ env('ONESIGNAL_APP_ID') }}"
+                    , notifyButton: {
+                        enable: false
+                    }
+                });
 
+                const isPushSupported = await OneSignal.Notifications.isPushSupported();
+                if (!isPushSupported) {
+                    alert("Browser tidak mendukung push notification.");
+                    return;
+                }
+
+                const permission = await OneSignal.Notifications.permissionNative();
+                console.log("Permission:", permission);
+
+                const isSubscribed = await OneSignal.User.PushSubscription.isSubscribed();
+                console.log("isSubscribed:", isSubscribed);
+
+                if (!isSubscribed || permission !== 'granted') {
+                    console.log("Meminta user untuk mengaktifkan notifikasi...");
+                    await OneSignal.Notifications.showSlidedownPrompt();
+                }
+
+                // Tunggu sejenak agar OneSignal memproses subscription
+                setTimeout(async () => {
+                    const playerId = await OneSignal.User.getId();
+                    console.log("Player ID:", playerId);
+
+                    if (playerId) {
+                        Livewire.dispatch('userSubscribed', {
+                            player_id: playerId
+                        });
+                    } else {
+                        alert("Gagal mendapatkan Player ID setelah permintaan izin.");
+                    }
+                }, 3000); // kasih delay agar proses selesai
+            });
+        }
+
+    </script>
     @livewire('wire-elements-modal')
     @livewireScripts
     @stack('scripts')
