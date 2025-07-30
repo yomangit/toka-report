@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificationManager extends Component
 {
-
     #[On('userSubscribed')]
     public function savePlayerId($data)
     {

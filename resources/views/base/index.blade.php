@@ -53,9 +53,8 @@
         @endif
     </title>
     <!-- OneSignal SDK -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
-
 <body class="static antialiased">
     <div id="page-loader" class="fixed inset-0 z-[1000] flex items-center justify-center transition-opacity duration-500 opacity-100 bg-white/80">
         <div class="w-16 h-16 border-4 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
@@ -70,16 +69,11 @@
         </div>
     </main>
     {{-- Livewire global loading --}}
-    {{-- <div wire:loading.delay.long
-        class="fixed z-50 px-4 py-2 text-sm text-white bg-blue-600 rounded-lg shadow-lg bottom-5 right-5 animate-bounce">
+    {{-- <div wire:loading.delay.long class="fixed z-50 px-4 py-2 text-sm text-white bg-blue-600 rounded-lg shadow-lg bottom-5 right-5 animate-bounce">
         Memuat data...
     </div> --}}
 
-    {{--
-    <livewire:notification-manager /> --}}
-    @livewire('wire-elements-modal')
-    @livewireScripts
-    @stack('scripts')
+    <livewire:notification-manager />
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
         window.OneSignalDeferred = window.OneSignalDeferred || [];
@@ -87,11 +81,22 @@
             await OneSignal.init({
                 appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18"
             , });
-            console.log(OneSignal.User.PushSubscription.id);
-
+            const playerId = OneSignal.User.PushSubscription.id;
+            console.log("Player ID:", playerId);
+            if (playerId) {
+                Livewire.dispatch('userSubscribed', {
+                    player_id: playerId
+                });
+            } else {
+                alert("Gagal mendapatkan Player ID setelah permintaan izin.");
+            }
         });
 
     </script>
+    @livewire('wire-elements-modal')
+    @livewireScripts
+    @stack('scripts')
+
 </body>
 
 </html>
