@@ -6,41 +6,43 @@
     </div>
 
     @push('scripts')
-
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
         function activateNotifications() {
-            console.log("activateNotifications dipanggil");
-
             window.OneSignalDeferred = window.OneSignalDeferred || [];
+
             OneSignalDeferred.push(async function(OneSignal) {
-                console.log("OneSignal init mulai...");
+                console.log("Mulai init OneSignal...");
 
                 await OneSignal.init({
                     appId: "{{ env('ONESIGNAL_APP_ID') }}"
-                    , serviceWorkerPath: "/OneSignalSDKWorker.js"
-                    , serviceWorkerUpdaterPath: "/OneSignalSDKUpdaterWorker.js"
+                    , serviceWorkerPath: '/'
+                    , serviceWorkerParam: {
+                        scope: '/'
+                    }
                     , notifyButton: {
                         enable: false
                     }
                 });
 
+                console.log("OneSignal siap");
+
                 const isPushSupported = await OneSignal.Notifications.isPushSupported();
-                console.log("Push supported:", isPushSupported);
+                console.log("Push supported?", isPushSupported);
 
                 if (!isPushSupported) {
                     alert("Browser tidak mendukung push notification.");
                     return;
                 }
 
-               const permission = await OneSignal.User.Permission.getCurrent();
-                console.log("Permission:", permission);
+                const nativePermission = await OneSignal.Notifications.permission(); // ✅ YANG BENAR di v16
+                console.log("Permission:", nativePermission);
 
                 const isSubscribed = await OneSignal.User.PushSubscription.isSubscribed();
                 console.log("isSubscribed:", isSubscribed);
 
-                if (!isSubscribed || permission !== 'granted') {
-                    console.log("Meminta izin...");
+                if (!isSubscribed || nativePermission !== 'granted') {
+                    console.log("Menampilkan slidedown prompt...");
                     await OneSignal.Notifications.showSlidedownPrompt();
                 }
 
@@ -53,18 +55,16 @@
                             player_id: playerId
                         });
                     } else {
-                        alert("Gagal mendapatkan Player ID setelah permintaan izin.");
+                        alert("Gagal mendapatkan Player ID");
                     }
                 }, 3000);
             });
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log("DOM Loaded, panggil activateNotifications()");
-            activateNotifications();
-        });
+        document.addEventListener("DOMContentLoaded", activateNotifications);
 
     </script>
+
 
     @endpush
 
