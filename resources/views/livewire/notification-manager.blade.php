@@ -6,57 +6,55 @@
     </div>
 
     @push('scripts')
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
     <script>
         window.OneSignal = window.OneSignal || [];
         OneSignal.push(function() {
             OneSignal.init({
                 appId: "{{ env('ONESIGNAL_APP_ID') }}"
+                , serviceWorkerPath: "/OneSignalSDKWorker.js"
+                , serviceWorkerUpdaterPath: "/OneSignalSDKUpdaterWorker.js"
                 , notifyButton: {
                     enable: false
                 }
-                , allowLocalhostAsSecureOrigin: true // optional: untuk dev
+                , allowLocalhostAsSecureOrigin: true
             });
 
-            OneSignal.isPushNotificationsSupported().then(function(isSupported) {
-                if (!isSupported) {
-                    alert("Browser tidak mendukung push notification.");
-                    return;
+            if (!OneSignal.isPushNotificationsSupported()) {
+                alert("Browser tidak mendukung push notification.");
+                return;
+            }
+
+            OneSignal.getNotificationPermission(function(permission) {
+                console.log("Permission:", permission);
+
+                if (permission !== 'granted') {
+                    OneSignal.showSlidedownPrompt();
                 }
 
-                OneSignal.getNotificationPermission().then(function(permission) {
-                    console.log("Permission:", permission);
+                OneSignal.isPushNotificationsEnabled(function(isEnabled) {
+                    console.log("Is enabled:", isEnabled);
 
-                    if (permission !== 'granted') {
-                        OneSignal.showSlidedownPrompt();
+                    if (isEnabled) {
+                        OneSignal.getUserId(function(playerId) {
+                            console.log("Player ID:", playerId);
+
+                            if (playerId) {
+                                Livewire.dispatch('userSubscribed', {
+                                    player_id: playerId
+                                });
+                            } else {
+                                alert("Gagal mendapatkan Player ID");
+                            }
+                        });
+                    } else {
+                        console.log("User belum mengaktifkan notifikasi.");
                     }
-
-                    OneSignal.isPushNotificationsEnabled().then(function(isEnabled) {
-                        console.log("isPushEnabled:", isEnabled);
-
-                        if (isEnabled) {
-                            OneSignal.getUserId().then(function(playerId) {
-                                console.log("Player ID:", playerId);
-
-                                if (playerId) {
-                                    Livewire.dispatch('userSubscribed', {
-                                        player_id: playerId
-                                    });
-                                } else {
-                                    alert("Gagal mendapatkan Player ID");
-                                }
-                            });
-                        } else {
-                            console.log("User belum mengaktifkan push notifications");
-                        }
-                    });
                 });
             });
         });
 
     </script>
-
-
 
     @endpush
 
