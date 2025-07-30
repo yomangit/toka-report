@@ -5,15 +5,24 @@
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 
     <script>
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            for (let registration of registrations) {
+                registration.unregister();
+            }
+            console.log("All service workers unregistered.");
+        });
+
+    </script>
+    <script>
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function(OneSignal) {
             await OneSignal.init({
                 appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18"
+                , serviceWorkerPath: "/OneSignalSDKWorker.js"
+                , serviceWorkerUpdaterPath: "/OneSignalSDKUpdaterWorker.js"
                 , notifyButton: {
                     enable: true
                 }
-                , serviceWorkerPath: "/OneSignalSDKWorker.js"
-                , serviceWorkerUpdaterPath: "/OneSignalSDKUpdaterWorker.js"
             , });
 
             console.log("✅ OneSignal initialized");
@@ -33,7 +42,7 @@
             // 📡 Dengarkan event perubahan status langganan
             OneSignal.User.PushSubscription.addEventListener('change', async (state) => {
                 if (state.current.optedIn) {
-                   const playerId = await OneSignal.User.PushSubscription.token;
+                    const playerId = await OneSignal.User.PushSubscription.token;
                     console.log("✅ New subscription. Player ID:", playerId);
                     window.Livewire.dispatch('userSubscribed', {
                         playerId
