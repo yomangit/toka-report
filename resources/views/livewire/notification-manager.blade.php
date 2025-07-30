@@ -48,12 +48,11 @@
                 }
             });
 
-            // Dapatkan player ID (user ID)
-            OneSignal.getUserId().then(function(playerId) {
-                console.log("Player ID:", playerId); // ✅ Ini adalah player ID
+            // ✅ Ambil player ID (user ID)
+            OneSignal.User.getId().then(function(playerId) {
+                console.log("Player ID:", playerId);
 
                 if (playerId) {
-                    // Kirim ke Livewire
                     Livewire.dispatch('userSubscribed', {
                         player_id: playerId
                     });
@@ -62,5 +61,6 @@
         });
 
     </script>
+
 
 </div>
