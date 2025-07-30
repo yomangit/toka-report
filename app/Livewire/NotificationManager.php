@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificationManager extends Component
 {
-    #[On('userSubscribed')]
-    public function savePlayerId($data)
+    public $onesignal_player_id;
+    public function mount()
     {
-        dd($data);
+        dd($this->onesignal_player_id);
         auth()->user()->update([
-            'onesignal_player_id' => $data['player_id'],
+            'onesignal_player_id' => $this->onesignal_player_id
         ]);
     }
     public function render()
