@@ -11,8 +11,9 @@ class NotificationManager extends Component
     #[On('userSubscribed')]
     public function savePlayerId($data)
     {
+        dd($data);
         auth()->user()->update([
-            'onesignal_player_id' => $data['playerId'],
+            'onesignal_player_id' => $data['player_id'],
         ]);
     }
     public function render()
