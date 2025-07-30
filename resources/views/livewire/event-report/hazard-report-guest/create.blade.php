@@ -101,9 +101,9 @@
                         <x-input wire:click='clickReportTo' wire:model.live='report_toName' placeholder="{{ __('report_to') }}" :error="$errors->get('report_toName')" class="cursor-pointer" tabindex="0" role="button" />
                         <div tabindex="0" class="dropdown-content card card-compact  bg-base-300 text-primary-content z-[1] w-full  p-2 shadow {{ $hiddenReportTo }}">
                             <div class="relative">
-                                <div class="h-full mb-2 pb-6 overflow-auto max-h-40 scroll-smooth focus:scroll-auto" wire:target='report_toName' wire:loading.class='hidden'>
+                                <div class="h-full pb-6 mb-2 overflow-auto max-h-40 scroll-smooth focus:scroll-auto" wire:target='report_toName' wire:loading.class='hidden'>
                                     @forelse ($Report_To as $report_to)
-                                    <div wire:click="reportedTo({{ $report_to->users_id }})" class="flex flex-col border-b cursor-pointer hover:bg-primary border-base-200 ">
+                                    <div wire:click="reportedTo({{ $report_to->users->id }})" class="flex flex-col border-b cursor-pointer hover:bg-primary border-base-200 ">
                                         <strong class="text-[10px] text-slate-800">{{ $report_to->users->lookup_name }}</strong>
                                     </div>
                                     @empty
