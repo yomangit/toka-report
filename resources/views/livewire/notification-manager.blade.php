@@ -33,7 +33,7 @@
                     return;
                 }
 
-                const permission = await OneSignal.Notifications.permissionNative();
+               const permission = await OneSignal.User.Permission.getCurrent();
                 console.log("Permission:", permission);
 
                 const isSubscribed = await OneSignal.User.PushSubscription.isSubscribed();
