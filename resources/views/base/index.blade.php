@@ -87,7 +87,7 @@
             await OneSignal.init({
                 appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18"
             , });
-            console.log(OneSignal);
+            console.log(OneSignal.User);
 
         });
 
