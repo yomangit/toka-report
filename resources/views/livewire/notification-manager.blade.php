@@ -12,7 +12,8 @@
             console.log("Player ID:", playerId);
             if (playerId) {
                 Livewire.dispatch('userSubscribed', {
-                    player_id: playerId
+                    // player_id: playerId
+                    player_id: 'playerId'
                 });
             } else {
                 alert("Gagal mendapatkan Player ID setelah permintaan izin.");

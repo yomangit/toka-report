@@ -10,6 +10,7 @@ class NotificationManager extends Component
     #[On('userSubscribed')]
     public function savePlayerId($data)
     {
+        dd($data);
         // Akses nilai dari payload JS
         $playerId = $data['player_id'];
 
