@@ -2,7 +2,7 @@
     {{-- Komponen NotificationManager --}}
 
     <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-    <script>
+    {{-- <script>
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function(OneSignal) {
             await OneSignal.init({
@@ -32,6 +32,31 @@
                     const playerId = await OneSignal.User.PushSubscription.token;
                     console.log("✅ New subscription. Player ID:", playerId);
                      Livewire.dispatch('userSubscribed', { player_id: playerId });
+                }
+            });
+        });
+
+    </script> --}}
+    <script>
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+
+        OneSignalDeferred.push(function(OneSignal) {
+            OneSignal.init({
+                appId: "{{ env('ONESIGNAL_APP_ID') }}"
+                , notifyButton: {
+                    enable: true
+                }
+            });
+
+            // Dapatkan player ID (user ID)
+            OneSignal.getUserId().then(function(playerId) {
+                console.log("Player ID:", playerId); // ✅ Ini adalah player ID
+
+                if (playerId) {
+                    // Kirim ke Livewire
+                    Livewire.dispatch('userSubscribed', {
+                        player_id: playerId
+                    });
                 }
             });
         });
