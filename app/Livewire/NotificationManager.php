@@ -14,11 +14,9 @@ class NotificationManager extends Component
     #[On('userSubscribed')]
     public function simpanPlayerId($player_id)
     {
-        if (auth()->user()->onesignal_player_id !== $player_id) {
-            auth()->user()->update([
-                'onesignal_player_id' => $player_id,
-            ]);
-        }
+        auth()->user()->update([
+            'onesignal_player_id' => $player_id,
+        ]);
     }
     public function test()
     {
