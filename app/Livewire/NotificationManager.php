@@ -22,7 +22,7 @@ class NotificationManager extends Component
     {
         $restApiKey = 'wvl3wiusquq3uvs6ueyhrdhg6';
         $appId = 'b50c5099-e9f4-439d-a8e9-319b0e4e5e18';
-        $playerId = '15076f32-8828-4369-ab73-8a8d30ca3c32';
+        $playerId = '6e2bd45c-cc8e-466c-a9d3-71f4265a2bfe';
 
         $response = Http::withHeaders([
             'Authorization' => 'Basic ' . $restApiKey,
