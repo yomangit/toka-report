@@ -48,8 +48,8 @@
             notifyButton: { enable: true }
         });
 
-        // ✅ Cek apakah sudah subscribe
-        const subscribed = await OneSignal.User.PushSubscription.exists();
+        const subscribed = await OneSignal.User.PushSubscription.optedIn;
+
         if (!subscribed) {
             try {
                 await OneSignal.User.PushSubscription.subscribe();
@@ -60,7 +60,6 @@
             }
         }
 
-        // ✅ Tunggu playerId
         let playerId = OneSignal.User.PushSubscription.id;
         while (!playerId) {
             await new Promise(resolve => setTimeout(resolve, 300));
@@ -69,7 +68,6 @@
 
         console.log("🎯 Player ID ready:", playerId);
 
-        // ✅ Login user
         const userIdFromBackend = "{{ auth()->id() }}";
         if (userIdFromBackend) {
             try {
@@ -80,17 +78,16 @@
             }
         }
 
-        // ✅ Kirim ke Livewire
         Livewire.dispatch('userSubscribed', { player_id: playerId });
 
-        // 🔁 Pantau perubahan
         OneSignal.Notifications.addEventListener("subscriptionChange", async () => {
             const newPlayerId = OneSignal.User.PushSubscription.id;
-            console.log("♻️ Subscription changed, new ID:", newPlayerId);
+            console.log("♻️ Subscription changed:", newPlayerId);
             Livewire.dispatch('userSubscribed', { player_id: newPlayerId });
         });
     });
 </script>
+
 
 
 
