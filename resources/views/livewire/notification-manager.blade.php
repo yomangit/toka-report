@@ -29,15 +29,15 @@
         }
 
         // Event listener saat status berubah
-        OneSignal.Notifications.addEventListener("subscriptionChange", async (event) => {
-            const newPlayerId = OneSignal.User.PushSubscription.id;
-            console.log("🟢 Player ID Updated:", newPlayerId);
-            if (newPlayerId) {
-                Livewire.dispatch('userSubscribed', {
-                    player_id: newPlayerId
-                });
-            }
-        });
+        // OneSignal.Notifications.addEventListener("subscriptionChange", async (event) => {
+        //     const newPlayerId = OneSignal.User.PushSubscription.id;
+        //     console.log("🟢 Player ID Updated:", newPlayerId);
+        //     if (newPlayerId) {
+        //         Livewire.dispatch('userSubscribed', {
+        //             player_id: newPlayerId
+        //         });
+        //     }
+        // });
     });
 
 </script>

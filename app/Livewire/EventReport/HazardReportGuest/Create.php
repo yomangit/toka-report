@@ -23,6 +23,7 @@ use App\Models\EventUserSecurity;
 use App\Models\Tindakantidakaman;
 use App\Notifications\toModerator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Intervention\Image\Facades\Image;
 use Cjmellor\Approval\Models\Approval;
 use Illuminate\Support\Facades\Request;
@@ -505,12 +506,17 @@ class Create extends Component
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
             ]));
             $user_os = User::find($this->report_to);
-            OneSignal::sendNotificationToUser(
-                $user_os->onesignal_player_id,
-                '⚠️ Laporan Bahaya: ' . $this->reference,
-                $this->report_byName . ' mengirimkan laporan. Klik untuk detail.',
-                url("/eventReport/hazardReportDetail/{$url}")
-            );
+            $response = Http::withHeaders([
+                'Authorization' => 'Basic ' . config('services.onesignal.rest_api_key'),
+                'Content-Type' => 'application/json',
+            ])->post('https://onesignal.com/api/v1/notifications', [
+                'app_id' => config('services.onesignal.app_id'),
+                'include_player_ids' => [$user_os->onesignal_player_id],
+                'headings' => ['en' => 'Tes dari Laravel'],
+                'contents' => ['en' => 'Halo! Ini notifikasi dari backend'],
+                'url' => url("/eventReport/hazardReportDetail/{$url}"),
+            ]);
+            return $response->json();
         }
 
         $this->clearFields();
