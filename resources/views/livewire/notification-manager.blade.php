@@ -42,55 +42,61 @@
 <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     OneSignalDeferred.push(async function(OneSignal) {
+        // Init SDK
         await OneSignal.init({
-            appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18"
-            , serviceWorkerPath: "/sw.js"
-            , serviceWorkerRegistration: await navigator.serviceWorker.ready
-            , notifyButton: {
-                enable: true
-            }
+            appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18",
+            serviceWorkerPath: "/sw.js",
+            serviceWorkerRegistration: await navigator.serviceWorker.ready,
+            notifyButton: { enable: true }
         });
 
-        // ✅ Loginkan user ke OneSignal pakai ID user sistemmu (misal user ID Laravel)
-        const userIdFromBackend = "{{ auth()->id() }}"; // atau bisa dari cookie, API, dsb
-        if (userIdFromBackend) {
-            await OneSignal.login(userIdFromBackend);
+        // Cek apakah browser mendukung push
+        const isPushSupported = await OneSignal.isPushSupported();
+        if (!isPushSupported) {
+            console.warn("🚫 Push not supported on this browser.");
+            return;
         }
 
-        // Lanjutkan cek subscription
-        const isSubscribed = OneSignal.User.PushSubscription.optedIn;
-        if (isSubscribed) {
-            const playerId = OneSignal.User.PushSubscription.id;
-            console.log("🎯 Player ID:", playerId);
-            if (playerId) {
-                Livewire.dispatch('userSubscribed', {
-                    player_id: playerId
-                });
-            }
-        } else {
-            console.log("🔕 User belum subscribe");
-        }
-
-        // // 🔄 Jika status subscription berubah
-        // OneSignal.Notifications.addEventListener("subscriptionChange", async (event) => {
-        //     const updated = await OneSignal.User.PushSubscription.get();
-        //     if (updated ? .id) {
-        //         console.log("🟢 Player ID Updated:", updated.id);
-        //         Livewire.dispatch('userSubscribed', {
-        //             player_id: updated.id
-        //         });
-        //     }
-        // });
-
-        // 🚪 Logout bersih (opsional)
-        window.addEventListener("beforeunload", async () => {
+        // Subscribe kalau belum
+        const alreadySubscribed = await OneSignal.User.PushSubscription.exists();
+        if (!alreadySubscribed) {
             try {
-                // Belum tersedia di SDK v16 (logout belum support), jadi cukup rely on backend
-                console.log("🚪 Unloading... (player still cached on device)");
+                await OneSignal.User.PushSubscription.subscribe();
+                console.log("✅ User now subscribed");
+            } catch (err) {
+                console.error("❌ Failed to subscribe:", err);
+                return;
+            }
+        }
+
+        // ✅ Login setelah sudah pasti subscription ada
+        const userIdFromBackend = "{{ auth()->id() }}";
+        if (userIdFromBackend) {
+            try {
+                await OneSignal.login(userIdFromBackend);
+                console.log("🔑 Logged in to OneSignal with ID:", userIdFromBackend);
             } catch (e) {
-                console.warn("Logout error:", e);
+                console.error("❌ Failed to login to OneSignal:", e);
+            }
+        }
+
+        // Ambil dan kirim player_id ke Livewire
+        const playerId = OneSignal.User.PushSubscription.id;
+        if (playerId) {
+            console.log("🎯 Player ID:", playerId);
+            Livewire.dispatch('userSubscribed', { player_id: playerId });
+        } else {
+            console.warn("⚠️ Player ID not available yet.");
+        }
+
+        // Update kalau ada perubahan subscription
+        OneSignal.Notifications.addEventListener("subscriptionChange", async () => {
+            const newPlayerId = OneSignal.User.PushSubscription.id;
+            if (newPlayerId) {
+                console.log("🔄 Player ID updated:", newPlayerId);
+                Livewire.dispatch('userSubscribed', { player_id: newPlayerId });
             }
         });
     });
-
 </script>
+
