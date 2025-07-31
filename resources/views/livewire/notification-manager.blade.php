@@ -17,7 +17,8 @@
                 enable: true
             },
         });
-
+        console.log(OneSignal);
+        
         // Dapatkan Player ID dengan benar
         const playerId = await OneSignal.getUserId();
         console.log("✅ Player ID:", playerId);
