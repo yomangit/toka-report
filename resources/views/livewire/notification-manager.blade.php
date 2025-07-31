@@ -46,7 +46,10 @@
             appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18"
             , serviceWorkerPath: "/sw.js"
             , serviceWorkerRegistration: await navigator.serviceWorker.ready
-        , });
+            , notifyButton: {
+                enable: true
+            }
+        });
 
         // ✅ Loginkan user ke OneSignal pakai ID user sistemmu (misal user ID Laravel)
         const userIdFromBackend = "{{ auth()->id() }}"; // atau bisa dari cookie, API, dsb
