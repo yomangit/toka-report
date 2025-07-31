@@ -504,7 +504,7 @@ class Create extends Component
                 'line3'     => 'Terima kasih atas perhatian dan kerjasamanya 🙏',
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
             ]));
-            $user_os = User::whereId($this->report_to);
+            $user_os = User::find($this->report_to);
             OneSignal::sendNotificationToUser(
                 $user_os->onesignal_player_id,
                 '⚠️ Laporan Bahaya: ' . $this->reference,
