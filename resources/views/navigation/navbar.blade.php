@@ -62,3 +62,28 @@
         </div>
     </div>
 </div>
+@push('script')
+<script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+        const logoutLink = document.querySelector('a[href="/logout"]');
+        const logoutForm = document.getElementById('logout-form');
+
+        if (logoutLink && logoutForm) {
+            logoutLink.addEventListener('click', async function(e) {
+                e.preventDefault();
+
+                try {
+                    await OneSignal.User.logout(); // SDK v16
+                    console.log("✅ Player ID direset");
+                } catch (err) {
+                    console.warn("❌ Gagal reset Player ID:", err);
+                }
+
+                logoutForm.submit();
+            });
+        }
+    });
+
+</script>
+@endpush

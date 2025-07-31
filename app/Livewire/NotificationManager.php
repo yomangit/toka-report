@@ -14,23 +14,13 @@ class NotificationManager extends Component
     #[On('userSubscribed')]
     public function simpanPlayerId($player_id)
     {
-
-        // Contoh: simpan ke user
-        if (Auth::check()) {
+        if (auth()->user()->onesignal_player_id !== $player_id) {
             auth()->user()->update([
-                'onesignal_player_id' => $player_id
+                'onesignal_player_id' => $player_id,
             ]);
         }
     }
-    #[On('userLoggedOut')]
-    public function clearPlayerId()
-    {
-        if (Auth::check()) {
-            Auth::user()->update([
-                'onesignal_player_id' => null,
-            ]);
-        }
-    }
+
     public function savePlayerId($player_id)
     {
         if (!auth()->check()) return;
