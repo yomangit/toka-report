@@ -23,7 +23,7 @@
             </div>
             <ul tabindex="0" class="dropdown-content menu-xs menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                 <li>
-                    <a href="/logout" id="custom-logout" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
+                    <a href="/logout" id="logout-link" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
                         Logout
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
@@ -64,25 +64,20 @@
 </div>
 @push('script')
 <script>
-    document.getElementById('custom-logout').addEventListener('click', async function (e) {
-        e.preventDefault();
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(function(OneSignal) {
+        document.getElementById('logout-link').addEventListener('click', async function (e) {
+            e.preventDefault();
 
-        if (window.OneSignalDeferred) {
-            OneSignalDeferred.push(async function (OneSignal) {
-                try {
-                    await OneSignal.logout();
-                    console.log("✅ Player ID direset");
-                } catch (error) {
-                    console.warn("❌ Gagal reset OneSignal:", error);
-                } finally {
-                    // Setelah reset selesai, submit logout
-                    document.getElementById('logout-form').submit();
-                }
-            });
-        } else {
-            // Jika OneSignal belum ready, tetap logout
+            try {
+                await OneSignal.logout();
+                console.log("✅ OneSignal logout success");
+            } catch (error) {
+                console.error("❌ OneSignal logout failed", error);
+            }
+
             document.getElementById('logout-form').submit();
-        }
+        });
     });
 </script>
 @endpush

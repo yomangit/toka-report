@@ -46,14 +46,13 @@
 <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     OneSignalDeferred.push(async function(OneSignal) {
-        const logoutLink = document.querySelector('a[href="{{ route('logout') }}"]');
         await OneSignal.init({
             appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18"
             , serviceWorkerPath: "/sw.js"
             , serviceWorkerUpdaterPath: "/sw.js"
             , serviceWorkerRegistration: await navigator.serviceWorker.ready
         , });
-
+        await OneSignal.login("{{ auth()->id() }}"); // 🆕 kaitkan user ke OneSignal
         // ✅ Cek apakah user sudah subscribe
         const isSubscribed = OneSignal.User.PushSubscription.optedIn;
         if (isSubscribed) {
@@ -66,24 +65,6 @@
             }
         } else {
             console.log("🔕 User belum subscribe notifikasi");
-        }
-    });
-
-    document.addEventListener("DOMContentLoaded", function() {
-        const logoutForm = document.querySelector('form#logout-form');
-        if (logoutForm) {
-            logoutForm.addEventListener('submit', async function() {
-                try {
-                    const OneSignal = window.OneSignal;
-                    if (OneSignal) {
-                        await OneSignal.logout();
-                        Livewire.dispatch('userLoggedOut');
-                        console.log('✅ Logout OneSignal berhasil');
-                    }
-                } catch (error) {
-                    console.warn('❌ Gagal logout OneSignal:', error);
-                }
-            });
         }
     });
 

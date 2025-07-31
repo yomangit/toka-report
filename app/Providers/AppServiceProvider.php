@@ -29,16 +29,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
         ResetPassword::createUrlUsing(function (User $user, string $token) {
             return 'https://tokasafe.archimining.com/reset-password/' . $token;
         });
         Event::listen(Logout::class, function ($event) {
-            if ($event->user instanceof User) {
-                $event->user->update([
-                    'onesignal_player_id' => null,
-                ]);
-            }
+            $event->user->update(['onesignal_player_id' => null]);
         });
     }
 }
