@@ -529,7 +529,7 @@ class Create extends Component
                 'Content-Type' => 'application/json',
             ])->post('https://onesignal.com/api/v1/notifications', [
                 'app_id' => $appId,
-                'include_player_ids' => '6e2bd45c-cc8e-466c-a9d3-71f4265a2bfe',
+                'include_player_ids' => 'ea559b76-e8f2-49ee-9a79-db84da99d6fe',
                 'headings' => ['en' => $judul],
                 'contents' => ['en' => $isi],
                 'url' => $url,

@@ -31,17 +31,6 @@ class NotificationManager extends Component
         $playerId = 'ea559b76-e8f2-49ee-9a79-db84da99d6fe';
 
         $response = Http::withHeaders([
-            'Authorization' => 'Basic ' . $restApiKey,
-            'Content-Type' => 'application/json',
-        ])->post('https://onesignal.com/api/v1/notifications', [
-            'app_id' => $appId,
-            'include_player_ids' => [$playerId],
-            'headings' => ['en' => 'Tes Notifikasi'],
-            'contents' => ['en' => 'Ini adalah notifikasi dari Laravel.'],
-            'url' => 'https://tokasafe.archimining.com', // wajib kalau Chrome
-        ]);
-
-        $response = Http::withHeaders([
             'Authorization' => 'Basic ' . config('services.onesignal.rest_api_key'),
             'Content-Type' => 'application/json',
         ])->post('https://onesignal.com/api/v1/notifications', [
