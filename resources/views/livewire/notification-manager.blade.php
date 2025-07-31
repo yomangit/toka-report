@@ -1,5 +1,5 @@
 <div>
-    {{-- The Master doesn't talk, he acts. --}}
+    <x-btn-add wire:click='test' />
 </div>
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script>
