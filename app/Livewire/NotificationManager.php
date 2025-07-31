@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use App\Models\OnesignalPlayer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Berkayk\OneSignal\OneSignalFacade as OneSignal;
@@ -15,10 +16,11 @@ class NotificationManager extends Component
     public function simpanPlayerId($player_id)
     {
         $playerId = $player_id;
-        $user = auth()->user();
-        if ($user && $playerId) {
-            $user->onesignalPlayers()->firstOrCreate([
-                'player_id' => $playerId
+
+        if ($playerId && Auth::check()) {
+            OnesignalPlayer::firstOrCreate([
+                'user_id' => Auth::user()->id,
+                'player_id' => $playerId,
             ]);
         }
     }

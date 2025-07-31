@@ -27,17 +27,14 @@
                 player_id: playerId
             });
         }
-
-        // Event listener saat status berubah
-        // OneSignal.Notifications.addEventListener("subscriptionChange", async (event) => {
-        //     const newPlayerId = OneSignal.User.PushSubscription.id;
-        //     console.log("🟢 Player ID Updated:", newPlayerId);
-        //     if (newPlayerId) {
-        //         Livewire.dispatch('userSubscribed', {
-        //             player_id: newPlayerId
-        //         });
-        //     }
-        // });
+        OneSignal.Notifications.addEventListener("subscriptionChange", async (event) => {
+            const newPlayerId = OneSignal.User.PushSubscription.id;
+            if (newPlayerId) {
+                Livewire.dispatch('userSubscribed', {
+                    player_id: newPlayerId
+                });
+            }
+        })
     });
 
 </script>
@@ -53,20 +50,20 @@
             , serviceWorkerRegistration: await navigator.serviceWorker.ready
         , });
         await OneSignal.login("{{ auth()->id() }}"); // 🆕 kaitkan user ke OneSignal
-        // ✅ Cek apakah user sudah subscribe
-        const isSubscribed = OneSignal.User.PushSubscription.optedIn;
-        if (isSubscribed) {
-            const playerId = OneSignal.User.PushSubscription.id;
-            console.log("🎯 Player ID:", playerId);
-            if (playerId) {
-                Livewire.dispatch('userSubscribed', {
-                    player_id: playerId
-                });
-            }
-        } else {
-            console.log("🔕 User belum subscribe notifikasi");
-        }
-    });
-   
+// ✅ Cek apakah user sudah subscribe
+const isSubscribed = OneSignal.User.PushSubscription.optedIn;
+if (isSubscribed) {
+const playerId = OneSignal.User.PushSubscription.id;
+console.log("🎯 Player ID:", playerId);
+if (playerId) {
+Livewire.dispatch('userSubscribed', {
+player_id: playerId
+});
+}
+} else {
+console.log("🔕 User belum subscribe notifikasi");
+}
+});
+
 
 </script> --}}

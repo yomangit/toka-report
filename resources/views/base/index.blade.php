@@ -78,7 +78,11 @@
     @livewire('wire-elements-modal')
     @livewireScripts
     @stack('scripts')
-   
+   <script>
+    window.addEventListener('beforeunload', function () {
+        OneSignal.User.logout(); // Logout OneSignal SDK v16
+    });
+</script>
 
     
 </body>
