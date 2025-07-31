@@ -45,7 +45,6 @@
         await OneSignal.init({
             appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18"
             serviceWorkerPath: "/sw.js",
-            serviceWorkerUpdaterPath: "/sw.js",
             serviceWorkerRegistration: await navigator.serviceWorker.ready,
         });
 
