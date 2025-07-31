@@ -15,7 +15,7 @@ class NotificationManager extends Component
     {
         if (!auth()->check()) return;
 
-        $newId = $player_id['player_id'];
+        $newId = $player_id;
 
         // Bersihkan dari user lain jika pernah dipakai
         User::where('onesignal_player_id', $newId)
