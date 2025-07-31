@@ -32,8 +32,9 @@ class NotificationManager extends Component
             'include_player_ids' => [$playerId],
             'headings' => ['en' => 'Tes Notifikasi'],
             'contents' => ['en' => 'Ini adalah notifikasi dari Laravel.'],
+            'url' => 'https://tokasafe.archimining.com', // wajib kalau Chrome
         ]);
-
+        dd($response->json());
         return $response->json();
         $this->dispatch('alert', [
             'text'            => "Laporan Hazard Anda Sudah Terkirim, Terima kasih sudah melapor!!!",
