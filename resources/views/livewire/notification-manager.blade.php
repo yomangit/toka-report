@@ -38,7 +38,6 @@
     });
 
 </script> --}}
-
 <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     OneSignalDeferred.push(async function (OneSignal) {
@@ -49,13 +48,7 @@
             notifyButton: { enable: true }
         });
 
-        const isPushSupported = await OneSignal.isPushSupported();
-        if (!isPushSupported) {
-            console.warn("🚫 Push Not Supported");
-            return;
-        }
-
-        // Langkah 1: Subscribe jika belum
+        // ✅ Cek apakah sudah subscribe
         const subscribed = await OneSignal.User.PushSubscription.exists();
         if (!subscribed) {
             try {
@@ -67,16 +60,16 @@
             }
         }
 
-        // Langkah 2: Tunggu sampai Player ID tersedia
+        // ✅ Tunggu playerId
         let playerId = OneSignal.User.PushSubscription.id;
         while (!playerId) {
-            await new Promise(resolve => setTimeout(resolve, 300)); // tunggu 300ms
+            await new Promise(resolve => setTimeout(resolve, 300));
             playerId = OneSignal.User.PushSubscription.id;
         }
 
         console.log("🎯 Player ID ready:", playerId);
 
-        // Langkah 3: Sekarang boleh login
+        // ✅ Login user
         const userIdFromBackend = "{{ auth()->id() }}";
         if (userIdFromBackend) {
             try {
@@ -87,10 +80,10 @@
             }
         }
 
-        // Langkah 4: Kirim ke Livewire
+        // ✅ Kirim ke Livewire
         Livewire.dispatch('userSubscribed', { player_id: playerId });
 
-        // Langkah 5: Dengarkan perubahan subscription
+        // 🔁 Pantau perubahan
         OneSignal.Notifications.addEventListener("subscriptionChange", async () => {
             const newPlayerId = OneSignal.User.PushSubscription.id;
             console.log("♻️ Subscription changed, new ID:", newPlayerId);
@@ -98,5 +91,6 @@
         });
     });
 </script>
+
 
 
