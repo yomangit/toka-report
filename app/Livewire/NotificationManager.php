@@ -20,22 +20,6 @@ class NotificationManager extends Component
             ]);
         }
     }
-
-    public function savePlayerId($player_id)
-    {
-        if (!auth()->check()) return;
-
-        $newId = $player_id;
-
-        // Bersihkan dari user lain jika pernah dipakai
-        User::where('onesignal_player_id', $newId)
-            ->where('id', '!=', auth()->id())
-            ->update(['onesignal_player_id' => null]);
-
-        auth()->user()->update([
-            'onesignal_player_id' => $newId,
-        ]);
-    }
     public function test()
     {
         $restApiKey = 'os_v2_app_wugfbgpj6rbz3khjggnq4ts6ddon2ktn3fbeuduhkekgx7odctgn7qfesyj4r4hcd7fjar4cidqbkmkqqna7h26oug3wnyxomvqfvni';
