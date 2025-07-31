@@ -5,12 +5,32 @@ namespace App\Livewire;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Berkayk\OneSignal\OneSignalFacade as OneSignal;
 
 class NotificationManager extends Component
 {
     #[On('userSubscribed')]
+    public function simpanPlayerId($player_id)
+    {
+
+        // Contoh: simpan ke user
+        if (Auth::check()) {
+            auth()->user()->update([
+                'onesignal_player_id' => $player_id
+            ]);
+        }
+    }
+    #[On('userLoggedOut')]
+    public function clearPlayerId()
+    {
+        if (Auth::check()) {
+            Auth::user()->update([
+                'onesignal_player_id' => null,
+            ]);
+        }
+    }
     public function savePlayerId($player_id)
     {
         if (!auth()->check()) return;

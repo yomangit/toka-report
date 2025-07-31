@@ -4,7 +4,7 @@
 </div>
 
 <!-- SDK OneSignal -->
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" async></script>
+{{-- <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" async></script>
 
 <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
@@ -40,4 +40,43 @@
         });
     });
 
+</script> --}}
+
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+            appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18",
+            serviceWorkerPath: "/sw.js",
+            serviceWorkerUpdaterPath: "/sw.js",
+            serviceWorkerRegistration: await navigator.serviceWorker.ready,
+        });
+
+        const status = await OneSignal.Notifications.permissionStatus();
+        if (status === 'granted') {
+            const playerId = await OneSignal.User.PushSubscription.id;
+            if (playerId) {
+                Livewire.dispatch('userSubscribed', { player_id: playerId });
+            }
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const logoutForm = document.querySelector('form#logout-form');
+        if (logoutForm) {
+            logoutForm.addEventListener('submit', async function () {
+                try {
+                    const OneSignal = window.OneSignal;
+                    if (OneSignal) {
+                        await OneSignal.logout();
+                        Livewire.dispatch('userLoggedOut');
+                        console.log('✅ Logout OneSignal berhasil');
+                    }
+                } catch (error) {
+                    console.warn('❌ Gagal logout OneSignal:', error);
+                }
+            });
+        }
+    });
 </script>
