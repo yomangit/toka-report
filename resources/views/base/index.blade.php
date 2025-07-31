@@ -66,6 +66,7 @@
 
         <div class="w-full max-w-screen-xl px-4 py-4 mx-auto">
             @yield('content')
+            <livewire:notification-manager />
         </div>
     </main>
     {{-- Livewire global loading --}}
@@ -73,7 +74,7 @@
         Memuat data...
     </div> --}}
 
-    <livewire:notification-manager />
+    
     @livewire('wire-elements-modal')
     @livewireScripts
     @stack('scripts')

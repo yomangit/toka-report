@@ -30,6 +30,14 @@ class NotificationManager extends Component
             'headings' => ['en' => 'Halo ' . auth()->user()->lookup_name],
             'contents' => ['en' => 'Notifikasi dari Livewire'],
         ]);
+        $this->dispatch('alert', [
+            'text'            => "Laporan Hazard Anda Sudah Terkirim, Terima kasih sudah melapor!!!",
+            'duration'        => 5000,
+            'destination'     => '/contact',
+            'newWindow'       => true,
+            'close'           => true,
+            'backgroundColor' => "linear-gradient(to right, #06b6d4, #22c55e)",
+        ]);
     }
 
     public function render()

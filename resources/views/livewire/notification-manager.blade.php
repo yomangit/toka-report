@@ -1,4 +1,5 @@
 <div>
+    <x-notification />
     <x-btn-add wire:click='test' />
 </div>
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
@@ -18,9 +19,5 @@
             alert("Gagal mendapatkan Player ID setelah permintaan izin.");
         }
     });
-   
-
-
 
 </script>
-
