@@ -519,19 +519,18 @@ class Create extends Component
             if (empty($playerIds)) {
                 return response()->json(['error' => 'No player IDs found.'], 422);
             }
-
-            $judul = '⚠️ Laporan Bahaya dengan Nomor Referensi: ' . $this->reference;
-            $isi = $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.';
+            dd($playerIds);
+            $judul =  ['en' => '⚠️ Laporan Bahaya dengan Nomor Referensi: ' . $this->reference];
+            $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
             $url = url("/eventReport/hazardReportDetail/{$url}");
-
              $response = Http::withHeaders([
             'Authorization' => 'Basic ' . config('services.onesignal.rest_api_key'),
             'Content-Type' => 'application/json',
         ])->post('https://onesignal.com/api/v1/notifications', [
             'app_id' => config('services.onesignal.app_id'),
             'include_player_ids' => [$playerIds],
-            'headings' => ['en' => 'Tes dari Laravel'],
-            'contents' => ['en' => 'Halo! Ini notifikasi dari backend'],
+            'headings' => $judul,
+            'contents' => $isi,
             'url' => 'https://tokasafe.archimining.com',
         ]);
         return $response->json();
