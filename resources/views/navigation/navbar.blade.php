@@ -62,22 +62,5 @@
         </div>
     </div>
 </div>
-@push('script')
-<script>
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(function(OneSignal) {
-        document.getElementById('logout-link').addEventListener('click', async function (e) {
-            e.preventDefault();
 
-            try {
-                await OneSignal.logout();
-                console.log("✅ OneSignal logout success");
-            } catch (error) {
-                console.error("❌ OneSignal logout failed", error);
-            }
 
-            document.getElementById('logout-form').submit();
-        });
-    });
-</script>
-@endpush

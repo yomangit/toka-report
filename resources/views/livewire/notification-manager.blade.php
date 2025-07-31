@@ -67,5 +67,18 @@
             console.log("🔕 User belum subscribe notifikasi");
         }
     });
+    const logoutLink = document.getElementById("logout-link");
+    if (logoutLink) {
+        logoutLink.addEventListener("click", async function(e) {
+            e.preventDefault();
+            try {
+                await OneSignal.logout();
+                console.log("✅ OneSignal logout berhasil");
+            } catch (err) {
+                console.warn("❌ OneSignal logout gagal", err);
+            }
+            document.getElementById("logout-form").submit();
+        });
+    }
 
 </script>
