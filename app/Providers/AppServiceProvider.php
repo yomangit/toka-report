@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\URL;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+
 use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Auth\Events\Logout;
+use Illuminate\Support\Facades\Event;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,6 +32,13 @@ class AppServiceProvider extends ServiceProvider
 
         ResetPassword::createUrlUsing(function (User $user, string $token) {
             return 'https://tokasafe.archimining.com/reset-password/' . $token;
+        });
+        Event::listen(Logout::class, function ($event) {
+            if ($event->user instanceof User) {
+                $event->user->update([
+                    'onesignal_player_id' => null,
+                ]);
+            }
         });
     }
 }
