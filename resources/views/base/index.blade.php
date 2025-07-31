@@ -78,7 +78,25 @@
     @livewire('wire-elements-modal')
     @livewireScripts
     @stack('scripts')
+    <script>
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(async function(OneSignal) {
+            const logoutButton = document.querySelector('form[action="{{ route('
+                logout ') }}"]');
+            if (logoutButton) {
+                logoutButton.addEventListener('submit', async () => {
+                    try {
+                        await OneSignal.logout();
+                        console.log("✅ OneSignal playerId direset saat logout");
+                    } catch (e) {
+                        console.warn("❌ Gagal reset OneSignal:", e);
+                    }
+                });
+            }
+        });
 
+    </script>
+    
 </body>
 
 </html>

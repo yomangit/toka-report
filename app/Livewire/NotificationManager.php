@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\User;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Http;
@@ -10,17 +11,24 @@ use Berkayk\OneSignal\OneSignalFacade as OneSignal;
 class NotificationManager extends Component
 {
     #[On('userSubscribed')]
-    public function simpanPlayerId($player_id)
+    public function savePlayerId($data)
     {
+        if (!auth()->check()) return;
 
-        // Contoh: simpan ke user
+        $newId = $data['player_id'];
+
+        // Bersihkan dari user lain jika pernah dipakai
+        User::where('onesignal_player_id', $newId)
+            ->where('id', '!=', auth()->id())
+            ->update(['onesignal_player_id' => null]);
+
         auth()->user()->update([
-            'onesignal_player_id' => $player_id
+            'onesignal_player_id' => $newId,
         ]);
     }
     public function test()
     {
-        $restApiKey = 'wvl3wiusquq3uvs6ueyhrdhg6';
+        $restApiKey = 'os_v2_app_wugfbgpj6rbz3khjggnq4ts6ddon2ktn3fbeuduhkekgx7odctgn7qfesyj4r4hcd7fjar4cidqbkmkqqna7h26oug3wnyxomvqfvni';
         $appId = 'b50c5099-e9f4-439d-a8e9-319b0e4e5e18';
         $playerId = '6e2bd45c-cc8e-466c-a9d3-71f4265a2bfe';
 

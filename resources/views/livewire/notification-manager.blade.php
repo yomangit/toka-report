@@ -6,7 +6,7 @@
 <!-- SDK OneSignal -->
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" async></script>
 
-<script>
+{{-- <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     OneSignalDeferred.push(async function(OneSignal) {
         await OneSignal.init({
@@ -40,4 +40,18 @@
         });
     });
 
+</script> --}}
+<script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+        // Tunggu sampai OneSignal siap
+        const subscription = await OneSignal.User.PushSubscription.get();
+        const playerId = subscription?.id;
+
+        if (playerId) {
+            Livewire.dispatch('userSubscribed', {
+                player_id: playerId
+            });
+        }
+    });
 </script>
