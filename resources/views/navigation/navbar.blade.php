@@ -23,7 +23,7 @@
             </div>
             <ul tabindex="0" class="dropdown-content menu-xs menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                 <li>
-                    <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <a href="/logout" id="custom-logout" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
                         Logout
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
@@ -64,26 +64,25 @@
 </div>
 @push('script')
 <script>
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function(OneSignal) {
-        const logoutLink = document.querySelector('a[href="/logout"]');
-        const logoutForm = document.getElementById('logout-form');
+    document.getElementById('custom-logout').addEventListener('click', async function (e) {
+        e.preventDefault();
 
-        if (logoutLink && logoutForm) {
-            logoutLink.addEventListener('click', async function(e) {
-                e.preventDefault();
-
+        if (window.OneSignalDeferred) {
+            OneSignalDeferred.push(async function (OneSignal) {
                 try {
-                    await OneSignal.User.logout(); // SDK v16
+                    await OneSignal.logout();
                     console.log("✅ Player ID direset");
-                } catch (err) {
-                    console.warn("❌ Gagal reset Player ID:", err);
+                } catch (error) {
+                    console.warn("❌ Gagal reset OneSignal:", error);
+                } finally {
+                    // Setelah reset selesai, submit logout
+                    document.getElementById('logout-form').submit();
                 }
-
-                logoutForm.submit();
             });
+        } else {
+            // Jika OneSignal belum ready, tetap logout
+            document.getElementById('logout-form').submit();
         }
     });
-
 </script>
 @endpush
