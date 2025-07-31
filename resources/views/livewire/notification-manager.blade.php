@@ -45,9 +45,7 @@
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     OneSignalDeferred.push(async function(OneSignal) {
         // Tunggu sampai OneSignal siap
-        const subscription = await OneSignal.User.PushSubscription.get();
-        const playerId = subscription?.id;
-
+        const playerId = OneSignal.User.PushSubscription.id;
         if (playerId) {
             Livewire.dispatch('userSubscribed', {
                 player_id: playerId
