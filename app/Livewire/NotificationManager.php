@@ -22,10 +22,10 @@ class NotificationManager extends Component
     public function test()
     {
         Http::withHeaders([
-            'Authorization' => 'Basic ' . config('services.onesignal.rest_api_key'),
+            'Authorization' => 'Basic ' . "wvl3wiusquq3uvs6ueyhrdhg6",
             'Content-Type' => 'application/json',
         ])->post('https://onesignal.com/api/v1/notifications', [
-            'app_id' => config('services.onesignal.app_id'),
+            'app_id' => "b50c5099-e9f4-439d-a8e9-319b0e4e5e18",
             'include_player_ids' => [auth()->user()->onesignal_player_id],
             'headings' => ['en' => 'Halo ' . auth()->user()->lookup_name],
             'contents' => ['en' => 'Notifikasi dari Livewire'],
