@@ -24,22 +24,6 @@ class NotificationManager extends Component
             ]);
         }
     }
-    public function test()
-    {
-        $playerId = '6e2bd45c-cc8e-466c-a9d3-71f4265a2bfe';
-        $response = Http::withHeaders([
-            'Authorization' => 'Basic ' . config('services.onesignal.rest_api_key'),
-            'Content-Type' => 'application/json',
-        ])->post('https://onesignal.com/api/v1/notifications', [
-            'app_id' => config('services.onesignal.app_id'),
-            'include_player_ids' => [$playerId],
-            'headings' => ['en' => 'Tes dari Laravel'],
-            'contents' => ['en' => 'Halo! Ini notifikasi dari backend'],
-            'url' => 'https://tokasafe.archimining.com',
-        ]);
-        return $response->json();
-    }
-
     public function render()
     {
         return view('livewire.notification-manager');
