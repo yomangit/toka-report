@@ -21,15 +21,21 @@ class NotificationManager extends Component
     }
     public function test()
     {
-        Http::withHeaders([
-            'Authorization' => 'Basic ' . "wvl3wiusquq3uvs6ueyhrdhg6",
+        $restApiKey = 'wvl3wiusquq3uvs6ueyhrdhg6';
+        $appId = 'b50c5099-e9f4-439d-a8e9-319b0e4e5e18';
+        $playerId = '15076f32-8828-4369-ab73-8a8d30ca3c32';
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Basic ' . $restApiKey,
             'Content-Type' => 'application/json',
         ])->post('https://onesignal.com/api/v1/notifications', [
-            'app_id' => "b50c5099-e9f4-439d-a8e9-319b0e4e5e18",
-            'include_player_ids' => [auth()->user()->onesignal_player_id],
-            'headings' => ['en' => 'Halo ' . auth()->user()->lookup_name],
-            'contents' => ['en' => 'Notifikasi dari Livewire'],
+            'app_id' => $appId,
+            'include_player_ids' => [$playerId],
+            'headings' => ['en' => 'Tes Notifikasi'],
+            'contents' => ['en' => 'Ini adalah notifikasi dari Laravel.'],
         ]);
+
+        return $response->json();
         $this->dispatch('alert', [
             'text'            => "Laporan Hazard Anda Sudah Terkirim, Terima kasih sudah melapor!!!",
             'duration'        => 5000,
