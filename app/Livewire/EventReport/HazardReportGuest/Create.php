@@ -2,6 +2,7 @@
 
 namespace App\Livewire\EventReport\HazardReportGuest;
 
+use App\Helpers\NotificationHelper;
 use DateTime;
 use App\Models\User;
 use Livewire\Component;
@@ -506,17 +507,12 @@ class Create extends Component
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
             ]));
             $user_os = User::find($this->report_to);
-            $response = Http::withHeaders([
-                'Authorization' => 'Basic ' . config('services.onesignal.rest_api_key'),
-                'Content-Type' => 'application/json',
-            ])->post('https://onesignal.com/api/v1/notifications', [
-                'app_id' => config('services.onesignal.app_id'),
-                'include_player_ids' => [$user_os->onesignal_player_id],
-                'headings' => ['en' => '⚠️ Laporan Bahaya dengan Nomor Referensi: ' . $this->reference],
-                'contents' => ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'],
-                'url' => url("/eventReport/hazardReportDetail/{$url}"),
-            ]);
-            return $response->json();
+            $playerIds = $user_os->oneSignalPlayers->pluck('player_id')->toArray();
+            $judul = '⚠️ Laporan Bahaya dengan Nomor Referensi: ' . $this->reference;
+            $isi = $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.';
+            $url = url("/eventReport/hazardReportDetail/{$url}");
+
+            NotificationHelper::sendToUser($user_os, $judul, $isi, $url);
         }
 
         $this->clearFields();
