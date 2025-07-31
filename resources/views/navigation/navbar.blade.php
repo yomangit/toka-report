@@ -23,7 +23,7 @@
             </div>
             <ul tabindex="0" class="dropdown-content menu-xs menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                 <li>
-                    <a href="/logout" id="logout-link" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
+                    <a href="/logout" id="logout-link" onclick="event.preventDefault();logoutFromApp();  document.getElementById('logout-form').submit();">
                         Logout
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
@@ -62,5 +62,17 @@
         </div>
     </div>
 </div>
+<script>
+    async function logoutFromApp() {
+        try {
+            await OneSignal.logout(); // logout dari OneSignal (client)
+            console.log("✅ OneSignal logout berhasil");
+        } catch (e) {
+            console.warn("❌ Gagal OneSignal logout:", e);
+        }
 
+        // Lanjutkan logout ke server
+        document.getElementById('logout-form').submit();
+    }
+</script>
 
