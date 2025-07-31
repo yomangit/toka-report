@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('icons.png') }}">
-
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar" content="#01d679">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="manifest" href="/manifest.json">
@@ -74,7 +74,7 @@
         Memuat data...
     </div> --}}
 
-    
+
     @livewire('wire-elements-modal')
     @livewireScripts
     @stack('scripts')
