@@ -62,17 +62,5 @@
         </div>
     </div>
 </div>
-<script>
-    async function logoutFromApp() {
-        try {
-            await OneSignal.logout(); // logout dari OneSignal (client)
-            console.log("✅ OneSignal logout berhasil");
-        } catch (e) {
-            console.warn("❌ Gagal OneSignal logout:", e);
-        }
 
-        // Lanjutkan logout ke server
-        document.getElementById('logout-form').submit();
-    }
-</script>
 
