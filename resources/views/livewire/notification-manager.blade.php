@@ -35,7 +35,7 @@
         });
 
         // Dapatkan player ID setelah subscribe
-        const playerId = await OneSignal.User.PushSubscription.getId();
+        const playerId = await OneSignal.User.PushSubscription.id;
         console.log("✅ Player ID:", playerId);
 
         // Kirim ke Livewire jika berhasil subscribe
