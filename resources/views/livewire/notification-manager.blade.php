@@ -1,5 +1,4 @@
 <div>
-    <x-notification />
     <x-btn-add wire:click='test' />
 </div>
 
