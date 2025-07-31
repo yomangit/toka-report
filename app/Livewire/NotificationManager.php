@@ -27,7 +27,7 @@ class NotificationManager extends Component
         ])->post('https://onesignal.com/api/v1/notifications', [
             'app_id' => config('services.onesignal.app_id'),
             'include_player_ids' => [auth()->user()->onesignal_player_id],
-            'headings' => ['en' => 'Halo ' . auth()->user()->lookupname],
+            'headings' => ['en' => 'Halo ' . auth()->user()->lookup_name],
             'contents' => ['en' => 'Notifikasi dari Livewire'],
         ]);
     }
