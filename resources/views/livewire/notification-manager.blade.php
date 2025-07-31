@@ -45,7 +45,7 @@
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function(OneSignal) {
+    OneSignalDeferred.push(async function (OneSignal) {
         await OneSignal.init({
             appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18",
             serviceWorkerPath: "/sw.js",
@@ -53,8 +53,8 @@
             serviceWorkerRegistration: await navigator.serviceWorker.ready,
         });
 
-        const status = await OneSignal.Notifications.permissionStatus();
-        if (status === 'granted') {
+        const permission = await OneSignal.User.PushSubscription.getPermission();
+        if (permission === 'granted') {
             const playerId = await OneSignal.User.PushSubscription.id;
             if (playerId) {
                 Livewire.dispatch('userSubscribed', { player_id: playerId });
@@ -80,3 +80,4 @@
         }
     });
 </script>
+
