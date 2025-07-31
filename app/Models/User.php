@@ -69,7 +69,10 @@ class User extends Authenticatable implements LdapAuthenticatable
             'password' => 'hashed',
         ];
     }
-
+    public function onesignalPlayers()
+    {
+        return $this->hasMany(OnesignalPlayer::class);
+    }
     public function company()
     {
         return $this->belongsTo(Company::class);
@@ -101,11 +104,11 @@ class User extends Authenticatable implements LdapAuthenticatable
 
     public function divisions()
     {
-        return $this->belongsToMany(Division::class,'division_user');
+        return $this->belongsToMany(Division::class, 'division_user');
     }
     public function divisions_pic()
     {
-        return $this->belongsToMany(Division::class,'person_in_charges');
+        return $this->belongsToMany(Division::class, 'person_in_charges');
     }
     public function scopeSearchFor($query, $term)
     {
