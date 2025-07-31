@@ -46,6 +46,8 @@
 <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     OneSignalDeferred.push(async function(OneSignal) {
+        const logoutLink = document.querySelector('a[href="{{ route('
+            logout ') }}"]');
         await OneSignal.init({
             appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18"
             , serviceWorkerPath: "/sw.js"
@@ -68,22 +70,21 @@
         }
     });
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const logoutForm = document.querySelector('form#logout-form');
-        if (logoutForm) {
-            logoutForm.addEventListener('submit', async function() {
-                try {
-                    const OneSignal = window.OneSignal;
-                    if (OneSignal) {
-                        await OneSignal.logout();
-                        Livewire.dispatch('userLoggedOut');
-                        console.log('✅ Logout OneSignal berhasil');
-                    }
-                } catch (error) {
-                    console.warn('❌ Gagal logout OneSignal:', error);
-                }
-            });
-        }
-    });
+    if (logoutLink) {
+        logoutLink.addEventListener('click', async function(e) {
+            e.preventDefault();
+
+            try {
+                // ✅ Logout dari OneSignal terlebih dahulu
+                await OneSignal.logout();
+                console.log("✅ OneSignal logout berhasil");
+            } catch (err) {
+                console.warn("⚠️ Gagal OneSignal logout:", err);
+            }
+
+            // ✅ Setelah itu, submit form logout Laravel
+            document.getElementById('logout-form').submit();
+        });
+    }
 
 </script>

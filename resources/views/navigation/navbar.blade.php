@@ -62,23 +62,4 @@
         </div>
     </div>
 </div>
-<script>
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function(OneSignal) {
-        // Cari form logout
-        const logoutForm = document.getElementById('logout-form');
 
-        if (logoutForm) {
-            logoutForm.addEventListener('submit', async () => {
-                try {
-                    // Logout dari OneSignal juga
-                    await OneSignal.logout();
-                    console.log("✅ OneSignal playerId direset saat logout");
-                } catch (e) {
-                    console.warn("❌ Gagal reset OneSignal:", e);
-                }
-            });
-        }
-    });
-
-</script>
