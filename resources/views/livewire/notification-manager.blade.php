@@ -45,27 +45,33 @@
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function (OneSignal) {
+    OneSignalDeferred.push(async function(OneSignal) {
         await OneSignal.init({
-            appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18",
-            serviceWorkerPath: "/sw.js",
-            serviceWorkerUpdaterPath: "/sw.js",
-            serviceWorkerRegistration: await navigator.serviceWorker.ready,
-        });
+            appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18"
+            , serviceWorkerPath: "/sw.js"
+            , serviceWorkerUpdaterPath: "/sw.js"
+            , serviceWorkerRegistration: await navigator.serviceWorker.ready
+        , });
 
-        const permission = await OneSignal.User.PushSubscription.getPermission();
-        if (permission === 'granted') {
-            const playerId = await OneSignal.User.PushSubscription.id;
+        // ✅ Cek apakah user sudah subscribe
+        const isSubscribed = OneSignal.User.PushSubscription.optedIn;
+        if (isSubscribed) {
+            const playerId = OneSignal.User.PushSubscription.id;
+            console.log("🎯 Player ID:", playerId);
             if (playerId) {
-                Livewire.dispatch('userSubscribed', { player_id: playerId });
+                Livewire.dispatch('userSubscribed', {
+                    player_id: playerId
+                });
             }
+        } else {
+            console.log("🔕 User belum subscribe notifikasi");
         }
     });
 
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         const logoutForm = document.querySelector('form#logout-form');
         if (logoutForm) {
-            logoutForm.addEventListener('submit', async function () {
+            logoutForm.addEventListener('submit', async function() {
                 try {
                     const OneSignal = window.OneSignal;
                     if (OneSignal) {
@@ -79,5 +85,5 @@
             });
         }
     });
-</script>
 
+</script>
