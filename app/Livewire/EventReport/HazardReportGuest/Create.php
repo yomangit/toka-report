@@ -511,8 +511,19 @@ class Create extends Component
             $judul = '⚠️ Laporan Bahaya dengan Nomor Referensi: ' . $this->reference;
             $isi = $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.';
             $url = url("/eventReport/hazardReportDetail/{$url}");
-
-            NotificationHelper::sendToUser($user_os, $judul, $isi, $url);
+            $restApiKey = 'os_v2_app_wugfbgpj6rbz3khjggnq4ts6ddon2ktn3fbeuduhkekgx7odctgn7qfesyj4r4hcd7fjar4cidqbkmkqqna7h26oug3wnyxomvqfvni';
+            $appId = 'b50c5099-e9f4-439d-a8e9-319b0e4e5e18';
+            $response =   Http::withHeaders([
+                'Authorization' => 'Basic ' . $restApiKey,
+                'Content-Type' => 'application/json',
+            ])->post('https://onesignal.com/api/v1/notifications', [
+                'app_id' => $appId,
+                'include_player_ids' => $playerIds,
+                'headings' => ['en' => $judul],
+                'contents' => ['en' => $isi],
+                'url' => $url,
+            ]);
+            return $response->json();
         }
 
         $this->clearFields();
