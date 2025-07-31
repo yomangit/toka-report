@@ -26,7 +26,7 @@ class NotificationManager extends Component
     }
     public function test()
     {
-        $playerId = 'ea559b76-e8f2-49ee-9a79-db84da99d6fe';
+        $playerId = '6e2bd45c-cc8e-466c-a9d3-71f4265a2bfe';
         $response = Http::withHeaders([
             'Authorization' => 'Basic ' . config('services.onesignal.rest_api_key'),
             'Content-Type' => 'application/json',

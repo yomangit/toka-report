@@ -8,12 +8,7 @@ class NotificationHelper
 {
     public static function sendToUser($user, string $heading, string $content, string $url): void
     {
-        $playerIds = $user->oneSignalPlayers()
-            ->pluck('player_id')
-            ->unique()
-            ->filter()
-            ->values()
-            ->toArray();
+        $playerIds = $user->oneSignalPlayers()->pluck('player_id')->toArray();
 
         if (empty($playerIds)) {
             return;
