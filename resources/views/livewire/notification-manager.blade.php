@@ -41,45 +41,43 @@
 
 <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function (OneSignal) {
+    OneSignalDeferred.push(async function(OneSignal) {
         await OneSignal.init({
-            appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18",
-            serviceWorkerPath: "/sw.js",
-            serviceWorkerRegistration: await navigator.serviceWorker.ready,
-        });
+            appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18"
+            , serviceWorkerPath: "/sw.js"
+            , serviceWorkerRegistration: await navigator.serviceWorker.ready
+        , });
 
-        // 🛑 Pastikan permission diberikan
-        const permission = await OneSignal.Notifications.permission;
-        if (permission !== "granted") {
-            await OneSignal.Notifications.requestPermission();
+        // ✅ Loginkan user ke OneSignal pakai ID user sistemmu (misal user ID Laravel)
+        const userIdFromBackend = "{{ auth()->id() }}"; // atau bisa dari cookie, API, dsb
+        if (userIdFromBackend) {
+            await OneSignal.login(userIdFromBackend);
         }
 
-        // ✅ Tunggu player_id muncul
-        async function waitForPlayerId(maxRetries = 10, delay = 1000) {
-            for (let i = 0; i < maxRetries; i++) {
-                const subscription = await OneSignal.User.PushSubscription.get();
-                if (subscription?.id) return subscription.id;
-                await new Promise(resolve => setTimeout(resolve, delay));
-            }
-            return null;
-        }
-
-        const playerId = await waitForPlayerId();
-        if (playerId) {
+        // Lanjutkan cek subscription
+        const isSubscribed = OneSignal.User.PushSubscription.optedIn;
+        if (isSubscribed) {
+            const playerId = OneSignal.User.PushSubscription.id;
             console.log("🎯 Player ID:", playerId);
-            Livewire.dispatch('userSubscribed', { player_id: playerId });
+            if (playerId) {
+                Livewire.dispatch('userSubscribed', {
+                    player_id: playerId
+                });
+            }
         } else {
-            console.warn("❌ Player ID not found after retries.");
+            console.log("🔕 User belum subscribe");
         }
 
-        // 🔄 Jika status subscription berubah
-        OneSignal.Notifications.addEventListener("subscriptionChange", async (event) => {
-            const updated = await OneSignal.User.PushSubscription.get();
-            if (updated?.id) {
-                console.log("🟢 Player ID Updated:", updated.id);
-                Livewire.dispatch('userSubscribed', { player_id: updated.id });
-            }
-        });
+        // // 🔄 Jika status subscription berubah
+        // OneSignal.Notifications.addEventListener("subscriptionChange", async (event) => {
+        //     const updated = await OneSignal.User.PushSubscription.get();
+        //     if (updated ? .id) {
+        //         console.log("🟢 Player ID Updated:", updated.id);
+        //         Livewire.dispatch('userSubscribed', {
+        //             player_id: updated.id
+        //         });
+        //     }
+        // });
 
         // 🚪 Logout bersih (opsional)
         window.addEventListener("beforeunload", async () => {
@@ -91,4 +89,5 @@
             }
         });
     });
+
 </script>
