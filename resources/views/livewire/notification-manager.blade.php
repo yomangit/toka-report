@@ -8,23 +8,23 @@
 
 <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function(OneSignal) {
+    OneSignalDeferred.push(async function (OneSignal) {
+        // Aktifkan log
+        OneSignal.log.setLevel("trace");
+
         await OneSignal.init({
-            appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18"
-            , serviceWorkerPath: "/sw.js"
-            , serviceWorkerRegistration: await navigator.serviceWorker.ready
-            , notifyButton: {
-                enable: true
-            }
+            appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18",
+            serviceWorkerPath: "/sw.js",
+            serviceWorkerRegistration: await navigator.serviceWorker.ready,
+            notifyButton: { enable: true }
         });
 
-        // Tunggu sampai status subscribe berubah
-        OneSignal.on('subscriptionChange', async function(isSubscribed) {
-            console.log("🟢 Status subscription berubah:", isSubscribed);
-            if (isSubscribed) {
-                const playerId = await OneSignal.getUserId();
+        // Listener baru sesuai SDK v16
+        OneSignal.Notifications.addEventListener("subscriptionChange", async (event) => {
+            console.log("🟢 Status subscription berubah:", event.to);
+            if (event.to) {
+                const playerId = await OneSignal.User.getId();
                 console.log("🎯 Player ID (subscriptionChange):", playerId);
-
                 if (playerId) {
                     Livewire.dispatch('userSubscribed', {
                         player_id: playerId
@@ -33,16 +33,14 @@
             }
         });
 
-        // Coba ambil langsung juga kalau sudah login sebelumnya
-        const playerId = await OneSignal.getUserId();
+        // Coba ambil langsung kalau sudah ada
+        const playerId = await OneSignal.User.getId();
+        console.log("🔍 Player ID langsung:", playerId);
         if (playerId) {
-            console.log("✅ Player ID (langsung):", playerId);
             Livewire.dispatch('userSubscribed', {
                 player_id: playerId
             });
-        } else {
-            console.log("⏳ Belum ada playerId, menunggu izin notifikasi.");
         }
     });
-
 </script>
+
