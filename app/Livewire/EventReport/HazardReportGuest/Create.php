@@ -512,8 +512,8 @@ class Create extends Component
             ])->post('https://onesignal.com/api/v1/notifications', [
                 'app_id' => config('services.onesignal.app_id'),
                 'include_player_ids' => [$user_os->onesignal_player_id],
-                'headings' => ['en' => 'Tes dari Laravel'],
-                'contents' => ['en' => 'Halo! Ini notifikasi dari backend'],
+                'headings' => ['en' => '⚠️ Laporan Bahaya dengan Nomor Referensi: ' . $this->reference],
+                'contents' => ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'],
                 'url' => url("/eventReport/hazardReportDetail/{$url}"),
             ]);
             return $response->json();
