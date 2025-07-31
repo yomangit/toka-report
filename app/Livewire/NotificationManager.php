@@ -11,11 +11,11 @@ use Berkayk\OneSignal\OneSignalFacade as OneSignal;
 class NotificationManager extends Component
 {
     #[On('userSubscribed')]
-    public function savePlayerId($data)
+    public function savePlayerId($player_id)
     {
         if (!auth()->check()) return;
 
-        $newId = $data['player_id'];
+        $newId = $player_id['player_id'];
 
         // Bersihkan dari user lain jika pernah dipakai
         User::where('onesignal_player_id', $newId)
