@@ -524,16 +524,16 @@ class Create extends Component
             $url = url("/eventReport/hazardReportDetail/{$url}");
             foreach ($playerIds as  $player_id) {
                 $response = Http::withHeaders([
-                'Authorization' => 'Basic ' . config('services.onesignal.rest_api_key'),
-                'Content-Type' => 'application/json',
-            ])->post('https://onesignal.com/api/v1/notifications', [
-                'app_id' => config('services.onesignal.app_id'),
-                 'include_player_ids' => $player_id,
-                'headings' => $judul,
-                'contents' => $isi,
-                'url' => 'https://tokasafe.archimining.com',
-            ]);
-            return $response->json();
+                    'Authorization' => 'Basic ' . $restApiKey,
+                    'Content-Type' => 'application/json',
+                ])->post('https://onesignal.com/api/v1/notifications', [
+                    'app_id' => $appId,
+                    'include_player_ids' => $player_id,
+                    'headings' => $judul,
+                    'contents' => $isi,
+                    'url' => 'https://tokasafe.archimining.com',
+                ]);
+                return $response->json();
             }
         }
 
