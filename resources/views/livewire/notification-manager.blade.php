@@ -60,11 +60,15 @@
                 return;
             }
         }
-        @if(auth() - > check())
-        await OneSignal.login('{{ auth()->id() }}');
-        @else
-        await OneSignal.logout();
-        @endif
+        const isLoggedIn = "{{ auth()->check() }}";
+        const userId = "{{ auth()->id() }}";
+
+        if (isLoggedIn) {
+            await OneSignal.login(userId);
+        } else {
+            await OneSignal.logout();
+        }
+
 
         let playerId = OneSignal.User.PushSubscription.id;
         while (!playerId) {
