@@ -23,7 +23,7 @@
             </div>
             <ul tabindex="0" class="dropdown-content menu-xs menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                 <li>
-                    <a href="/logout" id="logout-link" onclick="event.preventDefault();logoutFromApp();  document.getElementById('logout-form').submit();">
+                    <a href="/logout" id="logout-link" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
                         Logout
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
