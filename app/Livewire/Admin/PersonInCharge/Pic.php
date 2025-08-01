@@ -47,7 +47,7 @@ class Pic extends Component
         $this->divisionId = $divisi->id;
         $this->searchDivisionQuery = Division::find($division_Id)?->formatWorkgroupName() ?? '';
         $this->selectedUsers = $divisi->users_pic->pluck('id')->map(fn($id) => (string) $id)->toArray();
-       
+
         $this->showModal = true;
         $this->editMode = true;
     }
@@ -94,17 +94,13 @@ class Pic extends Component
             ]
         );
     }
-    public function updatingSearchNama()
-    {
-        $this->resetPage(); // reset ke halaman 1 saat melakukan pencarian
-    }
 
     public function toggleUserSelection($userId)
     {
         if (in_array($userId, $this->selectedUsers)) {
             $this->selectedUsers = array_filter(
                 $this->selectedUsers,
-                fn ($id) => $id != $userId
+                fn($id) => $id != $userId
             );
         } else {
             $this->selectedUsers[] = $userId;
@@ -112,12 +108,12 @@ class Pic extends Component
     }
     public function resetForm()
     {
-        $this->reset(['showModal', 'editMode', 'divisionId', 'selectedUsers', 'searchDivisionQuery', 'showDivisionDropdown','search_nama']);
+        $this->reset(['showModal', 'editMode', 'divisionId', 'selectedUsers', 'searchDivisionQuery', 'showDivisionDropdown', 'search_nama']);
     }
     public function render()
     {
         return view('livewire.admin.person-in-charge.pic', [
-            'users' =>User::searchNama(trim($this->search_nama))->orderBy('lookup_name','ASC')->paginate(100, ['*'], 'select_pic'),
+            'users' => User::searchNama(trim($this->search_nama))->orderBy('lookup_name', 'ASC')->paginate(100, ['*'], 'select_pic'),
             'specialAccessList' => Division::with('users_pic')->paginate(20),
         ])->extends('base.index', ['header' => 'Akeses PIC', 'title' => 'Akeses PIC'])->section('content');
     }

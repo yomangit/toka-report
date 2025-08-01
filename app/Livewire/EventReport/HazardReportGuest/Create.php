@@ -12,7 +12,6 @@ use Livewire\Attributes\On;
 use App\Models\Eventsubtype;
 use App\Models\HazardReport;
 use Livewire\WithPagination;
-use App\Models\DocHazPelapor;
 use App\Models\LocationEvent;
 use Livewire\WithFileUploads;
 use App\Models\choseEventType;
@@ -24,31 +23,26 @@ use App\Models\EventUserSecurity;
 use App\Models\Tindakantidakaman;
 use App\Notifications\toModerator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Intervention\Image\Facades\Image;
 use Cjmellor\Approval\Models\Approval;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
-use Berkayk\OneSignal\OneSignalFacade as OneSignal;
 
 class Create extends Component
 {
     use WithFileUploads;
     use WithPagination;
-
     // Basic UI Controls
     public $divider = 'Input Hazard Report';
     public $show = false;
     public $show_immidiate = 'yes';
     public $showLocation = false;
-
     // Dropdown & Visibility Controls
     public $dropdownLocation = 'dropdown', $hidden = 'block';
     public $dropdownWorkgroup = 'dropdown', $hiddenWorkgroup = 'block';
     public $dropdownReportBy = 'dropdown', $hiddenReportBy = 'block';
     public $dropdownReportTo = 'dropdown', $hiddenReportTo = 'block';
-
     // Search Fields
     public $search = '';
     public $searchLikelihood = '';
@@ -58,7 +52,6 @@ class Create extends Component
     public $search_report_by = '';
     public $search_report_to = '';
     public $location_search = '';
-
     // IDs and Relational Keys
     public $location_id;
     public $tablerisk_id;
@@ -83,7 +76,6 @@ class Create extends Component
     public $workgroup_name;
     public $report_byName;
     public $report_toName;
-
     // Other Report Data
     public $reference;
     public $report_by_nolist;
@@ -97,7 +89,6 @@ class Create extends Component
     public $suggested_corrective_action;
     public $preliminary_cause;
     public $corrective_action_suggested;
-
     // Risk Details
     public $TableRisk = [];
     public $RiskAssessment = [];
@@ -106,26 +97,21 @@ class Create extends Component
     public $risk_consequence_id;
     public $risk_consequence_doc;
     public $risk_probability_doc;
-
     // Event Types and Roles
     public $Event_type = [];
     public $EventSubType = [];
     public $ResponsibleRole;
-
     // Hierarchy Data
     public $parent_Company;
     public $business_unit;
     public $dept;
-
     // Address & Conditions
     public $alamat;
     public $kondisi_tidak_aman;
     public $tindakan_tidak_aman;
     public $tindakkan_selanjutnya;
-
     // File Handling
     public $fileUpload;
-
     // Miscellaneous
     public $data = [];
 
@@ -456,7 +442,6 @@ class Create extends Component
             'key_word'                    => $this->key_word,
             'kondisitidakamen_id'         => $this->kondisitidakamen_id,
             'tindakantidakamen_id'        => $this->tindakantidakamen_id,
-            'tindakantidakamen_id'        => $this->tindakantidakamen_id,
             'closed_by'                   => $closed_by,
         ];
 
@@ -509,6 +494,11 @@ class Create extends Component
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
             ];
             Notification::send($user, new toModerator($content_moderator));
+            $user_moderator = User::find($user->id);
+            $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
+            $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya . Mohon untuk segera ditinjau.'];
+            $url = url("/eventReport/hazardReportDetail/{$url}");
+            NotificationHelper::sendToUser($user_moderator, $judul, $isi, $url);
         }
 
         // Kirim notifikasi ke report_to
@@ -522,11 +512,11 @@ class Create extends Component
                 'line3'     => 'Terima kasih atas perhatian dan kerjasamanya 🙏',
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
             ];
+            Notification::send($reportTo, new toModerator($content));
             $user_os = User::find($this->report_to);
-            $judul =  ['en' => '⚠️ Laporan Bahaya dengan Nomor Referensi: ' . $this->reference];
+            $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
             $url = url("/eventReport/hazardReportDetail/{$url}");
-            Notification::send($reportTo, new toModerator($content));
             NotificationHelper::sendToUser($user_os, $judul, $isi, $url);
         }
         $this->clearFields();
