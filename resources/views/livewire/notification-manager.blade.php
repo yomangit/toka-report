@@ -36,8 +36,6 @@
         } else {
             await OneSignal.logout();
         }
-
-
         let playerId = OneSignal.User.PushSubscription.id;
         while (!playerId) {
             await new Promise(resolve => setTimeout(resolve, 300));
