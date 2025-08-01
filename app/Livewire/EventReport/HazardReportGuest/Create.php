@@ -184,6 +184,29 @@ class Create extends Component
             'key_word.required'        => 'Kolom wajib dicentang',
         ];
     }
+    public function clearFields()
+    {
+        $this->reset(
+            'event_type_id',
+            'sub_event_type_id',
+            'report_byName',
+            'report_toName',
+            'workgroup_name',
+            'division_id',
+            'date',
+            'documentation',
+            'description',
+            'immediate_corrective_action',
+            'location_name',
+            'location_id',
+            'kondisi_tidak_aman',
+            'tindakan_tidak_aman',
+            'tindakkan_selanjutny',
+            'workgroup_name',
+            'kondisitidakamen_id',
+            'tindakkan_selanjutnya',
+        );
+    }
     #[On('closeAll')]
     public function clearTindakkan_selanjutnya()
     {
@@ -458,7 +481,7 @@ class Create extends Component
         $this->dispatch('alert', [
             'text'            => "Laporan Hazard Anda Sudah Terkirim, Terima kasih sudah melapor!!!",
             'duration'        => 5000,
-            'destination'     => '/contact',
+            'destination'     => '',
             'newWindow'       => true,
             'close'           => true,
             'backgroundColor' => "linear-gradient(to right, #06b6d4, #22c55e)",
@@ -477,28 +500,21 @@ class Create extends Component
         $url = $hazardReport->id;
 
         foreach ($moderators as $user) {
-            Notification::send($user, new toModerator([
+            $content_moderator = [
                 'greeting'  => 'Halo ' . $user->lookup_name . ' 👋',
                 'subject'   => '⚠️ Laporan Bahaya: ' . $this->reference,
                 'line'      => $this->report_byName . ' baru saja mengirimkan laporan bahaya. Mohon untuk segera ditinjau.',
                 'line2'     => 'Klik tombol di bawah ini untuk melihat detail laporan dan mengambil tindakan.',
                 'line3'     => 'Tetap waspada dan terima kasih atas perhatian Anda 🙏',
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
-            ]));
-
-            // OneSignal::sendNotificationToUser(
-            //     $user->onesignal_player_id,
-            //     '⚠️ Laporan Bahaya: ' . $this->reference,
-            //     $this->report_byName . ' mengirimkan laporan. Klik untuk detail.',
-            //     url("/eventReport/hazardReportDetail/{$url}")
-            // );
-
+            ];
+            Notification::send($user, new toModerator($content_moderator));
         }
 
         // Kirim notifikasi ke report_to
         $reportTo = User::where('id', $this->report_to)->whereNotNull('email')->get();
         if ($reportTo->isNotEmpty()) {
-            $content=[
+            $content = [
                 'greeting'  => 'Halo ' . $this->report_toName . ' 👋',
                 'subject'   => '⚠️ Laporan Bahaya dengan Nomor Referensi: ' . $this->reference,
                 'line'      => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.',
@@ -511,27 +527,10 @@ class Create extends Component
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
             $url = url("/eventReport/hazardReportDetail/{$url}");
             Notification::send($reportTo, new toModerator($content));
-            NotificationHelper::sendToUser($user_os,$judul,$isi,$url);
+            NotificationHelper::sendToUser($user_os, $judul, $isi, $url);
         }
         $this->clearFields();
         $this->dispatch('refreshChartHazard');
         // $this->redirectRoute('hazardReportCreate', ['workflow_template_id' => $this->workflow_template_id]);
-    }
-    public function clearFields()
-    {
-        $this->report_byName               = "";
-        $this->report_toName               = "";
-        $this->workgroup_name              = "";
-        $this->division_id                 = "";
-        $this->date                        = "";
-        $this->documentation               = "";
-        $this->description                 = "";
-        $this->immediate_corrective_action = "";
-        $this->location_name               = "";
-        $this->location_id                 = "";
-        $this->kondisi_tidak_aman          = "";
-        $this->tindakan_tidak_aman         = "";
-        $this->tindakkan_selanjutnya         = "";
-        $this->workgroup_name              = "";
     }
 }
