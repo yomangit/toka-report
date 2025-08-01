@@ -522,22 +522,22 @@ class Create extends Component
             $judul =  ['en' => '⚠️ Laporan Bahaya dengan Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
             $url = url("/eventReport/hazardReportDetail/{$url}");
-            $response = Http::withHeaders([
+            foreach ($playerIds as $key => $player_id) {
+                $response = Http::withHeaders([
                 'Authorization' => 'Basic ' . config('services.onesignal.rest_api_key'),
                 'Content-Type' => 'application/json',
             ])->post('https://onesignal.com/api/v1/notifications', [
                 'app_id' => config('services.onesignal.app_id'),
                 'target_channel' => [
                     'type' => 'push',
-                    'recipients' => $playerIds,
+                    'recipients' => $player_id,
                 ],
                 'headings' => $judul,
                 'contents' => $isi,
                 'url' => 'https://tokasafe.archimining.com',
             ]);
             return $response->json();
-
-            return $response->json();
+            }
         }
 
         $this->clearFields();
