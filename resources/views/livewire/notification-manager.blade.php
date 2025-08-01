@@ -39,12 +39,14 @@
 </script> --}}
 <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function (OneSignal) {
+    OneSignalDeferred.push(async function(OneSignal) {
         await OneSignal.init({
-            appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18",
-            serviceWorkerPath: "/sw.js",
-            serviceWorkerRegistration: await navigator.serviceWorker.ready,
-            notifyButton: { enable: true }
+            appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18"
+            , serviceWorkerPath: "/sw.js"
+            , serviceWorkerRegistration: await navigator.serviceWorker.ready
+            , notifyButton: {
+                enable: true
+            }
         });
 
         const subscribed = await OneSignal.User.PushSubscription.optedIn;
@@ -58,6 +60,11 @@
                 return;
             }
         }
+        @if(auth() - > check())
+        await OneSignal.login('{{ auth()->id() }}');
+        @else
+        await OneSignal.logout();
+        @endif
 
         let playerId = OneSignal.User.PushSubscription.id;
         while (!playerId) {
@@ -77,16 +84,17 @@
             }
         }
 
-        Livewire.dispatch('userSubscribed', { player_id: playerId });
+        Livewire.dispatch('userSubscribed', {
+            player_id: playerId
+        });
 
         OneSignal.Notifications.addEventListener("subscriptionChange", async () => {
             const newPlayerId = OneSignal.User.PushSubscription.id;
             console.log("♻️ Subscription changed:", newPlayerId);
-            Livewire.dispatch('userSubscribed', { player_id: newPlayerId });
+            Livewire.dispatch('userSubscribed', {
+                player_id: newPlayerId
+            });
         });
     });
+
 </script>
-
-
-
-

@@ -62,5 +62,11 @@
         </div>
     </div>
 </div>
-
-
+@if(session('logout'))
+<script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.logout(); // ensure OneSignal session cleared
+    });
+</script>
+@endif

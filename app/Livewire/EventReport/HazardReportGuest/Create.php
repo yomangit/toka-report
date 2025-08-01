@@ -531,7 +531,7 @@ class Create extends Component
                     'include_player_ids' => $playerIds,
                     'headings' => $judul,
                     'contents' => $isi,
-                    'url' => 'https://tokasafe.archimining.com',
+                    'url' =>  $url,
                 ]);
                 dd($response->json());
                 return $response->json();
