@@ -18,10 +18,17 @@ class NotificationManager extends Component
         $playerId = $player_id;
 
         if ($playerId && Auth::check()) {
-            OnesignalPlayer::firstOrCreate([
-                'user_id' => Auth::user()->id,
-                'player_id' => $playerId,
-            ]);
+            // Pastikan player ID ini hanya terkait ke user yang sedang login
+
+            // Unlink player ID dari user lain
+            OnesignalPlayer::where('player_id', $playerId)
+                ->where('user_id', '!=', Auth::id())
+                ->delete();
+
+            OnesignalPlayer::updateOrCreate(
+                ['player_id' => $playerId],
+                ['user_id' => Auth::id()]
+            );
         }
     }
     public function test()
