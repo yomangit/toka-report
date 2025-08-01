@@ -498,18 +498,19 @@ class Create extends Component
         // Kirim notifikasi ke report_to
         $reportTo = User::where('id', $this->report_to)->whereNotNull('email')->get();
         if ($reportTo->isNotEmpty()) {
-            Notification::send($reportTo, new toModerator([
+            $content=[
                 'greeting'  => 'Halo ' . $this->report_toName . ' 👋',
                 'subject'   => '⚠️ Laporan Bahaya dengan Nomor Referensi: ' . $this->reference,
                 'line'      => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.',
                 'line2'     => 'Klik tombol di bawah ini untuk melihat detail laporan.',
                 'line3'     => 'Terima kasih atas perhatian dan kerjasamanya 🙏',
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
-            ]));
+            ];
             $user_os = User::find($this->report_to);
             $judul =  ['en' => '⚠️ Laporan Bahaya dengan Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
             $url = url("/eventReport/hazardReportDetail/{$url}");
+            Notification::send($reportTo, new toModerator($content));
             NotificationHelper::sendToUser($user_os,$judul,$isi,$url);
         }
         $this->clearFields();
