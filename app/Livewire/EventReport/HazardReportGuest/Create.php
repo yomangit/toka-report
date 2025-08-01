@@ -506,42 +506,15 @@ class Create extends Component
                 'line3'     => 'Terima kasih atas perhatian dan kerjasamanya 🙏',
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
             ]));
-            $restApiKey = 'os_v2_app_wugfbgpj6rbz3khjggnq4ts6ddon2ktn3fbeuduhkekgx7odctgn7qfesyj4r4hcd7fjar4cidqbkmkqqna7h26oug3wnyxomvqfvni';
-            $appId = 'b50c5099-e9f4-439d-a8e9-319b0e4e5e18';
             $user_os = User::find($this->report_to);
-            $playerIds = collect($user_os->oneSignalPlayers)
-                ->pluck('player_id')
-                ->filter()
-                ->unique()
-                ->values()
-                ->toArray();
-
-            if (empty($playerIds)) {
-                return response()->json(['error' => 'No player IDs found.'], 422);
-            }
             $judul =  ['en' => '⚠️ Laporan Bahaya dengan Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
             $url = url("/eventReport/hazardReportDetail/{$url}");
-            
-                $response = Http::withHeaders([
-                     'Authorization' => 'Basic ' . config('services.onesignal.rest_api_key'),
-                    'Content-Type' => 'application/json',
-                ])->post('https://onesignal.com/api/v1/notifications', [
-                    'app_id' => config('services.onesignal.app_id'),
-                    'include_player_ids' => $playerIds,
-                    'headings' => $judul,
-                    'contents' => $isi,
-                    'url' =>  $url,
-                ]);
-                dd($response->json());
-                return $response->json();
-           
+            NotificationHelper::sendToUser($user_os,$judul,$isi,$url);
         }
-
         $this->clearFields();
         $this->dispatch('refreshChartHazard');
         // $this->redirectRoute('hazardReportCreate', ['workflow_template_id' => $this->workflow_template_id]);
-
     }
     public function clearFields()
     {
