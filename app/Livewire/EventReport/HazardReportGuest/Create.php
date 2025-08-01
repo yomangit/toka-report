@@ -533,6 +533,7 @@ class Create extends Component
                     'contents' => $isi,
                     'url' => 'https://tokasafe.archimining.com',
                 ]);
+                dd($response->json());
                 return $response->json();
             }
         }
