@@ -63,7 +63,6 @@
     <!-- start: Main -->
     <main class="min-h-screen w-full md:w-[calc(100%-256px)] md:ml-64 transition-all main">
         @include('navigation.navbar')
-
         <div class="w-full max-w-screen-xl px-4 py-4 mx-auto">
             @yield('content')
             <livewire:notification-manager />
@@ -73,18 +72,9 @@
     {{-- <div wire:loading.delay.long class="fixed z-50 px-4 py-2 text-sm text-white bg-blue-600 rounded-lg shadow-lg bottom-5 right-5 animate-bounce">
         Memuat data...
     </div> --}}
-
-
     @livewire('wire-elements-modal')
     @livewireScripts
     @stack('scripts')
-   <script>
-    window.addEventListener('beforeunload', function () {
-        OneSignal.User.logout(); // Logout OneSignal SDK v16
-    });
-</script>
-
-    
 </body>
 
 </html>
