@@ -524,10 +524,10 @@ class Create extends Component
             $url = url("/eventReport/hazardReportDetail/{$url}");
             
                 $response = Http::withHeaders([
-                    'Authorization' => 'Basic ' . $restApiKey,
+                     'Authorization' => 'Basic ' . config('services.onesignal.rest_api_key'),
                     'Content-Type' => 'application/json',
                 ])->post('https://onesignal.com/api/v1/notifications', [
-                    'app_id' => $appId,
+                    'app_id' => config('services.onesignal.app_id'),
                     'include_player_ids' => $playerIds,
                     'headings' => $judul,
                     'contents' => $isi,
