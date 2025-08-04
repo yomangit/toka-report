@@ -28,6 +28,7 @@ class NotificationManager extends Component
     {
         if ($player_id && Auth::check()) {
             $data =   OnesignalPlayer::where('player_id', $player_id)->where('user_id', Auth::user()->id)->first()->id;
+            dd($data);
             OnesignalPlayer::whereId($data)->delete();
         }
     }
