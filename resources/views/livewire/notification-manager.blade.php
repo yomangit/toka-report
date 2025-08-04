@@ -16,7 +16,6 @@
                 enable: false
             }
         });
-
         const subscribed = await OneSignal.User.PushSubscription.optedIn;
         if (!subscribed) {
             try {
@@ -27,14 +26,12 @@
                 return;
             }
         }
-
         const isLoggedIn = "{{ auth()->check() }}";
         const userId = "{{ auth()->id() }}";
 
         if (isLoggedIn) {
             await OneSignal.login(userId);
         }
-
         let playerId = OneSignal.User.PushSubscription.id;
         while (!playerId) {
             await new Promise(resolve => setTimeout(resolve, 300));
@@ -57,12 +54,12 @@
             player_id: playerId
         });
 
-        @if(session('logout'))
+        if(session('logout'))
         if (playerId) {
             Livewire.dispatch('user_out', {
                 player_id: playerId
             });
         }
-        @endif
+        endif
     });
 </script>
