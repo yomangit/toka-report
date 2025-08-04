@@ -57,6 +57,12 @@
             player_id: playerId
         });
 
-       
+        @if(session('logout'))
+        if (playerId) {
+            Livewire.dispatch('user_out', {
+                player_id: playerId
+            });
+        }
+        @endif
     });
 </script>
