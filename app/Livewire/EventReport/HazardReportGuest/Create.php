@@ -514,8 +514,7 @@ class Create extends Component
             ];
             Notification::send($reportTo, new toModerator($content));
             $user_os = User::find($this->report_to);
-            $playerIds = collect($user_os->oneSignalPlayers)
-                ->pluck('player_id')
+            $playerIds = $user_os->oneSignalPlayers()->pluck('player_id')
                 ->filter()
                 ->unique()
                 ->values()
