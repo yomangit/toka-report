@@ -187,7 +187,6 @@ class Create extends Component
             'location_id',
             'kondisi_tidak_aman',
             'tindakan_tidak_aman',
-            'tindakkan_selanjutny',
             'workgroup_name',
             'kondisitidakamen_id',
             'tindakkan_selanjutnya',
