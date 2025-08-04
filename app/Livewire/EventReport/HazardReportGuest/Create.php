@@ -2,7 +2,6 @@
 
 namespace App\Livewire\EventReport\HazardReportGuest;
 
-use App\Helpers\NotificationHelper;
 use DateTime;
 use App\Models\User;
 use Livewire\Component;
@@ -22,7 +21,9 @@ use App\Models\Kondisitidakaman;
 use App\Models\EventUserSecurity;
 use App\Models\Tindakantidakaman;
 use App\Notifications\toModerator;
+use App\Helpers\NotificationHelper;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Intervention\Image\Facades\Image;
 use Cjmellor\Approval\Models\Approval;
 use Illuminate\Support\Facades\Request;
@@ -513,10 +514,28 @@ class Create extends Component
             ];
             Notification::send($reportTo, new toModerator($content));
             $user_os = User::find($this->report_to);
+            $playerIds = collect($user_os->oneSignalPlayers)
+                ->pluck('player_id')
+                ->filter()
+                ->unique()
+                ->values()
+                ->toArray();
+
             $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
             $url = url("/eventReport/hazardReportDetail/{$url}");
-            NotificationHelper::sendToUser($user_os, $judul, $isi, $url);
+            // NotificationHelper::sendToUser($user_os, $judul, $isi, $url);
+            $response = Http::withHeaders([
+                'Authorization' => 'Basic ' . config('services.onesignal.rest_api_key'),
+                'Content-Type' => 'application/json',
+            ])->post('https://onesignal.com/api/v1/notifications', [
+                'app_id' => config('services.onesignal.app_id'),
+                'include_player_ids' => $playerIds,
+                'headings' => $judul,
+                'contents' => $isi,
+                'url' =>  $url,
+            ]);
+            return $response->json();
         }
         $this->clearFields();
         $this->dispatch('refreshChartHazard');
