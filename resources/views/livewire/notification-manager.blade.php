@@ -54,11 +54,7 @@
         Livewire.dispatch('userSubscribed', {
             player_id: playerId
         });
-        @if(session('logout'))
-        if (playerId) {
-            Livewire.dispatch('userLoggedOut');
-        }
-        @endif
+       
        
     });
 

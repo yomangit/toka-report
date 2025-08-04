@@ -7,8 +7,6 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use App\Models\OnesignalPlayer;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
-use Berkayk\OneSignal\OneSignalFacade as OneSignal;
 
 class NotificationManager extends Component
 {
@@ -25,7 +23,7 @@ class NotificationManager extends Component
             );
         }
     }
-   
+    #[On('userLoggedOut')]
     public function handleUserLoggedOut()
     {
         OnesignalPlayer::where('player_id', $this->playerId)
