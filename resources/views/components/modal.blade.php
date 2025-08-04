@@ -1,5 +1,5 @@
 <div
-    class="fixed inset-0 z-50 flex items-center justify-center h-screen bg-black bg-opacity-40"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40"
     x-data="{
         open: @entangle($attributes->wire('model')),
         init() {
@@ -19,7 +19,7 @@
     x-transition:leave-end="opacity-0 scale-95"
     style="display: none;"
 >
-    <div class="w-full max-w-lg p-6 rounded shadow-lg bg-base-300">
+    <div class="w-full p-6 rounded shadow-lg bg-base-300">
         <div class="text-lg font-semibold">
             {{ $title }}
         </div>
