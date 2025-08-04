@@ -1,5 +1,12 @@
 <div>
+@if (session('logout'))
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        Livewire.dispatch('userLoggedOut');
+    });
 
+</script>
+@endif
 </div>
 
 <!-- SDK OneSignal -->
@@ -67,13 +74,4 @@
     });
 
 </script>
-@push('scripts')
-@if (session('logout'))
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        Livewire.dispatch('userLoggedOut');
-    });
 
-</script>
-@endif
-@endpush
