@@ -66,7 +66,23 @@
 <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     OneSignalDeferred.push(async function(OneSignal) {
-        await OneSignal.logout(); // ensure OneSignal session cleared
+        const playerId = await OneSignal.User.PushSubscription.id;
+
+        if (playerId) {
+            await fetch('/onesignal/logout', {
+                method: 'POST'
+                , headers: {
+                    'Content-Type': 'application/json'
+                    , 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                , }
+                , body: JSON.stringify({
+                    player_id: playerId
+                })
+            , });
+        }
+
+        // Jangan panggil OneSignal.logout() di sini agar device lain tidak terdampak
     });
+
 </script>
 @endif

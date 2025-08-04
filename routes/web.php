@@ -58,8 +58,9 @@ use App\Livewire\Admin\WorkflowAdministration\Index as workflowAdministration;
 use App\Livewire\EventReport\HazardReport\CreateAndUpdate as hazardReportform;
 use App\Livewire\EventReport\HazardReportGuest\Create as HazardReportGuestCreate;
 use App\Livewire\EventReport\IncidentReport\CreateAndUpdate as CreateAndUpdateIncidentReport;
-use App\Livewire\NotificationManager;
-use Illuminate\Support\Facades\Http;
+
+use Illuminate\Http\Request;
+use App\Models\OnesignalPlayer;
 // $newReference =  Str::random(9);
 // $reference_pto = 'OHS-PTO-' . $newReference;
 
@@ -85,7 +86,17 @@ Route::get('eventReport/hazardReportform/{workflow_template_id?}', hazardReportf
 Route::get('eventReport/hazardReportGuest/{workflow_template_id?}', HazardReportGuestCreate::class)->name('hazardReportCreate');
 Route::get('manhours/manhoursTable', WebAccess::class)->name('WebAccess');
 Route::get('eventReport/hazardReportExcel', TableExcel::class)->name('TableExcel');
+Route::post('/onesignal/logout', function (Request $request) {
+    $playerId = $request->input('player_id');
 
+    if (auth()->check() && $playerId) {
+        OnesignalPlayer::where('user_id', auth()->user()->id())
+            ->where('player_id', $playerId)
+            ->delete();
+    }
+
+    return response()->json(['success' => true]);
+});
 Route::middleware(['auth', 'auth.session'])->group(function () {
 
     Route::get('/', dashoard::class)->name('dashboard');
