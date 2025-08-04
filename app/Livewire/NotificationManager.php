@@ -19,11 +19,6 @@ class NotificationManager extends Component
         $this->playerId = $player_id;
 
         if (isset($this->playerId) && Auth::check()) {
-            // Pastikan player ID ini hanya terkait ke user yang sedang login
-
-            // Unlink player ID dari user lain
-
-
             OnesignalPlayer::updateOrCreate(
                 ['player_id' => $this->playerId],
                 ['user_id' => Auth::user()->id]
