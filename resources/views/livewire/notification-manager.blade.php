@@ -1,13 +1,5 @@
 <div>
-    @if(session('logout'))
-    <script>
-        window.OneSignalDeferred = window.OneSignalDeferred || [];
-        OneSignalDeferred.push(async function(OneSignal) {
-            await OneSignal.logout(); // ensure OneSignal session cleared
-        });
 
-    </script>
-    @endif
 </div>
 
 <!-- SDK OneSignal -->
@@ -75,9 +67,13 @@
     });
 
 </script>
+@push('scripts')
 @if (session('logout'))
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         Livewire.dispatch('userLoggedOut');
     });
+
 </script>
+@endif
+@endpush
