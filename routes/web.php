@@ -86,17 +86,6 @@ Route::get('eventReport/hazardReportform/{workflow_template_id?}', hazardReportf
 Route::get('eventReport/hazardReportGuest/{workflow_template_id?}', HazardReportGuestCreate::class)->name('hazardReportCreate');
 Route::get('manhours/manhoursTable', WebAccess::class)->name('WebAccess');
 Route::get('eventReport/hazardReportExcel', TableExcel::class)->name('TableExcel');
-Route::post('/onesignal/logout', function (Request $request) {
-    $playerId = $request->input('player_id');
-
-    if (auth()->check() && $playerId) {
-        OnesignalPlayer::where('user_id', auth()->user()->id())
-            ->where('player_id', $playerId)
-            ->delete();
-    }
-
-    return response()->json(['success' => true]);
-});
 Route::middleware(['auth', 'auth.session'])->group(function () {
 
     Route::get('/', dashoard::class)->name('dashboard');

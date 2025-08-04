@@ -13,23 +13,29 @@ use Berkayk\OneSignal\OneSignalFacade as OneSignal;
 class NotificationManager extends Component
 {
     #[On('userSubscribed')]
+    public  $playerId;
     public function simpanPlayerId($player_id)
     {
-        $playerId = $player_id;
+        $this->playerId = $player_id;
 
-        if (isset($playerId) && Auth::check()) {
+        if (isset($this->playerId) && Auth::check()) {
             // Pastikan player ID ini hanya terkait ke user yang sedang login
 
             // Unlink player ID dari user lain
-            // OnesignalPlayer::where('player_id', $playerId)
-            //     ->where('user_id', '!=', Auth::id())
-            //     ->delete();
+
 
             OnesignalPlayer::updateOrCreate(
-                ['player_id' => $playerId],
-                ['user_id' => Auth::id()]
+                ['player_id' => $this->playerId],
+                ['user_id' => Auth::user()->id]
             );
         }
+    }
+    #[On('userLoggedOut')]
+    public function handleUserLoggedOut()
+    {
+        OnesignalPlayer::where('player_id', $this->playerId)
+            ->where('user_id', '===', Auth::user()->id)
+            ->delete();
     }
     public function render()
     {

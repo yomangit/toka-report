@@ -1,5 +1,13 @@
 <div>
- 
+    @if(session('logout'))
+    <script>
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(async function(OneSignal) {
+            await OneSignal.logout(); // ensure OneSignal session cleared
+        });
+
+    </script>
+    @endif
 </div>
 
 <!-- SDK OneSignal -->
@@ -13,7 +21,7 @@
             , serviceWorkerPath: "/sw.js"
             , serviceWorkerRegistration: await navigator.serviceWorker.ready
             , notifyButton: {
-                enable: false 
+                enable: false
             }
         });
 
@@ -32,7 +40,9 @@
 
         if (isLoggedIn) {
             await OneSignal.login(userId);
-        } 
+        } else {
+            await OneSignal.logout();
+        }
         let playerId = OneSignal.User.PushSubscription.id;
         while (!playerId) {
             await new Promise(resolve => setTimeout(resolve, 300));
@@ -64,4 +74,10 @@
         // });
     });
 
+</script>
+@if (session('logout'))
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        Livewire.dispatch('userLoggedOut');
+    });
 </script>
