@@ -514,12 +514,6 @@ class Create extends Component
             ];
             Notification::send($reportTo, new toModerator($content));
             $user_os = User::find($this->report_to);
-            $playerIds = $user_os->oneSignalPlayers()->pluck('player_id')
-                ->filter()
-                ->unique()
-                ->values()
-                ->toArray();
-
             $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
             $url = url("/eventReport/hazardReportDetail/{$url}");
