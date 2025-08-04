@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class NotificationHelper
 {
-    public static function sendToUser($user,  $heading,  $content, string $url): void
+    public static function sendToUser($user,  $heading,  $content, $url): void
     {
         $playerIds = $user->oneSignalPlayers()->pluck('player_id')
             ->filter()
