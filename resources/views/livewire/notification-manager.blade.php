@@ -57,13 +57,13 @@
             player_id: playerId
         });
 
-        OneSignal.Notifications.addEventListener("subscriptionChange", async () => {
-            const newPlayerId = OneSignal.User.PushSubscription.id;
-            console.log("♻️ Subscription changed:", newPlayerId);
-            Livewire.dispatch('userSubscribed', {
-                player_id: newPlayerId
-            });
-        });
+        // OneSignal.Notifications.addEventListener("subscriptionChange", async () => {
+        //     const newPlayerId = OneSignal.User.PushSubscription.id;
+        //     console.log("♻️ Subscription changed:", newPlayerId);
+        //     Livewire.dispatch('userSubscribed', {
+        //         player_id: newPlayerId
+        //     });
+        // });
     });
 
 </script>
