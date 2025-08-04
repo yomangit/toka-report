@@ -252,7 +252,7 @@ class Index extends Component
                     'actionUrl'  => url("https://tokasafe.archimining.com/eventReport/hazardReportDetail/{$url}"),
                 ];
                 Notification::send($user, new toModerator($offerData));
-                $user_erm = User::find($moderator->id);
+                $user_erm = User::find($user->id);
                 $judul =  ['en' => '⚠️ Laporan Bahaya No. Referensi: ' . $this->reference];
                 $isi = ['en' =>  Auth::user()->lookup_name.' mengirimkan laporan bahaya kepada anda, Mohon untuk ditinjau'];
                 $url = url("/eventReport/hazardReportDetail/{$url}");
