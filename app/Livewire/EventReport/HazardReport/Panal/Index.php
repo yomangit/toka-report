@@ -13,6 +13,7 @@ use App\Models\HazardReportLog;
 use App\Models\EventUserSecurity;
 use App\Models\WorkflowApplicable;
 use App\Notifications\toModerator;
+use App\Helpers\NotificationHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 
@@ -224,6 +225,11 @@ class Index extends Component
                     'actionUrl'  => url("https://tokasafe.archimining.com/eventReport/hazardReportDetail/{$url}"),
                 ];
                 Notification::send($moderator, new toModerator($offerData));
+                $user_moderator = User::find($moderator->id);
+                $judul =  ['en' => '⚠️ Laporan Bahaya No. Referensi: ' . $this->reference];
+                $isi = ['en' => Auth::user()->lookup_name . ' telah memperbarui status laporan hazard menjadi "' . $this->status . '". Mohon untuk ditinjau.'];
+                $url = url("/eventReport/hazardReportDetail/{$url}");
+                NotificationHelper::sendToUser($user_moderator, $judul, $isi, $url);
             }
         }
         // Notifikasi ke assign/also_assign jika ke ERM
@@ -246,6 +252,11 @@ class Index extends Component
                     'actionUrl'  => url("https://tokasafe.archimining.com/eventReport/hazardReportDetail/{$url}"),
                 ];
                 Notification::send($user, new toModerator($offerData));
+                $user_erm = User::find($moderator->id);
+                $judul =  ['en' => '⚠️ Laporan Bahaya No. Referensi: ' . $this->reference];
+                $isi = ['en' =>  Auth::user()->lookup_name.' mengirimkan laporan bahaya kepada anda, Mohon untuk ditinjau'];
+                $url = url("/eventReport/hazardReportDetail/{$url}");
+                NotificationHelper::sendToUser($user_erm, $judul, $isi, $url);
             }
         }
 

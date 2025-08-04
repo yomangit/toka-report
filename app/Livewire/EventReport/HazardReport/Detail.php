@@ -30,6 +30,7 @@ use App\Models\EventUserSecurity;
 use App\Models\Tindakantidakaman;
 use App\Models\WorkflowApplicable;
 use App\Notifications\toModerator;
+use App\Helpers\NotificationHelper;
 use App\Models\HazardDocumentation;
 use App\Models\TableRiskAssessment;
 use Illuminate\Support\Facades\Log;
@@ -244,7 +245,7 @@ class Detail extends Component
             'Divisi'          => Division::whereNotNull('company_id')->with(['DeptByBU.BusinesUnit.Company', 'DeptByBU.Department', 'Company'])->groupBy('company_id')->get(),
             'Division'        => $this->divisi_search,
             'Report_By'       => User::searchFor(trim($this->report_byName))->paginate(100, ['*'], 'Report_By'),
-            'Report_To'  =>  PersonInCharge::where('division_id',$this->division_id)->get(),
+            'Report_To'  =>  PersonInCharge::where('division_id', $this->division_id)->get(),
             'Location'        => LocationEvent::get(),
         ])->extends('base.index', ['header' => 'Hazard Report', 'title' => 'Hazard Report', 'id' => $this->data_id])->section('content');
     }
@@ -440,17 +441,21 @@ class Detail extends Component
             $getModerator = EventUserSecurity::where('responsible_role_id', $this->responsible_role_id)->where('user_id', 'NOT LIKE', Auth::user()->id)->pluck('user_id')->toArray();
             $User         = User::whereIn('id', $getModerator)->get();
             $url          = $this->data_id;
-            foreach ($User as $key => $value) {
-                $users     = User::whereId($value->id)->get();
+            foreach ($User as $key => $user) {
                 $offerData = [
-                    'greeting'  => 'Hi' . '' . $value->lookup_name,
+                    'greeting'  => 'Hi' . '' . $user->lookup_name,
                     'subject'   => 'Hazard Report' . ' ' . $this->reference,
                     'line'      => Auth::user()->lookup_name . ' ' . 'has update a hazard report, please review',
                     'line2'     => 'Please review this report',
                     'line3'     => 'Thank you',
                     'actionUrl' => url("/eventReport/hazardReportDetail/$url"),
                 ];
-                Notification::send($users, new toModerator($offerData));
+                Notification::send($user, new toModerator($offerData));
+                $user_moderator = User::find($user->id);
+                $judul =  ['en' => '⚠️ Laporan Bahaya No. Referensi: ' . $this->reference];
+                $isi = ['en' => Auth::user()->lookup_name . ' telah memperbaharui laporan bahaya . Mohon untuk segera ditinjau.'];
+                $url = url("/eventReport/hazardReportDetail/$url");
+                NotificationHelper::sendToUser($user_moderator, $judul, $isi, $url);
             }
         }
 
@@ -468,10 +473,10 @@ class Detail extends Component
         $EventKeyword = EventKeyword::where('reference', $this->reference)->exists();
         if ($EventParticipants) {
             // Hapus data di EventParticipants jika ditemukan
-            EventParticipants::where('reference',$this->reference)->delete();
+            EventParticipants::where('reference', $this->reference)->delete();
         } elseif ($EventKeyword) {
             // Hapus data di EventKeyword jika ditemukan
-            EventKeyword::where('reference',$this->reference)->delete();
+            EventKeyword::where('reference', $this->reference)->delete();
         } else {
             // Tidak ditemukan data apapun
             // Bisa tambahkan log atau feedback jika perlu

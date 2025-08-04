@@ -21,6 +21,7 @@ use App\Models\Kondisitidakaman;
 use App\Models\EventUserSecurity;
 use App\Models\Tindakantidakaman;
 use App\Notifications\toModerator;
+use App\Helpers\NotificationHelper;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Cjmellor\Approval\Models\Approval;
@@ -471,27 +472,39 @@ class CreateAndUpdate extends Component
         $url = $hazardReport->id;
 
         foreach ($moderators as $user) {
-            Notification::send($user, new toModerator([
+            $content_moderator = [
                 'greeting'  => 'Halo ' . $user->lookup_name . ' 👋',
                 'subject'   => '⚠️ Laporan Bahaya: ' . $this->reference,
                 'line'      => $this->report_byName . ' baru saja mengirimkan laporan bahaya. Mohon untuk segera ditinjau.',
                 'line2'     => 'Klik tombol di bawah ini untuk melihat detail laporan dan mengambil tindakan.',
                 'line3'     => 'Tetap waspada dan terima kasih atas perhatian Anda 🙏',
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
-            ]));
+            ];
+            Notification::send($user, new toModerator($content_moderator));
+            $user_moderator = User::find($user->id);
+            $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
+            $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya . Mohon untuk segera ditinjau.'];
+            $url = url("/eventReport/hazardReportDetail/{$url}");
+            NotificationHelper::sendToUser($user_moderator, $judul, $isi, $url);
         }
 
         // Kirim notifikasi ke report_to
         $reportTo = User::where('id', $this->report_to)->whereNotNull('email')->get();
         if ($reportTo->isNotEmpty()) {
-            Notification::send($reportTo, new toModerator([
+            $content = [
                 'greeting'  => 'Halo ' . $this->report_toName . ' 👋',
                 'subject'   => '⚠️ Laporan Bahaya dengan Nomor Referensi: ' . $this->reference,
                 'line'      => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.',
                 'line2'     => 'Klik tombol di bawah ini untuk melihat detail laporan.',
                 'line3'     => 'Terima kasih atas perhatian dan kerjasamanya 🙏',
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
-            ]));
+            ];
+            Notification::send($reportTo, new toModerator($content));
+            $user_os = User::find($this->report_to);
+            $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
+            $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
+            $url = url("/eventReport/hazardReportDetail/{$url}");
+            NotificationHelper::sendToUser($user_os, $judul, $isi, $url);
         }
         $this->dispatch('hazardChartShouldRefresh');
         $this->clearFields();
