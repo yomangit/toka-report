@@ -516,7 +516,7 @@ class Create extends Component
             $user_os = User::find($this->report_to);
             $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
-            $url = url("/eventReport/hazardReportDetail/{$url}");
+            $url = 'https://tokasafe.archimining.com/eventReport/hazardReportGuest/3';
             NotificationHelper::sendToUser($user_os, $judul, $isi, $url);
 
         }

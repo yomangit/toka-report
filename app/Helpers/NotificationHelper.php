@@ -25,7 +25,7 @@ class NotificationHelper
             'include_player_ids' => $playerIds,
             'headings' => $heading,
             'contents' => $content,
-            'url' => 'https://tokasafe.archimining.com/eventReport/hazardReportGuest/3',
+            'url' =>  $url,
         ]);
         return $response->json();
     }
