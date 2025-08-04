@@ -1,37 +1,39 @@
-<div class="p-4 space-y-4">
-    <h2 class="text-lg font-bold">Divisi - Akses Khusus</h2>
+<div>
+    <div class="p-4 space-y-4">
+        <h2 class="text-lg font-bold">Divisi - Akses Khusus</h2>
 
-    <div class="flex justify-start">
-        <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
+        <div class="flex justify-start">
+            <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="table min-w-full text-sm table-auto table-xs">
+                <thead>
+                    <tr class="text-left bg-gray-100">
+                        <th class="px-4 py-2">Divisi</th>
+                        <th class="px-4 py-2">User</th>
+                        <th class="px-4 py-2 text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($specialAccessList as $division)
+                    <tr class="border-b">
+                        <td class="px-4 py-2">{{ $division->formatWorkgroupName() }}</td>
+                        <td class="px-4 py-2">
+                            {{ $division->users_pic->pluck('lookup_name')->join(', ') }}
+                        </td>
+                        <td class="px-4 py-2 space-x-2 text-center">
+                            <x-icon-btn-edit data-tip="Edit" wire:click="openEditModal({{ $division->id }})" class="text-blue-600" />
+                            <x-icon-btn-delete data-tip="Hapus" wire:click="delete({{ $division->id }})" class="text-red-600" onclick="return confirm('Hapus semua akses divisi user ini?')" />
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-2">{{ $specialAccessList->links() }}</div>
     </div>
-
-    <div class="overflow-x-auto">
-        <table class="table min-w-full text-sm table-auto table-xs">
-            <thead>
-                <tr class="text-left bg-gray-100">
-                    <th class="px-4 py-2">Divisi</th>
-                    <th class="px-4 py-2">User</th>
-                    <th class="px-4 py-2 text-center">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($specialAccessList as $division)
-                <tr class="border-b">
-                    <td class="px-4 py-2">{{ $division->formatWorkgroupName() }}</td>
-                    <td class="px-4 py-2">
-                        {{ $division->users_pic->pluck('lookup_name')->join(', ') }}
-                    </td>
-                    <td class="px-4 py-2 space-x-2 text-center">
-                        <x-icon-btn-edit data-tip="Edit" wire:click="openEditModal({{ $division->id }})" class="text-blue-600" />
-                        <x-icon-btn-delete data-tip="Hapus" wire:click="delete({{ $division->id }})" class="text-red-600" onclick="return confirm('Hapus semua akses divisi user ini?')" />
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-
-    <div class="mt-2">{{ $specialAccessList->links() }}</div>
 
     <!-- Modal -->
     <x-modal wire:model="showModal">
