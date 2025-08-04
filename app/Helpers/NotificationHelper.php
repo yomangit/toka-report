@@ -27,6 +27,7 @@ class NotificationHelper
             'contents' => $content,
             'url' =>  $url,
         ]);
+        dd($response->json());
         return $response->json();
     }
 }
