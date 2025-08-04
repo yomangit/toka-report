@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificationManager extends Component
 {
-    #[On('userSubscribed')]
     public  $playerId;
+    #[On('userSubscribed')]
     public function simpanPlayerId($player_id)
     {
         $this->playerId = $player_id;

@@ -65,7 +65,7 @@
         @include('navigation.navbar')
         <div class="w-full max-w-screen-xl px-4 py-4 mx-auto">
             @yield('content')
-            {{-- <livewire:notification-manager /> --}}
+            <livewire:notification-manager />
         </div>
     </main>
     {{-- Livewire global loading --}}
