@@ -21,9 +21,9 @@ class NotificationManager extends Component
             // Pastikan player ID ini hanya terkait ke user yang sedang login
 
             // Unlink player ID dari user lain
-            OnesignalPlayer::where('player_id', $playerId)
-                ->where('user_id', '!=', Auth::id())
-                ->delete();
+            // OnesignalPlayer::where('player_id', $playerId)
+            //     ->where('user_id', '!=', Auth::id())
+            //     ->delete();
 
             OnesignalPlayer::updateOrCreate(
                 ['player_id' => $playerId],
