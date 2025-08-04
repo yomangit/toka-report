@@ -25,7 +25,7 @@ class NotificationManager extends Component
             );
         }
     }
-    #[On('userLoggedOut')]
+   
     public function handleUserLoggedOut()
     {
         OnesignalPlayer::where('player_id', $this->playerId)
