@@ -24,14 +24,10 @@ class NotificationManager extends Component
         }
     }
     #[On('user_out')]
-    public function handleUserLoggedOut()
+    public function handleUserLoggedOut($player_id)
     {
-        OnesignalPlayer::where('player_id', $this->playerId)
-            ->where('user_id', Auth::user()->id)
+        OnesignalPlayer::where('player_id', $player_id)
+            ->where('user_id', Auth::id())
             ->delete();
-    }
-    public function render()
-    {
-        return view('livewire.notification-manager');
     }
 }
