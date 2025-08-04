@@ -534,6 +534,7 @@ class Create extends Component
                 'contents' => $isi,
                 'url' =>  $url,
             ]);
+            dd($response->json());
             return $response->json();
         }
         $this->clearFields();
