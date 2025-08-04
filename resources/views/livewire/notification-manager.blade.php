@@ -58,9 +58,7 @@
         });
         @if(session('logout'))
         if (playerId) {
-            Livewire.dispatch('userLoggedOut', {
-                playerId: playerId
-            });
+            Livewire.dispatch('userLoggedOut');
         }
         @endif
        
