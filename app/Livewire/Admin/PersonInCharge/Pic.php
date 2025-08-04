@@ -98,14 +98,12 @@ class Pic extends Component
     public function toggleUserSelection($userId)
     {
         if (in_array($userId, $this->selectedUsers)) {
-            $this->selectedUsers = array_filter(
-                $this->selectedUsers,
-                fn($id) => $id != $userId
-            );
+            $this->selectedUsers = array_diff($this->selectedUsers, [$userId]);
         } else {
             $this->selectedUsers[] = $userId;
         }
     }
+
     public function resetForm()
     {
         $this->reset(['showModal', 'editMode', 'divisionId', 'selectedUsers', 'searchDivisionQuery', 'showDivisionDropdown', 'search_nama']);

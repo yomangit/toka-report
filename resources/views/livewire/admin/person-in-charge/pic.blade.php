@@ -69,8 +69,8 @@
                 {{-- Checkbox list --}}
                 <div class="p-2 space-y-2 overflow-y-auto border rounded max-h-48">
                     @foreach ($users as $user)
-                    <label class="flex items-center space-x-2" wire:ignore>
-                        <input type="checkbox" value="{{ $user->id }}" wire:click="toggleUserSelection({{ $user->id }})" {{ in_array($user->id, $selectedUsers) ? 'checked' : '' }} class="checkbox checkbox-xs" />
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" wire:key="user-checkbox-{{ $user->id }}" value="{{ $user->id }}" wire:click="toggleUserSelection({{ $user->id }})" {{ in_array((int) $user->id, array_map('intval', $selectedUsers)) ? 'checked' : '' }} class="checkbox checkbox-xs" />
                         <span>{{ $user->lookup_name }}</span>
                     </label>
                     @endforeach
