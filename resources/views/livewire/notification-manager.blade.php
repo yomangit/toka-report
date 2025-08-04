@@ -18,7 +18,6 @@
         });
 
         const subscribed = await OneSignal.User.PushSubscription.optedIn;
-
         if (!subscribed) {
             try {
                 await OneSignal.User.PushSubscription.subscribe();
