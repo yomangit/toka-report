@@ -13,9 +13,11 @@ use App\Models\CompanyCategory;
 use App\Models\ResponsibleRole;
 use App\Models\TypeEventReport;
 use App\Models\EventUserSecurity;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
     protected $listeners = ['event_user_security_created' => 'render'];
     #[Url]
     public $search_people = '';
