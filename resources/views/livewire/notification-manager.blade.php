@@ -19,6 +19,7 @@
         OneSignal.Notifications.addEventListener("permissionChange", async (event) => {
             if (event.to === "granted") {
                 const playerId = OneSignal.User.PushSubscription.id;
+                console.log(playerId);
                 Livewire.dispatch('userSubscribed', {
                     player_id: playerId
                 });
