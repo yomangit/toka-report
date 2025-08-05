@@ -16,7 +16,7 @@
                 enable: false
             }
         });
-        console.log(OneSignal);
+        console.log(OneSignal.Notifications);
         
         OneSignal.Notifications.addEventListener("permissionChange", async (event) => {
             if (event.to === "granted") {
