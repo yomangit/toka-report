@@ -13,6 +13,7 @@ class Pic extends Component
     use WithPagination;
     public string $searchDivisionQuery = '';
     public string $search_nama = '';
+    public string $search = '';
     public bool $showDivisionDropdown = false;
     public Collection $divisionSearchResults;
     public ?int $divisionId = null;

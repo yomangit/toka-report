@@ -2,9 +2,16 @@
     <div class="p-4 space-y-4">
         <h2 class="text-lg font-bold">Divisi - Akses Khusus</h2>
 
-        <div class="flex justify-start">
-            <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" />
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            {{-- Tombol Tambah --}}
+            <x-btn-add data-tip="Tambah Data" wire:click="openCreateModal" class="w-full sm:w-auto" />
+
+            {{-- Input Pencarian --}}
+            <div class="w-full sm:max-w-sm">
+                <x-inputsearch name="search" wire:model.live="search" />
+            </div>
         </div>
+
 
         <div class="overflow-x-auto">
             <table class="table min-w-full text-sm table-auto table-xs">
