@@ -36,7 +36,7 @@
                                     @endforeach
                                 </ul>
                             </div>
-                            <div class="grid flex-grow h-40 overflow-auto card bg-base-300 rounded-box">
+                            {{-- <div class="grid flex-grow h-40 overflow-auto card bg-base-300 rounded-box">
                                 <x-select-multiple wire:model.live='division_id' :error="$errors->get('division_id')">
                                     @foreach ($Division as $item)
                                         <option class="text-wrap hover:bg-primary" value="{{ $item->id }}">
@@ -50,7 +50,7 @@
                                         </option>
                                     @endforeach
                                 </x-select-multiple>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
