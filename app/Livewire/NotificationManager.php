@@ -12,15 +12,15 @@ use Berkayk\OneSignal\OneSignalFacade as OneSignal;
 
 class NotificationManager extends Component
 {
-    public  $playerId;
+   
     #[On('userSubscribed')]
     public function simpanPlayerId($player_id)
     {
-        $this->playerId = $player_id;
+        $playerId = $player_id;
 
-        if (isset($this->playerId) && Auth::check()) {
+        if (isset($playerId) && Auth::check()) {
             OnesignalPlayer::updateOrCreate(
-                ['player_id' => $this->playerId],
+                ['player_id' => $playerId],
                 ['user_id' => Auth::user()->id]
             );
         }
