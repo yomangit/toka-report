@@ -34,6 +34,13 @@
                                             {{ $item->BusinesUnit->Company->name_company }}-{{ $item->Department->department_name }}
                                         </li>
                                     @endforeach
+                                    <li class="px-2 cursor-pointer hover:bg-base-200">Contractor</li>
+                                    @foreach ($Division as $item)
+                                        <li wire:click="department({{ $item->id }})"
+                                            class="px-4 cursor-pointer hover:bg-base-200">
+                                            {{ $item->Division->formatWorkgroupName() }}
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                             {{-- <div class="grid flex-grow h-40 overflow-auto card bg-base-300 rounded-box">
