@@ -38,7 +38,10 @@ class CreateAndUpdate extends ModalComponent
         $this->dept = $user_security->dept_by_business_unit_id;
         $this->business_unit = $user_security->busines_unit_id;
     }
-
+    public function updatedWorkgroup_name() 
+    {
+          $this->business_unit = $this->dept = $this->division_id =$this->parent_Company = null;
+    }
     public function render()
     {
         $this->divider = $this->event_user_security_id ? 'Edit Event User Security' : 'Add Event User Security';
@@ -71,6 +74,7 @@ class CreateAndUpdate extends ModalComponent
                 $this->workgroup_name = $divisi->formatWorkgroupName();
             }
         }
+
         return view('livewire.admin.event-user-security.create-and-update', [
             'User' => User::searchId(trim($this->user_id_update))
                 ->searchNama(trim($this->search_people))
