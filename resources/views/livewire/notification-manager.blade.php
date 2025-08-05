@@ -12,13 +12,10 @@
             serviceWorkerRegistration: await navigator.serviceWorker.ready,
             notifyButton: { enable: false }
         });
-
         const isSubscribed = await OneSignal.User.PushSubscription.optedIn;
 
         if (isSubscribed) {
             const playerId = OneSignal.User.PushSubscription.id;
-            console.log('Player ID:', playerId);
-
             Livewire.dispatch('userSubscribed', {
                 player_id: playerId
             });
@@ -27,26 +24,19 @@
         OneSignal.Notifications.addEventListener("permissionChange", async (event) => {
             if (event.to === "granted") {
                 const playerId = OneSignal.User.PushSubscription.id;
-                console.log('Player ID (on change):', playerId);
-
                 Livewire.dispatch('userSubscribed', {
                     player_id: playerId
                 });
             }
         });
-
         // Fungsi logout
         window.handleLogout = async function () {
             try {
                 const playerId = OneSignal.User.PushSubscription.id;
-
                 if (playerId) {
                     Livewire.dispatch('removePlayerId', {
                         player_id: playerId
                     });
-
-                    console.log('Removing player ID:', playerId);
-
                     // Logout dari OneSignal
                     await OneSignal.logout();
                 }
