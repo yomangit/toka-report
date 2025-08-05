@@ -23,7 +23,7 @@ class CreateAndUpdate extends ModalComponent
     #[Url]
     public $search_people = '';
     public $divider = '', $search_workgroup = '';
-    public $responsible_role_id, $workgroup_name, $user_id = [], $workgroup = [];
+    public $responsible_role_id, $workgroupName, $user_id = [], $workgroup = [];
     public $type_event_report_id, $event_user_security_id, $user_id_update;
     public $division_id, $parent_Company, $business_unit, $dept;
 
@@ -33,12 +33,12 @@ class CreateAndUpdate extends ModalComponent
         $this->responsible_role_id = $user_security->responsible_role_id;
         $this->user_id_update = $user_security->user_id;
         $this->type_event_report_id = $user_security->type_event_report_id;
-        $this->workgroup_name = $user_security->name;
+        $this->workgroupName = $user_security->name;
         $this->parent_Company = $user_security->company_category_id;
         $this->dept = $user_security->dept_by_business_unit_id;
         $this->business_unit = $user_security->busines_unit_id;
     }
-    public function updatedWorkgroup_name() 
+    public function updatedWorkgroupName() 
     {
         $this->reset('business_unit','dept','division_id','parent_Company');
     }
@@ -47,19 +47,19 @@ class CreateAndUpdate extends ModalComponent
         $this->divider = $this->event_user_security_id ? 'Edit Event User Security' : 'Add Event User Security';
         $this->user_id_update = empty($this->search_people) ? $this->user_id_update : null;
 
-        // Menentukan workgroup_name
+        // Menentukan workgroupName
         if ($this->parent_Company) {
-            $this->workgroup_name = CompanyCategory::find(1)?->name_category_company;
+            $this->workgroupName = CompanyCategory::find(1)?->name_category_company;
         }
 
         if ($this->business_unit) {
-            $this->workgroup_name = BusinesUnit::with('Company')->find($this->business_unit)?->Company?->name_company;
+            $this->workgroupName = BusinesUnit::with('Company')->find($this->business_unit)?->Company?->name_company;
         }
 
         if ($this->dept) {
             $deptModel = DeptByBU::with(['Department', 'BusinesUnit.Company'])->find($this->dept);
             if ($deptModel) {
-                $this->workgroup_name = $deptModel->BusinesUnit->Company->name_company . '-' . $deptModel->Department->department_name;
+                $this->workgroupName = $deptModel->BusinesUnit->Company->name_company . '-' . $deptModel->Department->department_name;
             }
         }
         if ($this->division_id) {
@@ -71,7 +71,7 @@ class CreateAndUpdate extends ModalComponent
             ])->find($this->division_id);
 
             if ($divisi) {
-                $this->workgroup_name = $divisi->formatWorkgroupName();
+                $this->workgroupName = $divisi->formatWorkgroupName();
             }
         }
 
@@ -79,10 +79,10 @@ class CreateAndUpdate extends ModalComponent
             'User' => User::searchId(trim($this->user_id_update))
                 ->searchNama(trim($this->search_people))
                 ->paginate(100, ['*'], 'User'),
-            'ParentCompany' => CompanyCategory::whereId(1)->searchFor(trim($this->workgroup_name))->get(),
-            'BusinessUnit' => BusinesUnit::with(['Department', 'Company'])->search(trim($this->workgroup_name))->get(),
-            'Department' => DeptByBU::with(['Department', 'BusinesUnit'])->searchDept(trim($this->workgroup_name))->orderBy('busines_unit_id')->get(),
-            'Division' => Division::with(['DeptByBU.BusinesUnit.Company', 'DeptByBU.Department', 'Company'])->searchContractor(trim('Contractor'))->searchByFormattedName(trim($this->workgroup_name))->orderBy('dept_by_business_unit_id', 'asc')->get(),
+            'ParentCompany' => CompanyCategory::whereId(1)->searchFor(trim($this->workgroupName))->get(),
+            'BusinessUnit' => BusinesUnit::with(['Department', 'Company'])->search(trim($this->workgroupName))->get(),
+            'Department' => DeptByBU::with(['Department', 'BusinesUnit'])->searchDept(trim($this->workgroupName))->orderBy('busines_unit_id')->get(),
+            'Division' => Division::with(['DeptByBU.BusinesUnit.Company', 'DeptByBU.Department', 'Company'])->searchContractor(trim('Contractor'))->searchByFormattedName(trim($this->workgroupName))->orderBy('dept_by_business_unit_id', 'asc')->get(),
             'ClassHierarchy' => ClassHierarchy::with([
                 'Company',
                 'BusinesUnit.Company',
@@ -140,7 +140,7 @@ class CreateAndUpdate extends ModalComponent
     {
         return [
             'responsible_role_id.required' => 'Responsible Role is required',
-            'workgroup_name.required' => 'Workgroup Name is required',
+            'workgroupName.required' => 'Workgroup Name is required',
             'user_id.required' => 'People Name is required',
             'type_event_report_id.nullable' => 'Type Event Report is required',
         ];
@@ -151,7 +151,7 @@ class CreateAndUpdate extends ModalComponent
         $divisi = is_array($this->division_id) ? (int) $this->division_id[0] : null;
 
         return [
-            'name' => $this->workgroup_name,
+            'name' => $this->workgroupName,
             'division_id' => $divisi,
             'company_category_id' => $this->parent_Company,
             'busines_unit_id' => $this->business_unit,
@@ -190,7 +190,7 @@ class CreateAndUpdate extends ModalComponent
             $this->forceClose()->closeModal();
         } else {
             $this->reset([
-                'workgroup_name',
+                'workgroupName',
                 'business_unit',
                 'dept',
                 'responsible_role_id',

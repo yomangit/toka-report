@@ -8,7 +8,7 @@
             <div class="w-full max-w-xs sm:max-w-sm xl:max-w-xl form-control">
                 <x-label-req :value="__('Workgroup')" />
                 <div class="dropdown dropdown-end">
-                    <x-input wire:model.live='workgroup_name' :error="$errors->get('workgroup_name')" class="cursor-pointer" tabindex="0"
+                    <x-input wire:model.live='workgroupName' :error="$errors->get('workgroupName')" class="cursor-pointer" tabindex="0"
                         role="button" />
                     <div tabindex="0"
                         class="z-10 w-full shadow dropdown-content card card-compact bg-primary text-primary-content">
@@ -43,25 +43,10 @@
                                     @endforeach
                                 </ul>
                             </div>
-                            {{-- <div class="grid flex-grow h-40 overflow-auto card bg-base-300 rounded-box">
-                                <x-select-multiple wire:model.live='division_id' :error="$errors->get('division_id')">
-                                    @foreach ($Division as $item)
-                                        <option class="text-wrap hover:bg-primary" value="{{ $item->id }}">
-                                            {{ $item->DeptByBU->BusinesUnit->Company->name_company }}-{{ $item->DeptByBU->Department->department_name }}
-                                            @if (!empty($item->company_id))
-                                                -{{ $item->Company->name_company }}
-                                            @endif
-                                            @if (!empty($item->section_id))
-                                            -{{ $item->Section->name }}
-                                        @endif
-                                        </option>
-                                    @endforeach
-                                </x-select-multiple>
-                            </div> --}}
                         </div>
                     </div>
                 </div>
-                <x-label-error :messages="$errors->get('workgroup_name')" />
+                <x-label-error :messages="$errors->get('workgroupName')" />
             </div>
             <div class="w-full max-w-xs sm:max-w-sm xl:max-w-xl form-control">
                 <x-label-req :value="__('People')" />
