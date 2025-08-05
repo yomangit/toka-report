@@ -9,7 +9,7 @@
     <link rel="apple-touch-icon" href="{{ asset('icons.png') }}">
     <link rel="manifest" href="/manifest.json">
     <meta name="apple-mobile-web-app-status-bar" content="#d42c39">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="mobile-web-app-capable" content="yes">
     <link rel="manifest" href="/manifest.json">
     <link rel="apple-touch-icon" sizes="16x16" href="/pwa/icons/ios/16.png">
     <link rel="apple-touch-icon" sizes="20x20" href="/pwa/icons/ios/20.png">

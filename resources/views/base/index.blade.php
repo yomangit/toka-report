@@ -9,7 +9,6 @@
     <link rel="icon" href="{{ asset('icons.png') }}">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar" content="#01d679">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="manifest" href="/manifest.json">
     <link rel="apple-touch-icon" sizes="16x16" href="/pwa/icons/ios/16.png">
     <link rel="apple-touch-icon" sizes="20x20" href="/pwa/icons/ios/20.png">
@@ -37,7 +36,6 @@
     <link rel="apple-touch-icon" sizes="256x256" href="/pwa/icons/ios/256.png">
     <link rel="apple-touch-icon" sizes="512x512" href="/pwa/icons/ios/512.png">
     <link rel="apple-touch-icon" sizes="1024x1024" href="/pwa/icons/ios/1024.png">
-
     <link href="/pwa/icons/ios/1024.png" sizes="1024x1024" rel="apple-touch-startup-image">
     <link href="/pwa/icons/ios/512.png" sizes="512x512" rel="apple-touch-startup-image">
     <link href="/pwa/icons/ios/256.png" sizes="256x256" rel="apple-touch-startup-image">
