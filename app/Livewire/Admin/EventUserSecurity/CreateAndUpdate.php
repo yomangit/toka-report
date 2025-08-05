@@ -40,7 +40,7 @@ class CreateAndUpdate extends ModalComponent
     }
     public function updatedWorkgroup_name() 
     {
-          $this->business_unit = $this->dept = $this->division_id =$this->parent_Company = null;
+        $this->reset('business_unit','dept','division_id','parent_Company');
     }
     public function render()
     {
