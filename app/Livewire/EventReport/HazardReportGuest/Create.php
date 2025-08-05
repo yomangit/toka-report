@@ -497,8 +497,8 @@ class Create extends Component
             $user_moderator = User::find($user->id);
             $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya . Mohon untuk segera ditinjau.'];
-            $url = url("/eventReport/hazardReportDetail/{$url}");
-            NotificationHelper::sendToUser($user_moderator, $judul, $isi, $url);
+            $urls = url("/eventReport/hazardReportDetail/{$hazardReport->id}");
+            NotificationHelper::sendToUser($user_moderator, $judul, $isi, $urls);
         }
 
         // Kirim notifikasi ke report_to
@@ -516,8 +516,8 @@ class Create extends Component
             $user_os = User::find($this->report_to);
             $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
-            $url = url("/eventReport/hazardReportDetail/{$url}");
-            NotificationHelper::sendToUser($user_os, $judul, $isi, $hazardReport->id);
+            $urls = url("/eventReport/hazardReportDetail/{$hazardReport->id}");
+            NotificationHelper::sendToUser($user_os, $judul, $isi, $urls);
         }
         $this->clearFields();
         $this->dispatch('refreshChartHazard');
