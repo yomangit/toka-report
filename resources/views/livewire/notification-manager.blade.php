@@ -16,7 +16,8 @@
                 enable: false
             }
         });
-        console.log(OneSignal.User.getId());
+       const playerId = await OneSignal.User.getId();
+        console.log('Player ID:', playerId);
         
         OneSignal.Notifications.addEventListener("permissionChange", async (event) => {
             if (event.to === "granted") {
