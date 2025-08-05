@@ -113,7 +113,7 @@ class Pic extends Component
     {
         return view('livewire.admin.person-in-charge.pic', [
             'users' => User::searchNama(trim($this->search_nama))->orderBy('lookup_name', 'ASC')->paginate(100, ['*'], 'select_pic'),
-            'specialAccessList' => Division::with('users_pic')->paginate(20),
+            'specialAccessList' => Division::with('users_pic')->searchByFormattedName(trim($this->search))->paginate(20),
         ])->extends('base.index', ['header' => 'Akeses PIC', 'title' => 'Akeses PIC'])->section('content');
     }
     public function paginationView()
