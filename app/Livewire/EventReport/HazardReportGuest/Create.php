@@ -517,7 +517,7 @@ class Create extends Component
             $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
             $url = url("/eventReport/hazardReportDetail/{$url}");
-            NotificationHelper::sendToUser($user_os, $judul, $isi, $url);
+            NotificationHelper::sendToUser($user_os, $judul, $isi, $hazardReport->id);
         }
         $this->clearFields();
         $this->dispatch('refreshChartHazard');
