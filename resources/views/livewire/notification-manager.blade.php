@@ -4,6 +4,7 @@
 
 <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
+
     OneSignalDeferred.push(async function(OneSignal) {
         await OneSignal.init({
             appId: "b50c5099-e9f4-439d-a8e9-319b0e4e5e18",
@@ -33,6 +34,32 @@
                 });
             }
         });
+
+        // Fungsi logout
+        window.handleLogout = async function () {
+            try {
+                const playerId = OneSignal.User.PushSubscription.id;
+
+                if (playerId) {
+                    Livewire.dispatch('removePlayerId', {
+                        player_id: playerId
+                    });
+
+                    console.log('Removing player ID:', playerId);
+
+                    // Logout dari OneSignal
+                    await OneSignal.logout();
+                }
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+
+            // Tunggu sebentar sebelum redirect logout
+            setTimeout(() => {
+                document.getElementById('logout-form').submit();
+            }, 300);
+        };
     });
 </script>
+
 

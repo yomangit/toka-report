@@ -12,7 +12,7 @@ use Berkayk\OneSignal\OneSignalFacade as OneSignal;
 
 class NotificationManager extends Component
 {
-   
+
     #[On('userSubscribed')]
     public function simpanPlayerId($player_id)
     {
@@ -25,10 +25,16 @@ class NotificationManager extends Component
             );
         }
     }
-    #[On('user_out')]
-    public function handleUserLoggedOut($player_id)
+    #[On('removePlayerId')]
+    public function removePlayerId($player_id)
     {
-        OnesignalPlayer::where('player_id', $player_id)->where('user_id', Auth::user()->id)->delete();
+        $playerId = $player_id ?? null;
+
+        if (!$playerId || !auth()->check()) return;
+
+        OnesignalPlayer::where('user_id', auth()->id())
+            ->where('player_id', $playerId)
+            ->delete();
     }
     public function render()
     {
