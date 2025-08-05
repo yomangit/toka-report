@@ -16,6 +16,8 @@
                 enable: false
             }
         });
+        console.log(OneSignal);
+        
         OneSignal.Notifications.addEventListener("permissionChange", async (event) => {
             if (event.to === "granted") {
                 const playerId = OneSignal.User.PushSubscription.id;
