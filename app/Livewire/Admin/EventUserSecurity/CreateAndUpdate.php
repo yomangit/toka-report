@@ -117,7 +117,6 @@ class CreateAndUpdate extends ModalComponent
     }
     public function division($id)
     {
-        dd($id);
         $this->division_id = $id;
         $this->parent_Company = $this->business_unit = $this->dept = null;
     }
