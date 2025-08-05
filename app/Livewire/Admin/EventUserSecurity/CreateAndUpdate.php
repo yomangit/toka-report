@@ -59,7 +59,18 @@ class CreateAndUpdate extends ModalComponent
                 $this->workgroup_name = $deptModel->BusinesUnit->Company->name_company . '-' . $deptModel->Department->department_name;
             }
         }
+        if ($this->division_id) {
+            $divisi = Division::with([
+                'DeptByBU.BusinesUnit.Company',
+                'DeptByBU.Department',
+                'Company',
+                'Section'
+            ])->find($this->division_id);
 
+            if ($divisi) {
+                $this->workgroup_name = $divisi->formatWorkgroupName();
+            }
+        }
         return view('livewire.admin.event-user-security.create-and-update', [
             'User' => User::searchId(trim($this->user_id_update))
                 ->searchNama(trim($this->search_people))
@@ -99,6 +110,11 @@ class CreateAndUpdate extends ModalComponent
     {
         $this->dept = $id;
         $this->parent_Company = $this->business_unit = $this->division_id = null;
+    }
+    public function division($id)
+    {
+        $this->division_id = $id;
+        $this->parent_Company = $this->business_unit = $this->dept = null;
     }
 
     public function rules()

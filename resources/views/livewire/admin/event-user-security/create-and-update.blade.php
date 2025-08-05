@@ -36,7 +36,7 @@
                                     @endforeach
                                     <li class="px-2 cursor-pointer hover:bg-base-200">Contractor</li>
                                     @foreach ($Division as $item)
-                                        <li wire:click="department({{ $item->id }})"
+                                        <li wire:click="division({{ $item->id }})"
                                             class="px-4 cursor-pointer hover:bg-base-200">
                                             {{ $item->formatWorkgroupName() }}
                                         </li>
