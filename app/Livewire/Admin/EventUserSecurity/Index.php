@@ -142,4 +142,8 @@ class Index extends Component
             ]
         );
     }
+     public function paginationView()
+    {
+        return 'pagination.masterpaginate';
+    }
 }
