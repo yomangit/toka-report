@@ -28,11 +28,11 @@ class Division extends Model
     }
     public function users()
     {
-        return $this->belongsToMany(User::class,'division_user');
+        return $this->belongsToMany(User::class, 'division_user');
     }
     public function users_pic()
     {
-        return $this->belongsToMany(User::class,'person_in_charges');
+        return $this->belongsToMany(User::class, 'person_in_charges');
     }
 
     public function Division()
@@ -125,17 +125,29 @@ class Division extends Model
         return implode('-', $parts) ?: 'N/A';
     }
     public function scopeSearchByFormattedName($query, ?string $keyword)
-{
-    if (empty($keyword)) {
-        return $query; // return semua data jika keyword kosong/null
+    {
+        if (empty($keyword)) {
+            return $query; // return semua data jika keyword kosong/null
+        }
+
+        return $query->where(function ($q) use ($keyword) {
+            $q->whereHas('Section', fn($q) => $q->where('name', 'like', "%{$keyword}%"))
+                ->orWhereHas('Company', fn($q) => $q->where('name_company', 'like', "%{$keyword}%"))
+                ->orWhereHas('DeptByBU.Department', fn($q) => $q->where('department_name', 'like', "%{$keyword}%"))
+                ->orWhereHas('DeptByBU.BusinesUnit.Company', fn($q) => $q->where('name_company', 'like', "%{$keyword}%"));
+        });
     }
+    public function scopeSearchContractor($query, ?string $keyword)
+    {
+        if (empty($keyword)) {
+            return $query; // return semua data jika keyword kosong/null
+        }
 
-    return $query->where(function ($q) use ($keyword) {
-        $q->whereHas('Section', fn($q) => $q->where('name', 'like', "%{$keyword}%"))
-          ->orWhereHas('Company', fn($q) => $q->where('name_company', 'like', "%{$keyword}%"))
-          ->orWhereHas('DeptByBU.Department', fn($q) => $q->where('department_name', 'like', "%{$keyword}%"))
-          ->orWhereHas('DeptByBU.BusinesUnit.Company', fn($q) => $q->where('name_company', 'like', "%{$keyword}%"));
-    });
-}
-
+        return $query->where(function ($q) use ($keyword) {
+            $q->whereHas('Section', fn($q) => $q->where('name', 'like', "%{$keyword}%"))
+                ->orWhereHas('Company', fn($q) => $q->where('name_company', 'like', "%{$keyword}%"))
+                ->orWhereHas('DeptByBU.Department', fn($q) => $q->where('department_name', 'like', "%{$keyword}%"))
+                ->orWhereHas('DeptByBU.BusinesUnit.Company', fn($q) => $q->where('name_company', 'like', "%{$keyword}%"));
+        });
+    }
 }

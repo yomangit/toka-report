@@ -75,10 +75,10 @@ class CreateAndUpdate extends ModalComponent
             'User' => User::searchId(trim($this->user_id_update))
                 ->searchNama(trim($this->search_people))
                 ->paginate(100, ['*'], 'User'),
-            'ParentCompany' => CompanyCategory::whereId(1)->get(),
-            'BusinessUnit' => BusinesUnit::with(['Department', 'Company'])->get(),
-            'Department' => DeptByBU::with(['Department', 'BusinesUnit'])->orderBy('busines_unit_id')->get(),
-            'Division' => Division::with(['DeptByBU.BusinesUnit.Company', 'DeptByBU.Department', 'Company'])->searchByFormattedName(trim('Contractor'))->orderBy('dept_by_business_unit_id', 'asc')->get(),
+            'ParentCompany' => CompanyCategory::whereId(1)->searchFor(trim($this->workgroup_name))->get(),
+            'BusinessUnit' => BusinesUnit::with(['Department', 'Company'])->search(trim($this->workgroup_name))->get(),
+            'Department' => DeptByBU::with(['Department', 'BusinesUnit'])->searchDept(trim($this->workgroup_name))->orderBy('busines_unit_id')->get(),
+            'Division' => Division::with(['DeptByBU.BusinesUnit.Company', 'DeptByBU.Department', 'Company'])->searchContractor(trim('Contractor'))->searchByFormattedName(trim($this->workgroup_name))->orderBy('dept_by_business_unit_id', 'asc')->get(),
             'ClassHierarchy' => ClassHierarchy::with([
                 'Company',
                 'BusinesUnit.Company',
