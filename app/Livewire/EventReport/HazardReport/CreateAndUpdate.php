@@ -335,7 +335,7 @@ class CreateAndUpdate extends Component
 
         return view('livewire.event-report.hazard-report.create-and-update', [
             'Report_By'  => User::searchNama(trim($this->report_byName))->paginate(100, ['*'], 'Report_By'),
-            'Report_To'  =>  PersonInCharge::where('division_id',$this->division_id)->get(),
+            'Report_To'  =>  PersonInCharge::where('division_id', $this->division_id)->get(),
             'Division'   => $this->divisi_search,
 
             'EventType'  => $this->Event_type,
@@ -484,8 +484,8 @@ class CreateAndUpdate extends Component
             $user_moderator = User::find($user->id);
             $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya . Mohon untuk segera ditinjau.'];
-            $url = url("/eventReport/hazardReportDetail/{$url}");
-            NotificationHelper::sendToUser($user_moderator, $judul, $isi, $url);
+            $urls = url("/eventReport/hazardReportDetail/{$hazardReport->id}");
+            NotificationHelper::sendToUser($user_moderator, $judul, $isi, $urls);
         }
 
         // Kirim notifikasi ke report_to
@@ -503,8 +503,8 @@ class CreateAndUpdate extends Component
             $user_os = User::find($this->report_to);
             $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
-            $url = url("/eventReport/hazardReportDetail/{$url}");
-            NotificationHelper::sendToUser($user_os, $judul, $isi, $url);
+            $urls = url("/eventReport/hazardReportDetail/{$hazardReport->id}");
+            NotificationHelper::sendToUser($user_os, $judul, $isi, $urls);
         }
         $this->dispatch('hazardChartShouldRefresh');
         $this->clearFields();

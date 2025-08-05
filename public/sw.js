@@ -1,5 +1,5 @@
 // HARUS di baris pertama
-importScripts('https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js');
+importScripts('/OneSignalSDK.sw.js');
 
 // Tambahan kamu (opsional, tapi hati-hati tidak boleh override OneSignal listener)
 const CACHE_NAME = 'v1.0.0';
