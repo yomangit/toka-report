@@ -12,8 +12,8 @@ use Berkayk\OneSignal\OneSignalFacade as OneSignal;
 
 class NotificationManager extends Component
 {
-    #[On('userSubscribed')]
     public  $playerId;
+    #[On('userSubscribed')]
     public function simpanPlayerId($player_id)
     {
         $this->playerId = $player_id;
