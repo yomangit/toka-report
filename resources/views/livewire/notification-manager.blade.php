@@ -16,39 +16,39 @@
                 enable: false
             }
         });
-        const subscribed = await OneSignal.User.PushSubscription.optedIn;
-        if (!subscribed) {
-            try {
-                await OneSignal.User.PushSubscription.subscribe();
-                console.log("🔔 Subscribed successfully");
-            } catch (err) {
-                console.error("❌ Subscription failed", err);
-                return;
-            }
-        }
+        // const subscribed = await OneSignal.User.PushSubscription.optedIn;
+        // if (!subscribed) {
+        //     try {
+        //         await OneSignal.User.PushSubscription.subscribe();
+        //         console.log("🔔 Subscribed successfully");
+        //     } catch (err) {
+        //         console.error("❌ Subscription failed", err);
+        //         return;
+        //     }
+        // }
         const isLoggedIn = "{{ auth()->check() }}";
         const userId = "{{ auth()->id() }}";
 
-        if (isLoggedIn) {
-            await OneSignal.login(userId);
-        }
+        // if (isLoggedIn) {
+        //     await OneSignal.login(userId);
+        // }
         let playerId = OneSignal.User.PushSubscription.id;
-        while (!playerId) {
-            await new Promise(resolve => setTimeout(resolve, 300));
-            playerId = OneSignal.User.PushSubscription.id;
-        }
+        // while (!playerId) {
+        //     await new Promise(resolve => setTimeout(resolve, 300));
+        //     playerId = OneSignal.User.PushSubscription.id;
+        // }
 
         console.log("🎯 Player ID ready:", playerId);
 
-        const userIdFromBackend = "{{ auth()->id() }}";
-        if (userIdFromBackend) {
-            try {
-                await OneSignal.login(userIdFromBackend);
-                console.log("✅ Logged in to OneSignal");
-            } catch (err) {
-                console.error("❌ Login failed:", err);
-            }
-        }
+        // const userIdFromBackend = "{{ auth()->id() }}";
+        // if (userIdFromBackend) {
+        //     try {
+        //         await OneSignal.login(userIdFromBackend);
+        //         console.log("✅ Logged in to OneSignal");
+        //     } catch (err) {
+        //         console.error("❌ Login failed:", err);
+        //     }
+        // }
 
         Livewire.dispatch('userSubscribed', {
             player_id: playerId
