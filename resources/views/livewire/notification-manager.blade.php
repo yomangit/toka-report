@@ -17,7 +17,7 @@
                 enable: false,
             },
         });
-
+console.log("✅ SDK version:", OneSignal.sdkVersion);
         const playerId = await OneSignal.User.getId();
         console.log('✅ OneSignal playerId:', playerId);
 
