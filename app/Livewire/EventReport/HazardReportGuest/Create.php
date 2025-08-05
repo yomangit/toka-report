@@ -497,7 +497,7 @@ class Create extends Component
             $user_moderator = User::find($user->id);
             $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya . Mohon untuk segera ditinjau.'];
-            $url = "https://tokasafe.archimining.com/eventReport/hazardReportDetail/$url";
+            $url = url("/eventReport/hazardReportDetail/{$url}");
             NotificationHelper::sendToUser($user_moderator, $judul, $isi, $url);
         }
 
@@ -516,7 +516,7 @@ class Create extends Component
             $user_os = User::find($this->report_to);
             $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
-            $url = "https://tokasafe.archimining.com/eventReport/hazardReportDetail/$url";
+            $url = url("/eventReport/hazardReportDetail/{$url}");
             NotificationHelper::sendToUser($user_os, $judul, $isi, $url);
         }
         $this->clearFields();
