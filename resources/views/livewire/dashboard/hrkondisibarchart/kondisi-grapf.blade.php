@@ -66,6 +66,7 @@
 
     document.addEventListener('livewire:init', () => {
         Livewire.on('kondisiChartUpdated', data => {
+             console.log('Data chart diterima:', data); // Debug
             const labels = data.map(item => item.label);
             const counts = data.map(item => item.count);
 
