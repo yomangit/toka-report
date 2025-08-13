@@ -116,7 +116,7 @@
     const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
     // Listener Livewire event
-    Livewire.on('kondisiChartUpdated', (sevent) => {
+    Livewire.on('kondisiChartUpdated', (event) => {
         const data = event; // di Livewire 3 biasanya langsung data array, tapi kadang terbungkus
         console.log(data);
         
