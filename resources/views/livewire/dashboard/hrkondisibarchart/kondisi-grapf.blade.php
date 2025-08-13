@@ -1,9 +1,15 @@
 <div>
+        <button wire:click="sendToJs">Kirim ke JS</button>
     <x-input-daterange id="rangeDate" placeholder="date-range" />
     <div wire:ignore id="kondisiCharts"></div>
 </div>
 
 @push('scripts')
+<script>
+    Livewire.on('messageFromLivewire', data => {
+        console.log('Pesan dari Livewire:', data);
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>

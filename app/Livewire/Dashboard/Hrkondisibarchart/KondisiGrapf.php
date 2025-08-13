@@ -51,7 +51,12 @@ class KondisiGrapf extends Component
             ];
         })->values()->toArray());
     }
+    public $message = "Halo dari Livewire";
 
+    public function sendToJs()
+    {
+        $this->dispatch('messageFromLivewire', $this->message);
+    }
     public function render()
     {
         return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf');
