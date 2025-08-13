@@ -51,8 +51,8 @@
 
     // Listener Livewire event
     Livewire.on('kondisiChartUpdated', (newData) => {
-        const newLabels = newData.map(item => item.label);
-        const newCounts = newData.map(item => item.count);
+        const newLabels = newData[0].map(item => item.label);
+        const newCounts = newData[0].map(item => item.count);
 
         kondisiChart.updateOptions({
             xaxis: { categories: shortenLabels(newLabels) },
