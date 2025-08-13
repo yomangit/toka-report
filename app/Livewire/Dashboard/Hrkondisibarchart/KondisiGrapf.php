@@ -8,17 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class KondisiGrapf extends Component
 {
-    public $tglMulai;
-    public $tglAkhir;
-    public $labels;
-    public $counts;
+    public $labels = [];
+    public $counts = [];
+    public $kondisi;
 
-    public function updated($property)
-    {
-        if (in_array($property, ['tglMulai', 'tglAkhir'])) {
-            $this->loadChartData();
-        }
-    }
+    protected $listeners = ['hazardChartShouldRefresh' => 'loadChartData'];
 
     public function loadChartData()
     {
@@ -29,39 +23,35 @@ class KondisiGrapf extends Component
             ->groupBy('kondisitidakamen_id')
             ->with('kondisiTidakAman');
 
-        if ($this->tglMulai && $this->tglAkhir) {
-            $query->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
-        }
-
         if ($user->hasRolePermit('administration')) {
             $reports = $query->get();
         } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
             $divisionIds = $user->divisions->pluck('id')->toArray();
             $reports = $query->whereIn('division_id', $divisionIds)->get();
         } else {
-            $reports = collect();
+            $reports = collect(); // kosong
         }
 
-        $labels = $reports->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
-        $counts = $reports->pluck('total')->toArray();
-        $this->labels = $labels;
-        $this->counts = $counts;
-        // Kirim event ke browser
-        $this->dispatch('kondisiChartUpdated', collect($labels)->map(function ($label, $index) use ($counts) {
-            return [
-                'label' => $label,
-                'count' => $counts[$index] ?? 0
-            ];
-        })->values()->toArray());
-    }
-    public $message = "Halo dari Livewire";
+        $this->labels = $reports->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
+        $this->counts = $reports->pluck('total')->toArray();
 
-    public function sendToJs()
-    {
-        $this->dispatch('messageFromLivewire', $this->message);
+        $this->dispatch(
+            'kondisiChartUpdated',
+            collect($this->labels)
+                ->map(function ($label, $index) {
+                    return [
+                        'label' => $label,
+                        'count' => $this->counts[$index] ?? 0
+                    ];
+                })
+                ->values()
+                ->toArray()
+        );
     }
     public function render()
     {
+        $this->loadChartData();
+
         return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf');
     }
 }
