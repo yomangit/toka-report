@@ -49,9 +49,8 @@
         return Array.from({ length }, (_, i) => colorList[i % colorList.length]);
     }
 
-    // Listener untuk update chart saat Livewire kirim event
-    document.addEventListener('livewire:kondisiChartUpdated', function (event) {
-        const newData = event.detail;
+    // Tangkap event dari Livewire
+    Livewire.on('kondisiChartUpdated', (newData) => {
         const newLabels = newData.map(item => item.label);
         const newCounts = newData.map(item => item.count);
 
