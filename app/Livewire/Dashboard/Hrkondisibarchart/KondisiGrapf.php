@@ -22,46 +22,39 @@ class KondisiGrapf extends Component
         }
     }
 
-    public function loadChartData()
-    {
-        $user = auth()->user();
+   public function loadChartData()
+{
+    $user = auth()->user();
 
-        $query = HazardReport::select('kondisitidakamen_id', DB::raw('COUNT(*) as total'))
-            ->whereNotNull('kondisitidakamen_id')
-            ->groupBy('kondisitidakamen_id')
-            ->with('kondisiTidakAman');
+    $query = HazardReport::select('kondisitidakamen_id', DB::raw('COUNT(*) as total'))
+        ->whereNotNull('kondisitidakamen_id')
+        ->groupBy('kondisitidakamen_id')
+        ->with('kondisiTidakAman');
 
-        // Filter tanggal jika ada
-        if ($this->tglMulai && $this->tglAkhir) {
-            $query->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
-        }
-
-        if ($user->hasRolePermit('administration')) {
-            $reports = $query->get();
-        } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
-            $divisionIds = $user->divisions->pluck('id')->toArray();
-            $reports = $query->whereIn('division_id', $divisionIds)->get();
-        } else {
-            $reports = collect();
-        }
-
-        $this->labels = $reports->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
-        $this->counts = $reports->pluck('total')->toArray();
-
-        // Kirim event ke JS
-        $this->dispatch(
-            'kondisiChartUpdated',
-            collect($this->labels)
-                ->map(function ($label, $index) {
-                    return [
-                        'label' => $label,
-                        'count' => $this->counts[$index] ?? 0
-                    ];
-                })
-                ->values()
-                ->toArray()
-        );
+    if ($this->tglMulai && $this->tglAkhir) {
+        $query->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
     }
+
+    if ($user->hasRolePermit('administration')) {
+        $reports = $query->get();
+    } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
+        $divisionIds = $user->divisions->pluck('id')->toArray();
+        $reports = $query->whereIn('division_id', $divisionIds)->get();
+    } else {
+        $reports = collect();
+    }
+
+    $labels = $reports->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
+    $counts = $reports->pluck('total')->toArray();
+
+    // Kirim data baru ke JS
+    $this->dispatch('kondisiChartUpdated', collect($labels)->map(function ($label, $index) use ($counts) {
+        return [
+            'label' => $label,
+            'count' => $counts[$index] ?? 0
+        ];
+    })->values()->toArray());
+}
 
     public function render()
     {
