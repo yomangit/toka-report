@@ -75,6 +75,8 @@
     // === LISTEN FOR LIVEWIRE EVENT TO UPDATE CHART ===
     document.addEventListener('livewire:kondisiChartUpdated', function (event) {
         const newData = event.detail;
+        console.log(newData);
+        
         const newLabels = newData.map(item => item.label);
         const newCounts = newData.map(item => item.count);
 
