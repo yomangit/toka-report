@@ -9,9 +9,9 @@
 <script>
     // Date range picker
     flatpickr("#rangeDate", {
-        mode: 'range',
-        dateFormat: "d-m-Y",
-        onChange: function(dates) {
+        mode: 'range'
+        , dateFormat: "d-m-Y"
+        , onChange: function(dates) {
             if (dates.length === 2) {
                 let start = dates[0];
                 let end = dates[1];
@@ -35,31 +35,58 @@
             label.length > 20 ? label.slice(0, 20) + '…' : label
         );
     }
+
     function generateColors(length) {
         const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
-        return Array.from({ length }, (_, i) => colorList[i % colorList.length]);
+        return Array.from({
+            length
+        }, (_, i) => colorList[i % colorList.length]);
     }
 
     // Init chart kosong
     const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), {
-        chart: { type: 'bar', height: 350 },
-        series: [{ name: 'Jumlah', data: [] }],
-        xaxis: { categories: [] },
-        plotOptions: { bar: { borderRadius: 4, distributed: true } }
+        chart: {
+            type: 'bar'
+            , height: 350
+        }
+        , series: [{
+            name: 'Jumlah'
+            , data: []
+        }]
+        , xaxis: {
+            categories: []
+        }
+        , plotOptions: {
+            bar: {
+                borderRadius: 4
+                , distributed: true
+            }
+        }
     });
     kondisiChart.render();
 
     // Listener Livewire event
     Livewire.on('kondisiChartUpdated', (newData) => {
-        const newLabels = newData[0].map(item => item.label);
-        const newCounts = newData[0].map(item => item.count);
+        const data = newData; // di Livewire 3 biasanya langsung data array, tapi kadang terbungkus
+        if (!Array.isArray(data)) {
+            console.warn("Data chart tidak valid:", data);
+            return;
+        }
+        const newLabels = newData.map(item => item.label);
+        const newCounts = newData.map(item => item.count);
 
         kondisiChart.updateOptions({
-            xaxis: { categories: shortenLabels(newLabels) },
-            colors: generateColors(newLabels.length)
+            xaxis: {
+                categories: shortenLabels(newLabels)
+            }
+            , colors: generateColors(newLabels.length)
         });
 
-        kondisiChart.updateSeries([{ name: 'Jumlah', data: newCounts }]);
+        kondisiChart.updateSeries([{
+            name: 'Jumlah'
+            , data: newCounts
+        }]);
     });
+
 </script>
 @endpush
