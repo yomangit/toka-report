@@ -87,7 +87,7 @@
             xaxis: {
                 categories: shortenLabels(newLabels)
             }
-            , colors: '#00E396'
+            , colors: 
         });
 
         kondisiChart.updateSeries([{
