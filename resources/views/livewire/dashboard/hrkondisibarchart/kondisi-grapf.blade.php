@@ -72,7 +72,7 @@
     kondisiChart.render();
 
     // Listener Livewire event
-    Livewire.on('kondisiChartUpdated', (event) => {
+    Livewire.on('kondisiChartUpdated', event => {
         const data = event; // di Livewire 3 biasanya langsung data array, tapi kadang terbungkus
         if (!Array.isArray(data)) {
             console.warn("Data chart tidak valid:", data);
