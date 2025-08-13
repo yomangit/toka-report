@@ -80,7 +80,7 @@
             console.warn("Data chart tidak valid:", data);
             return;
         }
-        const newLabels = event.map(item => item.label);
+        const newLabels = event[0].map(item => item.label);
         console.log(newLabels);
         
         const newCounts = event.map(item => item.count);
