@@ -115,6 +115,31 @@
 
     const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
+    // Listener Livewire event
+    Livewire.on('kondisiChartUpdated', sevent => {
+        const data = event; // di Livewire 3 biasanya langsung data array, tapi kadang terbungkus
+        console.log(data);
+        
+
+        if (!Array.isArray(data)) {
+            console.warn("Data chart tidak valid:", data);
+            return;
+        }
+        const newLabels = event[0].map(item => item.label);
+        const newCounts = event[0].map(item => item.count);
+
+        kondisiChart.updateOptions({
+            xaxis: {
+                categories: shortenLabels(newLabels)
+            }
+            , colors: '#00E396'
+        });
+
+        kondisiChart.updateSeries([{
+            name: 'Jumlah'
+            , data: newCounts
+        }]);
+    });
 
 </script>
 @endpush
