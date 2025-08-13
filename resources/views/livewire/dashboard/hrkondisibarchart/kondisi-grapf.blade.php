@@ -1,40 +1,55 @@
-<div>
-        <button wire:click="sendToJs">Kirim ke JS</button>
-    <x-input-daterange id="rangeDate" placeholder="date-range" />
+<div wire:init="loadChartData" wire:poll.3s="loadChartData">
+    <x-input-daterange id="rangeDate" wire:model.live='rangeDate' placeholder='date-range' />
     <div wire:ignore id="kondisiCharts"></div>
 </div>
 
 @push('scripts')
-<script>
-    Livewire.on('messageFromLivewire', data => {
-        console.log('Pesan dari Livewire:', data);
-    });
-</script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-    // Date range picker
-    flatpickr("#rangeDate", {
-        mode: 'range'
-        , dateFormat: "d-m-Y"
-        , onChange: function(dates) {
-            if (dates.length === 2) {
-                let start = dates[0];
-                let end = dates[1];
+         flatpickr("#rangeDate", {
+            mode: 'range',
+            dateFormat: "d-m-Y", //defaults to "F Y"
+            onChange: function(dates) {
+                if (dates.length === 2) {
 
-                let tglMulai = start.getFullYear() + '-' +
-                    String(start.getMonth() + 1).padStart(2, '0') + '-' +
-                    String(start.getDate()).padStart(2, '0');
+                    var start = new Date(dates[0]);
+                    var end = new Date(dates[1]);
 
-                let tglAkhir = end.getFullYear() + '-' +
-                    String(end.getMonth() + 1).padStart(2, '0') + '-' +
-                    String(end.getDate()).padStart(2, '0');
+                    var year = start.getFullYear();
+                    var month = start.getMonth() + 1;
+                    var dt = start.getDate();
 
-                @this.set('tglMulai', tglMulai);
-                @this.set('tglAkhir', tglAkhir);
+                    if (dt < 10) {
+                        dt = '0' + dt;
+                    }
+                    if (month < 10) {
+                        month = '0' + month;
+                    }
+                    var year2 = end.getFullYear();
+                    var month2 = end.getMonth() + 1;
+                    var dt2 = end.getDate();
+
+                    if (dt2 < 10) {
+                        dt2 = '0' + dt2;
+                    }
+                    if (month2 < 10) {
+                        month2 = '0' + month2;
+                    }
+
+                    // var tglMulai = year + '-' + month + '-' + dt;
+                    // var tglAkhir = year2 + '-' + month2 + '-' + dt2;
+
+                    var tglMulai = year + '-' + month + '-' + dt;
+                    var tglAkhir = year2 + '-' + month2 + '-' + dt2;
+                    @this.set('tglMulai', tglMulai)
+                    @this.set('tglAkhir', tglAkhir)
+                }
             }
-        }
-    });
+        });
+    </script>
+<script>
+    const initialLabels = @json($labels);
+    const initialCounts = @json($counts);
 
     function shortenLabels(labels) {
         return labels.map(label =>
@@ -49,18 +64,33 @@
         }, (_, i) => colorList[i % colorList.length]);
     }
 
-    // Init chart kosong
-    const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), {
+    const chartKondisi = {
         chart: {
             type: 'bar'
             , height: 350
         }
         , series: [{
             name: 'Jumlah'
-            , data: []
+            , data: initialCounts
         }]
+        , colors: generateColors(initialLabels.length)
+        , title: {
+            text: 'Kondisi Tidak Aman'
+            , align: 'center'
+            , style: {
+                fontSize: '12px'
+                , fontWeight: 'bold'
+                , color: '#fb7185'
+            }
+        }
         , xaxis: {
-            categories: []
+            categories: shortenLabels(initialLabels)
+            , labels: {
+                rotate: -45
+                , style: {
+                    fontSize: '09px'
+                }
+            }
         }
         , plotOptions: {
             bar: {
@@ -68,33 +98,23 @@
                 , distributed: true
             }
         }
-    });
+        , fill: {
+            type: 'gradient'
+            , gradient: {
+                shade: 'light'
+                , type: 'vertical'
+                , shadeIntensity: 0.25
+                , inverseColors: true
+                , opacityFrom: 0.9
+                , opacityTo: 1
+                , stops: [50, 100]
+            }
+        }
+    };
+
+    const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
 
-    // Listener Livewire event
-    Livewire.on('kondisiChartUpdated', event => {
-        const data = event; // di Livewire 3 biasanya langsung data array, tapi kadang terbungkus
-      
-        
-        if (!Array.isArray(data)) {
-            console.warn("Data chart tidak valid:", data);
-            return;
-        }
-        const newLabels = event[0].map(item => item.label);
-        const newCounts = event[0].map(item => item.count);
-
-        kondisiChart.updateOptions({
-            xaxis: {
-                categories: shortenLabels(newLabels)
-            }
-            , colors: '#00E396'
-        });
-
-        kondisiChart.updateSeries([{
-            name: 'Jumlah'
-            , data: newCounts
-        }]);
-    });
 
 </script>
 @endpush
