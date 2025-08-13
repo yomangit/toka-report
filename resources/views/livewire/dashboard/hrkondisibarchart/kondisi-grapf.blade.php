@@ -1,4 +1,4 @@
-<div wire:init="loadChartData" wire:poll.3s="loadChartData">
+<div wire:init="loadChartData" >
     <x-input-daterange id="rangeDate" wire:model.live='rangeDate' placeholder='date-range' />
     <div wire:ignore id="kondisiCharts"></div>
 </div>
