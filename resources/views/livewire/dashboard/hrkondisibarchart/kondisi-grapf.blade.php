@@ -1,5 +1,5 @@
 <div>
-        <button wire:click="sendToJs">Kirim ke JS</button>
+    <button wire:click="sendToJs">Kirim ke JS</button>
     <x-input-daterange id="rangeDate" placeholder="date-range" />
     <div wire:ignore id="kondisiCharts"></div>
 </div>
@@ -9,6 +9,7 @@
     Livewire.on('messageFromLivewire', data => {
         console.log('Pesan dari Livewire:', data);
     });
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -81,6 +82,19 @@
         }
         const newLabels = event.map(item => item.label);
         const newCounts = event.map(item => item.count);
+
+        function shortenLabels(newLabels) {
+            return newLabels.map(label =>
+                label.length > 20 ? label.slice(0, 20) + '…' : label
+            );
+        }
+
+        function generateColors(length) {
+            const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
+            return Array.from({
+                length
+            }, (_, i) => colorList[i % colorList.length]);
+        }
 
         kondisiChart.updateOptions({
             xaxis: {
