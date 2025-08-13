@@ -51,9 +51,6 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-    const initialLabels = @json($labels);
-    const initialCounts = @json($counts);
-
     function shortenLabels(labels) {
         return labels.map(label =>
             label.length > 20 ? label.slice(0, 20) + '…' : label
@@ -68,6 +65,8 @@
     }
 
     Livewire.on('kondisiChartUpdated', data => {
+        const initialLabels = data.map(item => item.label);
+        const initialCounts = data.map(item => item.count);
         const chartKondisi = {
             chart: {
                 type: 'bar'
@@ -118,7 +117,6 @@
         const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
         kondisiChart.render();
     })
-
 
 </script>
 @endpush
