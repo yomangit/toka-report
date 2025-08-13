@@ -65,58 +65,58 @@
     }
 
     Livewire.on('kondisiChartUpdated', data => {
-    
-        const labels = data[0].map(item => item.label);
-        console.log(labels);
-        // const chartKondisi = {
-        //     chart: {
-        //         type: 'bar'
-        //         , height: 350
-        //     }
-        //     , series: [{
-        //         name: 'Jumlah'
-        //         , data: initialCounts
-        //     }]
-        //     , colors: generateColors(initialLabels.length)
-        //     , title: {
-        //         text: 'Kondisi Tidak Aman'
-        //         , align: 'center'
-        //         , style: {
-        //             fontSize: '12px'
-        //             , fontWeight: 'bold'
-        //             , color: '#fb7185'
-        //         }
-        //     }
-        //     , xaxis: {
-        //         categories: shortenLabels(initialLabels)
-        //         , labels: {
-        //             rotate: -45
-        //             , style: {
-        //                 fontSize: '09px'
-        //             }
-        //         }
-        //     }
-        //     , plotOptions: {
-        //         bar: {
-        //             borderRadius: 4
-        //             , distributed: true
-        //         }
-        //     }
-        //     , fill: {
-        //         type: 'gradient'
-        //         , gradient: {
-        //             shade: 'light'
-        //             , type: 'vertical'
-        //             , shadeIntensity: 0.25
-        //             , inverseColors: true
-        //             , opacityFrom: 0.9
-        //             , opacityTo: 1
-        //             , stops: [50, 100]
-        //         }
-        //     }
-        // };
-        // const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
-        // kondisiChart.render();
+      
+        const initialLabels = data[0].map(item => item.label);
+        const initialCounts = data[0].map(item => item.count);
+        const chartKondisi = {
+            chart: {
+                type: 'bar'
+                , height: 350
+            }
+            , series: [{
+                name: 'Jumlah'
+                , data: initialCounts
+            }]
+            , colors: generateColors(initialLabels.length)
+            , title: {
+                text: 'Kondisi Tidak Aman'
+                , align: 'center'
+                , style: {
+                    fontSize: '12px'
+                    , fontWeight: 'bold'
+                    , color: '#fb7185'
+                }
+            }
+            , xaxis: {
+                categories: shortenLabels(initialLabels)
+                , labels: {
+                    rotate: -45
+                    , style: {
+                        fontSize: '09px'
+                    }
+                }
+            }
+            , plotOptions: {
+                bar: {
+                    borderRadius: 4
+                    , distributed: true
+                }
+            }
+            , fill: {
+                type: 'gradient'
+                , gradient: {
+                    shade: 'light'
+                    , type: 'vertical'
+                    , shadeIntensity: 0.25
+                    , inverseColors: true
+                    , opacityFrom: 0.9
+                    , opacityTo: 1
+                    , stops: [50, 100]
+                }
+            }
+        };
+        const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
+        kondisiChart.render();
     })
 
 </script>
