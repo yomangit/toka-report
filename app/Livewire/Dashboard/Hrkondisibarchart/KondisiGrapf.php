@@ -10,6 +10,8 @@ class KondisiGrapf extends Component
 {
     public $tglMulai;
     public $tglAkhir;
+    public $labels;
+    public $counts;
 
     public function updated($property)
     {
@@ -42,7 +44,8 @@ class KondisiGrapf extends Component
 
         $labels = $reports->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
         $counts = $reports->pluck('total')->toArray();
-
+        $this->labels = $labels;
+        $this->counts = $counts;
         // Kirim event ke browser
         $this->dispatch('kondisiChartUpdated', collect($labels)->map(function ($label, $index) use ($counts) {
             return [
