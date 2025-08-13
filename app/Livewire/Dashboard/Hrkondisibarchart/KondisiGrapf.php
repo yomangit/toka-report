@@ -11,6 +11,7 @@ class KondisiGrapf extends Component
     public $labels = [];
     public $counts = [];
     public $kondisi;
+    public $rangeDate = '';
     public $tglMulai;
     public $tglAkhir;
     protected $listeners = ['hazardChartShouldRefresh' => 'loadChartData'];
