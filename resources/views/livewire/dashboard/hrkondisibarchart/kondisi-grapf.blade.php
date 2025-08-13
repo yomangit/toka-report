@@ -81,9 +81,7 @@
             return;
         }
         const newLabels = event[0].map(item => item.label);
-        console.log(newLabels);
-        
-        const newCounts = event.map(item => item.count);
+        const newCounts = event[0].map(item => item.count);
 
         kondisiChart.updateOptions({
             xaxis: {
