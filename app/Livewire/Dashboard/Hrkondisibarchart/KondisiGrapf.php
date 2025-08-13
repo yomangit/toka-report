@@ -10,11 +10,17 @@ class KondisiGrapf extends Component
 {
     public $labels = [];
     public $counts = [];
-    public $kondisi;
-    public $rangeDate = '';
     public $tglMulai;
     public $tglAkhir;
+
     protected $listeners = ['hazardChartShouldRefresh' => 'loadChartData'];
+
+    public function updated($property)
+    {
+        if (in_array($property, ['tglMulai', 'tglAkhir'])) {
+            $this->loadChartData();
+        }
+    }
 
     public function loadChartData()
     {
@@ -24,22 +30,25 @@ class KondisiGrapf extends Component
             ->whereNotNull('kondisitidakamen_id')
             ->groupBy('kondisitidakamen_id')
             ->with('kondisiTidakAman');
-        // Filter berdasarkan tanggal jika ada
+
+        // Filter tanggal jika ada
         if ($this->tglMulai && $this->tglAkhir) {
-            $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
+            $query->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
         }
+
         if ($user->hasRolePermit('administration')) {
             $reports = $query->get();
         } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
             $divisionIds = $user->divisions->pluck('id')->toArray();
             $reports = $query->whereIn('division_id', $divisionIds)->get();
         } else {
-            $reports = collect(); // kosong
+            $reports = collect();
         }
 
         $this->labels = $reports->map(fn($item) => optional($item->kondisiTidakAman)?->name ?? 'Unknown')->toArray();
         $this->counts = $reports->pluck('total')->toArray();
 
+        // Kirim event ke JS
         $this->dispatch(
             'kondisiChartUpdated',
             collect($this->labels)
@@ -53,16 +62,10 @@ class KondisiGrapf extends Component
                 ->toArray()
         );
     }
-    public function updated($propertyName)
-{
-    if (in_array($propertyName, ['startDate', 'endDate'])) {
-        $this->loadChartData();
-    }
-}
+
     public function render()
     {
         $this->loadChartData();
-
         return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf');
     }
 }
