@@ -1,9 +1,53 @@
 <div wire:init="loadChartData" wire:poll.3s="loadChartData">
+    <x-input-daterange id="rangeDate" wire:model.live='rangeDate' placeholder='date-range' />
     <div wire:ignore id="kondisiCharts"></div>
 </div>
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+         flatpickr("#rangeDate", {
+            mode: 'range',
+            dateFormat: "d-m-Y", //defaults to "F Y"
+            onChange: function(dates) {
+                if (dates.length === 2) {
+
+                    var start = new Date(dates[0]);
+                    var end = new Date(dates[1]);
+
+                    var year = start.getFullYear();
+                    var month = start.getMonth() + 1;
+                    var dt = start.getDate();
+
+                    if (dt < 10) {
+                        dt = '0' + dt;
+                    }
+                    if (month < 10) {
+                        month = '0' + month;
+                    }
+                    var year2 = end.getFullYear();
+                    var month2 = end.getMonth() + 1;
+                    var dt2 = end.getDate();
+
+                    if (dt2 < 10) {
+                        dt2 = '0' + dt2;
+                    }
+                    if (month2 < 10) {
+                        month2 = '0' + month2;
+                    }
+
+                    // var tglMulai = year + '-' + month + '-' + dt;
+                    // var tglAkhir = year2 + '-' + month2 + '-' + dt2;
+
+                    var tglMulai = year + '-' + month + '-' + dt;
+                    var tglAkhir = year2 + '-' + month2 + '-' + dt2;
+                    @this.set('tglMulai', tglMulai)
+                    @this.set('tglAkhir', tglAkhir)
+                }
+            }
+        });
+    </script>
 <script>
     const initialLabels = @json($labels);
     const initialCounts = @json($counts);
@@ -71,26 +115,6 @@
 
     const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
-
-// Livewire.on('kondisiChartUpdated', (data) => {
-//     console.log("Data received:", data);
-
-//     const newLabels = shortenLabels(data.map(item => item.label));
-//     const newCounts = data.map(item => item.count);
-//     const newColors = generateColors(newLabels.length);
-
-//     kondisiChart.updateOptions({
-//         xaxis: {
-//             categories: newLabels
-//         },
-//         colors: newColors
-//     });
-
-//     kondisiChart.updateSeries([{
-//         name: 'Jumlah',
-//         data: newCounts
-//     }]);
-// });
 
 
 </script>

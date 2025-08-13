@@ -11,7 +11,8 @@ class KondisiGrapf extends Component
     public $labels = [];
     public $counts = [];
     public $kondisi;
-
+    public $tglMulai;
+    public $tglAkhir;
     protected $listeners = ['hazardChartShouldRefresh' => 'loadChartData'];
 
     public function loadChartData()
@@ -22,7 +23,10 @@ class KondisiGrapf extends Component
             ->whereNotNull('kondisitidakamen_id')
             ->groupBy('kondisitidakamen_id')
             ->with('kondisiTidakAman');
-
+        // Filter berdasarkan tanggal jika ada
+        if ($this->tglMulai && $this->tglAkhir) {
+            $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
+        }
         if ($user->hasRolePermit('administration')) {
             $reports = $query->get();
         } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
