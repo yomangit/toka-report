@@ -65,9 +65,8 @@
     }
 
     Livewire.on('kondisiChartUpdated', data => {
-        const initialLabels = data.map(item => item.label);
-        const initialCounts = data.map(item => item.count);
-        console.log(initialLabels);
+    
+        console.log(data);
         
         // const chartKondisi = {
         //     chart: {
