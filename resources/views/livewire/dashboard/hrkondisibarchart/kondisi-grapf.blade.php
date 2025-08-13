@@ -51,73 +51,76 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-    function shortenLabels(labels) {
-        return labels.map(label =>
-            label.length > 20 ? label.slice(0, 20) + '…' : label
-        );
-    }
+    Livewire.on('kondisiChartUpdated', (chartData) => {
+        // Pastikan data valid
+        if (!Array.isArray(chartData) || !Array.isArray(chartData[0])) {
+            console.error("Format data chart tidak sesuai:", chartData);
+            return;
+        }
 
-    function generateColors(length) {
-        const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
-        return Array.from({
-            length
-        }, (_, i) => colorList[i % colorList.length]);
-    }
+        const kondisiData = chartData[0];
 
-    Livewire.on('kondisiChartUpdated', data => {
-      
-        const initialLabels = data[0].map(item => item.label);
-        const initialCounts = data[0].map(item => item.count);
+        const initialLabels = kondisiData.map(item => item.label ?? '');
+        const initialCounts = kondisiData.map(item => item.count ?? 0);
+
+        // Kalau chart sudah ada → hapus dulu biar nggak double render
+        if (window.kondisiChartInstance) {
+            window.kondisiChartInstance.destroy();
+        }
+
         const chartKondisi = {
             chart: {
-                type: 'bar'
-                , height: 350
-            }
-            , series: [{
-                name: 'Jumlah'
-                , data: initialCounts
-            }]
-            , colors: generateColors(initialLabels.length)
-            , title: {
-                text: 'Kondisi Tidak Aman'
-                , align: 'center'
-                , style: {
-                    fontSize: '12px'
-                    , fontWeight: 'bold'
-                    , color: '#fb7185'
+                type: 'bar',
+                height: 350
+            },
+            series: [{
+                name: 'Jumlah',
+                data: initialCounts
+            }],
+            colors: generateColors(initialLabels.length),
+            title: {
+                text: 'Kondisi Tidak Aman',
+                align: 'center',
+                style: {
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    color: '#fb7185'
                 }
-            }
-            , xaxis: {
-                categories: shortenLabels(initialLabels)
-                , labels: {
-                    rotate: -45
-                    , style: {
-                        fontSize: '09px'
-                    }
+            },
+            xaxis: {
+                categories: shortenLabels(initialLabels),
+                labels: {
+                    rotate: -45,
+                    style: { fontSize: '09px' }
                 }
-            }
-            , plotOptions: {
+            },
+            plotOptions: {
                 bar: {
-                    borderRadius: 4
-                    , distributed: true
+                    borderRadius: 4,
+                    distributed: true
                 }
-            }
-            , fill: {
-                type: 'gradient'
-                , gradient: {
-                    shade: 'light'
-                    , type: 'vertical'
-                    , shadeIntensity: 0.25
-                    , inverseColors: true
-                    , opacityFrom: 0.9
-                    , opacityTo: 1
-                    , stops: [50, 100]
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'light',
+                    type: 'vertical',
+                    shadeIntensity: 0.25,
+                    inverseColors: true,
+                    opacityFrom: 0.9,
+                    opacityTo: 1,
+                    stops: [50, 100]
                 }
             }
         };
-        const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
-        kondisiChart.render();
-    })
 
+        // Simpan instance chart di window biar bisa di-destroy nanti
+        window.kondisiChartInstance = new ApexCharts(
+            document.querySelector("#kondisiCharts"),
+            chartKondisi
+        );
+        window.kondisiChartInstance.render();
+    });
 </script>
+
 @endpush
