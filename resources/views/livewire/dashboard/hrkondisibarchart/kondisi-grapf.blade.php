@@ -1,4 +1,4 @@
-<div wire:init="loadChartData" wire:poll>
+<div>
     <x-input-daterange id="rangeDate" placeholder="date-range" />
     <div wire:ignore id="kondisiCharts"></div>
 </div>
@@ -7,7 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-    // Date Range Picker
+    // Date range picker
     flatpickr("#rangeDate", {
         mode: 'range',
         dateFormat: "d-m-Y",
@@ -30,15 +30,6 @@
         }
     });
 
-    // Chart Init (kosong dulu)
-    const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), {
-        chart: { type: 'bar', height: 350 },
-        series: [{ name: 'Jumlah', data: [] }],
-        xaxis: { categories: [] },
-        plotOptions: { bar: { borderRadius: 4, distributed: true } }
-    });
-    kondisiChart.render();
-
     function shortenLabels(labels) {
         return labels.map(label =>
             label.length > 20 ? label.slice(0, 20) + '…' : label
@@ -49,7 +40,16 @@
         return Array.from({ length }, (_, i) => colorList[i % colorList.length]);
     }
 
-    // Tangkap event dari Livewire
+    // Init chart kosong
+    const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), {
+        chart: { type: 'bar', height: 350 },
+        series: [{ name: 'Jumlah', data: [] }],
+        xaxis: { categories: [] },
+        plotOptions: { bar: { borderRadius: 4, distributed: true } }
+    });
+    kondisiChart.render();
+
+    // Listener Livewire event
     Livewire.on('kondisiChartUpdated', (newData) => {
         const newLabels = newData.map(item => item.label);
         const newCounts = newData.map(item => item.count);
