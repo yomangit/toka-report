@@ -52,9 +52,15 @@ class KondisiGrapf extends Component
                 ->toArray()
         );
     }
+    public function updated($propertyName)
+{
+    if (in_array($propertyName, ['startDate', 'endDate'])) {
+        $this->loadChartData();
+    }
+}
     public function render()
     {
-        $this->loadChartData();
+        // $this->loadChartData();
 
         return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf');
     }
