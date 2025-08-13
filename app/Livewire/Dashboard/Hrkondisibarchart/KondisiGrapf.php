@@ -49,7 +49,7 @@ class KondisiGrapf extends Component
                 'label' => $label,
                 'count' => $counts[$index] ?? 0
             ];
-        })->values()->toArray())->toBrowser();
+        })->values()->toArray());
     }
 
     public function render()
