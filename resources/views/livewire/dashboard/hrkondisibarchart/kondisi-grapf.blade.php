@@ -78,8 +78,8 @@
             console.warn("Data chart tidak valid:", data);
             return;
         }
-        const newLabels = newData.map(item => item.label);
-        const newCounts = newData.map(item => item.count);
+        const newLabels = event.map(item => item.label);
+        const newCounts = event.map(item => item.count);
 
         kondisiChart.updateOptions({
             xaxis: {
