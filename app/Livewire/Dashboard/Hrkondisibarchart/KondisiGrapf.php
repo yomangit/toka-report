@@ -40,19 +40,16 @@ class KondisiGrapf extends Component
         } else {
             $reports = collect(); // kosong
         }
-        $temp = [];
+        $counts = [];
 
         foreach ($reports as $value) {
             $label = $value->kondisiTidakAman->name;
-            $temp[$label] = ($temp[$label] ?? 0) + 1;
+            $counts[$label] = ($counts[$label] ?? 0) + 1;
         }
-
-        foreach ($temp as $label => $count) {
-            $data['label'][] = $label;
-            $data['count'][] = $count;
-        }
+        $data['label'] = array_keys($counts);
+        $data['count'] = array_values($counts);
         $this->kondisi = json_encode($data);
-      
+        dd($this->kondisi);
     }
     public function loadChartData()
     {
