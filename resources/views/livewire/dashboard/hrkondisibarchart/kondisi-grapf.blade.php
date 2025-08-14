@@ -110,8 +110,8 @@
             newData = newData[0];
         }
 
-        const newLabels = newData.map(item => item.label ? ? '');
-        const newCounts = newData.map(item => item.count ? ? 0);
+        const newLabels = newData.map(item => item.label ?? '');
+        const newCounts = newData.map(item => item.count ?? 0);
 
         kondisiChart.updateSeries([{
             name: 'Jumlah'
