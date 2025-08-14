@@ -116,26 +116,10 @@
     const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
     // Listener Livewire event
-    Livewire.on('kondisiChartUpdated', event => {
+    Livewire.on('kondisiChartUpdated', (event) => {
         const data = event; // di Livewire 3 biasanya langsung data array, tapi kadang terbungkus
-        const newLabels = event.map(item => item.label);
-        const newCounts = event.map(item => item.count);
-        console.log(newLabels);
+        console.log(data);
 
-        kondisiChart.updateSeries([{
-            data: newCounts
-        }], true); // true for animation
-        kondisiChart.updateOptions({
-            xaxis: {
-                categories: shortenLabels(newLabels)
-                , labels: {
-                    rotate: -45
-                    , style: {
-                        fontSize: '09px'
-                    }
-                }
-            }
-        });
     });
 
 </script>
