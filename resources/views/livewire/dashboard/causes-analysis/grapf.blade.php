@@ -2,7 +2,7 @@
     <x-input-daterange id="rangeDate-pie" placeholder='date-range' />
     <div id="chart-pie" style="height: 400px;"></div>
 </div>
-@push('scripts')
+
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://echarts.apache.org/en/js/vendors/echarts/dist/echarts.min.js"></script>
 <script>
@@ -102,4 +102,4 @@
     window.addEventListener('resize', myChart.resize);
 
 </script>
-@endpush
+
