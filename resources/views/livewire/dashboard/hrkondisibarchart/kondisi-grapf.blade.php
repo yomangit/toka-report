@@ -57,7 +57,10 @@
        var myChart = echarts.init(dom);
 
        var option = {
-           color: ['#4CAF50'], // warna batang
+           legend: {
+               selectedMode: true
+           }
+           , color: ['#4CAF50'], // warna batang
            xAxis: {
                type: 'category'
                , data: data.label
