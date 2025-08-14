@@ -1,6 +1,6 @@
 <div wire:init="loadChartData">
     <x-input-daterange id="rangeDate" placeholder='date-range' />
-    <div wire:ignore id="kondisiCharts"></div>
+    <div  id="kondisiCharts"></div>
 </div>
 
 @push('scripts')
