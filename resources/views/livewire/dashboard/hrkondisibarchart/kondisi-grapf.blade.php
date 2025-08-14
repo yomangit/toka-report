@@ -32,7 +32,7 @@
            myChart.setOption(option);
 
            // Event listener di Livewire 3
-           $wire.on('updateChart', (payload) => {
+           Livewire.on('updateChart', (payload) => {
                myChart.setOption({
                    xAxis: {
                        data: payload.data.map(v => v.label)
