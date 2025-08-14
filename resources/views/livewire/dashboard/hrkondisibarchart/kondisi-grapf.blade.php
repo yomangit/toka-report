@@ -131,7 +131,7 @@
             name: 'Jumlah'
             , data: newCounts
         }]
-        , colors: generateColors(initialLabels.length)
+        , colors: "#008FFB"
         , title: {
             text: 'Kondisi Tidak Aman'
             , align: 'center'
