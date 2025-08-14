@@ -49,9 +49,9 @@ class KondisiGrapf extends Component
             } else {
                 $counts[$label]++;
             }
-            $data['label'][] = $label;
-            $data['count'][] = $counts;
         }
+        $data['label'][] = $label;
+        $data['count'][] = $counts;
         $this->kondisi = json_encode($data);
         dd($this->kondisi);
     }
