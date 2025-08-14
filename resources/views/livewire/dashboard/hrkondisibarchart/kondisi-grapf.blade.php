@@ -122,10 +122,10 @@
         const newCounts = event[0].map(item => item.count);
         console.log(newLabels);
 
-        chart.updateSeries([{
+        kondisiChart.updateSeries([{
             data: newCounts
         }], true); // true for animation
-        chart.updateOptions({
+        kondisiChart.updateOptions({
             xaxis: {
                 categories: shortenLabels(newLabels)
                 , labels: {
