@@ -106,7 +106,7 @@
     const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
     Livewire.on('berhasilUpdate', event => {
-        let payload = JSON.parse(event.data); // ini parse JSON dari PHP
+        let payload = JSON.parse(event); // ini parse JSON dari PHP
         kondisiChart.updateSeries([{
             name: 'Jumlah'
             , data: payload.count
