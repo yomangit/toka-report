@@ -108,19 +108,20 @@
     var intervalRuns = 0;
     var interval = window.setInterval(function() {
         intervalRuns++
-        getNewSeries(lastDate, {
-            min: 10
-            , max: 90
-        })
-
-        kondisiChart.updateSeries([{
-            data: data.slice()
-        }])
+       kondisiChart.updateSeries([{
+            name: 'Jumlah'
+            , data: [1,2,3]
+        }]);
+        kondisiChart.updateOptions({
+            xaxis: {
+                categories: shortenLabels(data.label)
+            }
+        });
 
         if (intervalRuns === 2 && window.isATest === true) {
             clearInterval(interval)
         }
-    }, 1000)
+    }, 5000)
 
 </script>
 @endpush
