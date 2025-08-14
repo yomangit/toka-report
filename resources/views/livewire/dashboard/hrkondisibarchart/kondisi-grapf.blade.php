@@ -49,9 +49,7 @@
             length
         }, (_, i) => colorList[i % colorList.length]);
     }
-
-    // Chart config
-    const chartKondisi = {
+const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), {
         chart: {
             type: 'bar'
             , height: 350
@@ -60,24 +58,8 @@
             name: 'Jumlah'
             , data: initialCounts
         }]
-        , colors: generateColors(initialLabels.length)
-        , title: {
-            text: 'Kondisi Tidak Aman'
-            , align: 'center'
-            , style: {
-                fontSize: '12px'
-                , fontWeight: 'bold'
-                , color: '#fb7185'
-            }
-        }
         , xaxis: {
             categories: shortenLabels(initialLabels)
-            , labels: {
-                rotate: -45
-                , style: {
-                    fontSize: '09px'
-                }
-            }
         }
         , plotOptions: {
             bar: {
@@ -85,22 +67,8 @@
                 , distributed: true
             }
         }
-        , fill: {
-            type: 'gradient'
-            , gradient: {
-                shade: 'light'
-                , type: 'vertical'
-                , shadeIntensity: 0.25
-                , inverseColors: true
-                , opacityFrom: 0.9
-                , opacityTo: 1
-                , stops: [50, 100]
-            }
-        }
-    };
-
-    // Init chart
-    const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
+    });
+    // Chart config
     kondisiChart.render();
 
     // Livewire event listener
