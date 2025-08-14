@@ -1,6 +1,6 @@
 <div wire:init="loadChartData">
     <x-input-daterange id="rangeDate" placeholder='date-range' />
-    <div wire:ignore id="kondisiCharts"></div>
+    <div id="kondisiCharts"></div>
 </div>
 
 @push('scripts')
@@ -108,54 +108,54 @@
     Livewire.on('berhasilUpdate', jsonString => {
         const apexData = JSON.parse(jsonString);
 
-         const newchartKondisi = {
-        chart: {
-            type: 'bar'
-            , height: 350
-        }
-        , series: [{
-            name: 'Jumlah'
-            , data: apexData.count
-        }]
-        , title: {
-            text: 'Kondisi Tidak Aman'
-            , align: 'center'
-            , style: {
-                fontSize: '12px'
-                , fontWeight: 'bold'
-                , color: '#fb7185'
+        const newchartKondisi = {
+            chart: {
+                type: 'bar'
+                , height: 350
             }
-        }
-        , xaxis: {
-            categories: shortenLabels(apexData.label)
-            , labels: {
-                rotate: -45
+            , series: [{
+                name: 'Jumlah'
+                , data: apexData.count
+            }]
+            , title: {
+                text: 'Kondisi Tidak Aman'
+                , align: 'center'
                 , style: {
-                    fontSize: '09px'
+                    fontSize: '12px'
+                    , fontWeight: 'bold'
+                    , color: '#fb7185'
                 }
             }
-        }
-        , plotOptions: {
-            bar: {
-                borderRadius: 4
-                , distributed: true
+            , xaxis: {
+                categories: shortenLabels(apexData.label)
+                , labels: {
+                    rotate: -45
+                    , style: {
+                        fontSize: '09px'
+                    }
+                }
             }
-        }
-        , fill: {
-            type: 'gradient'
-            , gradient: {
-                shade: 'light'
-                , type: 'vertical'
-                , shadeIntensity: 0.25
-                , inverseColors: true
-                , opacityFrom: 0.9
-                , opacityTo: 1
-                , stops: [50, 100]
+            , plotOptions: {
+                bar: {
+                    borderRadius: 4
+                    , distributed: true
+                }
             }
-        }
-    };
-    const newkondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), newchartKondisi);
-    newkondisiChart.render();
+            , fill: {
+                type: 'gradient'
+                , gradient: {
+                    shade: 'light'
+                    , type: 'vertical'
+                    , shadeIntensity: 0.25
+                    , inverseColors: true
+                    , opacityFrom: 0.9
+                    , opacityTo: 1
+                    , stops: [50, 100]
+                }
+            }
+        };
+        const newkondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), newchartKondisi);
+        newkondisiChart.render();
     });
 
 </script>
