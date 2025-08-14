@@ -62,6 +62,10 @@
                type: 'category'
                , data: data.label
            }
+           , legend: {
+               selectedMode: true
+           }
+           , 
            , yAxis: {
                type: 'value'
            }
