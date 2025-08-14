@@ -60,7 +60,7 @@
            legend: {
                selectedMode: true
            }
-           , color: ['#4CAF50'], // warna batang
+           ,
            xAxis: {
                type: 'category'
                , data: data.label
