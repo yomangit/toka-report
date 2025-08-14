@@ -24,7 +24,7 @@ class KondisiGrapf extends Component
             ->get()
             ->map(fn($item) => [
                 'label' => 'Kondisi ' . $item->kondisitidakamen_id,
-                'count' => $item->jumlah
+                'count' => $item->id
             ])
             ->toArray();
 
