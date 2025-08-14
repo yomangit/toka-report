@@ -27,7 +27,7 @@ class KondisiGrapf extends Component
         $user = auth()->user();
         $query = HazardReport::select('kondisitidakamen_id', DB::raw('COUNT(*) as total'))
             ->whereNotNull('kondisitidakamen_id')
-            ->groupBy('kondisitidakamen_id')
+           
             ->with('kondisiTidakAman');
         if ($this->tglMulai && $this->tglAkhir) {
             $query->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
