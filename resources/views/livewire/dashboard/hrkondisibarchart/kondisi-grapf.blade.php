@@ -1,5 +1,5 @@
    <div>
-       <x-input-daterange wire:model.live='rangeDate' id="rangeDate" placeholder='date-range' />
+       <x-input-daterange id="rangeDate" placeholder='date-range' />
        <div wire:ignore id="chart-container" style="height: 400px;"></div>
    </div>
 
@@ -46,6 +46,9 @@
                    var tglAkhir = year2 + '-' + month2 + '-' + dt2;
                    @this.set('tglMulai', tglMulai)
                    @this.set('tglAkhir', tglAkhir)
+               } else {
+                   @this.set('tglMulai', null)
+                   @this.set('tglAkhir', null)
                }
            }
        });
@@ -59,8 +62,7 @@
            legend: {
                selectedMode: true
            }
-           ,
-           xAxis: {
+           , xAxis: {
                type: 'category'
                , data: data.label
            }
