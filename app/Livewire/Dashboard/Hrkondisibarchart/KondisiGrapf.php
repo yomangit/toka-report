@@ -49,9 +49,9 @@ class KondisiGrapf extends Component
             } else {
                 $counts[$label]++;
             }
+            dd($counts);
         }
 
-        dd($counts);
     }
     public function loadChartData()
     {
