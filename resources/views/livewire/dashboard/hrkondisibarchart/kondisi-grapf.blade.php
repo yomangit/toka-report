@@ -118,7 +118,8 @@
     // Listener Livewire event
     Livewire.on('kondisiChartUpdated', event => {
         const data = event; // di Livewire 3 biasanya langsung data array, tapi kadang terbungkus
-        console.log(data);
+        const newLabels = event[0].map(item => item.label);
+        console.log(newLabels);
     });
 
 </script>
