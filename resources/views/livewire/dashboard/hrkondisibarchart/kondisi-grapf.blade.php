@@ -1,10 +1,10 @@
-<div >
+<div>
     <x-input-daterange id="rangeDate" placeholder='date-range' />
     <div wire:ignore id="kondisiCharts"></div>
 </div>
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://echarts.apache.org/en/js/vendors/echarts/dist/echarts.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
     // Date range
@@ -52,76 +52,36 @@
     setInterval(() => Livewire.dispatch('chartUpdated'), 3000);
     const data = JSON.parse('<?php echo $kondisi ?>');
 
-    function shortenLabels(labels) {
-        return labels.map(label =>
-            label.length > 20 ? label.slice(0, 20) + '…' : label
-        );
-    }
-    const chartKondisi = {
-        chart: {
-            type: 'bar'
-            , height: 350
+    var dom = document.getElementById('kondisiCharts');
+    var myChart = echarts.init(dom, null, {
+        renderer: 'canvas'
+        , useDirtyRect: false
+    });
+    var app = {};
+
+
+    var option;
+
+    option = {
+        xAxis: {
+            type: 'category'
+            , data: data.label
+        }
+        , yAxis: {
+            type: 'value'
         }
         , series: [{
-            name: 'Jumlah'
-            , data: data.count
+            data: data.count
+            , type: 'bar'
         }]
-        , title: {
-            text: 'Kondisi Tidak Aman'
-            , align: 'center'
-            , style: {
-                fontSize: '12px'
-                , fontWeight: 'bold'
-                , color: '#fb7185'
-            }
-        }
-        , xaxis: {
-            categories: shortenLabels(data.label)
-            , labels: {
-                rotate: -45
-                , style: {
-                    fontSize: '09px'
-                }
-            }
-        }
-        , plotOptions: {
-            bar: {
-                borderRadius: 4
-                , distributed: true
-            }
-        }
-        , fill: {
-            type: 'gradient'
-            , gradient: {
-                shade: 'light'
-                , type: 'vertical'
-                , shadeIntensity: 0.25
-                , inverseColors: true
-                , opacityFrom: 0.9
-                , opacityTo: 1
-                , stops: [50, 100]
-            }
-        }
     };
-    const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
-    kondisiChart.render();
-    var intervalRuns = 0;
-    var interval = window.setInterval(function() {
-        intervalRuns++
-       kondisiChart.updateSeries([{
-            name: 'Jumlah'
-            , data: [1,2,3]
-        }]);
-        kondisiChart.updateOptions({
-            xaxis: {
-                categories: shortenLabels(data.label)
-            }
-        });
 
-        if (intervalRuns === 2 && window.isATest === true) {
-            clearInterval(interval)
-        }
-    }, 5000)
+
+    if (option && typeof option === 'object') {
+        myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
 
 </script>
 @endpush
