@@ -48,23 +48,6 @@ class KondisiGrapf extends Component
             'count' => $reports->pluck('total')->toArray()
         ];
 
-
-        // output array untuk chart
-        $labels = [];
-        $counts = [];
-
-        foreach ($reports as $value) {
-            $name = $value->kondisiTidakAman->name;
-
-            if (isset($counts[$name])) {
-                $counts[$name]++; // tambah kalau sudah ada
-            } else {
-                $counts[$name] = 1; // set awal
-                $labels[] = $name;  // label baru
-            }
-        }
-        $data['label'] = $labels;
-        $data['count'] = array_values($counts);
         dd($data);
     }
     public function loadChartData()
