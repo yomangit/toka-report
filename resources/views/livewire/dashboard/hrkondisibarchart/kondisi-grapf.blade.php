@@ -1,4 +1,4 @@
-<div wire:init="loadChartData" >
+<div wire:init="loadChartData">
     <x-input-daterange id="rangeDate" placeholder='date-range' />
     <div wire:ignore id="kondisiCharts"></div>
 </div>
@@ -105,18 +105,22 @@
     };
     const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
-    Livewire.on('berhasilUpdate', event => {
-        let payload = JSON.parse(event); // ini parse JSON dari PHP
+    var intervalRuns = 0;
+    var interval = window.setInterval(function() {
+        intervalRuns++
+        getNewSeries(lastDate, {
+            min: 10
+            , max: 90
+        })
+
         kondisiChart.updateSeries([{
-            name: 'Jumlah'
-            , data: payload.data.map((val) => val.count)
-        }]);
-        kondisiChart.updateOptions({
-            xaxis: {
-                categories: shortenLabels(payload.data.map((val) => val.label))
-            }
-        });
-    });
+            data: data.slice()
+        }])
+
+        if (intervalRuns === 2 && window.isATest === true) {
+            clearInterval(interval)
+        }
+    }, 1000)
 
 </script>
 @endpush
