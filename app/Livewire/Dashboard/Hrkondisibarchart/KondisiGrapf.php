@@ -51,7 +51,8 @@ class KondisiGrapf extends Component
             $data['label'][] = $label;
             $data['count'][] = $count;
         }
-        dd($data);
+        $this->kondisi = json_encode($data);
+        dd( $this->kondisi);
     }
     public function loadChartData()
     {
