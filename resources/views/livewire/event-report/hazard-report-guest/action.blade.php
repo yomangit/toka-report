@@ -18,11 +18,11 @@
                     <x-text-area wire:model.blur='actionee_comment' :error="$errors->get('actionee_comment')" />
                     <x-label-error :messages="$errors->get('actionee_comment')" />
                 </div>
-                <div class="w-full max-w-xs sm:max-w-sm xl:max-w-xl form-control">
+                {{-- <div class="w-full max-w-xs sm:max-w-sm xl:max-w-xl form-control">
                     <x-label-no-req :value="__('Action Condition')" />
                     <x-text-area wire:model.blur='action_condition' :error="$errors->get('action_condition')" />
                     <x-label-error :messages="$errors->get('action_condition')" />
-                </div>
+                </div> --}}
                 <!-- Name -->
                 <div class="w-full max-w-xs sm:max-w-sm xl:max-w-xl form-control">
                     <x-label-no-req for="name" :value="__('Responsibility')" />
