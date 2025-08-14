@@ -49,6 +49,9 @@
         }
     });
     // end date range
+    const data = JSON.parse('<?php echo $kondisi ?>');
+    console.log(data);
+    
     const initialLabels = @json($labels);
     const initialCounts = @json($counts);
 
