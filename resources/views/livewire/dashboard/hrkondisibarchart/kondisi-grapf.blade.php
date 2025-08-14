@@ -109,11 +109,11 @@
         let payload = JSON.parse(event); // ini parse JSON dari PHP
         kondisiChart.updateSeries([{
             name: 'Jumlah'
-            , data: payload.count
+            , data: payload.data.map((val) => val.count)
         }]);
         kondisiChart.updateOptions({
             xaxis: {
-                categories: shortenLabels(payload.label)
+                categories: shortenLabels(payload.data.map((val) => val.label))
             }
         });
     });
