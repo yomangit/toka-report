@@ -2,6 +2,7 @@
     {{-- <div id="perbandinganPieChart" data-labels='@json($labels)' data-counts='@json($counts)' class=" w-80 h-96"></div> --}}
     <div id="chart-pie"></div>
 </div>
+@push('scripts')
 <script src="https://echarts.apache.org/en/js/vendors/echarts/dist/echarts.min.js"></script>
 <script>
     var dom = document.getElementById("chart-pie");
@@ -68,3 +69,4 @@
     window.addEventListener("resize", myChart.resize);
 
 </script>
+@endpush
