@@ -95,7 +95,7 @@
                     }
                 }
             }
-            , colors: generateColors(newLabels.length)
+            
         });
     });
 
