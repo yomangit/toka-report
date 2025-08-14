@@ -5,6 +5,7 @@ namespace App\Livewire\Dashboard\Hrkondisibarchart;
 use Livewire\Component;
 use App\Models\HazardReport;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class KondisiGrapf extends Component
 {
@@ -21,9 +22,40 @@ class KondisiGrapf extends Component
             $this->loadChartData();
         }
     }
+    public function mount()
+    {
+        $user = Auth::user()->id;
+        $query = HazardReport::select('kondisitidakamen_id', DB::raw('COUNT(*) as total'))
+            ->whereNotNull('kondisitidakamen_id')
+            ->groupBy('kondisitidakamen_id')
+            ->with('kondisiTidakAman');
+        if ($this->tglMulai && $this->tglAkhir) {
+            $query->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
+        }
+        if ($user->hasRolePermit('administration')) {
+            $reports = $query->get();
+        } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
+            $divisionIds = $user->divisions->pluck('id')->toArray();
+            $reports = $query->whereIn('division_id', $divisionIds)->get();
+        } else {
+            $reports = collect(); // kosong
+        }
+        $temp = [];
+
+        foreach ($reports as $value) {
+            $label = $value->kondisiTidakAman->name;
+            $temp[$label] = ($temp[$label] ?? 0) + 1;
+        }
+
+        foreach ($temp as $label => $count) {
+            $data['label'][] = $label;
+            $data['count'][] = $count;
+        }
+        dd($data);
+    }
     public function loadChartData()
     {
-        $user = auth()->user();
+        $user = Auth::user()->id;
 
         $query = HazardReport::select('kondisitidakamen_id', DB::raw('COUNT(*) as total'))
             ->whereNotNull('kondisitidakamen_id')
