@@ -6,7 +6,7 @@
    <script src="https://echarts.apache.org/en/js/vendors/echarts/dist/echarts.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
    <script>
-     const data = JSON.parse('<?php echo $kondisi ?>');
+       const data = JSON.parse('<?php echo $kondisi ?>');
        var dom = document.getElementById('chart-container');
        var myChart = echarts.init(dom, null, {
            renderer: 'canvas'
@@ -28,7 +28,12 @@
            , series: [{
                data: data.count
                , type: 'bar'
-           }]
+               , label: {
+                   show: true
+                   , position: 'inside'
+               }
+           , }],
+
        };
 
 
