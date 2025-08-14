@@ -1,6 +1,6 @@
    <div>
        <x-input-daterange id="rangeDate" placeholder='date-range' />
-       <div id="chart-container" style="height: 400px;"></div>
+       <div wire:ignore id="chart-container" style="height: 400px;"></div>
    </div>
 
    @push('scripts')
