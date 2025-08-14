@@ -9,9 +9,9 @@
 <script>
     // Date range picker
     flatpickr("#rangeDate", {
-        mode: 'range',
-        dateFormat: "d-m-Y",
-        onChange: function(dates) {
+        mode: 'range'
+        , dateFormat: "d-m-Y"
+        , onChange: function(dates) {
             if (dates.length === 2) {
                 let start = dates[0];
                 let end = dates[1];
@@ -45,34 +45,56 @@
     // Generate colors
     function generateColors(length) {
         const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
-        return Array.from({ length }, (_, i) => colorList[i % colorList.length]);
+        return Array.from({
+            length
+        }, (_, i) => colorList[i % colorList.length]);
     }
 
     // Chart config
     const chartKondisi = {
-        chart: { type: 'bar', height: 350 },
-        series: [{ name: 'Jumlah', data: initialCounts }],
-        colors: generateColors(initialLabels.length),
-        title: {
-            text: 'Kondisi Tidak Aman',
-            align: 'center',
-            style: { fontSize: '12px', fontWeight: 'bold', color: '#fb7185' }
-        },
-        xaxis: {
-            categories: shortenLabels(initialLabels),
-            labels: { rotate: -45, style: { fontSize: '09px' } }
-        },
-        plotOptions: { bar: { borderRadius: 4, distributed: true } },
-        fill: {
-            type: 'gradient',
-            gradient: {
-                shade: 'light',
-                type: 'vertical',
-                shadeIntensity: 0.25,
-                inverseColors: true,
-                opacityFrom: 0.9,
-                opacityTo: 1,
-                stops: [50, 100]
+        chart: {
+            type: 'bar'
+            , height: 350
+        }
+        , series: [{
+            name: 'Jumlah'
+            , data: initialCounts
+        }]
+        , colors: generateColors(initialLabels.length)
+        , title: {
+            text: 'Kondisi Tidak Aman'
+            , align: 'center'
+            , style: {
+                fontSize: '12px'
+                , fontWeight: 'bold'
+                , color: '#fb7185'
+            }
+        }
+        , xaxis: {
+            categories: shortenLabels(initialLabels)
+            , labels: {
+                rotate: -45
+                , style: {
+                    fontSize: '09px'
+                }
+            }
+        }
+        , plotOptions: {
+            bar: {
+                borderRadius: 4
+                , distributed: true
+            }
+        }
+        , fill: {
+            type: 'gradient'
+            , gradient: {
+                shade: 'light'
+                , type: 'vertical'
+                , shadeIntensity: 0.25
+                , inverseColors: true
+                , opacityFrom: 0.9
+                , opacityTo: 1
+                , stops: [50, 100]
             }
         }
     };
@@ -88,17 +110,26 @@
             newData = newData[0];
         }
 
-        const newLabels = newData.map(item => item.label ?? '');
-        const newCounts = newData.map(item => item.count ?? 0);
+        const newLabels = newData.map(item => item.label ? ? '');
+        const newCounts = newData.map(item => item.count ? ? 0);
 
-        kondisiChart.updateSeries([{ name: 'Jumlah', data: newCounts }], true);
+        kondisiChart.updateSeries([{
+            name: 'Jumlah'
+            , data: newCounts
+        }], true);
         kondisiChart.updateOptions({
             xaxis: {
-                categories: shortenLabels(newLabels),
-                labels: { rotate: -45, style: { fontSize: '09px' } }
-            },
-            colors: generateColors(newLabels.length)
+                categories: shortenLabels(newLabels)
+                , labels: {
+                    rotate: -45
+                    , style: {
+                        fontSize: '09px'
+                    }
+                }
+            }
+            , colors: generateColors(newLabels.length)
         });
     });
+
 </script>
 @endpush
