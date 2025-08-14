@@ -1,6 +1,6 @@
 <div wire:init="loadChartData">
     <x-input-daterange id="rangeDate" placeholder='date-range' />
-    <div  id="kondisiCharts"></div>
+    <div id="kondisiCharts"></div>
 </div>
 
 @push('scripts')
@@ -122,56 +122,20 @@
         const newCounts = event[0].map(item => item.count);
         console.log(newLabels);
 
-         const newchartKondisi = {
-        chart: {
-            type: 'bar'
-            , height: 350
-        }
-        , series: [{
-            name: 'Jumlah'
-            , data: newCounts
-        }]
-        , colors: "#008FFB"
-        , title: {
-            text: 'Kondisi Tidak Aman'
-            , align: 'center'
-            , style: {
-                fontSize: '12px'
-                , fontWeight: 'bold'
-                , color: '#fb7185'
-            }
-        }
-        , xaxis: {
-            categories: shortenLabels(newLabels)
-            , labels: {
-                rotate: -45
-                , style: {
-                    fontSize: '09px'
+        chart.updateSeries([{
+            data: newCounts
+        }], true); // true for animation
+        chart.updateOptions({
+            xaxis: {
+                categories: shortenLabels(newLabels)
+                , labels: {
+                    rotate: -45
+                    , style: {
+                        fontSize: '09px'
+                    }
                 }
             }
-        }
-        , plotOptions: {
-            bar: {
-                borderRadius: 4
-                , distributed: true
-            }
-        }
-        , fill: {
-            type: 'gradient'
-            , gradient: {
-                shade: 'light'
-                , type: 'vertical'
-                , shadeIntensity: 0.25
-                , inverseColors: true
-                , opacityFrom: 0.9
-                , opacityTo: 1
-                , stops: [50, 100]
-            }
-        }
-    };
-
-        const NewkondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), newchartKondisi);
-        NewkondisiChart.render();
+        });
     });
 
 </script>
