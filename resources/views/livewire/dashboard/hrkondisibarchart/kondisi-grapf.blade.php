@@ -13,44 +13,31 @@
        var myChart = echarts.init(dom);
 
        var option = {
-           tooltip: {}
-           , visualMap: {
-               max: Math.max(...data.count)
-               , inRange: {
-                   color: ['#4CAF50', '#FFC107', '#F44336'] // gradasi warna
-               }
-           }
-           , xAxis3D: {
+           color: ['#4CAF50'], // warna batang
+           xAxis: {
                type: 'category'
                , data: data.label
            }
-           , yAxis3D: {
-               type: 'category'
-               , data: ['Jumlah'] // bisa 1 kategori karena ini bar 3D tunggal
-           }
-           , zAxis3D: {
+           , yAxis: {
                type: 'value'
            }
-           , grid3D: {
-               boxWidth: 200
-               , boxDepth: 50
-               , viewControl: {
-                   projection: 'perspective'
-               }
-           }
            , series: [{
-               type: 'bar3D'
-               , data: data.label.map((label, i) => [label, 'Jumlah', data.count[i]])
-               , shading: 'color'
+               data: data.count
+               , type: 'bar'
+               , itemStyle: {
+                   color: (params) => {
+                       // Warna dinamis per batang
+                       const warna = ['#4CAF50', '#FFC107', '#F44336', '#2196F3'];
+                       return warna[params.dataIndex % warna.length];
+                   }
+               }
                , label: {
                    show: true
-                   , formatter: '{c}'
-               }
-               , itemStyle: {
-                   opacity: 0.9
+                   , position: 'inside'
                }
            }]
        };
+
 
        myChart.setOption(option);
        window.addEventListener('resize', myChart.resize);
