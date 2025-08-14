@@ -104,11 +104,10 @@
     };
     const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
-    Livewire.on('berhasilUpdate', event => {
-       const apexData = JSON.parse(event.data);
-       console.log(apexData);
-       
-    });
+    Livewire.on('berhasilUpdate', jsonString => {
+    const apexData = JSON.parse(jsonString);
+    console.log(apexData);
+});
 
 </script>
 @endpush

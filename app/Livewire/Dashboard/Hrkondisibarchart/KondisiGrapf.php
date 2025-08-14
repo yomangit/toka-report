@@ -77,7 +77,7 @@ class KondisiGrapf extends Component
             'count' => $reports->pluck('total')->toArray()
         ];
         $this->kondisi = json_encode($data);
-        $this->dispatch('berhasilUpdate',['data'=>$this->kondisi]);
+        $this->dispatch('berhasilUpdate',$this->kondisi);
     }
     public function render()
     {
