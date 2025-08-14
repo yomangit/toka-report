@@ -25,24 +25,29 @@ class KondisiGrapf extends Component
     public function mount()
     {
         $user = Auth::user();
-        $query = HazardReport::select('kondisitidakamen_id', DB::raw('COUNT(*) as total'))
+        $query = HazardReport::join('kondisitidakamen', 'hazard_reports.kondisitidakamen_id', '=', 'kondisitidakamen.id')
+            ->select('kondisitidakamen.name as label', DB::raw('COUNT(*) as total'))
             ->whereNotNull('kondisitidakamen_id')
-            ->groupBy('kondisitidakamen_id')
-            ->with('kondisiTidakAman');
+            ->groupBy('kondisitidakamen.name');
 
         if ($this->tglMulai && $this->tglAkhir) {
             $query->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
         }
 
         if ($user->hasRolePermit('administration')) {
-            $reports = $query->get(['kondisitidakamen.name as label', DB::raw('COUNT(*) as total')]);
+            $reports = $query->get();
         } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
             $divisionIds = $user->divisions->pluck('id')->toArray();
-            $reports = $query->whereIn('division_id', $divisionIds)
-                ->get(['kondisitidakamen.name as label', DB::raw('COUNT(*) as total')]);
+            $reports = $query->whereIn('division_id', $divisionIds)->get();
         } else {
             $reports = collect();
         }
+
+        $data = [
+            'label' => $reports->pluck('label')->toArray(),
+            'count' => $reports->pluck('total')->toArray()
+        ];
+
 
         // output array untuk chart
         $labels = [];
