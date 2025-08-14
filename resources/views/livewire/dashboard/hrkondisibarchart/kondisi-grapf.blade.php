@@ -50,22 +50,10 @@
     });
     // end date range
     const data = JSON.parse('<?php echo $kondisi ?>');
-    console.log(data);
-    
-    const initialLabels = @json($labels);
-    const initialCounts = @json($counts);
-
     function shortenLabels(labels) {
         return labels.map(label =>
             label.length > 20 ? label.slice(0, 20) + '…' : label
         );
-    }
-
-    function generateColors(length) {
-        const colorList = ['#FF4560', '#008FFB', '#00E396', '#FEB019', '#775DD0', '#FF66C3', '#546E7A', '#26a69a', '#D10CE8'];
-        return Array.from({
-            length
-        }, (_, i) => colorList[i % colorList.length]);
     }
 
     const chartKondisi = {
@@ -75,9 +63,8 @@
         }
         , series: [{
             name: 'Jumlah'
-            , data: initialCounts
+            , data: data.count
         }]
-        , colors: generateColors(initialLabels.length)
         , title: {
             text: 'Kondisi Tidak Aman'
             , align: 'center'
@@ -88,7 +75,7 @@
             }
         }
         , xaxis: {
-            categories: shortenLabels(initialLabels)
+            categories: shortenLabels(data.label)
             , labels: {
                 rotate: -45
                 , style: {
