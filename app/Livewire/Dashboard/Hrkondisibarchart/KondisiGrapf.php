@@ -24,38 +24,37 @@ class KondisiGrapf extends Component
     }
     public function mount()
     {
-        $user = auth()->user();
-        $query = HazardReport::select('kondisitidakamen_id', DB::raw('COUNT(*) as total'))
+        $user = Auth::user()->id;
+        $query = HazardReport::select(
+            'kondisitidakamen_id',
+            DB::raw('COUNT(*) as total')
+        )
+            ->join('kondisitidakamen', 'hazard_reports.kondisitidakamen_id', '=', 'kondisitidakamen.id')
             ->whereNotNull('kondisitidakamen_id')
-            ->with('kondisiTidakAman');
+            ->groupBy('kondisitidakamen_id', 'kondisitidakamen.name');
+
         if ($this->tglMulai && $this->tglAkhir) {
             $query->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
         }
+
         if ($user->hasRolePermit('administration')) {
-            $reports = $query->get();
+            $reports = $query->get(['kondisitidakamen.name as label', DB::raw('COUNT(*) as total')]);
         } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
             $divisionIds = $user->divisions->pluck('id')->toArray();
-            $reports = $query->whereIn('division_id', $divisionIds)->get();
+            $reports = $query->whereIn('division_id', $divisionIds)
+                ->get(['kondisitidakamen.name as label', DB::raw('COUNT(*) as total')]);
         } else {
-            $reports = collect(); // kosong
-        }
-        $counts = [];
-
-        foreach ($reports as $value) {
-            $label = $value->kondisiTidakAman->name;
-
-            if (!isset($counts[$label])) {
-                $counts[$label] = 1;
-            } else {
-                $counts[$label]++;
-            }
-            dd($counts);
+            $reports = collect();
         }
 
+        // output array untuk chart
+        $data['label'] = $reports->pluck('label');
+        $data['count'] = $reports->pluck('total');
+        dd($data);
     }
     public function loadChartData()
     {
-        $user = auth()->user();
+        $user = Auth::user()->id;
 
         $query = HazardReport::select('kondisitidakamen_id', DB::raw('COUNT(*) as total'))
             ->whereNotNull('kondisitidakamen_id')
