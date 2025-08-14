@@ -48,7 +48,6 @@ class KondisiGrapf extends Component
             'count' => $reports->pluck('total')->toArray()
         ];
         $this->kondisi = json_encode($data);
-        dd($this->kondisi);
     }
     public function loadChartData()
     {
