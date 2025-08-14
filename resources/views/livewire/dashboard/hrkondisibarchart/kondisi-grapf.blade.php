@@ -1,4 +1,4 @@
-<div wire:init="loadChartData" >
+<div wire:init="loadChartData">
     <x-input-daterange id="rangeDate" placeholder='date-range' />
     <div wire:ignore id="kondisiCharts"></div>
 </div>
@@ -49,8 +49,9 @@
         }
     });
     // end date range
-    setInterval(() =>Livewire.dispatch('chartUpdated'), 3000);
+    setInterval(() => Livewire.dispatch('chartUpdated'), 3000);
     const data = JSON.parse('<?php echo $kondisi ?>');
+
     function shortenLabels(labels) {
         return labels.map(label =>
             label.length > 20 ? label.slice(0, 20) + '…' : label
@@ -105,9 +106,19 @@
     const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
     Livewire.on('berhasilUpdate', jsonString => {
-    const apexData = JSON.parse(jsonString);
-    console.log(apexData);
-});
+        const apexData = JSON.parse(jsonString);
+        console.log(apexData);
+        kondisiChart.updateOptions({
+            xaxis: {
+                categories: shortenLabels(apexData.label)
+            }
+        });
+
+        kondisiChart.updateSeries([{
+            name: 'Jumlah'
+            , data: apexData.count
+        }]);
+    });
 
 </script>
 @endpush
