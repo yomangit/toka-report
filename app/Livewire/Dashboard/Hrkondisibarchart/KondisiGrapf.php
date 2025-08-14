@@ -10,31 +10,79 @@ use Illuminate\Support\Facades\Auth;
 
 class KondisiGrapf extends Component
 {
-    public $data = [];
+    public $labels = [];
+    public $counts = [];
+    public $kondisi;
+    public $tglMulai;
+    public $tglAkhir;
 
+    protected $listeners = ['hazardChartShouldRefresh' => 'loadChartData'];
+    public function updated($property)
+    {
+        if (in_array($property, ['tglMulai', 'tglAkhir'])) {
+            $this->loadChartData();
+        }
+    }
     public function mount()
     {
-        $this->loadData();
-    }
+        $user = Auth::user();
+        $query = HazardReport::join('kondisitidakamen', 'hazard_reports.kondisitidakamen_id', '=', 'kondisitidakamen.id')
+            ->select('kondisitidakamen.name as label', DB::raw('COUNT(*) as total'))
+            ->whereNotNull('kondisitidakamen_id')
+            ->groupBy('kondisitidakamen.name');
 
-    public function loadData()
+        if ($this->tglMulai && $this->tglAkhir) {
+            $query->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
+        }
+
+        if ($user->hasRolePermit('administration')) {
+            $reports = $query->get();
+        } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
+            $divisionIds = $user->divisions->pluck('id')->toArray();
+            $reports = $query->whereIn('division_id', $divisionIds)->get();
+        } else {
+            $reports = collect();
+        }
+
+        $data = [
+            'label' => $reports->pluck('label')->toArray(),
+            'count' => $reports->pluck('total')->toArray()
+        ];
+        $this->kondisi = json_encode($data);
+    }
+    #[On('chartUpdated')]
+    public function loadChartData()
     {
-        $this->data = HazardReport::selectRaw('kondisitidakamen_id, COUNT(*) as jumlah')
-            ->groupBy('kondisitidakamen_id')
-            ->get()
-            ->map(fn($item) => [
-                'label' => 'Kondisi ' . $item->kondisitidakamen_id,
-                'count' => $item->id
-            ])
-            ->toArray();
+        $user = Auth::user();
+        $query = HazardReport::join('kondisitidakamen', 'hazard_reports.kondisitidakamen_id', '=', 'kondisitidakamen.id')
+            ->select('kondisitidakamen.name as label', DB::raw('COUNT(*) as total'))
+            ->whereNotNull('kondisitidakamen_id')
+            ->groupBy('kondisitidakamen.name');
 
-        // Kirim event ke JS (Livewire 3)
-        $this->dispatch('updateChart', data: $this->data);
+        if ($this->tglMulai && $this->tglAkhir) {
+            $query->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
+        }
+
+        if ($user->hasRolePermit('administration')) {
+            $reports = $query->get();
+        } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
+            $divisionIds = $user->divisions->pluck('id')->toArray();
+            $reports = $query->whereIn('division_id', $divisionIds)->get();
+        } else {
+            $reports = collect();
+        }
+
+       $data = [
+            'label' => $reports->pluck('label')->toArray(),
+            'count' => $reports->pluck('total')->toArray()
+        ];
+        $this->kondisi = json_encode($data);
+        // Kirim ke JS
+        $this->dispatch('berhasilUpdate', $this->kondisi);
     }
-
     public function render()
     {
-        
+        $this->loadChartData();
 
         return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf');
     }
