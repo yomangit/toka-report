@@ -107,16 +107,15 @@
     kondisiChart.render();
     Livewire.on('berhasilUpdate', jsonString => {
         const apexData = JSON.parse(jsonString);
-        console.log(apexData);
+
         kondisiChart.updateOptions({
             xaxis: {
                 categories: shortenLabels(apexData.label)
             }
         });
-
         kondisiChart.updateSeries([{
-            name: 'Jumlah'
-            , data: apexData.count
+            name: 'Jumlah',
+            data: apexData.count
         }]);
     });
 
