@@ -1,5 +1,5 @@
 <div>
-    <div id="chart-pie"></div>
+    <div id="chart-pie"style="height: 400px;"></div>
 </div>
 @push('scripts')
 <script src="https://echarts.apache.org/en/js/vendors/echarts/dist/echarts.min.js"></script>
