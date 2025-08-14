@@ -51,6 +51,8 @@
            }
        });
        // end date range
+       setInterval(() => Livewire.dispatch('chartUpdated'), 3000);
+       const data = JSON.parse('<?php echo $pie ?>');
     var dom = document.getElementById('chart-pie');
     var myChart = echarts.init(dom, null, {
         renderer: 'canvas'
@@ -79,25 +81,10 @@
             , type: 'pie'
             , radius: '50%'
             , data: [{
-                    value: 1048
-                    , name: 'Search Engine'
+                    value: data.count
+                    , name: data.label
                 }
-                , {
-                    value: 735
-                    , name: 'Direct'
-                }
-                , {
-                    value: 580
-                    , name: 'Email'
-                }
-                , {
-                    value: 484
-                    , name: 'Union Ads'
-                }
-                , {
-                    value: 300
-                    , name: 'Video Ads'
-                }
+                
             ]
             , emphasis: {
                 itemStyle: {
