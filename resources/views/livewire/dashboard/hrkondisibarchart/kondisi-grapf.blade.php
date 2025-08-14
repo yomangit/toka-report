@@ -49,13 +49,13 @@
         }
     });
     // end date range
+    setInterval(() =>Livewire.dispatch('chartUpdated'), 3000);
     const data = JSON.parse('<?php echo $kondisi ?>');
     function shortenLabels(labels) {
         return labels.map(label =>
             label.length > 20 ? label.slice(0, 20) + '…' : label
         );
     }
-
     const chartKondisi = {
         chart: {
             type: 'bar'
@@ -102,10 +102,13 @@
             }
         }
     };
-
     const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
-    
+    Livewire.on('berhasilUpdate', event => {
+       const apexData = JSON.parse(event.data);
+       console.log(apexData);
+       
+    });
 
 </script>
 @endpush
