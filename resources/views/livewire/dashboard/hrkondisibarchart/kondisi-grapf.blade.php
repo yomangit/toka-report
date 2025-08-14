@@ -86,9 +86,17 @@
        myChart.setOption(option);
        Livewire.on('berhasilUpdate', event => {
            let payload = JSON.parse(event); // ini parse JSON dari PHP
-           console.log(payload);
-           
+           myChart.setOption({
+               xAxis: {
+                   data: payload.label
+               }
+               , series: [{
+                   data: payload.count
+               }]
+           });
        });
+
+
        window.addEventListener('resize', myChart.resize);
 
    </script>
