@@ -3,7 +3,7 @@
        <div wire:ignore id="chart-container" style="height: 400px;"></div>
    </div>
 
-   @push('scripts')
+   
    <script src="https://echarts.apache.org/en/js/vendors/echarts/dist/echarts.min.js"></script>
    <script src="https://echarts.apache.org/en/js/vendors/echarts-gl/dist/echarts-gl.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -105,4 +105,4 @@
 
    </script>
 
-   @endpush
+
