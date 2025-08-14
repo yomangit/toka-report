@@ -27,7 +27,7 @@ class KondisiGrapf extends Component
         $user = auth()->user();
         $query = HazardReport::select('kondisitidakamen_id', DB::raw('COUNT(*) as total'))
             ->whereNotNull('kondisitidakamen_id')
-            
+            ->groupBy('kondisitidakamen_id')
             ->with('kondisiTidakAman');
         if ($this->tglMulai && $this->tglAkhir) {
             $query->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
@@ -40,24 +40,23 @@ class KondisiGrapf extends Component
         } else {
             $reports = collect(); // kosong
         }
-        $counts = [];
+        $temp = [];
 
         foreach ($reports as $value) {
             $label = $value->kondisiTidakAman->name;
-            if (!isset($counts[$label])) {
-                $counts[$label] = 1;
-            } else {
-                $counts[$label]++;
-            }
+            $temp[$label] = ($temp[$label] ?? 0) + 1;
         }
-        $data['label'] = array_keys($counts);
-        $data['count'] = array_values($counts);
+
+        foreach ($temp as $label => $count) {
+            $data['label'][] = $label;
+            $data['count'][] = $count;
+        }
         $this->kondisi = json_encode($data);
         dd($this->kondisi);
     }
     public function loadChartData()
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         $query = HazardReport::select('kondisitidakamen_id', DB::raw('COUNT(*) as total'))
             ->whereNotNull('kondisitidakamen_id')
