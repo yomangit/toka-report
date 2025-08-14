@@ -72,32 +72,7 @@
     kondisiChart.render();
 
     // Livewire event listener
-    Livewire.on('kondisiChartUpdated', (newData) => {
-        // Handle if nested array
-        if (Array.isArray(newData) && Array.isArray(newData[0])) {
-            newData = newData[0];
-        }
-
-        const newLabels = newData.map(item => item.label);
-        const newCounts = newData.map(item => item.count);
-
-        kondisiChart.updateSeries([{
-            name: 'Jumlah'
-            , data: newCounts
-        }], true);
-        kondisiChart.updateOptions({
-            xaxis: {
-                categories: shortenLabels(newLabels)
-                , labels: {
-                    rotate: -45
-                    , style: {
-                        fontSize: '09px'
-                    }
-                }
-            }
-            
-        });
-    });
+    
 
 </script>
 @endpush
