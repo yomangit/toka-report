@@ -72,12 +72,14 @@ class KondisiGrapf extends Component
             $reports = collect();
         }
 
-        $data = [
-            'label' => $reports->pluck('label')->toArray(),
-            'count' => $reports->pluck('total')->toArray()
-        ];
-        $this->kondisi = json_encode($data);
-        $this->dispatch('berhasilUpdate',$this->kondisi);
+        $labels = $reports->pluck('kondisiTidakAman.name')->toArray();
+        $counts = $reports->pluck('total')->map(fn($v) => (int) $v)->toArray();
+
+        // Kirim ke JS
+        $this->dispatch('berhasilUpdate', json_encode([
+            'label' => $labels,
+            'count' => $counts
+        ]));
     }
     public function render()
     {
