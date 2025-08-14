@@ -24,7 +24,7 @@ class KondisiGrapf extends Component
     }
     public function mount()
     {
-        $user = Auth::user()->id;
+        $user = Auth::user();
         $query = HazardReport::select(
             'kondisitidakamen_id',
             DB::raw('COUNT(*) as total')
@@ -54,7 +54,7 @@ class KondisiGrapf extends Component
     }
     public function loadChartData()
     {
-        $user = Auth::user()->id;
+        $user = Auth::user();
 
         $query = HazardReport::select('kondisitidakamen_id', DB::raw('COUNT(*) as total'))
             ->whereNotNull('kondisitidakamen_id')
