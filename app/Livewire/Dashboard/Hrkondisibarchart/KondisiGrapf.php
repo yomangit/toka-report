@@ -25,13 +25,10 @@ class KondisiGrapf extends Component
     public function mount()
     {
         $user = Auth::user();
-        $query = HazardReport::select(
-            'kondisitidakamen_id',
-            DB::raw('COUNT(*) as total')
-        )
-            ->join('kondisitidakamen', 'hazard_reports.kondisitidakamen_id', '=', 'kondisitidakamen.id')
+        $query = HazardReport::select('kondisitidakamen_id', DB::raw('COUNT(*) as total'))
             ->whereNotNull('kondisitidakamen_id')
-            ->groupBy('kondisitidakamen_id', 'kondisitidakamen.name');
+            ->groupBy('kondisitidakamen_id')
+            ->with('kondisiTidakAman');
 
         if ($this->tglMulai && $this->tglAkhir) {
             $query->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
