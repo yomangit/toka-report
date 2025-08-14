@@ -105,11 +105,17 @@
     };
     const kondisiChart = new ApexCharts(document.querySelector("#kondisiCharts"), chartKondisi);
     kondisiChart.render();
-    Livewire.on('berhasilUpdate', jsonString => {
-        const apexData = JSON.parse(jsonString);
-        console.log(apexData);
-        
-       
+    Livewire.on('berhasilUpdate', event => {
+        let payload = JSON.parse(event.data); // ini parse JSON dari PHP
+        kondisiChart.updateSeries([{
+            name: 'Jumlah'
+            , data: payload.count
+        }]);
+        kondisiChart.updateOptions({
+            xaxis: {
+                categories: shortenLabels(payload.label)
+            }
+        });
     });
 
 </script>
