@@ -109,6 +109,7 @@
            value: data_pie.count[index]
            , name: label
        }));
+       const seriesName = chartData.map(d => d.label).join(', ');
        console.log(chartData);
        
        var dom_ie = document.getElementById('chart-pie');
@@ -133,7 +134,7 @@
                , left: 'left'
            }
            , series: [{
-               name: 'Access From'
+               name: seriesName
                , type: 'pie'
                , radius: '50%'
                , data: chartData
