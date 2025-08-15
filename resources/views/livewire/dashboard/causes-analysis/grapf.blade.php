@@ -56,7 +56,7 @@
             , name: label
         }));
         var dom = document.getElementById('chart-pie');
-        var myChart = echarts.init(dom, null, {
+        var pieChart = echarts.init(dom, null, {
             renderer: 'canvas'
             , useDirtyRect: false
         });
@@ -93,10 +93,10 @@
         };
     
         if (option && typeof option === 'object') {
-            myChart.setOption(option);
+            pieChart.setOption(option);
         }
     
-        window.addEventListener('resize', myChart.resize);
+        window.addEventListener('resize', pieChart.resize);
     
     </script>
 </div>
