@@ -132,7 +132,7 @@ class KondisiGrapf extends Component
             'count' => [$kondisi, $tindakan]
         ];
         $this->pie = json_encode($data);
-        $this->dispatch('berhasilUpdatePie', $this->pie);
+        $this->dispatch('berhasilUpdatePie',  $data);
     }
     public function render()
     {
