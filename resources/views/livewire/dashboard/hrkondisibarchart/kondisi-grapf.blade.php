@@ -89,8 +89,6 @@
                }
            }]
        };
-
-
        myChart.setOption(option);
        Livewire.on('berhasilUpdate', event => {
            let payload = JSON.parse(event); // ini parse JSON dari PHP
