@@ -122,7 +122,7 @@
        var dom_tta = document.getElementById('chart_tindakan');
        var myChart_tta = echarts.init(dom_tta);
 
-       var option = {
+       var option_tta = {
            title: {
                text: 'Tindakkan Tidak Aman'
                , left: 'center'
@@ -159,7 +159,7 @@
                }
            }]
        };
-       myChart_tta.setOption(option);
+       myChart_tta.setOption(option_tta);
 
        Livewire.on('berhasilUpdatetta', event => {
            let tta = JSON.parse(event); // ini parse JSON dari PHP
