@@ -61,7 +61,7 @@ class KondisiGrapf extends Component
             ->groupBy('kondisitidakamen.name');
 
         if ($this->tglMulai && $this->tglAkhir) {
-            $query->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
+             $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
         }
 
         if ($user->hasRolePermit('administration')) {
