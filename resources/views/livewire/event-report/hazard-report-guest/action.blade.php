@@ -54,7 +54,7 @@
                     <x-label-error :messages="$errors->get('due_date')" />
                 </div>
                 <div class="w-full max-w-xs sm:max-w-sm xl:max-w-xl form-control">
-                    <x-label-no-req :value="__('Selesai')" />
+                    <x-label-no-req :value="__('Completion Date')" />
                     <x-input-date id="completion_date_guest" wire:model.live='completion_date' readonly :error="$errors->get('completion_date')" />
                     <x-label-error :messages="$errors->get('completion_date')" />
                 </div>
