@@ -35,7 +35,6 @@ class KondisiGrapf extends Component
         if ($this->tglMulai && $this->tglAkhir) {
             $query->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
         }
-
         if ($user->hasRolePermit('administration')) {
             $reports = $query->get();
         } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
@@ -44,7 +43,6 @@ class KondisiGrapf extends Component
         } else {
             $reports = collect();
         }
-
         $data = [
             'label' => $reports->pluck('label')->toArray(),
             'count' => $reports->pluck('total')->toArray()
@@ -63,7 +61,6 @@ class KondisiGrapf extends Component
         if ($this->tglMulai && $this->tglAkhir) {
              $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
         }
-
         if ($user->hasRolePermit('administration')) {
             $reports = $query->get();
         } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
@@ -72,7 +69,6 @@ class KondisiGrapf extends Component
         } else {
             $reports = collect();
         }
-
        $data = [
             'label' => $reports->pluck('label')->toArray(),
             'count' => $reports->pluck('total')->toArray()
