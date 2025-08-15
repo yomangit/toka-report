@@ -20,9 +20,9 @@
                    Dashboard
                 </summary>
                 <ul class="p-1 w-52 bg-base-400 menu menu-xs">
-                    <li><a href="{{ route('dashboard-hazard-report') }}" class="{{ Request::is('/hazard/dashboard') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Incident Report') }}</a>
+                    <li><a href="{{ route('dashboard-hazard-report') }}" class="{{ Request::is('/hazard/dashboard') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Hazard') }}</a>
                     </li>
-                    <li><a href="{{ route('dashboard') }}" class="{{ Request::is('/') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Hazard Report') }}</a>
+                    <li><a href="{{ route('dashboard') }}" class="{{ Request::is('/') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Incident') }}</a>
                     </li>
                 </ul>
             </details>
