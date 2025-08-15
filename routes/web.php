@@ -88,8 +88,8 @@ Route::get('manhours/manhoursTable', WebAccess::class)->name('WebAccess');
 Route::get('eventReport/hazardReportExcel', TableExcel::class)->name('TableExcel');
 Route::middleware(['auth', 'auth.session'])->group(function () {
 
-    Route::get('/', dashoard::class)->name('dashboard');
-    Route::get('/hazard/dashboard', HrGrapf::class)->name('dashboard-hazard-report');
+    Route::get('dashboard/incident', dashoard::class)->name('dashboard-incident');
+    Route::get('dashboard/hazard', HrGrapf::class)->name('dashboard-hazard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
