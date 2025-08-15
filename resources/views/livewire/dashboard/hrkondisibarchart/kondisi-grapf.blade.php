@@ -109,6 +109,8 @@
            value: data_pie.count[index]
            , name: label
        }));
+       console.log(chartData);
+       
        var dom_ie = document.getElementById('chart-pie');
        var pieChart = echarts.init(dom_ie, null, {
            renderer: 'canvas'
@@ -150,8 +152,6 @@
        }
        Livewire.on('berhasilUpdatePie', event => {
            let payload = JSON.parse(event); // ini parse JSON dari PHP
-           console.log(payload);
-           
            const chartData = payload.label.map((label, index) => ({
                value: payload.count[index]
                , name: label
