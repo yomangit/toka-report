@@ -1,15 +1,15 @@
    <div>
-       <x-input-daterange id="rangeDate" placeholder='date-range' />
+       <x-input-daterange id="tanggal" placeholder='date-range' />
        <div wire:ignore id="chart-container" style="height: 400px;"></div>
    </div>
 
-   
+   @push('scripts')
    <script src="https://echarts.apache.org/en/js/vendors/echarts/dist/echarts.min.js"></script>
    <script src="https://echarts.apache.org/en/js/vendors/echarts-gl/dist/echarts-gl.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
    <script>
        // Date range
-       flatpickr("#rangeDate", {
+       flatpickr("#tanggal", {
            mode: 'range'
            , dateFormat: "d-m-Y", //defaults to "F Y"
            onChange: function(dates) {
@@ -105,4 +105,4 @@
 
    </script>
 
-
+   @endpush
