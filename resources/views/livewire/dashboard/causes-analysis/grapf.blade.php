@@ -63,9 +63,9 @@
         var app = {};
     
     
-        var option;
+        var option_pie;
     
-        option = {
+        option_pie = {
             title: {
                 text: 'Leading Indicator Cause Analysis'
                 , left: 'center'
@@ -92,8 +92,8 @@
             }]
         };
     
-        if (option && typeof option === 'object') {
-            pieChart.setOption(option);
+        if (option_pie && typeof option_pie === 'object') {
+            pieChart.setOption(option_pie);
         }
     
         window.addEventListener('resize', pieChart.resize);
