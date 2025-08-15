@@ -1,6 +1,7 @@
    <div>
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
        <div wire:ignore id="chart_kondisi" style="height: 400px;"></div>
+       <div wire:ignore id="chart-pie" style="height: 400px;"></div>
 
    </div>
    @push('scripts')
@@ -101,9 +102,56 @@
                }]
            });
        });
+       // ===== PIE CHART =====
+       const data_pie = JSON.parse('<?php echo $pie ?>');
+       const chartData = data_pie.label.map((label, index) => ({
+           value: data_pie.count[index]
+           , name: label
+       }));
+       var dom_ie = document.getElementById('chart-pie');
+       var pieChart = echarts.init(dom_ie, null, {
+           renderer: 'canvas'
+           , useDirtyRect: false
+       });
+       var app = {};
 
 
-       window.addEventListener('resize', myChart.resize);
+       var option_pie;
+       option_pie = {
+           title: {
+               text: 'Leading Indicator Cause Analysis'
+               , left: 'center'
+           }
+           , tooltip: {
+               trigger: 'item'
+           }
+           , legend: {
+               orient: 'vertical'
+               , left: 'left'
+           }
+           , series: [{
+               name: 'Access From'
+               , type: 'pie'
+               , radius: '50%'
+               , data: chartData
+               , emphasis: {
+                   itemStyle: {
+                       shadowBlur: 10
+                       , shadowOffsetX: 0
+                       , shadowColor: 'rgba(0, 0, 0, 0.5)'
+                   }
+               }
+           }]
+       };
+
+       if (option_pie && typeof option_pie === 'object') {
+           pieChart.setOption(option_pie);
+       }
+       // ===== RESIZE HANDLER =====
+       window.addEventListener('resize', () => {
+           pieChart.resize();
+           myChart.resize();
+       });
 
    </script>
    @endpush

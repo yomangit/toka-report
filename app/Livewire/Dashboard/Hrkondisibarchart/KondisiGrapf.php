@@ -48,6 +48,7 @@ class KondisiGrapf extends Component
             'count' => $reports->pluck('total')->toArray()
         ];
         $this->kondisi = json_encode($data);
+        $this->updatePerbandinganData();
     }
     #[On('chartUpdated')]
     public function loadChartData()
@@ -59,7 +60,7 @@ class KondisiGrapf extends Component
             ->groupBy('kondisitidakamen.name');
 
         if ($this->tglMulai && $this->tglAkhir) {
-             $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
+            $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
         }
         if ($user->hasRolePermit('administration')) {
             $reports = $query->get();
@@ -69,13 +70,41 @@ class KondisiGrapf extends Component
         } else {
             $reports = collect();
         }
-       $data = [
+        $data = [
             'label' => $reports->pluck('label')->toArray(),
             'count' => $reports->pluck('total')->toArray()
         ];
         $this->kondisi = json_encode($data);
         // Kirim ke JS
         $this->dispatch('berhasilUpdate', $this->kondisi);
+    }
+    public function updatePerbandinganData()
+    {
+        $user = Auth::user();
+        $totalKondisi = HazardReport::whereNotNull('kondisitidakamen_id');
+        $totalTindakan = HazardReport::whereNotNull('tindakantidakamen_id');
+
+        if ($this->tglMulai && $this->tglAkhir) {
+            $totalKondisi->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
+            $totalTindakan->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
+        }
+
+        if ($user->hasRolePermit('administration')) {
+            $kondisi = $totalKondisi->count();
+            $tindakan = $totalTindakan->count();
+        } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
+            $divisionIds = $user->divisions->pluck('id')->toArray();
+            $kondisi = $totalKondisi->whereIn('division_id', $divisionIds)->count();
+            $tindakan = $totalTindakan->whereIn('division_id', $divisionIds)->count();
+        } else {
+            $kondisi = collect();
+            $tindakan = collect();
+        }
+        $data = [
+            'label' => ['Kondisi Tidak Aman', 'Tindakan Tidak Aman'],
+            'count' => [$kondisi, $tindakan]
+        ];
+        $this->pie = json_encode($data);
     }
     public function render()
     {
