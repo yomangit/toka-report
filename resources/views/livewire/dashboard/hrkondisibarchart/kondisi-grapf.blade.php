@@ -1,108 +1,111 @@
    <div>
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
        <div wire:ignore id="chart-container" style="height: 400px;"></div>
-       <script src="https://echarts.apache.org/en/js/vendors/echarts/dist/echarts.min.js"></script>
-       <script src="https://echarts.apache.org/en/js/vendors/echarts-gl/dist/echarts-gl.min.js"></script>
-       <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-       <script>
-           // Date range
-           flatpickr("#tanggal_range", {
-               mode: 'range'
-               , dateFormat: "d-m-Y", //defaults to "F Y"
-               onChange: function(dates) {
-                   if (dates.length === 2) {
 
-                       var start = new Date(dates[0]);
-                       var end = new Date(dates[1]);
+   </div>
+   @push('scripts')
+   <script src="https://echarts.apache.org/en/js/vendors/echarts/dist/echarts.min.js"></script>
+   <script src="https://echarts.apache.org/en/js/vendors/echarts-gl/dist/echarts-gl.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+   <script>
+       // Date range
+       flatpickr("#tanggal_range", {
+           mode: 'range'
+           , dateFormat: "d-m-Y", //defaults to "F Y"
+           onChange: function(dates) {
+               if (dates.length === 2) {
 
-                       var year = start.getFullYear();
-                       var month = start.getMonth() + 1;
-                       var dt = start.getDate();
+                   var start = new Date(dates[0]);
+                   var end = new Date(dates[1]);
 
-                       if (dt < 10) {
-                           dt = '0' + dt;
-                       }
-                       if (month < 10) {
-                           month = '0' + month;
-                       }
-                       var year2 = end.getFullYear();
-                       var month2 = end.getMonth() + 1;
-                       var dt2 = end.getDate();
+                   var year = start.getFullYear();
+                   var month = start.getMonth() + 1;
+                   var dt = start.getDate();
 
-                       if (dt2 < 10) {
-                           dt2 = '0' + dt2;
-                       }
-                       if (month2 < 10) {
-                           month2 = '0' + month2;
-                       }
+                   if (dt < 10) {
+                       dt = '0' + dt;
+                   }
+                   if (month < 10) {
+                       month = '0' + month;
+                   }
+                   var year2 = end.getFullYear();
+                   var month2 = end.getMonth() + 1;
+                   var dt2 = end.getDate();
 
-                       // var tglMulai = year + '-' + month + '-' + dt;
-                       // var tglAkhir = year2 + '-' + month2 + '-' + dt2;
+                   if (dt2 < 10) {
+                       dt2 = '0' + dt2;
+                   }
+                   if (month2 < 10) {
+                       month2 = '0' + month2;
+                   }
 
-                       var tglMulai = year + '-' + month + '-' + dt;
-                       var tglAkhir = year2 + '-' + month2 + '-' + dt2;
-                       @this.set('tglMulai', tglMulai)
-                       @this.set('tglAkhir', tglAkhir)
-                   } else {
-                       @this.set('tglMulai', null)
-                       @this.set('tglAkhir', null)
+                   // var tglMulai = year + '-' + month + '-' + dt;
+                   // var tglAkhir = year2 + '-' + month2 + '-' + dt2;
+
+                   var tglMulai = year + '-' + month + '-' + dt;
+                   var tglAkhir = year2 + '-' + month2 + '-' + dt2;
+                   @this.set('tglMulai', tglMulai)
+                   @this.set('tglAkhir', tglAkhir)
+               } else {
+                   @this.set('tglMulai', null)
+                   @this.set('tglAkhir', null)
+               }
+           }
+       });
+       // end date range
+       setInterval(() => Livewire.dispatch('chartUpdated'), 3000);
+       const data = JSON.parse('<?php echo $kondisi ?>');
+       var dom = document.getElementById('chart-container');
+       var myChart = echarts.init(dom);
+
+       var option = {
+
+           tooltip: {
+               trigger: 'item'
+           }
+           , legend: {
+               selectedMode: true
+           }
+           , xAxis: {
+               type: 'category'
+               , data: data.label
+           }
+           , yAxis: {
+               type: 'value'
+           }
+           , series: [{
+               data: data.count
+               , type: 'bar'
+               , itemStyle: {
+                   color: (params) => {
+                       // Warna dinamis per batang
+                       const warna = ['#4CAF50', '#FFC107', '#F44336', '#2196F3'];
+                       return warna[params.dataIndex % warna.length];
                    }
                }
-           });
-           // end date range
-           setInterval(() => Livewire.dispatch('chartUpdated'), 3000);
-           const data = JSON.parse('<?php echo $kondisi ?>');
-           var dom = document.getElementById('chart-container');
-           var myChart = echarts.init(dom);
+               , label: {
+                   show: true
+                   , position: 'inside'
+               }
+           }]
+       };
 
-           var option = {
 
-               tooltip: {
-                   trigger: 'item'
-               }
-               , legend: {
-                   selectedMode: true
-               }
-               , xAxis: {
-                   type: 'category'
-                   , data: data.label
-               }
-               , yAxis: {
-                   type: 'value'
+       myChart.setOption(option);
+       Livewire.on('berhasilUpdate', event => {
+           let payload = JSON.parse(event); // ini parse JSON dari PHP
+           myChart.setOption({
+               xAxis: {
+                   data: payload.label
                }
                , series: [{
-                   data: data.count
-                   , type: 'bar'
-                   , itemStyle: {
-                       color: (params) => {
-                           // Warna dinamis per batang
-                           const warna = ['#4CAF50', '#FFC107', '#F44336', '#2196F3'];
-                           return warna[params.dataIndex % warna.length];
-                       }
-                   }
-                   , label: {
-                       show: true
-                       , position: 'inside'
-                   }
+                   data: payload.count
                }]
-           };
-
-
-           myChart.setOption(option);
-           Livewire.on('berhasilUpdate', event => {
-               let payload = JSON.parse(event); // ini parse JSON dari PHP
-               myChart.setOption({
-                   xAxis: {
-                       data: payload.label
-                   }
-                   , series: [{
-                       data: payload.count
-                   }]
-               });
            });
+       });
 
 
-           window.addEventListener('resize', myChart.resize);
+       window.addEventListener('resize', myChart.resize);
 
-       </script>
-   </div>
+   </script>
+   @endpush
