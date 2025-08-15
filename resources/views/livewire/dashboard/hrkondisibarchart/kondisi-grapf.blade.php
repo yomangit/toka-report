@@ -148,7 +148,7 @@
        if (option_pie && typeof option_pie === 'object') {
            pieChart.setOption(option_pie);
        }
-       Livewire.on('berhasilUpdate', event => {
+       Livewire.on('berhasilUpdatePie', event => {
            const chartData = event.label.map((label, index) => ({
                value: event.count[index]
                , name: label
