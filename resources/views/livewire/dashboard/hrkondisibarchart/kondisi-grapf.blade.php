@@ -1,5 +1,5 @@
    <div>
-       {{ $tglMulai}}-{{$tglAkhir}}
+    
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
        <div wire:ignore id="chart-container" style="height: 400px;"></div>
 

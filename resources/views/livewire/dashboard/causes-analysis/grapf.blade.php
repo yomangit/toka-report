@@ -42,11 +42,11 @@
 
                 var tglMulai = year + '-' + month + '-' + dt;
                 var tglAkhir = year2 + '-' + month2 + '-' + dt2;
-                @this.set('tglMulai', tglMulai)
-                @this.set('tglAkhir', tglAkhir)
+                @this.set('tglMulai_pie', tglMulai)
+                @this.set('tglAkhir_pie', tglAkhir)
             } else {
-                @this.set('tglMulai', null)
-                @this.set('tglAkhir', null)
+                @this.set('tglMulai_pie', null)
+                @this.set('tglAkhir_pie', null)
             }
         }
     });

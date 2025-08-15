@@ -11,8 +11,8 @@ class Grapf extends Component
     public $labels = [];
     public $counts = [];
     public $pie;
-    public $tglMulai;
-    public $tglAkhir;
+    public $tglMulai_pie;
+    public $tglAkhir_pie;
     protected $listeners = ['refreshPerbandinganChart' => 'updatePerbandinganData'];
 
     public function mount()
@@ -21,7 +21,7 @@ class Grapf extends Component
     }
     public function updated($property)
     {
-        if (in_array($property, ['tglMulai', 'tglAkhir'])) {
+        if (in_array($property, ['tglMulai_pie', 'tglAkhir_pie'])) {
             $this->loadChartData();
         }
     }
@@ -31,9 +31,9 @@ class Grapf extends Component
         $totalKondisi = HazardReport::whereNotNull('kondisitidakamen_id');
         $totalTindakan = HazardReport::whereNotNull('tindakantidakamen_id');
 
-        if ($this->tglMulai && $this->tglAkhir) {
-            $totalKondisi->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
-            $totalTindakan->whereBetween('date', [$this->tglMulai, $this->tglAkhir]);
+        if ($this->tglMulai_pie && $this->tglAkhir_pie) {
+            $totalKondisi->whereBetween('date', [array($this->tglMulai_pie), array($this->tglAkhir_pie)]);
+            $totalTindakan->whereBetween('date', [array($this->tglMulai_pie), array($this->tglAkhir_pie)]);
         }
 
         if ($user->hasRolePermit('administration')) {
