@@ -12,6 +12,7 @@ class KondisiGrapf extends Component
 {
     public $labels = [];
     public $counts = [];
+    public $divisi;
     public $kondisi;
     public $tindakan;
     public $pie;
@@ -29,7 +30,7 @@ class KondisiGrapf extends Component
     public function kta()
     {
         // Kondisi Tidak Aman
-        $user = Auth::user();
+        $user = auth()->user();
         $query = HazardReport::join('kondisitidakamen', 'hazard_reports.kondisitidakamen_id', '=', 'kondisitidakamen.id')
             ->select('kondisitidakamen.name as label', DB::raw('COUNT(*) as total'))
             ->whereNotNull('kondisitidakamen_id')
@@ -52,9 +53,37 @@ class KondisiGrapf extends Component
         ];
         $this->kondisi = json_encode($data);
     }
+    public function divisi()
+    {
+        $user = auth()->user();
+        $query = HazardReport::select('division_id', DB::raw('count(*) as total'))
+            ->with('division')
+            ->groupBy('division_id');
+        if ($this->tglMulai && $this->tglAkhir) {
+            $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
+        }
+        if ($user->hasRolePermit('administration')) {
+            // Admin bisa lihat semua laporan
+            $reports = $query->get();
+        } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
+            // Hanya user yang punya relasi dengan division_user
+            $divisionIds = $user->divisions->pluck('id')->toArray();
+            $reports = $query->whereIn('division_id', $divisionIds)->get();
+        } else {
+            // User tanpa relasi division_user tidak bisa lihat laporan
+            $reports = collect();
+        }
+        $label = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
+        $count = $reports->pluck('total')->toArray();
+        $divisi = [
+            'label' => $label,
+            'count' => $count
+        ];
+        $this->divisi = json_encode($divisi);
+    }
     public function tta()
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $query_tta = HazardReport::join('tindakantidakamen', 'hazard_reports.tindakantidakamen_id', '=', 'tindakantidakamen.id')
             ->select('tindakantidakamen.name as label', DB::raw('COUNT(*) as total'))
             ->whereNotNull('tindakantidakamen_id')
@@ -79,7 +108,7 @@ class KondisiGrapf extends Component
     }
     public function causesanalisys()
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $totalKondisi = HazardReport::whereNotNull('kondisitidakamen_id');
         $totalTindakan = HazardReport::whereNotNull('tindakantidakamen_id');
 
@@ -108,7 +137,7 @@ class KondisiGrapf extends Component
     #[On('chartUpdated')]
     public function kondisiTidakAman()
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $query = HazardReport::join('kondisitidakamen', 'hazard_reports.kondisitidakamen_id', '=', 'kondisitidakamen.id')
             ->select('kondisitidakamen.name as label', DB::raw('COUNT(*) as total'))
             ->whereNotNull('kondisitidakamen_id')
@@ -136,7 +165,7 @@ class KondisiGrapf extends Component
     #[On('chartUpdated')]
     public function tindakanTidakAman()
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $query = HazardReport::join('tindakantidakamen', 'hazard_reports.tindakantidakamen_id', '=', 'tindakantidakamen.id')
             ->select('tindakantidakamen.name as label', DB::raw('COUNT(*) as total'))
             ->whereNotNull('tindakantidakamen_id')
@@ -164,7 +193,7 @@ class KondisiGrapf extends Component
     #[On('chartUpdated')]
     public function updatePerbandinganData()
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $totalKondisi = HazardReport::whereNotNull('kondisitidakamen_id');
         $totalTindakan = HazardReport::whereNotNull('tindakantidakamen_id');
 

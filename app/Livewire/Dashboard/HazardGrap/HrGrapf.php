@@ -35,6 +35,8 @@ class HrGrapf extends Component
         $this->divisionLabels = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
         $this->divisionCounts = $reports->pluck('total')->toArray();
         // Fungsi untuk generate warna berdasarkan nama
+       
+       
         $stringToColor = function ($string) {
             $hash = crc32($string);
             return sprintf("#%06X", $hash & 0xFFFFFF);

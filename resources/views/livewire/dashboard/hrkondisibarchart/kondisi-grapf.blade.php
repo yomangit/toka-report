@@ -1,5 +1,8 @@
    <div>
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
+       <div class="mt-4 card card-border bg-base-300">
+           <div wire:ignore id="chart-divisi" style="height: 400px;"></div>
+       </div>
        <div class="grid gap-4 md:grid-cols-2">
            <div class="card card-border bg-base-300 ">
                <div wire:ignore id="chart_kondisi" style="height: 400px;"></div>
@@ -63,13 +66,18 @@
        });
        // end date range
        setInterval(() => Livewire.dispatch('chartUpdated'), 1000);
+       const divisi = JSON.parse('<?php echo $divisi ?>');
        const data = JSON.parse('<?php echo $kondisi ?>');
+       console.log(divisi);
+       console.log(data);
+       
        const data_tta = JSON.parse('<?php echo $tindakan ?>');
 
        function getRandomColor() {
            return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
        }
        // Buat array warna sesuai jumlah data
+       const warnaOtomatisdivisi = divisi.count.map(() => getRandomColor());
        const warnaOtomatis = data.count.map(() => getRandomColor());
        const warnaOtomatistta = data_tta.count.map(() => getRandomColor());
        var dom = document.getElementById('chart_kondisi');
