@@ -46,7 +46,7 @@ class KondisiGrapf extends Component
         ];
         $this->kondisi = json_encode($data);
         // Tindakan Tidak Aman
-        $query_tta = HazardReport::join('tindakantidakamen', 'hazard_reports.tindakantidakamen_id', '=', 'tindakantidakamen_id.id')
+        $query_tta = HazardReport::join('tindakantidakamen', 'hazard_reports.tindakantidakamen_id', '=', 'tindakantidakamen.id')
             ->select('tindakantidakamen.name as label', DB::raw('COUNT(*) as total'))
             ->whereNotNull('tindakantidakamen_id')
             ->groupBy('tindakantidakamen.name');
