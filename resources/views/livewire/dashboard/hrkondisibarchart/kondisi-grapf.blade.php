@@ -111,7 +111,7 @@
        }));
        const seriesName = chartData.map(d => d.label).join(', ');
        console.log(chartData);
-       
+
        var dom_ie = document.getElementById('chart-pie');
        var pieChart = echarts.init(dom_ie, null, {
            renderer: 'canvas'
@@ -134,9 +134,21 @@
                , left: 'left'
            }
            , series: [{
-               name: seriesName
+               name: 'Cause Analysis'
                , type: 'pie'
-               , radius: '50%'
+               , radius: ['40%', '70%']
+               , roseType: 'radius', // untuk efek melingkar
+               label: {
+                   show: true
+               }
+               , labelLine: {
+                   show: true
+               }
+               , itemStyle: {
+                   shadowBlur: 200
+                   , shadowColor: 'rgba(0, 0, 0, 0.5)'
+               }
+               , 
                , data: chartData
                , emphasis: {
                    itemStyle: {
