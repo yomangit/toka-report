@@ -1,6 +1,7 @@
    <div>
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
        <div wire:ignore id="chart_kondisi" style="height: 400px;"></div>
+       <div wire:ignore id="chart_tindakan" style="height: 400px;"></div>
        <div wire:ignore id="chart-pie" style="height: 400px;"></div>
 
    </div>
@@ -56,6 +57,7 @@
        // end date range
        setInterval(() => Livewire.dispatch('chartUpdated'), 1000);
        const data = JSON.parse('<?php echo $kondisi ?>');
+       const data_tta = JSON.parse('<?php echo $tindakan ?>');
 
        function getRandomColor() {
            return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
@@ -107,6 +109,60 @@
        Livewire.on('berhasilUpdate', event => {
            let payload = JSON.parse(event); // ini parse JSON dari PHP
            myChart.setOption({
+               xAxis: {
+                   data: payload.label
+               }
+               , series: [{
+                   data: payload.count
+               }]
+           });
+       });
+       //    ===== TTA =====
+       var dom = document.getElementById('chart_tindakan');
+       var myChart_tta = echarts.init(dom);
+
+       var option = {
+           title: {
+               text: 'Kondisi Tidak Aman'
+               , left: 'center'
+           }
+           , tooltip: {
+               trigger: 'item'
+           }
+           , legend: {
+               selectedMode: true
+           }
+           , xAxis: {
+               type: 'category'
+               , data: data_tta.label
+               , axisLabel: {
+                   interval: 0, // tampilkan semua label
+                   formatter: function(value) {
+                       //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
+                       return value.split(" ").join("\n");
+                   }
+               }
+           }
+           , yAxis: {
+               type: 'value'
+           }
+           , series: [{
+               data: data_tta.count
+               , type: 'bar'
+               , itemStyle: {
+                   color: (params) => warnaOtomatis[params.dataIndex]
+               }
+               , label: {
+                   show: true
+                   , position: 'inside'
+               }
+           }]
+       };
+       myChart_tta.setOption(option);
+
+       Livewire.on('berhasilUpdatetta', event => {
+           let payload = JSON.parse(event); // ini parse JSON dari PHP
+           myChart_tta.setOption({
                xAxis: {
                    data: payload.label
                }
@@ -189,6 +245,7 @@
        window.addEventListener('resize', () => {
            pieChart.resize();
            myChart.resize();
+           myChart_tta.resize();
        });
 
    </script>

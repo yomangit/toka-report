@@ -13,21 +13,17 @@ class KondisiGrapf extends Component
     public $labels = [];
     public $counts = [];
     public $kondisi;
+    public $tindakan;
     public $pie;
     public $rangeDate;
     public $tglMulai;
     public $tglAkhir;
 
-    protected $listeners = ['hazardChartShouldRefresh' => 'loadChartData'];
-    // public function updated($property)
-    // {
-    //     if (in_array($property, ['tglMulai', 'tglAkhir'])) {
-    //         $this->loadChartData();
-    //     }
-    // }
+
     public function mount()
     {
         $user = Auth::user();
+        // Kondisi Tidak Aman
         $query = HazardReport::join('kondisitidakamen', 'hazard_reports.kondisitidakamen_id', '=', 'kondisitidakamen.id')
             ->select('kondisitidakamen.name as label', DB::raw('COUNT(*) as total'))
             ->whereNotNull('kondisitidakamen_id')
@@ -49,6 +45,28 @@ class KondisiGrapf extends Component
             'count' => $reports->pluck('total')->toArray()
         ];
         $this->kondisi = json_encode($data);
+        // Tindakan Tidak Aman
+        $query_tta = HazardReport::join('tindakantidakamen', 'hazard_reports.tindakantidakamen_id', '=', 'kondisitidakamen.id')
+            ->select('tindakantidakamen.name as label', DB::raw('COUNT(*) as total'))
+            ->whereNotNull('tindakantidakamen_id')
+            ->groupBy('tindakantidakamen.name');
+
+        if ($this->tglMulai && $this->tglAkhir) {
+            $query_tta->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
+        }
+        if ($user->hasRolePermit('administration')) {
+            $reports_tta = $query_tta->get();
+        } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
+            $divisionIds = $user->divisions->pluck('id')->toArray();
+            $reports_tta = $query_tta->whereIn('division_id', $divisionIds)->get();
+        } else {
+            $reports_tta = collect();
+        }
+        $data_tta = [
+            'label' => $reports_tta->pluck('label')->toArray(),
+            'count' => $reports_tta->pluck('total')->toArray()
+        ];
+        $this->tindakan = json_encode($data_tta);
 
         // Pie chart
         $totalKondisi = HazardReport::whereNotNull('kondisitidakamen_id');
@@ -77,7 +95,8 @@ class KondisiGrapf extends Component
         $this->pie = json_encode($data);
     }
     #[On('chartUpdated')]
-    public function loadChartData()
+    #[On('hazardChartShouldRefresh')]
+    public function kondisiTidakAman()
     {
         $user = Auth::user();
         $query = HazardReport::join('kondisitidakamen', 'hazard_reports.kondisitidakamen_id', '=', 'kondisitidakamen.id')
@@ -105,6 +124,36 @@ class KondisiGrapf extends Component
         $this->dispatch('berhasilUpdate', $this->kondisi);
     }
     #[On('chartUpdated')]
+    #[On('hazardChartShouldRefresh')]
+    public function tindakanTidakAman()
+    {
+        $user = Auth::user();
+        $query = HazardReport::join('tindakantidakamen', 'hazard_reports.tindakantidakamen_id', '=', 'tindakantidakamen.id')
+            ->select('tindakantidakamen.name as label', DB::raw('COUNT(*) as total'))
+            ->whereNotNull('tindakantidakamen_id')
+            ->groupBy('tindakantidakamen.name');
+
+        if ($this->tglMulai && $this->tglAkhir) {
+            $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
+        }
+        if ($user->hasRolePermit('administration')) {
+            $reports = $query->get();
+        } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
+            $divisionIds = $user->divisions->pluck('id')->toArray();
+            $reports = $query->whereIn('division_id', $divisionIds)->get();
+        } else {
+            $reports = collect();
+        }
+        $data = [
+            'label' => $reports->pluck('label')->toArray(),
+            'count' => $reports->pluck('total')->toArray()
+        ];
+        $this->tindakan = json_encode($data);
+        // Kirim ke JS
+        $this->dispatch('berhasilUpdatetta', $this->tindakan);
+    }
+    #[On('chartUpdated')]
+    #[On('hazardChartShouldRefresh')]
     public function updatePerbandinganData()
     {
         $user = Auth::user();
@@ -136,8 +185,6 @@ class KondisiGrapf extends Component
     }
     public function render()
     {
-        $this->loadChartData();
-
         return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf');
     }
 }
