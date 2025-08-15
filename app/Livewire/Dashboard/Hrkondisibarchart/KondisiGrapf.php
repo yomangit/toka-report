@@ -79,6 +79,7 @@ class KondisiGrapf extends Component
         // Kirim ke JS
         $this->dispatch('berhasilUpdate', $this->kondisi);
     }
+    #[On('chartUpdated')]
     public function updatePerbandinganData()
     {
         $user = Auth::user();
