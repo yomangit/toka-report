@@ -22,8 +22,14 @@ class KondisiGrapf extends Component
 
     public function mount()
     {
-        $user = Auth::user();
+        $this->kta();
+        $this->tta();
+        $this->causesanalisys();
+    }
+    public function kta()
+    {
         // Kondisi Tidak Aman
+        $user = Auth::user();
         $query = HazardReport::join('kondisitidakamen', 'hazard_reports.kondisitidakamen_id', '=', 'kondisitidakamen.id')
             ->select('kondisitidakamen.name as label', DB::raw('COUNT(*) as total'))
             ->whereNotNull('kondisitidakamen_id')
@@ -45,7 +51,10 @@ class KondisiGrapf extends Component
             'count' => $reports->pluck('total')->toArray()
         ];
         $this->kondisi = json_encode($data);
-        // Tindakan Tidak Aman
+    }
+    public function tta()
+    {
+        $user = Auth::user();
         $query_tta = HazardReport::join('tindakantidakamen', 'hazard_reports.tindakantidakamen_id', '=', 'tindakantidakamen.id')
             ->select('tindakantidakamen.name as label', DB::raw('COUNT(*) as total'))
             ->whereNotNull('tindakantidakamen_id')
@@ -67,8 +76,10 @@ class KondisiGrapf extends Component
             'count' => $reports_tta->pluck('total')->toArray()
         ];
         $this->tindakan = json_encode($data_tta);
-
-        // Pie chart
+    }
+    public function causesanalisys()
+    {
+        $user = Auth::user();
         $totalKondisi = HazardReport::whereNotNull('kondisitidakamen_id');
         $totalTindakan = HazardReport::whereNotNull('tindakantidakamen_id');
 
