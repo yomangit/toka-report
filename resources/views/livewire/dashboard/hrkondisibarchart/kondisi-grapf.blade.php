@@ -147,8 +147,7 @@
                , itemStyle: {
                    shadowBlur: 200
                    , shadowColor: 'rgba(0, 0, 0, 0.5)'
-               }
-               , 
+               } 
                , data: chartData
            }]
        };
