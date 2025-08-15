@@ -136,6 +136,36 @@ class KondisiGrapf extends Component
         $this->pie = json_encode($data);
     }
     #[On('chartUpdated')]
+    public function divisiUp()
+    {
+        $user = auth()->user();
+        $query = HazardReport::select('division_id', DB::raw('count(*) as total'))
+            ->with('division')
+            ->groupBy('division_id');
+        if ($this->tglMulai && $this->tglAkhir) {
+            $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
+        }
+        if ($user->hasRolePermit('administration')) {
+            // Admin bisa lihat semua laporan
+            $reports = $query->get();
+        } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
+            // Hanya user yang punya relasi dengan division_user
+            $divisionIds = $user->divisions->pluck('id')->toArray();
+            $reports = $query->whereIn('division_id', $divisionIds)->get();
+        } else {
+            // User tanpa relasi division_user tidak bisa lihat laporan
+            $reports = collect();
+        }
+        $label = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
+        $count = $reports->pluck('total')->toArray();
+        $divisi = [
+            'label' => $label,
+            'count' => $count
+        ];
+        $this->divisi = json_encode($divisi);
+         $this->dispatch('berhasilUpdateDivisi', $this->divisi);
+    }
+    #[On('chartUpdated')]
     public function kondisiTidakAman()
     {
         $user = auth()->user();

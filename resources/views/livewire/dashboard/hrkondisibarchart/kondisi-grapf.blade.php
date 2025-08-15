@@ -68,8 +68,6 @@
        setInterval(() => Livewire.dispatch('chartUpdated'), 1000);
        const divisi = JSON.parse('<?php echo $divisi ?>');
        const data = JSON.parse('<?php echo $kondisi ?>');
-       console.log(divisi);
-       
        const data_tta = JSON.parse('<?php echo $tindakan ?>');
 
        function getRandomColor() {
@@ -79,6 +77,61 @@
        const warnaOtomatisdivisi = divisi.count.map(() => getRandomColor());
        const warnaOtomatis = data.count.map(() => getRandomColor());
        const warnaOtomatistta = data_tta.count.map(() => getRandomColor());
+       //     ====== DIVISI ======
+       var dom_divisi = document.getElementById('chart-divisi');
+       var myChart_divisi = echarts.init(dom_divisi);
+
+       var option_divisi = {
+           title: {
+               text: 'Laporan Hazard Per Divisi'
+               , left: 'center'
+           }
+           , tooltip: {
+               trigger: 'item'
+           }
+           , legend: {
+               selectedMode: true
+           }
+           , xAxis: {
+               type: 'category'
+               , data: divisi.label
+               , axisLabel: {
+                   interval: 0, // tampilkan semua label
+                   formatter: function(value) {
+                       //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
+                       return value.split(" ").join("\n");
+                   }
+               }
+           }
+           , yAxis: {
+               type: 'value'
+           }
+           , series: [{
+               data: divisi.count
+               , type: 'bar'
+               , itemStyle: {
+                   color: (params) => warnaOtomatis[params.dataIndex]
+               }
+               , label: {
+                   show: true
+                   , position: 'inside'
+               }
+           }]
+       };
+       myChart_divisi.setOption(option_divisi);
+
+       Livewire.on('berhasilUpdateDivisi', event => {
+           let payload_divisi = JSON.parse(event); // ini parse JSON dari PHP
+           myChart_divisi.setOption({
+               xAxis: {
+                   data: payload_divisi.label
+               }
+               , series: [{
+                   data: payload_divisi.count
+               }]
+           });
+       });
+       //    ===== KTA =====
        var dom = document.getElementById('chart_kondisi');
        var myChart = echarts.init(dom);
 
