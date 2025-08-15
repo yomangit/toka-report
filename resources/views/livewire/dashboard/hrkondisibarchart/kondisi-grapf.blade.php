@@ -1,6 +1,6 @@
    <div>
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
-       <div wire:ignore id="chart-container" style="height: 400px;"></div>
+       <div wire:ignore id="chart_kondisi" style="height: 400px;"></div>
 
    </div>
    @push('scripts')
@@ -55,7 +55,7 @@
        // end date range
        setInterval(() => Livewire.dispatch('chartUpdated'), 1000);
        const data = JSON.parse('<?php echo $kondisi ?>');
-       var dom = document.getElementById('chart-container');
+       var dom = document.getElementById('chart_kondisi');
        var myChart = echarts.init(dom);
 
        var option = {
