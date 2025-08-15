@@ -8,7 +8,7 @@
                <div wire:ignore id="chart_tindakan" style="height: 400px;"></div>
            </div>
        </div>
-       <div class="card card-border bg-base-300 ">
+       <div class="mt-4 card card-border bg-base-300">
            <div wire:ignore id="chart-pie" style="height: 400px;"></div>
        </div>
    </div>
