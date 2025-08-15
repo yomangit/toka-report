@@ -1,7 +1,9 @@
    <div>
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
-       <div wire:ignore id="chart_kondisi" style="height: 400px;"></div>
-       <div wire:ignore id="chart_tindakan" style="height: 400px;"></div>
+       <div class="grid gap-4 md:grid-cols-2">
+           <div wire:ignore id="chart_kondisi" style="height: 400px;"></div>
+           <div wire:ignore id="chart_tindakan" style="height: 400px;"></div>
+       </div>
        <div wire:ignore id="chart-pie" style="height: 400px;"></div>
 
    </div>
