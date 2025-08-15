@@ -1,13 +1,9 @@
    <div>
-    
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
        <div wire:ignore id="chart-container" style="height: 400px;"></div>
-
-   </div>
-   @push('scripts')
-   {{-- <script src="https://echarts.apache.org/en/js/vendors/echarts/dist/echarts.min.js"></script> --}}
-   {{-- <script src="https://echarts.apache.org/en/js/vendors/echarts-gl/dist/echarts-gl.min.js"></script> --}}
-   {{-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
+   <script src="https://echarts.apache.org/en/js/vendors/echarts/dist/echarts.min.js"></script>
+   <script src="https://echarts.apache.org/en/js/vendors/echarts-gl/dist/echarts-gl.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
    <script>
        // Date range
        flatpickr("#tanggal_range", {
@@ -105,4 +101,6 @@
        window.addEventListener('resize', myChart.resize);
 
    </script>
-   @endpush
+   </div>
+  
+
