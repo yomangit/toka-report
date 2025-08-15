@@ -214,6 +214,9 @@
                , type: 'pie'
                , radius: '50%'
                , data: chartData
+               , label: {
+                   formatter: '{d}%' // menampilkan persentase
+               }
                , emphasis: {
                    itemStyle: {
                        shadowBlur: 10
