@@ -56,6 +56,12 @@
        // end date range
        setInterval(() => Livewire.dispatch('chartUpdated'), 1000);
        const data = JSON.parse('<?php echo $kondisi ?>');
+
+       function getRandomColor() {
+           return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+       }
+       // Buat array warna sesuai jumlah data
+       const warnaOtomatis = data.count.map(() => getRandomColor());
        var dom = document.getElementById('chart_kondisi');
        var myChart = echarts.init(dom);
 
@@ -78,11 +84,7 @@
                data: data.count
                , type: 'bar'
                , itemStyle: {
-                   color: (params) => {
-                       // Warna dinamis per batang
-                       const warna = ['#4CAF50', '#FFC107', '#F44336', '#2196F3'];
-                       return warna[params.dataIndex % warna.length];
-                   }
+                   color: (params) => warnaOtomatis[params.dataIndex]
                }
                , label: {
                    show: true
@@ -111,7 +113,7 @@
        }));
        const seriesName = chartData.map(d => d.label).join(', ');
        console.log(chartData);
-       
+
        var dom_ie = document.getElementById('chart-pie');
        var pieChart = echarts.init(dom_ie, null, {
            renderer: 'canvas'
