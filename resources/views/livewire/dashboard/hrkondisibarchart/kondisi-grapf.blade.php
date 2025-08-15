@@ -153,7 +153,7 @@
                value: event.count[index]
                , name: label
            }));
-           myChart.setOption({
+           pieChart.setOption({
                series: [{
                    name: 'Access From'
                    , type: 'pie'
