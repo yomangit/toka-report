@@ -13,6 +13,7 @@ class KondisiGrapf extends Component
     public $labels = [];
     public $counts = [];
     public $kondisi;
+    public $pie;
     public $rangeDate;
     public $tglMulai;
     public $tglAkhir;
