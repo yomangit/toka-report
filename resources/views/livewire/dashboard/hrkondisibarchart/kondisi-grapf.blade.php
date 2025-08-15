@@ -150,6 +150,8 @@
        }
        Livewire.on('berhasilUpdatePie', event => {
            let payload = JSON.parse(event); // ini parse JSON dari PHP
+           console.log(payload);
+           
            const chartData = payload.label.map((label, index) => ({
                value: payload.count[index]
                , name: label
