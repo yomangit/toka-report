@@ -78,7 +78,6 @@
                , data: data.label
                , axisLabel: {
                    interval: 0, // tampilkan semua label
-                   rotate: 30, // putar 30 derajat
                    formatter: function(value) {
                     //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
                     return value.split(" ").join("\n");
