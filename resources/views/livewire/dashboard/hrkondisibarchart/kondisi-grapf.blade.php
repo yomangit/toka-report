@@ -161,7 +161,7 @@
        };
        myChart_tta.setOption(option_tta);
 
-       Livewire.on('berhasilUpdatetta', event => {
+       Livewire.on('berhasilUpdate_tta', event => {
            let tta = JSON.parse(event); // ini parse JSON dari PHP
            myChart_tta.setOption({
                xAxis: {

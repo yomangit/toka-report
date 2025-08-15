@@ -148,7 +148,7 @@ class KondisiGrapf extends Component
         ];
         $this->tindakan = json_encode($data);
         // Kirim ke JS
-        $this->dispatch('berhasilUpdatetta', $this->tindakan);
+        $this->dispatch('berhasilUpdate_tta', $this->tindakan);
     }
     #[On('chartUpdated')]
     public function updatePerbandinganData()
@@ -182,6 +182,8 @@ class KondisiGrapf extends Component
     }
     public function render()
     {
+        $this->kondisiTidakAman();
+        $this->tindakanTidakAman();
         return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf');
     }
 }
