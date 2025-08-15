@@ -64,6 +64,7 @@
        }
        // Buat array warna sesuai jumlah data
        const warnaOtomatis = data.count.map(() => getRandomColor());
+       const warnaOtomatistta = data_tta.count.map(() => getRandomColor());
        var dom = document.getElementById('chart_kondisi');
        var myChart = echarts.init(dom);
 
@@ -150,7 +151,7 @@
                data: data_tta.count
                , type: 'bar'
                , itemStyle: {
-                   color: (params) => warnaOtomatis[params.dataIndex]
+                   color: (params) => warnaOtomatistta[params.dataIndex]
                }
                , label: {
                    show: true
