@@ -95,7 +95,6 @@ class KondisiGrapf extends Component
         $this->pie = json_encode($data);
     }
     #[On('chartUpdated')]
-    #[On('hazardChartShouldRefresh')]
     public function kondisiTidakAman()
     {
         $user = Auth::user();
@@ -124,7 +123,6 @@ class KondisiGrapf extends Component
         $this->dispatch('berhasilUpdate', $this->kondisi);
     }
     #[On('chartUpdated')]
-    #[On('hazardChartShouldRefresh')]
     public function tindakanTidakAman()
     {
         $user = Auth::user();
@@ -153,7 +151,6 @@ class KondisiGrapf extends Component
         $this->dispatch('berhasilUpdatetta', $this->tindakan);
     }
     #[On('chartUpdated')]
-    #[On('hazardChartShouldRefresh')]
     public function updatePerbandinganData()
     {
         $user = Auth::user();
