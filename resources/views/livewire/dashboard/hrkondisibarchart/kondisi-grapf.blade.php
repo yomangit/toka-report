@@ -1,12 +1,12 @@
    <div>
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
        <div class="grid gap-4 md:grid-cols-2">
-           <div class="card card-border bg-base-100 w-96">
+           <div class="card card-border bg-base-300 ">
                <div class="card-body">
                    <div wire:ignore id="chart_kondisi" style="height: 400px;"></div>
                </div>
            </div>
-           <div class="card card-border bg-base-100 w-96">
+           <div class="card card-border bg-base-300 ">
                <div class="card-body">
                    <div wire:ignore id="chart_tindakan" style="height: 400px;"></div>
                </div>
