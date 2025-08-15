@@ -4,7 +4,7 @@
     <div id="divisionChart" data-labels='@json($divisionLabels)' data-counts='@json($divisionCounts)' data-colors='@json($divisionColors)'></div>
     @endif
 
-    {{-- <livewire:dashboard.causes-analysis.grapf> --}}
+   <div><livewire:dashboard.causes-analysis.grapf></div>
     <livewire:dashboard.hrkondisibarchart.kondisi-grapf>
 </div>
 
