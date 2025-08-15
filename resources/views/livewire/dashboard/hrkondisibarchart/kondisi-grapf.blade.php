@@ -161,13 +161,13 @@
        myChart_tta.setOption(option);
 
        Livewire.on('berhasilUpdatetta', event => {
-           let payload = JSON.parse(event); // ini parse JSON dari PHP
+           let tta = JSON.parse(event); // ini parse JSON dari PHP
            myChart_tta.setOption({
                xAxis: {
-                   data: payload.label
+                   data: tta.label
                }
                , series: [{
-                   data: payload.count
+                   data: tta.count
                }]
            });
        });
