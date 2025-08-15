@@ -1,9 +1,9 @@
    <div>
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
-       <div class="mt-4 card card-border bg-base-300">
+       <div class="mt-2 mt-4 card card-border bg-base-300">
            <div wire:ignore id="chart-divisi" style="height: 400px;"></div>
        </div>
-       <div class="grid gap-4 md:grid-cols-2">
+       <div class="grid gap-4 mt-4 md:grid-cols-2">
            <div class="card card-border bg-base-300 ">
                <div wire:ignore id="chart_kondisi" style="height: 400px;"></div>
            </div>
