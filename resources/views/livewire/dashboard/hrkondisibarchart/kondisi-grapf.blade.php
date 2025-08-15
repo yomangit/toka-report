@@ -118,8 +118,8 @@
            });
        });
        //    ===== TTA =====
-       var dom = document.getElementById('chart_tindakan');
-       var myChart_tta = echarts.init(dom);
+       var dom_tta = document.getElementById('chart_tindakan');
+       var myChart_tta = echarts.init(dom_tta);
 
        var option = {
            title: {
