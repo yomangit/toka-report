@@ -1,4 +1,5 @@
    <div>
+    {{ $tglMulai    $tglAkhir }}
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
        <div wire:ignore id="chart-container" style="height: 400px;"></div>
    <script src="https://echarts.apache.org/en/js/vendors/echarts/dist/echarts.min.js"></script>
