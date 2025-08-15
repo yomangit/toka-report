@@ -123,7 +123,7 @@
 
        var option = {
            title: {
-               text: 'Kondisi Tidak Aman'
+               text: 'Tindakkan Tidak Aman'
                , left: 'center'
            }
            , tooltip: {
