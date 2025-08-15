@@ -19,12 +19,12 @@ class KondisiGrapf extends Component
     public $tglAkhir;
 
     protected $listeners = ['hazardChartShouldRefresh' => 'loadChartData'];
-    public function updated($property)
-    {
-        if (in_array($property, ['tglMulai', 'tglAkhir'])) {
-            $this->loadChartData();
-        }
-    }
+    // public function updated($property)
+    // {
+    //     if (in_array($property, ['tglMulai', 'tglAkhir'])) {
+    //         $this->loadChartData();
+    //     }
+    // }
     public function mount()
     {
         $user = Auth::user();
