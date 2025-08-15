@@ -53,7 +53,7 @@
            }
        });
        // end date range
-       setInterval(() => Livewire.dispatch('chartUpdated'), 3000);
+       setInterval(() => Livewire.dispatch('chartUpdated'), 1000);
        const data = JSON.parse('<?php echo $kondisi ?>');
        var dom = document.getElementById('chart-container');
        var myChart = echarts.init(dom);
