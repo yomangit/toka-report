@@ -149,11 +149,11 @@
            pieChart.setOption(option_pie);
        }
        Livewire.on('berhasilUpdatePie', event => {
-           let payload = JSON.parse(event); // ini parse JSON dari PHP
-           console.log(payload);
+           // ini parse JSON dari PHP
+           console.log(event);
            
-           const chartData = payload.label.map((label, index) => ({
-               value: payload.count[index]
+           const chartData = event.label.map((label, index) => ({
+               value: event.count[index]
                , name: label
            }));
            pieChart.setOption({
