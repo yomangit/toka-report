@@ -253,6 +253,7 @@ class KondisiGrapf extends Component
     }
     public function render()
     {
+        $this->divisiUp();
         $this->kondisiTidakAman();
         $this->tindakanTidakAman();
         return view('livewire.dashboard.hrkondisibarchart.kondisi-grapf');
