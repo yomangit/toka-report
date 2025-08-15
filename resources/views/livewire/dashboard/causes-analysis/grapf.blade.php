@@ -69,8 +69,7 @@
 
     option = {
         title: {
-            text: 'Referer of a Website'
-            , subtext: 'Fake Data'
+            text: 'Leading Indicator Cause Analysis'
             , left: 'center'
         }
         , tooltip: {
