@@ -23,6 +23,7 @@ class KondisiGrapf extends Component
 
     public function mount()
     {
+        $this->divisi();
         $this->kta();
         $this->tta();
         $this->causesanalisys();
