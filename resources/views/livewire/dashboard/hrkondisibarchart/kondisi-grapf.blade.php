@@ -69,7 +69,6 @@
        const divisi = JSON.parse('<?php echo $divisi ?>');
        const data = JSON.parse('<?php echo $kondisi ?>');
        console.log(divisi);
-       console.log(data);
        
        const data_tta = JSON.parse('<?php echo $tindakan ?>');
 
