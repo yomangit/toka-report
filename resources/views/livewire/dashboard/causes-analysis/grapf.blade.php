@@ -49,7 +49,7 @@
             }
         });
         // end date range
-        setInterval(() => Livewire.dispatch('chartUpdated'), 3000);
+        setInterval(() => Livewire.dispatch('chartUpdatedPie'), 3000);
         const data = JSON.parse('<?php echo $pie ?>');
         const chartData = data.label.map((label, index) => ({
             value: data.count[index]
