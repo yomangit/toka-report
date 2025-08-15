@@ -55,17 +55,17 @@
             value: data.count[index]
             , name: label
         }));
-        var dom = document.getElementById('chart-pie');
-        var pieChart = echarts.init(dom, null, {
+        var dom_ie = document.getElementById('chart-pie');
+        var pieChart = echarts.init(dom_ie, null, {
             renderer: 'canvas'
             , useDirtyRect: false
         });
         var app = {};
     
     
-        var option_pie;
+        var option;
     
-        option_pie = {
+        option = {
             title: {
                 text: 'Leading Indicator Cause Analysis'
                 , left: 'center'
@@ -92,8 +92,8 @@
             }]
         };
     
-        if (option_pie && typeof option_pie === 'object') {
-            pieChart.setOption(option_pie);
+        if (option && typeof option === 'object') {
+            pieChart.setOption(option);
         }
     
         window.addEventListener('resize', pieChart.resize);
