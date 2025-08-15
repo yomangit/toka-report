@@ -91,6 +91,7 @@
            }]
        };
        myChart.setOption(option);
+
        Livewire.on('berhasilUpdate', event => {
            let payload = JSON.parse(event); // ini parse JSON dari PHP
            myChart.setOption({
@@ -147,6 +148,27 @@
        if (option_pie && typeof option_pie === 'object') {
            pieChart.setOption(option_pie);
        }
+       Livewire.on('berhasilUpdate', event => {
+           const chartData = event.label.map((label, index) => ({
+               value: event.count[index]
+               , name: label
+           }));
+           myChart.setOption({
+               series: [{
+                   name: 'Access From'
+                   , type: 'pie'
+                   , radius: '50%'
+                   , data: chartData
+                   , emphasis: {
+                       itemStyle: {
+                           shadowBlur: 10
+                           , shadowOffsetX: 0
+                           , shadowColor: 'rgba(0, 0, 0, 0.5)'
+                       }
+                   }
+               }]
+           });
+       });
        // ===== RESIZE HANDLER =====
        window.addEventListener('resize', () => {
            pieChart.resize();
