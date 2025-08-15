@@ -66,8 +66,11 @@
        var myChart = echarts.init(dom);
 
        var option = {
-
-           tooltip: {
+           title: {
+               text: 'Kondisi Tidak Aman'
+               , left: 'center'
+           }
+           , tooltip: {
                trigger: 'item'
            }
            , legend: {
@@ -79,8 +82,8 @@
                , axisLabel: {
                    interval: 0, // tampilkan semua label
                    formatter: function(value) {
-                    //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
-                    return value.split(" ").join("\n");
+                       //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
+                       return value.split(" ").join("\n");
                    }
                }
            }
