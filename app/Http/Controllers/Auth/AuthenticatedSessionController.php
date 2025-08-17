@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
        
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard-hazard', absolute: false));
+        return redirect()->intended(route('/', absolute: false));
     }
 
     protected function authenticated(LoginRequest $request, $user)
