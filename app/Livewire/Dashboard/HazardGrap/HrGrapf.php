@@ -75,6 +75,6 @@ class HrGrapf extends Component
 
     public function render()
     {
-        return view('livewire.dashboard.hazard-grap.hr-grapf')->extends('base.index', ['header' => 'Dashboard Hazard', 'title' => 'Dashboard Hazard'])->section('content');
+        return view('livewire.dashboard.hazard-grap.hr-grapf');
     }
 }
