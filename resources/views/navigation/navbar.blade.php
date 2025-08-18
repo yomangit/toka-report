@@ -26,8 +26,9 @@
                     <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Logout
                     </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="">
                         @csrf
+                         <button type="submit">Test Logout</button>
                     </form>
                 </li>
             </ul>
