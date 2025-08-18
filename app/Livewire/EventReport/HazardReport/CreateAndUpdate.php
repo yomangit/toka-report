@@ -20,6 +20,7 @@ use App\Models\TypeEventReport;
 use App\Models\Kondisitidakaman;
 use App\Models\EventUserSecurity;
 use App\Models\Tindakantidakaman;
+use Livewire\Attributes\Validate;
 use App\Notifications\toModerator;
 use App\Helpers\NotificationHelper;
 use Illuminate\Support\Facades\Auth;
@@ -57,17 +58,19 @@ class CreateAndUpdate extends Component
     public $location_search = '';
 
     // IDs and Relational Keys
+    #[Validate]
     public $location_id;
     public $tablerisk_id;
     public $risk_assessment_id;
     public $workflow_detail_id;
     public $workflow_template_id;
     public $division_id;
+     #[Validate]
     public $event_type_id;
+     #[Validate]
     public $sub_event_type_id;
     public $report_by;
     public $report_to;
-    public $event_location_id;
     public $site_id;
     public $workgroup_id;
     public $select_divisi;
@@ -77,9 +80,13 @@ class CreateAndUpdate extends Component
     public $tindakantidakamen_id;
 
     // Names and Labels
+    #[Validate]
     public $location_name;
+     #[Validate]
     public $workgroup_name;
+     #[Validate]
     public $report_byName;
+     #[Validate]
     public $report_toName;
 
     // Other Report Data
@@ -88,9 +95,12 @@ class CreateAndUpdate extends Component
     public $report_to_nolist;
     public $company_involved;
     public $task_being_done;
+    #[Validate]
     public $date;
+    #[Validate]
     public $description;
     public $documentation;
+    #[Validate]
     public $immediate_corrective_action;
     public $suggested_corrective_action;
     public $preliminary_cause;
@@ -119,6 +129,7 @@ class CreateAndUpdate extends Component
     public $alamat;
     public $kondisi_tidak_aman;
     public $tindakan_tidak_aman;
+    #[Validate]
     public $tindakkan_selanjutnya;
 
     // File Handling
@@ -143,6 +154,7 @@ class CreateAndUpdate extends Component
             'event_type_id'         => ['required'],
             'sub_event_type_id'     => ['required'],
             'report_byName'         => ['required'],
+            'report_toName'         => ['required'],
             'date'                  => ['required'],
             'documentation'         => 'nullable|mimes:jpg,jpeg,png,svg,gif,xlsx,pdf,docx',
             'description'           => ['required'],
