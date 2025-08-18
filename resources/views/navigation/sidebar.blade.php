@@ -11,12 +11,20 @@
 
     <ul class="mt-12 menu menu-xs">
         <li>
-            <a href="{{ route('/') }}" class="{{ Request::is('/') ? 'active text-emerald-500 font-semibold' : '' }}">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-                    <path d="M8.543 2.232a.75.75 0 0 0-1.085 0l-5.25 5.5A.75.75 0 0 0 2.75 9H4v4a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 1 1 2 0v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V9h1.25a.75.75 0 0 0 .543-1.268l-5.25-5.5Z" />
-                </svg>
-                {{ __('Dashboard') }}
-            </a>
+            <details {{ Request::is('dashboard/*') ? ' open' : '' }}>
+                <summary class="{{ Request::is('dashboard/*') ? ' text-primary-muted font-semibold' : '' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                        <path d="M8.543 2.232a.75.75 0 0 0-1.085 0l-5.25 5.5A.75.75 0 0 0 2.75 9H4v4a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 1 1 2 0v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V9h1.25a.75.75 0 0 0 .543-1.268l-5.25-5.5Z" />
+                    </svg>
+                   Dashboard
+                </summary>
+                <ul class="p-1 w-52 bg-base-400 menu menu-xs">
+                    <li><a href="{{ route('dashboard-hazard') }}" class="{{ Request::is('dashboard/hazard') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Hazard') }}</a>
+                    </li>
+                    <li><a href="{{ route('dashboard-incident') }}" class="{{ Request::is('dashboard/incident') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Incident') }}</a>
+                    </li>
+                </ul>
+            </details>
         </li>
         @auth
         @if (auth()->user()->hasRolePermit('administration', 'auth'))
