@@ -104,7 +104,8 @@
                     <div class="dropdown dropdown-end">
                         <div class="relative">
                             <x-input wire:click='clickReportTo' wire:model.live='report_toName' placeholder="{{ __('report_to') }}" :error="$errors->get('report_toName')" class="cursor-pointer" tabindex="0" role="button" />
-                            <span wire:target="report_toName" wire:loading.class="absolute right-0 transform -translate-y-1/2 top-1/2 loading loading-spinner text-secondary"></span>
+                            <span wire:loading wire:loading.class.remove="hidden" wire:target="reportedTo" class="absolute right-0 hidden -translate-y-1/2 top-1/2 loading loading-spinner text-secondary">
+                            </span>
                         </div>
                         <div tabindex="0" class="dropdown-content card card-compact  bg-base-300 text-primary-content z-[1] w-full  p-2 shadow {{ $hiddenReportTo }}">
                             <div class="relative">
