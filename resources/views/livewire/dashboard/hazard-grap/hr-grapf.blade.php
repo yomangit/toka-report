@@ -1,8 +1,5 @@
 <div>
-  
-            <livewire:dashboard.hrkondisibarchart.kondisi-grapf>
-        
-    </div>
 
-   
+    <livewire:dashboard.hrkondisibarchart.kondisi-grapf>
+
 </div>
