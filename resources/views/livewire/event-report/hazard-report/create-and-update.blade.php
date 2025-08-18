@@ -52,7 +52,7 @@
                                 <div class="h-full mb-2 overflow-auto max-h-40 scroll-smooth focus:scroll-auto" wire:target='report_byName' wire:loading.class='hidden'>
                                     @forelse ($Report_By as $report_by)
                                     <div wire:click="reportedBy({{ $report_by->id }})" class="flex flex-col border-b cursor-pointer hover:bg-primary border-base-200 ">
-                                        <strong class="text-[10px] text-slate-800">{{ $report_by->lookup_name }}</strong>
+                                        <strong class="text-xs text-slate-800">{{ $report_by->lookup_name }}</strong>
                                     </div>
                                     @empty
                                     <strong class="text-xs text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-rose-800">Name
@@ -78,7 +78,7 @@
                         <div tabindex="0" class="z-10 w-full   overflow-y-auto shadow dropdown-content card card-compact bg-base-200 text-primary-content {{ $hiddenWorkgroup }}">
                             <ul class="h-full px-4 py-4 list-disc list-inside max-h-40 bg-base-200 rounded-box">
                                 @forelse ($Division as $item)
-                                <li wire:click="select_division({{ $item->id }})" class="text-[9px] text-wrap hover:bg-primary subpixel-antialiased text-left cursor-pointer">
+                                <li wire:click="select_division({{ $item->id }})" class="text-xs subpixel-antialiased text-left cursor-pointer text-wrap hover:bg-primary">
                                     {{ $item->DeptByBU->BusinesUnit->Company->name_company }}-{{ $item->DeptByBU->Department->department_name }}
                                     @if (!empty($item->company_id))
                                     -{{ $item->Company->name_company }}
@@ -104,7 +104,7 @@
                                 <div class="h-full pb-6 mb-2 overflow-auto max-h-40 scroll-smooth focus:scroll-auto" wire:target='report_toName' wire:loading.class='hidden'>
                                     @forelse ($Report_To as $report_to)
                                     <div wire:click="reportedTo({{ $report_to->users->id }})" class="flex flex-col border-b cursor-pointer hover:bg-primary border-base-200 ">
-                                        <strong class="text-[10px] text-slate-800">{{ $report_to->users->lookup_name }}</strong>
+                                        <strong class="text-xs text-slate-800">{{ $report_to->users->lookup_name }}</strong>
                                     </div>
                                     @empty
                                     <strong class="text-xs text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-rose-800">Name
