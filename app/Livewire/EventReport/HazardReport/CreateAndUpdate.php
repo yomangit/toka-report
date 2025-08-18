@@ -161,16 +161,16 @@ class CreateAndUpdate extends Component
             'description'           => ['required'],
             'location_id'           => ['required'],
             'location_name'         => ['required'],
+            'key_word'         => ['required'],
             'tindakkan_selanjutnya' => ['required'],
             'immediate_corrective_action' => ['required'],
         ];
         if ($this->key_word === 'kta') {
             $baseRules['kondisitidakamen_id'] = ['required'];
-        } elseif ($this->key_word === 'tta') {
+        } 
+        if ($this->key_word === 'tta') {
             $baseRules['tindakantidakamen_id'] = ['required'];
-        } else {
-            $baseRules['key_word'] = ['required'];
-        }
+        } 
 
         return $baseRules;
     }
