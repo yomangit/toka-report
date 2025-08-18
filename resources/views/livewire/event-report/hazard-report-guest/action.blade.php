@@ -49,7 +49,7 @@
                     <x-label-error :messages="$errors->get('responsibility_name')" />
                 </div>
                 <div class="w-full max-w-xs sm:max-w-sm xl:max-w-xl form-control">
-                    <x-label-no-req :value="__('Tanggal Penemuan Hazard')" />
+                    <x-label-no-req :value="__('Date Identified')" />
                     <x-input-date  wire:model.live='orginal_date' readonly :error="$errors->get('due_date')" />
                     <x-label-error :messages="$errors->get('due_date')" />
                 </div>
