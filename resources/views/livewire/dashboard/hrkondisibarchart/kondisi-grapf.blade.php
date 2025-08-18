@@ -69,6 +69,7 @@
        const divisi = JSON.parse('<?php echo $divisi ?>');
        const data = JSON.parse('<?php echo $kondisi ?>');
        const data_tta = JSON.parse('<?php echo $tindakan ?>');
+       const data_pie = JSON.parse('<?php echo $pie ?>');
 
        function getRandomColor() {
            return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
@@ -77,6 +78,8 @@
        const warnaOtomatisdivisi = divisi.count.map(() => getRandomColor());
        const warnaOtomatis = data.count.map(() => getRandomColor());
        const warnaOtomatistta = data_tta.count.map(() => getRandomColor());
+       const warnaOtomatispie= data_pie.count.map(() => getRandomColor());
+
        //     ====== DIVISI ======
        var dom_divisi = document.getElementById('chart-divisi');
        var myChart_divisi = echarts.init(dom_divisi);
@@ -240,7 +243,7 @@
            });
        });
        // ===== PIE CHART =====
-       const data_pie = JSON.parse('<?php echo $pie ?>');
+
        const chartData = data_pie.label.map((label, index) => ({
            value: data_pie.count[index]
            , name: label
@@ -269,6 +272,7 @@
                orient: 'vertical'
                , left: 'left'
            }
+           color: (params) => warnaOtomatispie[params.dataIndex],
            , series: [{
                name: 'Cause Analysis'
                , type: 'pie'
