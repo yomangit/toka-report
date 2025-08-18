@@ -23,10 +23,14 @@ class KondisiGrapf extends Component
 
     public function mount()
     {
-        $this->divisi();
-        $this->kta();
-        $this->tta();
-        $this->causesanalisys();
+        // $this->divisi();
+        // $this->kta();
+        // $this->tta();
+        // $this->causesanalisys();
+        $this->divisiUp();
+        $this->kondisiTidakAman();
+        $this->tindakanTidakAman();
+        $this->updatePerbandinganData();
     }
     public function kta()
     {
