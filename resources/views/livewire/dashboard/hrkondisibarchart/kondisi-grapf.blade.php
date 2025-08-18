@@ -302,7 +302,7 @@
            }));
            pieChart.setOption({
                series: [{
-                   name: 'Access From'
+                   name: 'Cause Analysis'
                    , type: 'pie'
                    , radius: '50%'
                    , data: chartData
