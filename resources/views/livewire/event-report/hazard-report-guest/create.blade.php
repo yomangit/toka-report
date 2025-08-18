@@ -51,7 +51,7 @@
                             </span>
                             <div tabindex="0" class="dropdown-content card card-compact  bg-base-300 text-primary-content z-[1] w-full  p-2 shadow {{ $hiddenReportBy }}">
                             <div class="relative">
-                                <div class="h-full mb-2 overflow-auto max-h-40 scroll-smooth focus:scroll-auto" wire:target='report_byName' wire:loading.class='hidden'>
+                                <div class="h-full mb-4 overflow-auto max-h-40 scroll-smooth focus:scroll-auto" wire:target='report_byName' wire:loading.class='hidden'>
                                     @forelse ($Report_By as $report_by)
                                     <div wire:click="reportedBy({{ $report_by->id }})" class="flex flex-col border-b cursor-pointer hover:bg-primary border-base-200 ">
                                         <strong class="text-xs text-slate-800">{{ $report_by->lookup_name }}</strong>
@@ -111,7 +111,7 @@
                         </div>
                         <div tabindex="0" class="dropdown-content card card-compact  bg-base-300 text-primary-content z-[1] w-full  p-2 shadow {{ $hiddenReportTo }}">
                             <div class="relative">
-                                <div class="h-full pb-6 mb-2 overflow-auto max-h-40 scroll-smooth focus:scroll-auto" wire:target='report_toName' wire:loading.class='hidden'>
+                                <div class="h-full pb-6 mb-4 overflow-auto max-h-40 scroll-smooth focus:scroll-auto" wire:target='report_toName' wire:loading.class='hidden'>
                                     @forelse ($Report_To as $report_to)
                                     <div wire:click="reportedTo({{ $report_to->users->id }})" class="flex flex-col border-b cursor-pointer hover:bg-primary border-base-200 ">
                                         <strong class="text-xs text-slate-800">{{ $report_to->users->lookup_name }}</strong>
