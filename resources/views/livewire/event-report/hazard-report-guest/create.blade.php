@@ -52,7 +52,7 @@
                                 <div class="h-full mb-2 overflow-auto max-h-40 scroll-smooth focus:scroll-auto" wire:target='report_byName' wire:loading.class='hidden'>
                                     @forelse ($Report_By as $report_by)
                                     <div wire:click="reportedBy({{ $report_by->id }})" class="flex flex-col border-b cursor-pointer hover:bg-primary border-base-200 ">
-                                        <strong class="text-[10px] text-slate-800">{{ $report_by->lookup_name }}</strong>
+                                        <strong class="text-xs text-slate-800">{{ $report_by->lookup_name }}</strong>
                                     </div>
                                     @empty
                                     <strong class="text-xs text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-rose-800">Name
@@ -78,7 +78,7 @@
                         <div tabindex="0" class="z-10 w-full   overflow-y-auto shadow dropdown-content card card-compact bg-base-200 text-primary-content {{ $hiddenWorkgroup }}">
                             <ul class="h-full px-4 py-4 list-disc list-inside max-h-40 bg-base-200 rounded-box">
                                 @forelse ($Division as $item)
-                                <li wire:click="select_division({{ $item->id }})" class="text-[9px] text-wrap hover:bg-primary subpixel-antialiased text-left cursor-pointer">
+                                <li wire:click="select_division({{ $item->id }})" class="text-xs subpixel-antialiased text-left cursor-pointer text-wrap hover:bg-primary">
                                     {{ $item->DeptByBU->BusinesUnit->Company->name_company }}-{{ $item->DeptByBU->Department->department_name }}
                                     @if (!empty($item->company_id))
                                     -{{ $item->Company->name_company }}
@@ -104,7 +104,7 @@
                                 <div class="h-full pb-6 mb-2 overflow-auto max-h-40 scroll-smooth focus:scroll-auto" wire:target='report_toName' wire:loading.class='hidden'>
                                     @forelse ($Report_To as $report_to)
                                     <div wire:click="reportedTo({{ $report_to->users->id }})" class="flex flex-col border-b cursor-pointer hover:bg-primary border-base-200 ">
-                                        <strong class="text-[10px] text-slate-800">{{ $report_to->users->lookup_name }}</strong>
+                                        <strong class="text-xs text-slate-800">{{ $report_to->users->lookup_name }}</strong>
                                     </div>
                                     @empty
                                     <strong class="text-xs text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-rose-800">Name
@@ -114,7 +114,7 @@
                                 <div class="hidden pt-5 text-center" wire:target='report_toName' wire:loading.class.remove='hidden'>
                                     <x-loading-spinner />
                                 </div>
-                                
+
                                 <div class="fixed bottom-0 left-0 right-0 px-2 mb-1 bg-base-300 opacity-95 ">
                                     <x-input-no-req wire:model.live='report_to_nolist' placeholder="{{ __('name_notList') }}" />
                                 </div>
@@ -182,27 +182,27 @@
             <div class="grid grid-cols-1 gap-6 mt-4 transition-all duration-300 ease-in-out border divide-y border-base-200 divide-base-200 rounded-xl md:grid-cols-3 md:divide-y-0 md:divide-x md:p-6">
                 <!-- KEYWORD (KTA / TTA) -->
                 <div class="px-4 py-2 space-y-3 md:px-0">
-                    <fieldset x-data="{ status: @entangle('key_word') }" class="space-y-3">
+                    <fieldset class="space-y-3">
                         <x-label-req :value="__('Key Word')" />
 
                         <div class="flex items-center gap-4 mt-2">
                             <label class="flex items-center space-x-1">
-                                <input x-model="status" value="kta" id="draft" type="radio" name="status" class="radio radio-sm radio-primary" />
+                                <input wire:model.live="key_word" value="kta" type="radio" name="key_word" class="radio radio-sm radio-primary" />
                                 <span class="text-xs font-semibold">Kondisi Tidak Aman</span>
                             </label>
 
                             <label class="flex items-center space-x-1">
-                                <input x-model="status" value="tta" id="published" type="radio" name="status" class="radio radio-sm radio-accent" />
+                                <input wire:model.live="key_word" value="tta" type="radio" name="key_word" class="radio radio-sm radio-accent" />
                                 <span class="text-xs font-semibold">Tindakan Tidak Aman</span>
                             </label>
                         </div>
                         <x-label-error :messages="$errors->get('key_word')" />
 
                         <!-- KTA Select -->
-                        <div x-show="status === 'kta'" x-transition.opacity.duration.300ms class="mt-2">
+                        <div x-data x-show="$wire.key_word === 'kta'" x-transition.opacity.duration.300ms class="mt-2">
                             <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')">
                                 <option value="" selected>Pilih KTA...</option>
-                                @forelse ($KTA as $kta)
+                                @foreach ($KTA as $kta)
                                 <option value="{{ $kta->id }}">{{ $kta->name }}</option>
                                 @endforeach
                             </x-select>
@@ -210,16 +210,17 @@
                         </div>
 
                         <!-- TTA Select -->
-                        <div x-show="status === 'tta'" x-transition.opacity.duration.300ms class="mt-2">
+                        <div x-data x-show="$wire.key_word === 'tta'" x-transition.opacity.duration.300ms class="mt-2">
                             <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
                                 <option value="" selected>Pilih TTA</option>
-                                @forelse ($TTA as $tta)
+                                @foreach ($TTA as $tta)
                                 <option value="{{ $tta->id }}">{{ $tta->name }}</option>
                                 @endforeach
                             </x-select>
                             <x-label-error :messages="$errors->get('tindakantidakamen_id')" />
                         </div>
                     </fieldset>
+
 
                 </div>
 
@@ -276,7 +277,6 @@
                     @this.set('immediate_corrective_action', editor.getData());
                 });
             });
-
         </script>
     </div>
 </div>

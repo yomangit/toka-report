@@ -20,6 +20,7 @@ use App\Models\TypeEventReport;
 use App\Models\Kondisitidakaman;
 use App\Models\EventUserSecurity;
 use App\Models\Tindakantidakaman;
+use Livewire\Attributes\Validate;
 use App\Notifications\toModerator;
 use App\Helpers\NotificationHelper;
 use Illuminate\Support\Facades\Auth;
@@ -34,16 +35,18 @@ class Create extends Component
 {
     use WithFileUploads;
     use WithPagination;
-    // Basic UI Controls
+   // Basic UI Controls
     public $divider = 'Input Hazard Report';
     public $show = false;
     public $show_immidiate = 'yes';
     public $showLocation = false;
+
     // Dropdown & Visibility Controls
     public $dropdownLocation = 'dropdown', $hidden = 'block';
     public $dropdownWorkgroup = 'dropdown', $hiddenWorkgroup = 'block';
     public $dropdownReportBy = 'dropdown', $hiddenReportBy = 'block';
     public $dropdownReportTo = 'dropdown', $hiddenReportTo = 'block';
+
     // Search Fields
     public $search = '';
     public $searchLikelihood = '';
@@ -53,43 +56,57 @@ class Create extends Component
     public $search_report_by = '';
     public $search_report_to = '';
     public $location_search = '';
+
     // IDs and Relational Keys
+    #[Validate]
     public $location_id;
     public $tablerisk_id;
     public $risk_assessment_id;
     public $workflow_detail_id;
     public $workflow_template_id;
     public $division_id;
+     #[Validate]
     public $event_type_id;
+     #[Validate]
     public $sub_event_type_id;
     public $report_by;
     public $report_to;
-    public $event_location_id;
     public $site_id;
     public $workgroup_id;
     public $select_divisi;
     public $token;
+    #[Validate]
     public $key_word;
     public $kondisitidakamen_id;
     public $tindakantidakamen_id;
+
     // Names and Labels
+    #[Validate]
     public $location_name;
+     #[Validate]
     public $workgroup_name;
+     #[Validate]
     public $report_byName;
+     #[Validate]
     public $report_toName;
+
     // Other Report Data
     public $reference;
     public $report_by_nolist;
     public $report_to_nolist;
     public $company_involved;
     public $task_being_done;
+    #[Validate]
     public $date;
+    #[Validate]
     public $description;
     public $documentation;
+    #[Validate]
     public $immediate_corrective_action;
     public $suggested_corrective_action;
     public $preliminary_cause;
     public $corrective_action_suggested;
+
     // Risk Details
     public $TableRisk = [];
     public $RiskAssessment = [];
@@ -98,21 +115,27 @@ class Create extends Component
     public $risk_consequence_id;
     public $risk_consequence_doc;
     public $risk_probability_doc;
+
     // Event Types and Roles
     public $Event_type = [];
     public $EventSubType = [];
     public $ResponsibleRole;
+
     // Hierarchy Data
     public $parent_Company;
     public $business_unit;
     public $dept;
+
     // Address & Conditions
     public $alamat;
     public $kondisi_tidak_aman;
     public $tindakan_tidak_aman;
+    #[Validate]
     public $tindakkan_selanjutnya;
+
     // File Handling
     public $fileUpload;
+
     // Miscellaneous
     public $data = [];
 
@@ -132,21 +155,22 @@ class Create extends Component
             'event_type_id'         => ['required'],
             'sub_event_type_id'     => ['required'],
             'report_byName'         => ['required'],
+            'report_toName'         => ['required'],
             'date'                  => ['required'],
             'documentation'         => 'nullable|mimes:jpg,jpeg,png,svg,gif,xlsx,pdf,docx',
             'description'           => ['required'],
             'location_id'           => ['required'],
             'location_name'         => ['required'],
+            'key_word'         => ['required'],
             'tindakkan_selanjutnya' => ['required'],
+            'immediate_corrective_action' => ['required'],
         ];
-
         if ($this->key_word === 'kta') {
             $baseRules['kondisitidakamen_id'] = ['required'];
-        } elseif ($this->key_word === 'tta') {
+        } 
+        if ($this->key_word === 'tta') {
             $baseRules['tindakantidakamen_id'] = ['required'];
-        } else {
-            $baseRules['key_word'] = ['required'];
-        }
+        } 
 
         return $baseRules;
     }
@@ -157,6 +181,7 @@ class Create extends Component
             'event_type_id.required'                => 'Kolom wajib diisi',
             'sub_event_type_id.required'            => 'Kolom wajib diisi',
             'report_byName.required'                => 'Kolom wajib diisi',
+            'report_toName.required'                => 'Kolom wajib diisi',
             'workgroup_name.required'               => 'Kolom wajib diisi',
             'date.required'                         => 'Kolom wajib diisi',
             'site_id.required'                      => 'Kolom wajib diisi',
@@ -170,28 +195,6 @@ class Create extends Component
             'tindakkan_selanjutnya.required'        => 'Kolom wajib dicentang',
             'key_word.required'        => 'Kolom wajib dicentang',
         ];
-    }
-    public function clearFields()
-    {
-        $this->reset(
-            'event_type_id',
-            'sub_event_type_id',
-            'report_byName',
-            'report_toName',
-            'workgroup_name',
-            'division_id',
-            'date',
-            'documentation',
-            'description',
-            'immediate_corrective_action',
-            'location_name',
-            'location_id',
-            'kondisi_tidak_aman',
-            'tindakan_tidak_aman',
-            'workgroup_name',
-            'kondisitidakamen_id',
-            'tindakkan_selanjutnya',
-        );
     }
     #[On('closeAll')]
     public function clearTindakkan_selanjutnya()
