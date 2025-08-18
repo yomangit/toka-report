@@ -64,7 +64,7 @@ class Action extends Component
         $this->divider = $this->action_id ? "Update Action" : "Add Action";
 
         return view('livewire.event-report.hazard-report-guest.action', [
-            'Report_By' => User::searchNama(trim($this->responsibility_name))->limit(500)->get(),
+            'Report_By' => User::searchNama(trim($this->responsibility_name))->limit(50)->get(),
         ]);
     }
 
