@@ -78,7 +78,7 @@
        const warnaOtomatisdivisi = divisi.count.map(() => getRandomColor());
        const warnaOtomatis = data.count.map(() => getRandomColor());
        const warnaOtomatistta = data_tta.count.map(() => getRandomColor());
-       const warnaOtomatispie= data_pie.count.map(() => getRandomColor());
+       const warnaOtomatispie = data_pie.count.map(() => getRandomColor());
 
        //     ====== DIVISI ======
        var dom_divisi = document.getElementById('chart-divisi');
@@ -272,7 +272,7 @@
                orient: 'vertical'
                , left: 'left'
            }
-           color: warnaOtomatispie,
+           , color: warnaOtomatispie
            , series: [{
                name: 'Cause Analysis'
                , type: 'pie'
