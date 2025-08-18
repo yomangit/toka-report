@@ -47,7 +47,9 @@
                     <x-label-req :value="__('report_by')" />
                     <div class="dropdown dropdown-end">
                         <x-input wire:click='clickReportBy' wire:model.live='report_byName' placeholder='cari nama pelapor...' :error="$errors->get('report_byName')" class="cursor-pointer" tabindex="0" role="button" />
-                        <div tabindex="0" class="dropdown-content card card-compact  bg-base-300 text-primary-content z-[1] w-full  p-2 shadow {{ $hiddenReportBy }}">
+                         <span wire:loading wire:loading.class.remove="hidden" wire:target="reportedBy" class="absolute right-0 hidden -translate-y-1/2 top-1/2 loading loading-spinner text-secondary">
+                            </span>
+                            <div tabindex="0" class="dropdown-content card card-compact  bg-base-300 text-primary-content z-[1] w-full  p-2 shadow {{ $hiddenReportBy }}">
                             <div class="relative">
                                 <div class="h-full mb-2 overflow-auto max-h-40 scroll-smooth focus:scroll-auto" wire:target='report_byName' wire:loading.class='hidden'>
                                     @forelse ($Report_By as $report_by)
