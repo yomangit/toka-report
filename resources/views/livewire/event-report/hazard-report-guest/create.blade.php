@@ -76,7 +76,8 @@
                     <div class="dropdown dropdown-end">
                         <div class="relative">
                             <x-input wire:click='clickWorkgroup' wire:model.live='workgroup_name' wire:keydown.self="changeConditionDivision" placeholder='cari divisi...' :error="$errors->get('workgroup_name')" class="cursor-pointer" tabindex="0" role="button" />
-                            <span wire:target="division_id,workgroup_name" wire:loading.class="absolute right-0 transform -translate-y-1/2 top-1/2 loading loading-spinner text-warning"></span>
+                            <span wire:loading wire:target="select_division" class="absolute right-0 -translate-y-1/2 top-1/2 loading loading-spinner text-secondary">
+                            </span>
                         </div>
                         <div tabindex="0" class="z-10 w-full   overflow-y-auto shadow dropdown-content card card-compact bg-base-200 text-primary-content {{ $hiddenWorkgroup }}">
                             <ul class="h-full px-4 py-4 list-disc list-inside max-h-40 bg-base-200 rounded-box">
@@ -103,7 +104,7 @@
                     <div class="dropdown dropdown-end">
                         <div class="relative">
                             <x-input wire:click='clickReportTo' wire:model.live='report_toName' placeholder="{{ __('report_to') }}" :error="$errors->get('report_toName')" class="cursor-pointer" tabindex="0" role="button" />
-                            <span wire:target="report_toName" wire:loading.class="absolute right-0 transform -translate-y-1/2 top-1/2 loading loading-spinner text-warning"></span>
+                            <span wire:target="report_toName" wire:loading.class="absolute right-0 transform -translate-y-1/2 top-1/2 loading loading-spinner text-secondary"></span>
                         </div>
                         <div tabindex="0" class="dropdown-content card card-compact  bg-base-300 text-primary-content z-[1] w-full  p-2 shadow {{ $hiddenReportTo }}">
                             <div class="relative">
@@ -172,7 +173,7 @@
                         @include('livewire.event-report.svg-file')
                         {{ $documentation }}
                     </div>
-                    <span wire:target="documentation" wire:loading.class="absolute right-0 transform -translate-y-1/2 top-1/2 loading loading-spinner text-warning"></span>
+                    <span wire:target="documentation" wire:loading.class="absolute right-0 transform -translate-y-1/2 top-1/2 loading loading-spinner text-secondary"></span>
                 </div>
                 <x-label-error :messages="$errors->get('documentation')" />
             </div>
