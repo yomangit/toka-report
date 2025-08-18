@@ -181,6 +181,7 @@ class CreateAndUpdate extends Component
             'event_type_id.required'                => 'Kolom wajib diisi',
             'sub_event_type_id.required'            => 'Kolom wajib diisi',
             'report_byName.required'                => 'Kolom wajib diisi',
+            'report_toName.required'                => 'Kolom wajib diisi',
             'workgroup_name.required'               => 'Kolom wajib diisi',
             'date.required'                         => 'Kolom wajib diisi',
             'site_id.required'                      => 'Kolom wajib diisi',
