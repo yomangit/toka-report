@@ -313,10 +313,30 @@
            });
        });
        // ===== RESIZE HANDLER =====
-       window.addEventListener('resize', () => {
-           pieChart.resize();
-           myChart.resize();
-           myChart_tta.resize();
+       const charts = [{
+               dom: dom_divisi
+               , chart: myChart_divisi
+           }
+           , {
+               dom: dom
+               , chart: myChart
+           }
+           , {
+               dom: dom_tta
+               , chart: myChart_tta
+           }
+           , {
+               dom: dom_ie
+               , chart: pieChart
+           }
+       , ];
+
+       charts.forEach(item => {
+           if (item.dom && item.chart) {
+               new ResizeObserver(() => {
+                   item.chart.resize();
+               }).observe(item.dom);
+           }
        });
 
    </script>
