@@ -23,16 +23,12 @@
             </div>
             <ul tabindex="0" class="dropdown-content menu-xs menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                 <li>
-                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Logout
-                    </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="">
                         @csrf
-                         <button type="submit">Test Logout</button>
+                         <button type="submit">Logout</button>
                     </form>
                 </li>
             </ul>
-
         </div>
         @else
         <a class="btn btn-link btn-xs" href="{{ route('login') }}">Log in</a>
