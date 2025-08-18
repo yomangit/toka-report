@@ -55,7 +55,6 @@ use App\Livewire\EventReport\HazardReport\Detail as hazardReportDetail;
 use App\Livewire\Admin\TableRiskAssessment\Index as TableRiskAssessment;
 use App\Livewire\EventReport\IncidentReport\Detail as incidentReportDetail;
 use App\Livewire\Admin\WorkflowAdministration\Index as workflowAdministration;
-use App\Livewire\Dashboard\MainDashboard;
 use App\Livewire\EventReport\HazardReport\CreateAndUpdate as hazardReportform;
 use App\Livewire\EventReport\HazardReportGuest\Create as HazardReportGuestCreate;
 use App\Livewire\EventReport\IncidentReport\CreateAndUpdate as CreateAndUpdateIncidentReport;
@@ -88,8 +87,7 @@ Route::get('eventReport/hazardReportGuest/{workflow_template_id?}', HazardReport
 Route::get('manhours/manhoursTable', WebAccess::class)->name('WebAccess');
 Route::get('eventReport/hazardReportExcel', TableExcel::class)->name('TableExcel');
 Route::middleware(['auth', 'auth.session'])->group(function () {
-   
-    Route::get('/', MainDashboard::class)->name('dashboard');
+    Route::redirect('/', 'dashboard/hazard');
     Route::get('dashboard/incident', dashoard::class)->name('dashboard-incident');
     Route::get('dashboard/hazard', HrGrapf::class)->name('dashboard-hazard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
