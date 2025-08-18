@@ -98,7 +98,10 @@
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <x-label-no-req :value="__('report_to')" />
                     <div class="dropdown dropdown-end">
-                        <x-input wire:click='clickReportTo' wire:model.live='report_toName' placeholder="{{ __('report_to') }}" :error="$errors->get('report_toName')" class="cursor-pointer" tabindex="0" role="button" />
+                        <div class="relative">
+                            <x-input wire:click='clickReportTo' wire:model.live='report_toName' placeholder="{{ __('report_to') }}" :error="$errors->get('report_toName')" class="cursor-pointer" tabindex="0" role="button" />
+                            <span wire:target="report_toName" wire:loading.class="absolute right-0 transform -translate-y-1/2 top-1/2 loading loading-spinner text-warning"></span>
+                        </div>
                         <div tabindex="0" class="dropdown-content card card-compact  bg-base-300 text-primary-content z-[1] w-full  p-2 shadow {{ $hiddenReportTo }}">
                             <div class="relative">
                                 <div class="h-full pb-6 mb-2 overflow-auto max-h-40 scroll-smooth focus:scroll-auto" wire:target='report_toName' wire:loading.class='hidden'>
@@ -251,7 +254,7 @@
 
             <!-- Tombol Simpan -->
             <div class="flex justify-end">
-                <x-btn-save-active wire:target="documentation" wire:loading.class="btn-disabled">
+                <x-btn-save-active wire:target="documentation,division_id" wire:loading.class="btn-disabled">
                     {{ __('Submit') }}
                 </x-btn-save-active>
             </div>
@@ -277,6 +280,7 @@
                     @this.set('immediate_corrective_action', editor.getData());
                 });
             });
+
         </script>
     </div>
 </div>
