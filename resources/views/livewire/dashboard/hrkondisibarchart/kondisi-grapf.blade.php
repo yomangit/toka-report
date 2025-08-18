@@ -272,7 +272,7 @@
                orient: 'vertical'
                , left: 'left'
            }
-           color: (params) => warnaOtomatispie[params.dataIndex],
+           color: warnaOtomatispie,
            , series: [{
                name: 'Cause Analysis'
                , type: 'pie'
