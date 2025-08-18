@@ -75,6 +75,7 @@ class CreateAndUpdate extends Component
     public $workgroup_id;
     public $select_divisi;
     public $token;
+    #[Validate]
     public $key_word;
     public $kondisitidakamen_id;
     public $tindakantidakamen_id;
