@@ -23,122 +23,13 @@ class KondisiGrapf extends Component
 
     public function mount()
     {
-        // $this->divisi();
-        // $this->kta();
-        // $this->tta();
-        // $this->causesanalisys();
+       
         $this->divisiUp();
         $this->kondisiTidakAman();
         $this->tindakanTidakAman();
         $this->updatePerbandinganData();
     }
-    public function kta()
-    {
-        // Kondisi Tidak Aman
-        $user = auth()->user();
-        $query = HazardReport::join('kondisitidakamen', 'hazard_reports.kondisitidakamen_id', '=', 'kondisitidakamen.id')
-            ->select('kondisitidakamen.name as label', DB::raw('COUNT(*) as total'))
-            ->whereNotNull('kondisitidakamen_id')
-            ->groupBy('kondisitidakamen.name');
 
-        if ($this->tglMulai && $this->tglAkhir) {
-            $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
-        }
-        if ($user->hasRolePermit('administration')) {
-            $reports = $query->get();
-        } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
-            $divisionIds = $user->divisions->pluck('id')->toArray();
-            $reports = $query->whereIn('division_id', $divisionIds)->get();
-        } else {
-            $reports = collect();
-        }
-        $data = [
-            'label' => $reports->pluck('label')->toArray(),
-            'count' => $reports->pluck('total')->toArray()
-        ];
-        $this->kondisi = json_encode($data);
-    }
-    public function divisi()
-    {
-        $user = auth()->user();
-        $query = HazardReport::select('division_id', DB::raw('count(*) as total'))
-            ->with('division')
-            ->groupBy('division_id');
-        if ($this->tglMulai && $this->tglAkhir) {
-            $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
-        }
-        if ($user->hasRolePermit('administration')) {
-            // Admin bisa lihat semua laporan
-            $reports = $query->get();
-        } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
-            // Hanya user yang punya relasi dengan division_user
-            $divisionIds = $user->divisions->pluck('id')->toArray();
-            $reports = $query->whereIn('division_id', $divisionIds)->get();
-        } else {
-            // User tanpa relasi division_user tidak bisa lihat laporan
-            $reports = collect();
-        }
-        $label = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
-        $count = $reports->pluck('total')->toArray();
-        $divisi = [
-            'label' => $label,
-            'count' => $count
-        ];
-        $this->divisi = json_encode($divisi);
-    }
-    public function tta()
-    {
-        $user = auth()->user();
-        $query_tta = HazardReport::join('tindakantidakamen', 'hazard_reports.tindakantidakamen_id', '=', 'tindakantidakamen.id')
-            ->select('tindakantidakamen.name as label', DB::raw('COUNT(*) as total'))
-            ->whereNotNull('tindakantidakamen_id')
-            ->groupBy('tindakantidakamen.name');
-
-        if ($this->tglMulai && $this->tglAkhir) {
-            $query_tta->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
-        }
-        if ($user->hasRolePermit('administration')) {
-            $reports_tta = $query_tta->get();
-        } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
-            $divisionIds = $user->divisions->pluck('id')->toArray();
-            $reports_tta = $query_tta->whereIn('division_id', $divisionIds)->get();
-        } else {
-            $reports_tta = collect();
-        }
-        $data_tta = [
-            'label' => $reports_tta->pluck('label')->toArray(),
-            'count' => $reports_tta->pluck('total')->toArray()
-        ];
-        $this->tindakan = json_encode($data_tta);
-    }
-    public function causesanalisys()
-    {
-        $user = auth()->user();
-        $totalKondisi = HazardReport::whereNotNull('kondisitidakamen_id');
-        $totalTindakan = HazardReport::whereNotNull('tindakantidakamen_id');
-
-        if ($this->tglMulai && $this->tglAkhir) {
-            $totalKondisi->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
-            $totalTindakan->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
-        }
-
-        if ($user->hasRolePermit('administration')) {
-            $kondisi = $totalKondisi->count();
-            $tindakan = $totalTindakan->count();
-        } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
-            $divisionIds = $user->divisions->pluck('id')->toArray();
-            $kondisi = $totalKondisi->whereIn('division_id', $divisionIds)->count();
-            $tindakan = $totalTindakan->whereIn('division_id', $divisionIds)->count();
-        } else {
-            $kondisi = collect();
-            $tindakan = collect();
-        }
-        $data = [
-            'label' => ['Kondisi Tidak Aman', 'Tindakan Tidak Aman'],
-            'count' => [$kondisi, $tindakan]
-        ];
-        $this->pie = json_encode($data);
-    }
     #[On('chartUpdated')]
     public function divisiUp()
     {
