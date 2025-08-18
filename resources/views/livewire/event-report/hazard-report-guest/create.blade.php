@@ -76,7 +76,7 @@
                     <div class="dropdown dropdown-end">
                         <div class="relative">
                             <x-input wire:click='clickWorkgroup' wire:model.live='workgroup_name' wire:keydown.self="changeConditionDivision" placeholder='cari divisi...' :error="$errors->get('workgroup_name')" class="cursor-pointer" tabindex="0" role="button" />
-                            <span wire:loading wire:target="select_division" class="absolute right-0 -translate-y-1/2 top-1/2 loading loading-spinner text-secondary">
+                            <span wire:loading wire:loading.class.remove="hidden" wire:target="select_division" class="absolute right-0 hidden -translate-y-1/2 top-1/2 loading loading-spinner text-secondary">
                             </span>
                         </div>
                         <div tabindex="0" class="z-10 w-full   overflow-y-auto shadow dropdown-content card card-compact bg-base-200 text-primary-content {{ $hiddenWorkgroup }}">
