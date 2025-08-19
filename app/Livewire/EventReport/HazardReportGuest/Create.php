@@ -526,4 +526,21 @@ class Create extends Component
         $this->dispatch('refreshChartHazard');
         // $this->redirectRoute('hazardReportCreate', ['workflow_template_id' => $this->workflow_template_id]);
     }
+     public function clearFields()
+    {
+        $this->report_byName               = "";
+        $this->report_toName               = "";
+        $this->workgroup_name              = "";
+        $this->division_id                 = "";
+        $this->date                        = "";
+        $this->documentation               = "";
+        $this->description                 = "";
+        $this->immediate_corrective_action = "";
+        $this->location_name               = "";
+        $this->location_id                 = "";
+        $this->kondisi_tidak_aman          = "";
+        $this->tindakan_tidak_aman         = "";
+        $this->tindakkan_selanjutnya         = "";
+        $this->workgroup_name              = "";
+    }
 }
