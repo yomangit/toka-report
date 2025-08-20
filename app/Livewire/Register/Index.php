@@ -46,6 +46,6 @@ class Index extends Component
     {
         return view('livewire.register.index',[
             'User'=>User::searchNama(trim($this->name))->limit(500)->get()
-        ])->extends('base.guest', ['header' => 'Business Unit', 'title' => 'Business Unit'])->section('content');
+        ])->extends('base.guest')->section('content');
     }
 }
