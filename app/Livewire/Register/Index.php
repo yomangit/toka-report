@@ -40,7 +40,7 @@ class Index extends Component
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('dashboard-hazard', absolute: false));
     }
     public function render()
     {
