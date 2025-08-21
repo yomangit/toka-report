@@ -3,7 +3,7 @@
         <!-- Nama -->
         <div>
             <label class="block text-sm font-medium text-gray-700">Name</label>
-            <input type="text" wire:model.live="name" class="input input-sm ">
+            <input type="text" wire:model.live="name" class="w-full input input-sm">
             @error('name') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
         </div>
 
@@ -23,7 +23,7 @@
         <div x-data="{ show: false }" class="relative">
             <label class="block text-sm font-medium text-gray-700">Password (optional)</label>
 
-            <input :type="show ? 'text' : 'password'" wire:model.live="password" class="block input input-sm ">
+            <input :type="show ? 'text' : 'password'" wire:model.live="password" class="block w-full input input-sm">
 
             <!-- Tombol toggle -->
             <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
