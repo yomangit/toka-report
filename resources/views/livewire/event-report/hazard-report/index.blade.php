@@ -20,8 +20,7 @@
             <div class="flex flex-row form-control">
                 <label class="gap-4 cursor-pointer label">
                     <span class="label-text font-spicy_rice ">My Tray</span>
-                    <input type="checkbox" wire:model.live='in_tray' checked="checked"
-                        class="checkbox [--chkbg:oklch(var(--a))] [--chkfg:oklch(var(--p))] checkbox-xs" />
+                    <input type="checkbox" wire:model.live='in_tray' checked="checked" class="checkbox [--chkbg:oklch(var(--a))] [--chkfg:oklch(var(--p))] checkbox-xs" />
                 </label>
             </div>
         </div>
@@ -70,7 +69,7 @@
                         <p>Total/Open</p>
                     </th>
                     <th>Status</th>
-                    <th></th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -94,13 +93,13 @@
                     <td>
                         <div>
                             @if (
-                                auth()->user()->role_user_permit_id == 1 ||
-                                $item->submitter == auth()->id() ||
-                                $item->report_by == auth()->id() ||
-                                $item->report_to == auth()->id() ||
-                                $item->assign_to == auth()->id() ||
-                                $item->also_assign_to == auth()->id()||
-                                 auth()->user()->moderatorAkases->contains('pivot.responsible_role_id', 1)
+                            auth()->user()->role_user_permit_id == 1 ||
+                            $item->submitter == auth()->id() ||
+                            $item->report_by == auth()->id() ||
+                            $item->report_to == auth()->id() ||
+                            $item->assign_to == auth()->id() ||
+                            $item->also_assign_to == auth()->id()||
+                            auth()->user()->moderatorAkases->contains('pivot.responsible_role_id', 1)
                             )
                             <x-icon-btn-detail href="{{ route('hazardReportDetail', ['id' => $item->id]) }}" data-tip="Details" />
                             <x-icon-btn-delete data-tip="delete" wire:click='delete({{ $item->id }})' wire:confirm.prompt="Are you sure delete {{ $item->reference }}?\n\nType DELETE to confirm|DELETE" />
@@ -109,8 +108,6 @@
                     </td>
                 </tr>
                 @empty
-
-
                 <tr wire:loading.class='hidden'>
                     <th colspan="9" class="text-xl text-center font-signika">
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-yellow-500">
@@ -133,9 +130,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-         flatpickr("#rangeDate", {
-            mode: 'range',
-            dateFormat: "d-m-Y", //defaults to "F Y"
+        flatpickr("#rangeDate", {
+            mode: 'range'
+            , dateFormat: "d-m-Y", //defaults to "F Y"
             onChange: function(dates) {
                 if (dates.length === 2) {
 
@@ -173,9 +170,10 @@
                 }
             }
         });
+
     </script>
     <script>
-         function updateTooltipPosition() {
+        function updateTooltipPosition() {
             const isMobile = window.innerWidth < 640;
             document.querySelectorAll('.tooltip').forEach((el) => {
                 el.classList.remove('tooltip-top', 'tooltip-right', 'tooltip-left', 'tooltip-bottom');
@@ -184,6 +182,7 @@
         }
         window.addEventListener('DOMContentLoaded', updateTooltipPosition);
         window.addEventListener('resize', updateTooltipPosition);
+
     </script>
-   
+
 </div>
