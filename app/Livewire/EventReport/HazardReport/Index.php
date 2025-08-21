@@ -18,9 +18,11 @@ use App\Models\HazardDocumentation;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
     #[Url]
     public $rangeDate = '', $searching = '', $search_workgroup = '', $search_eventType = '', $search_eventSubType = '', $search_status = '', $responsible_role_id, $workflow_template_id;
     public $EventSubType = [], $show = false, $in_tray, $nilai, $muncul = false, $event_type_id, $view = false;

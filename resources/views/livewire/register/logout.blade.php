@@ -1,4 +1,7 @@
 <div>
+    <li class="hover:bg-base-200" wire:click="clickUser">
+       <span class="w-full">Setting</span>
+    </li>
     <li class="hover:bg-base-200" wire:click="clickLogout">
        <span class="w-full">Logout</span>
     </li>

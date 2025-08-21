@@ -16,6 +16,9 @@ class Logout extends Component
         // redirect ke halaman login
        $this->dispatch('logged-out');
     }
+    public function clickUser(){
+        return redirect()->route('update-user');
+    }
     public function render()
     {
         return view('livewire.register.logout');

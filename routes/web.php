@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Livewire\Admin\PersonInCharge\Pic;
 use App\Livewire\Admin\Site\Index as site;
 use App\Http\Controllers\ProfileController;
+use App\Http\Livewire\UserUpdate;
 use App\Livewire\Admin\ManageDivisionAccess;
 use App\Livewire\Admin\People\Index as people;
 use App\Livewire\Dashboard\HazardGrap\HrGrapf;
@@ -129,6 +130,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         Route::get('admin/parent/tta', Tta::class)->name('tta');
         Route::get('manhours/manhoursSite', manhoursSite::class)->name('manhoursSite');
         // people
+        Route::get('updateUser', UserUpdate::class)->name('update-user');
         Route::get('admin/people', people::class)->name('people');
         Route::get('admin/people/show/{id}', peopleShow::class)->name('peopleShow');
     });
