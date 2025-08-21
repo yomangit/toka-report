@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Livewire\Admin\PersonInCharge\Pic;
 use App\Livewire\Admin\Site\Index as site;
 use App\Http\Controllers\ProfileController;
-use App\Http\Livewire\Setting\User\UserUpdate;
+use App\Livewire\Setting\User\UserUpdate;
 use App\Livewire\Admin\ManageDivisionAccess;
 use App\Livewire\Admin\People\Index as people;
 use App\Livewire\Dashboard\HazardGrap\HrGrapf;
