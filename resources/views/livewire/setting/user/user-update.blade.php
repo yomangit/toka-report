@@ -23,16 +23,23 @@
         <div x-data="{ show: false }" class="relative">
             <label class="block text-sm font-medium text-gray-700">Password (optional)</label>
 
-            <input :type="show ? 'text' : 'password'" wire:model.live="password" class="block w-full input input-sm">
+            <input :type="show ? 'text' : 'password'" wire:model.live="password" class="block w-full pr-10 input input-sm"> <!-- kasih padding kanan -->
 
-            <!-- Tombol toggle -->
-            <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 flex items-center pt-2 text-sm leading-5 btn btn-sm btn-ghost">
-                <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <!-- Tombol toggle di dalam input -->
+            <button type="button" @click="show = !show" class="absolute text-gray-500 -translate-y-1/2 right-3 top-1/2">
+                <!-- Icon "eye" -->
+                <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 
+                     2.943 9.542 7-1.274 4.057-5.065 
+                     7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
-                <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.956 9.956 0 012.815-4.427M9.88 9.88a3 3 0 104.24 4.24" />
+                <!-- Icon "eye-off" -->
+                <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 
+                     19c-4.477 0-8.268-2.943-9.542-7a9.956 
+                     9.956 0 012.815-4.427M9.88 9.88a3 3 0 
+                     104.24 4.24" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18" />
                 </svg>
             </button>
@@ -41,6 +48,7 @@
             <span class="text-xs text-red-500">{{ $message }}</span>
             @enderror
         </div>
+
 
 
         <div>
