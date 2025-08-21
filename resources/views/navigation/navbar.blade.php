@@ -22,9 +22,7 @@
                 </p>
             </div>
             <ul tabindex="0" class="dropdown-content menu-xs menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                <li>
-                   <livewire:register.logout />
-                </li>
+                 <livewire:register.logout />
             </ul>
         </div>
         @else
