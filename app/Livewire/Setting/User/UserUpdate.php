@@ -33,10 +33,11 @@ class UserUpdate extends Component
 
     public function update()    
     {
+        $this->department_name = Department::where('id',$this->department_id)->first()->department_name;
         $this->validate();
 
         $this->user->update([
-            'name'          => $this->name,
+            'username'          => $this->name,
             'department' => $this->department_id,
             'department_name' => $this->department_name,
             'password'      => $this->password ? Hash::make($this->password) : $this->user->password,
@@ -46,9 +47,7 @@ class UserUpdate extends Component
 
         session()->flash('success', 'User updated successfully.');
     }
-    public function updateDepartment_id(){
-        $this->department_name = Department::whereID($this->department_id)->first()->department_name;
-    }
+    
 
     public function render()
     {
