@@ -1,5 +1,5 @@
 <div>
-    <li wire:click="clickLogout">
+    <li class="hover:bg-base-200" wire:click="clickLogout">
         Logout
     </li>
 </div>
