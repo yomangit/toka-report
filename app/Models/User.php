@@ -139,7 +139,11 @@ class User extends Authenticatable implements LdapAuthenticatable
     {
         return $this->belongsToMany(ResponsibleRole::class, 'event_user_securities');
     }
-
+    public function moderatorAkases()
+    {
+        return $this->belongsToMany(ResponsibleRole::class, 'event_user_securities')
+            ->withPivot('responsible_role_id', 'user_id');
+    }
     public function TypeEventReport()
     {
         return $this->belongsToMany(TypeEventReport::class, 'event_user_securities');

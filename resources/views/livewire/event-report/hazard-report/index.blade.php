@@ -99,7 +99,8 @@
                                 $item->report_by == auth()->id() ||
                                 $item->report_to == auth()->id() ||
                                 $item->assign_to == auth()->id() ||
-                                $item->also_assign_to == auth()->id()
+                                $item->also_assign_to == auth()->id()||
+                                 auth()->user()->moderatorAkases->contains('pivot.responsible_role_id', 1)
                             )
                             <x-icon-btn-detail href="{{ route('hazardReportDetail', ['id' => $item->id]) }}" data-tip="Details" />
                             <x-icon-btn-delete data-tip="delete" wire:click='delete({{ $item->id }})' wire:confirm.prompt="Are you sure delete {{ $item->reference }}?\n\nType DELETE to confirm|DELETE" />
@@ -108,6 +109,8 @@
                     </td>
                 </tr>
                 @empty
+
+
                 <tr wire:loading.class='hidden'>
                     <th colspan="9" class="text-xl text-center font-signika">
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-yellow-500">
