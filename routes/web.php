@@ -1,14 +1,16 @@
 <?php
 
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Spatie\Csp\AddCspHeaders;
+use App\Models\OnesignalPlayer;
 use App\Livewire\Manhours\WebAccess;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Livewire\Setting\User\UserUpdate;
 use App\Livewire\Admin\PersonInCharge\Pic;
 use App\Livewire\Admin\Site\Index as site;
 use App\Http\Controllers\ProfileController;
-use App\Livewire\Setting\User\UserUpdate;
 use App\Livewire\Admin\ManageDivisionAccess;
 use App\Livewire\Admin\People\Index as people;
 use App\Livewire\Dashboard\HazardGrap\HrGrapf;
@@ -16,12 +18,12 @@ use App\Livewire\Dashboard\Index  as dashoard;
 use App\Livewire\Admin\Company\Index as company;
 use App\Livewire\Admin\Section\Index as section;
 use App\Livewire\Admin\Division\Inde as division;
+
 use App\Livewire\Admin\People\Show as peopleShow;
+
 use App\Livewire\Admin\DeptByBU\Index as DeptByBU;
 use App\Livewire\Admin\JobClass\Index as JobClass;
-
 use App\Livewire\Admin\Location\Index as Location;
-
 use App\Livewire\Admin\DeptGroup\Index as deptGroup;
 use App\Livewire\Admin\Workgroup\Index as workgroup;
 use App\Livewire\Manhours\Index as manhoursRegister;
@@ -56,12 +58,10 @@ use App\Livewire\EventReport\HazardReport\Detail as hazardReportDetail;
 use App\Livewire\Admin\TableRiskAssessment\Index as TableRiskAssessment;
 use App\Livewire\EventReport\IncidentReport\Detail as incidentReportDetail;
 use App\Livewire\Admin\WorkflowAdministration\Index as workflowAdministration;
+
 use App\Livewire\EventReport\HazardReport\CreateAndUpdate as hazardReportform;
 use App\Livewire\EventReport\HazardReportGuest\Create as HazardReportGuestCreate;
 use App\Livewire\EventReport\IncidentReport\CreateAndUpdate as CreateAndUpdateIncidentReport;
-
-use Illuminate\Http\Request;
-use App\Models\OnesignalPlayer;
 // $newReference =  Str::random(9);
 // $reference_pto = 'OHS-PTO-' . $newReference;
 

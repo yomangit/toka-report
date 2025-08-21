@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire\Setting\User;
 
 use App\Models\Department;
 use App\Models\User;
@@ -58,3 +58,4 @@ class UserUpdate extends Component
         ])->extends('base.index', ['header' => 'User', 'title' => 'User'])->section('content');
     }
 }
+
