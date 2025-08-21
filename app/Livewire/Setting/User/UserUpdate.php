@@ -4,7 +4,6 @@ namespace App\Livewire\Setting\User;
 
 use App\Models\Department;
 use App\Models\User;
-
 use Livewire\Component;
 use Illuminate\Support\Facades\Hash;
 

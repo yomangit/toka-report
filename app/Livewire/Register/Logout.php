@@ -17,7 +17,7 @@ class Logout extends Component
        $this->dispatch('logged-out');
     }
     public function clickUser(){
-        return redirect()->route('update-user');
+        return redirect()->route('updateUser');
     }
     public function render()
     {

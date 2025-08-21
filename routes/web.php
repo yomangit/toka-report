@@ -7,7 +7,6 @@ use App\Models\OnesignalPlayer;
 use App\Livewire\Manhours\WebAccess;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use App\Livewire\Setting\User\UserUpdate;
 use App\Livewire\Admin\PersonInCharge\Pic;
 use App\Livewire\Admin\Site\Index as site;
 use App\Http\Controllers\ProfileController;
@@ -62,6 +61,8 @@ use App\Livewire\Admin\WorkflowAdministration\Index as workflowAdministration;
 use App\Livewire\EventReport\HazardReport\CreateAndUpdate as hazardReportform;
 use App\Livewire\EventReport\HazardReportGuest\Create as HazardReportGuestCreate;
 use App\Livewire\EventReport\IncidentReport\CreateAndUpdate as CreateAndUpdateIncidentReport;
+use App\Livewire\Setting\User\UserUpdate;
+
 // $newReference =  Str::random(9);
 // $reference_pto = 'OHS-PTO-' . $newReference;
 
@@ -130,7 +131,8 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         Route::get('admin/parent/tta', Tta::class)->name('tta');
         Route::get('manhours/manhoursSite', manhoursSite::class)->name('manhoursSite');
         // people
-        Route::get('updateUser', UserUpdate::class)->name('update-user');
+        // Route::get('updateUser', UserUpdate::class)->name('update-user');
+        Route::get('updateUser',UserUpdate::class)->name('updateUser');
         Route::get('admin/people', people::class)->name('people');
         Route::get('admin/people/show/{id}', peopleShow::class)->name('peopleShow');
     });
