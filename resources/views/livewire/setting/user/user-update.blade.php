@@ -3,14 +3,14 @@
         <!-- Nama -->
         <div>
             <label class="block text-sm font-medium text-gray-700">Name</label>
-            <input type="text" wire:model.live="name" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm">
+            <input type="text" wire:model.live="name" class="input input-sm ">
             @error('name') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
         </div>
 
         <!-- Departemen -->
         <div>
             <label class="block text-sm font-medium text-gray-700">Department</label>
-            <select wire:model.live="department_id" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm">
+            <select wire:model.live="department_id" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm select select-sm">
                 <option value="">-- Select Department --</option>
                 @foreach ($departments as $dept)
                 <option value="{{ $dept->id }}">{{ $dept->department_name }}</option>
@@ -23,7 +23,7 @@
         <div x-data="{ show: false }" class="relative">
             <label class="block text-sm font-medium text-gray-700">Password (optional)</label>
 
-            <input :type="show ? 'text' : 'password'" wire:model.live="password" class="block w-full pr-10 mt-1 border-gray-300 rounded-md shadow-sm">
+            <input :type="show ? 'text' : 'password'" wire:model.live="password" class="block input input-sm ">
 
             <!-- Tombol toggle -->
             <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
