@@ -14,7 +14,7 @@ class Logout extends Component
         session()->regenerateToken();
 
         // redirect ke halaman login
-       return redirect()->route('login');
+       $this->dispatch('logged-out');
     }
     public function render()
     {
