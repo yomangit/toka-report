@@ -14,7 +14,7 @@ class Logout extends Component
         session()->regenerateToken();
 
         // redirect ke halaman login
-        return $this->redirectRoute('login', navigate: true);
+       return redirect()->route('login');
     }
     public function render()
     {
