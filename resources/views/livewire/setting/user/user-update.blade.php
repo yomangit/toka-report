@@ -26,7 +26,7 @@
             <input :type="show ? 'text' : 'password'" wire:model.live="password" class="block w-full input input-sm">
 
             <!-- Tombol toggle -->
-            <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
+            <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 flex items-center pt-2 pr-3 text-sm leading-5">
                 <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
