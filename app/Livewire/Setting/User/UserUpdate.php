@@ -27,7 +27,7 @@ class UserUpdate extends Component
     public function mount(User $user)
     {
         $this->user = $user;
-        $this->name = $user->name;
+        $this->name = $user->username;
         $this->department_id = $user->department_id;
     }
 
