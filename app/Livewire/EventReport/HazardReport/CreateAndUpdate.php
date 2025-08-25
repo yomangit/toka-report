@@ -369,7 +369,7 @@ class CreateAndUpdate extends Component
             // Generate reference number
             $count = HazardReport::count() + 1;
             $refNumber = str_pad($count, 4, '0', STR_PAD_LEFT);
-            $this->reference = "LB/{$refNumber}";
+            $this->reference = "LB-{$refNumber}";
         }
         // Validasi input
         $this->validate();
