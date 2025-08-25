@@ -2,6 +2,7 @@
 
 namespace App\Livewire\EventReport\HazardReport;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\StatusEvent;
 use App\Models\ActionHazard;
@@ -9,6 +10,7 @@ use App\Models\EventKeyword;
 use App\Models\Eventsubtype;
 use App\Models\HazardReport;
 use Livewire\Attributes\Url;
+use Livewire\WithPagination;
 use App\Models\route_request;
 use App\Models\choseEventType;
 use App\Models\TypeEventReport;
@@ -18,7 +20,6 @@ use App\Models\HazardDocumentation;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
-use Livewire\WithPagination;
 
 class Index extends Component
 {
@@ -53,19 +54,20 @@ class Index extends Component
         if (Auth::user()->role_user_permit_id == 1) {
             $this->view = true;
         }
+        $today = Carbon::now()->format('Y-m-d : H:i');
         if ($this->rangeDate) {
 
             $Hazard = HazardReport::with([
                 'WorkflowDetails',
                 'subEventType',
                 'eventType'
-            ])->findSubmitter(trim($this->nilai))->searchStatus(trim($this->search_status))->searchEventType(trim($this->search_eventType))->searchEventSubType(trim($this->search_eventSubType))->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->search(trim($this->searching))->orderBy('created_at', 'DESC')->paginate(30);
+            ])->findSubmitter(trim($this->nilai))->searchStatus(trim($this->search_status))->searchEventType(trim($this->search_eventType))->searchEventSubType(trim($this->search_eventSubType))->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->search(trim($this->searching))->orderByRaw('ABS(DATEDIFF(date, ?)) ASC', [$today])->paginate(30);
         } else {
             $Hazard = HazardReport::with([
                 'WorkflowDetails',
                 'subEventType',
                 'eventType'
-            ])->findSubmitter(trim($this->nilai))->searchStatus(trim($this->search_status))->searchEventType(trim($this->search_eventType))->searchEventSubType(trim($this->search_eventSubType))->search(trim($this->searching))->orderBy('created_at', 'DESC')->paginate(30);
+            ])->findSubmitter(trim($this->nilai))->searchStatus(trim($this->search_status))->searchEventType(trim($this->search_eventType))->searchEventSubType(trim($this->search_eventSubType))->search(trim($this->searching))->orderByRaw('ABS(DATEDIFF(date, ?)) ASC', [$today])->paginate(30);
         }
 
         if (choseEventType::where('route_name', 'LIKE', '%' . '/eventReport/hazardReport' . '%')->exists()) {
