@@ -78,7 +78,7 @@
                     <th>{{ $HazardReport->firstItem() + $index }}</th>
                     <td>{{ \DateTime::createFromFormat('Y-m-d : H:i', $item->date)?->format('d-m-Y') ?? '-' }}</td>
                     <td>{{ $item->reference }}</td>
-                    <td>{{ $item->description ?? '-' }}</td>
+                   <td>{{ strip_tags($item->description) ?? '-' }}</td>
                     <td>{{ $item->subEventType?->event_sub_type_name ?? '-' }}</td>
                     <td>{{ $item->workgroup_name ?? '-' }}</td>
                     <td>
