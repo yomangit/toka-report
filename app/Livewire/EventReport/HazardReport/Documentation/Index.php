@@ -41,7 +41,7 @@ class Index extends Component
     {
         $files = HazardDocumentation::whereId($id);
         $files->first()->name_doc;
-        unlink(storage_path('app/public/documents/hazard/' . $files->first()->name_doc));
+        // unlink(storage_path('app/public/documents/hazard/' . $files->first()->name_doc));
         $this->dispatch(
             'alert',
             [
