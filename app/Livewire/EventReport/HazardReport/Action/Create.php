@@ -88,7 +88,7 @@ class Create extends Component
             ]
         );
         HazardReportLog::create([
-            'hazard_report_id' => $this->data_id,
+            'hazard_report_id' => $this->hazard_id,
             'user_id' => auth()->user()->id,
             'action' => 'updated action hazard',
             'description' => "memperbaharui data hazard",
