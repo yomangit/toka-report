@@ -40,7 +40,7 @@
                 <td> {{ $hr->eventLocation->location_name }}/ {{ $hr->location_name }}</td>
                 <td>{!! $hr->description? "$hr->description":'-' !!}</td>
                 <td>{!! $hr->immediate_corrective_action? "$hr->immediate_corrective_action":'-' !!}</td>
-                <td>{!! $hr->kondisi_tidak_aman? "$hr->kondisiTidakAman->name ":"$hr->Tindakantidakaman->name" !!}</td>
+                <td>{{ $hr->kondisi_tidak_aman ? optional($hr->kondisiTidakAman)->name : optional($hr->tindakanTidakAman)->name }}</td>
                 <td>
                     @if ($hr->WorkflowDetails->Status->status_name ==='Closed')
                     Closed
