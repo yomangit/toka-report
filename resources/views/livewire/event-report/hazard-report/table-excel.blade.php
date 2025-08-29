@@ -49,7 +49,6 @@
                 {{-- isi dari table action --}}
                 <td>
                     @if($hr->actions->count())
-                   
                         @foreach($hr->actions as $action)
                         <td>
                             Follow Up: {{ $action->followup_action ?? '-' }} <br>
@@ -59,7 +58,6 @@
                             Completion: {{ $action->completion_date ?? '-' }}
                         </td>
                         @endforeach
-                    </ul>
                     @else
                     -
                     @endif
