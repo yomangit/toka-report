@@ -20,15 +20,22 @@ class Action extends Component
     public $hiddenResponsibility = 'block';
     public $modal = 'modal';
     public $divider, $action_id, $orginal_due_date, $current_step, $token;
-
-    #[Validate]
     public $hazard_id, $responsible_role_id, $reference;
-    #[Validate]
     public $responsibility;
     public $responsibility_name;
-    #[Validate]
     public $followup_action;
     public $actionee_comment, $action_condition, $due_date, $completion_date;
+    public function rules()
+    {
+        return [
+            'responsibility' =>     ['required'],
+            'followup_action'     => ['required'],
+            'actionee_comment'    => ['nullable'],
+            'action_condition'    => ['nullable'],
+            'due_date'            => ['nullable'],
+            'completion_date'     => ['nullable'],
+        ];
+    }
      protected $messages = [
         'responsibility.required'     => 'penanggung jawab wajib diisi.',
         'followup_action.required'     => 'tindak lanjut temuan wajib diisi.',
@@ -76,24 +83,9 @@ class Action extends Component
         ]);
     }
 
-    public function rules()
-    {
-        return [
-            'responsibility' =>     ['required'],
-            'followup_action'     => ['required'],
-            'actionee_comment'    => ['nullable'],
-            'action_condition'    => ['nullable'],
-            'due_date'            => ['nullable'],
-            'completion_date'     => ['nullable'],
-        ];
-    }
+    
 
-    public function messages()
-    {
-        return [
-            'followup_action.required' => 'Follow Up Action is required',
-        ];
-    }
+    
 
     public function store()
     {
