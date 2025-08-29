@@ -3,18 +3,21 @@
         <!-- head -->
         <thead>
             <tr class="text-center">
-                <th>Date</th>
+                <th>Tanggal</th>
                 <th>Reference</th>
-                <th>Event Type</th>
-                <th>Event Sub Type</th>
-                <th>{{ __('report_by') }}</th>
-                <th>{{ __('Divisi yang melapor') }}</th>
-                <th>{{ __('Perusahaan terkait') }}</th>
-                <th class="flex-col">
-                    <p>Action</p>
-                    <p>Total/Open</p>
-                </th>
+                <th>Tipe Bahaya</th>
+                <th>Jenis Bahaya</th>
+                <th>Dilaporkan Oleh</th>
+                <th>Divisi yang melapor</th>
+                <th>Divisi Penanggung Jawab</th>
+                <th>Penanggung Jawab Area</th>
+                <th>Lokasi / Lokasi Spesifik</th>
+                <th>Rincian Bahaya</th>
+                <th>Tindakan Perbaikan Langsung</th>
+                <th>KTA/TTA</th>
+                <th>Perbaikan Tingkat Lanjut</th>
                 <th>Status</th>
+                <th>Closed By</th>
                 <th>{{ __('kondisi tidak aman')  }}</th>
                 <th>{{ __('closed by') }}</th>
                 <th>{{ __('Hazard Details') }}</th>
@@ -33,7 +36,11 @@
                 <td> {{ $hr->report_byName }}</td>
                 <td> {{ $hr->reportBy->department_name }}</td>
                 <td> {{ $hr->workgroup_name }}</td>
-                <td>{{ $ActionHazard->where('hazard_id', $hr->id)->count('due_date') }}/{{ $ActionHazard->where('hazard_id', $hr->id)->WhereNull('completion_date')->count('completion_date') }}</td>
+                <td> {{ $hr->report_toName }}</td>
+                <td> {{ $hr->eventLocation->location_name }}/ {{ $hr->location_name }}</td>
+                <td>{!! $hr->description? "$hr->description":'-' !!}</td>
+                <td>{!! $hr->immediate_corrective_action? "$hr->immediate_corrective_action":'-' !!}</td>
+                <td>{!! $hr->kondisi_tidak_aman? "$hr->kondisiTidakAman->name ":"$hr->Tindakantidakaman->name" !!}</td>
                 <td>
                     @if ($hr->WorkflowDetails->Status->status_name ==='Closed')
                     Closed
@@ -43,10 +50,7 @@
                     Open
                     @endif
                 </td>
-                <td>{{ ($hr->kondisi_tidak_aman==1)? "ya":'tidak' }}</td>
                 <td>{{ $hr->closed_by? "$hr->closed_by":'-' }}</td>
-                <td>{!! $hr->description? "$hr->description":'-' !!}</td>
-                <td>{!! $hr->immediate_corrective_action? "$hr->immediate_corrective_action":'-' !!}</td>
             </tr>
             @endforeach
         </tbody>

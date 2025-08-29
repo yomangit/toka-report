@@ -58,7 +58,7 @@ class Create extends Component
     public function rules()
     {
         return [
-            'responsibility_name' => ['nullable'],
+            'responsibility_name' => ['required'],
             'followup_action' => ['required'],
             'actionee_comment' => ['nullable'],
             'action_condition' => ['nullable'],
