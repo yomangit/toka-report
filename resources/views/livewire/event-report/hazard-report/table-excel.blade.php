@@ -3,11 +3,11 @@
         <!-- head -->
         <thead>
             <tr class="text-center">
-                <th>Tanggal</th>
                 <th>Reference</th>
+                <th>Tanggal</th>
+                <th>Dilaporkan Oleh</th>
                 <th>Tipe Bahaya</th>
                 <th>Jenis Bahaya</th>
-                <th>Dilaporkan Oleh</th>
                 <th>Divisi yang melapor</th>
                 <th>Divisi Penanggung Jawab</th>
                 <th>Penanggung Jawab Area</th>
@@ -16,6 +16,7 @@
                 <th>Tindakan Perbaikan Langsung</th>
                 <th>KTA/TTA</th>
                 <th>Perbaikkan Tingkat Lanjut</th>
+                <th>Total Action</th>
                 <th>Status</th>
                 <th>Closed By</th>
 
@@ -26,11 +27,11 @@
             @foreach ($HazardReport as $no => $hr)
             <tr class="text-center">
 
-                <td>{{ DateTime::createFromFormat('Y-m-d : H:i', $hr->date)->format('d-m-Y') }}</td>
                 <td>{{ $hr->reference }}</td>
+                <td>{{ DateTime::createFromFormat('Y-m-d : H:i', $hr->date)->format('d-m-Y') }}</td>
+                <td> {{ $hr->report_byName }}</td>
                 <td>{{$hr->eventType->type_eventreport_name}}</td>
                 <td>{{ $hr->subEventType->event_sub_type_name }}</td>
-                <td> {{ $hr->report_byName }}</td>
                 <td> {{ $hr->reportBy->department_name }}</td>
                 <td> {{ $hr->workgroup_name }}</td>
                 <td> {{ $hr->report_toName }}</td>
@@ -60,6 +61,10 @@
                     -
                     @endif
 
+                </td>
+                <td>
+                    {{ $hr->actions->->count('due_date') }} / 
+                        {{ $hr->actions->->whereNull('completion_date')->count('completion_date') }}
                 </td>
                 <td>
                     @if ($hr->WorkflowDetails->Status->status_name ==='Closed')
