@@ -46,7 +46,7 @@
                             </div>
                         </div>
                     </div>
-                    <x-label-error :messages="$errors->get('responsibility_name')" />
+                    <x-label-error :messages="$errors->get('responsibility')" />
                 </div>
                
                 <div class="w-full max-w-xs sm:max-w-sm xl:max-w-xl form-control">

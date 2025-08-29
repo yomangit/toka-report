@@ -23,12 +23,19 @@ class Action extends Component
 
     #[Validate]
     public $hazard_id, $responsible_role_id, $reference;
-    public $responsibility, $responsibility_name;
-    public $followup_action, $actionee_comment, $action_condition, $due_date, $completion_date;
+    #[Validate]
+    public $responsibility;
+    public $responsibility_name;
+    #[Validate]
+    public $followup_action;
+    public $actionee_comment, $action_condition, $due_date, $completion_date;
+     protected $messages = [
+        'responsibility.required'     => 'penanggung jawab wajib diisi.',
+        'followup_action.required'     => 'tindak lanjut temuan wajib diisi.',
+     ];
     public function mount($token)
     {
         $this->token = $token;
-
     }
     #[On('modalActionHazardNew')]
     public function modalActionHazardNew()
@@ -47,13 +54,14 @@ class Action extends Component
         $this->responsibility = $id;
         $this->responsibility_name = $user?->lookup_name ?? '';
         $this->hiddenResponsibility = 'hidden';
+        $this->validateOnly('responsibility');
     }
 
     public function openModal()
     {
         $this->modal = ' modal-open';
     }
-     #[On('closeAll')]
+    #[On('closeAll')]
     public function closeModal()
     {
         $this->reset('followup_action', 'actionee_comment', 'action_condition', 'due_date', 'completion_date', 'modal');
@@ -71,7 +79,7 @@ class Action extends Component
     public function rules()
     {
         return [
-            'responsibility_name' => ['nullable'],
+            'responsibility' =>     ['required'],
             'followup_action'     => ['required'],
             'actionee_comment'    => ['nullable'],
             'action_condition'    => ['nullable'],
