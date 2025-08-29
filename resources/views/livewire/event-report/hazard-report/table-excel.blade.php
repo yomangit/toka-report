@@ -52,7 +52,7 @@
                     <ul class="ml-4 text-left list-disc">
                         @foreach($hr->actions as $action)
                         <li>
-                            Ref: {{ $action->reference ?? '-' }} <br>
+                            Ref: {{ $action->Hazard->reference ?? '-' }} <br>
                             Kondisi: {{ $action->action_condition ?? '-' }} <br>
                             Tanggung Jawab: {{ $action->responsibility ?? '-' }} <br>
                             Due: {{ $action->due_date ?? '-' }} <br>
