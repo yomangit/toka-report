@@ -15,7 +15,7 @@
                 <th>Rincian Bahaya</th>
                 <th>Tindakan Perbaikan Langsung</th>
                 <th>KTA/TTA</th>
-                <th>table Action</th>
+                <th>Perbaikkan Tingkat Lanjut</th>
                 <th>Status</th>
                 <th>Closed By</th>
 
@@ -46,16 +46,6 @@
                     -
                     @endif
                 </td>
-
-                <td>
-                    @if ($hr->WorkflowDetails->Status->status_name ==='Closed')
-                    Closed
-                    @elseif($hr->WorkflowDetails->Status->status_name ==='Cancelled')
-                    Cancelled
-                    @else
-                    Open
-                    @endif
-                </td>
                 {{-- isi dari table action --}}
                 <td>
                     @if($hr->actions->count())
@@ -72,6 +62,15 @@
                     </ul>
                     @else
                     -
+                    @endif
+                </td>
+                <td>
+                    @if ($hr->WorkflowDetails->Status->status_name ==='Closed')
+                    Closed
+                    @elseif($hr->WorkflowDetails->Status->status_name ==='Cancelled')
+                    Cancelled
+                    @else
+                    Open
                     @endif
                 </td>
                 <td>{{ $hr->closed_by? "$hr->closed_by":'-' }}</td>
