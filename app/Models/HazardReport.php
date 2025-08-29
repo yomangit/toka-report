@@ -52,6 +52,10 @@ class HazardReport extends Model
         'show_immidiate',
         'submitter'
     ];
+    public function actions()
+{
+    return $this->hasMany(ActionHazard::class, 'hazard_id');
+}
     public function riskConsequence()
     {
         return $this->belongsTo(RiskConsequence::class);

@@ -15,13 +15,10 @@
                 <th>Rincian Bahaya</th>
                 <th>Tindakan Perbaikan Langsung</th>
                 <th>KTA/TTA</th>
-                <th>Perbaikan Tingkat Lanjut</th>
+                <th>table Action</th>
                 <th>Status</th>
                 <th>Closed By</th>
-                <th>{{ __('kondisi tidak aman')  }}</th>
-                <th>{{ __('closed by') }}</th>
-                <th>{{ __('Hazard Details') }}</th>
-                <th>{{ __('immediate corrective action') }}</th>
+
             </tr>
         </thead>
         <tbody>
@@ -57,6 +54,24 @@
                     Cancelled
                     @else
                     Open
+                    @endif
+                </td>
+                {{-- isi dari table action --}}
+                <td>
+                    @if($hr->actions->count())
+                    <ul class="ml-4 text-left list-disc">
+                        @foreach($hr->actions as $action)
+                        <li>
+                            Ref: {{ $action->reference ?? '-' }} <br>
+                            Kondisi: {{ $action->action_condition ?? '-' }} <br>
+                            Tanggung Jawab: {{ $action->responsibility ?? '-' }} <br>
+                            Due: {{ $action->due_date ?? '-' }} <br>
+                            Completion: {{ $action->completion_date ?? '-' }}
+                        </li>
+                        @endforeach
+                    </ul>
+                    @else
+                    -
                     @endif
                 </td>
                 <td>{{ $hr->closed_by? "$hr->closed_by":'-' }}</td>

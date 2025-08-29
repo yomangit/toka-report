@@ -20,7 +20,7 @@ class ActionHazard extends Model
     ];
     public function Hazard()
     {
-        return $this->belongsTo(HazardReport::class);
+        return $this->belongsTo(HazardReport::class,'hazard_id');
     }
     public function users()
     {
