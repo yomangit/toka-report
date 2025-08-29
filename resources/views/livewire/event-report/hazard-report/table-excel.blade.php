@@ -49,18 +49,17 @@
                 {{-- isi dari table action --}}
                 <td>
                     @if($hr->actions->count())
-                        @foreach($hr->actions as $action)
-                       
-                            Follow Up: {{ $action->followup_action ?? '-' }} <br>
-                            Kondisi: {{ $action->action_condition ?? '-' }} <br>
-                            Tanggung Jawab: {{ $action->users->lookup_name ?? '-' }} <br>
-                            Due: {{ $action->due_date ?? '-' }} <br>
-                            Completion: {{ $action->completion_date ?? '-' }}
-                        
-                        @endforeach
+                    @foreach($hr->actions as $action)
+                    Follow Up: {{ $action->followup_action ?? '-' }}&#10;
+                    Kondisi: {{ $action->action_condition ?? '-' }}&#10;
+                    Tanggung Jawab: {{ $action->users->lookup_name ?? '-' }}&#10;
+                    Due: {{ $action->due_date ?? '-' }}&#10;
+                    Completion: {{ $action->completion_date ?? '-' }}&#10;&#10;
+                    @endforeach
                     @else
                     -
                     @endif
+
                 </td>
                 <td>
                     @if ($hr->WorkflowDetails->Status->status_name ==='Closed')
