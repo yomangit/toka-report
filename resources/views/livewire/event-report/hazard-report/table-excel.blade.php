@@ -49,15 +49,15 @@
                 {{-- isi dari table action --}}
                 <td>
                     @if($hr->actions->count())
-                    <ul class="ml-4 text-left list-disc">
+                   
                         @foreach($hr->actions as $action)
-                        <li>
+                        <td>
                             Follow Up: {{ $action->followup_action ?? '-' }} <br>
                             Kondisi: {{ $action->action_condition ?? '-' }} <br>
                             Tanggung Jawab: {{ $action->users->lookup_name ?? '-' }} <br>
                             Due: {{ $action->due_date ?? '-' }} <br>
                             Completion: {{ $action->completion_date ?? '-' }}
-                        </li>
+                        </td>
                         @endforeach
                     </ul>
                     @else
