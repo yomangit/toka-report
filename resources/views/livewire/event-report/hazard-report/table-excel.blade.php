@@ -52,9 +52,9 @@
                     <ul class="ml-4 text-left list-disc">
                         @foreach($hr->actions as $action)
                         <li>
-                            Ref: {{ $action->Hazard->reference ?? '-' }} <br>
+                            Follow Up: {{ $action->followup_action ?? '-' }} <br>
                             Kondisi: {{ $action->action_condition ?? '-' }} <br>
-                            Tanggung Jawab: {{ $action->responsibility ?? '-' }} <br>
+                            Tanggung Jawab: {{ $action->users->lookup_name ?? '-' }} <br>
                             Due: {{ $action->due_date ?? '-' }} <br>
                             Completion: {{ $action->completion_date ?? '-' }}
                         </li>
