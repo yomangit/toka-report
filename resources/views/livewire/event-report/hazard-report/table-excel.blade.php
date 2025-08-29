@@ -63,8 +63,8 @@
 
                 </td>
                 <td>
-                    {{ $ActionHazard->where('hazard_id', $item->id)->count('due_date') }} / 
-                        {{ $ActionHazard->where('hazard_id', $item->id)->whereNull('completion_date')->count('completion_date') }}
+                    {{ $ActionHazard->where('hazard_id', $hr->id)->count('due_date') }} / 
+                        {{ $ActionHazard->where('hazard_id', $hr->id)->whereNull('completion_date')->count('completion_date') }}
                 </td>
                 <td>
                     @if ($hr->WorkflowDetails->Status->status_name ==='Closed')
