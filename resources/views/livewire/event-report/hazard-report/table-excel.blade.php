@@ -50,13 +50,13 @@
                 <td>
                     @if($hr->actions->count())
                         @foreach($hr->actions as $action)
-                        <td>
+                       
                             Follow Up: {{ $action->followup_action ?? '-' }} <br>
                             Kondisi: {{ $action->action_condition ?? '-' }} <br>
                             Tanggung Jawab: {{ $action->users->lookup_name ?? '-' }} <br>
                             Due: {{ $action->due_date ?? '-' }} <br>
                             Completion: {{ $action->completion_date ?? '-' }}
-                        </td>
+                        
                         @endforeach
                     @else
                     -
