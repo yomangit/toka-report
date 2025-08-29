@@ -16,7 +16,7 @@
                 <th>Tindakan Perbaikan Langsung</th>
                 <th>KTA/TTA</th>
                 <th>Perbaikkan Tingkat Lanjut</th>
-                <th>Total Action</th>
+                <th>Action [Total/Open] </th>
                 <th>Status</th>
                 <th>Closed By</th>
 
