@@ -105,7 +105,7 @@ class HazardReport extends Model
     {
         return $this->belongsTo(Kondisitidakaman::class, 'kondisitidakamen_id');
     }
-    public function Tindakantidakaman()
+	    public function Tindakantidakaman()
     {
         return $this->belongsTo(Tindakantidakaman::class, 'tindakantidakamen_id');
     }
@@ -154,16 +154,17 @@ class HazardReport extends Model
     }
     public function scopeFindSubmitter($q, $term)
     {
-        if ($term) {
-            $dept_name = User::where('id', $term)->first()->department_name;
-        }
+        // if ($term) {
+        //     $dept_name = User::where('id', $term)->first()->department_name;
+        // }
         $q->when(
             $term ?? false,
             fn($q, $term) => $q->where('submitter', $term)
+                ->orWhere('report_to', $term)->orWhere('report_by', $term)
                 ->orWhere('assign_to', $term)->orWhere('assign_to', $term)
-                ->orWhereHas('reportBy', function ($q) use ($dept_name) {
-                    $q->where('department_name', 'like', '%' . $dept_name . '%');
-                })
+                // ->orWhereHas('reportBy', function ($q) use ($dept_name) {
+                //     $q->where('department_name', 'like', '%' . $dept_name . '%');
+                // })
         );
     }
     public function scopeSearchEventSubType($q, $term)
