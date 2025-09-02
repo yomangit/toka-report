@@ -56,11 +56,11 @@
 
                         {{-- Description --}}
                         <x-label-req>{{ __('Description') }} </x-label-req>
-                        <x-text-area wire:model="description" type="text" placeholder="Description" />
+                        <x-text-area wire:model="description" type="text" :error="$errors->get('description')" placeholder="Description" />
 
                         {{-- Action --}}
                         <x-label-req>{{ __('Action') }} </x-label-req>
-                        <x-text-area wire:model="action" type="text" placeholder="Action" />
+                        <x-text-area wire:model="action" :error="$errors->get('action')" type="text" placeholder="Action" />
                     </fieldset>
 
                     <div class="flex justify-end gap-2 mt-4">
