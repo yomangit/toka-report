@@ -313,7 +313,7 @@
                                         <tr>
                                             <th colspan="2" class="p-1 text-center bg-gray-200 border border-black">Legend</th>
                                             @foreach ($RiskAssessments as $risk_assessment)
-                                            <th class="p-1 text-xs text-center rotate_text border border-black {{ $risk_assessment->colour }}">
+                                            <th class="p-4 text-xs text-center rotate_text border border-black {{ $risk_assessment->colour }}">
                                                 {{ $risk_assessment->risk_assessments_name }}
                                             </th>
                                             @endforeach
@@ -407,14 +407,7 @@
                         </div>
                     </div>
 
-                    {{-- <div role="tablist" class="mb-4 tabs tabs-lifted">
-                        <input type="radio" name="my_tabs_3" class="font-semibold tab z-1 font-signika text-sky-500" aria-label="Event Keyword" checked="checked" />
-                        <div role="tabpanel" class="p-6 tab-content bg-base-100 border-base-300 rounded-box">
-                            <div class="mx-4 my-2">
-                                <livewire:event-report.event-keyword.index :data="$data_id">
-                            </div>
-                        </div>
-                    </div> --}}
+                  
                     <div>
                         <div wire:ignore class="w-full form-control">
                             <x-label-no-req :value="__('moderator comment')" />
