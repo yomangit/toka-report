@@ -3,6 +3,8 @@
 namespace App\Livewire\Admin\TableRiskAssessment;
 
 use Livewire\Component;
+use App\Models\RiskAssessment;
+use App\Models\RiskAssessmentMatrix;
 use App\Models\RiskLikelihood;
 use App\Models\RiskMatrixCell;
 use App\Models\RiskConsequence;
@@ -30,7 +32,7 @@ class Grid extends Component
         $this->description = "Auto generated L $likelihoods_level × C $RiskConsequence_level";
         $this->action = $cell?->action;
         $this->dispatch('edit-cell', id: $cell?->id, likelihood: $likelihoodId, consequence: $consequenceId);
-       $this->showModal = true;
+        $this->showModal = true;
     }
     public function updateMatrix()
     {
@@ -49,6 +51,15 @@ class Grid extends Component
                 'action' => $this->action,
             ]
         );
+        $risk_assessment_id =  RiskAssessment::where('risk_assessments_name', 'like', '%' . $this->severity . '%')->first()->id;
+        RiskAssessmentMatrix::updateOrCreate(
+            [
+                'risk_matrix_cell_id' =>  $this->editingCellId,
+            ],
+            [
+                'risk_assessment_id' =>  $risk_assessment_id,
+            ]
+        );
         $this->dispatch(
             'alert',
             [
@@ -60,11 +71,11 @@ class Grid extends Component
                 'backgroundColor' => "linear-gradient(to right, #06b6d4, #22c55e)",
             ]
         );
-         $this->showModal = false;
+        $this->showModal = false;
     }
     public function close_modal()
     {
-         $this->showModal = false;
+        $this->showModal = false;
     }
     public function render()
     {
