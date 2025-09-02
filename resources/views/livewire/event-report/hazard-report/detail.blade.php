@@ -248,13 +248,13 @@
                             <div class="flex flex-wrap gap-4 mt-2">
                                 <!-- YES -->
                                 <label class="flex items-center space-x-1 transition-transform duration-200 ease-in-out transform hover:scale-105">
-                                    <input wire:click="$dispatch('modalActionHazardNew')" wire:model.live="tindakkan_selanjutnya" value="1" name="tingkat_lanjut" id="yes_lanjut" class="radio radio-sm radio-error peer/yes_lanjut" type="radio" />
+                                    <input wire:click="$dispatch('modalActionHazardNew')" wire:model.live="tindakkan_selanjutnya" value="1" name="tingkat_lanjut" id="yes_lanjut" class="radio radio-sm radio-error peer/yes_lanjut {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'btn-disabled bg-gray-300' : '' }}" type="radio" />
                                     <span class="text-xs font-semibold peer-checked/yes_lanjut:text-error">Yes</span>
                                 </label>
 
                                 <!-- NO -->
                                 <label class="flex items-center space-x-1 transition-transform duration-200 ease-in-out transform hover:scale-105">
-                                    <input wire:model.live="tindakkan_selanjutnya" value="0" name="tingkat_lanjut" id="no_lanjut" class="radio radio-sm radio-success peer/no_lanjut" type="radio" />
+                                    <input wire:model.live="tindakkan_selanjutnya" value="0" name="tingkat_lanjut" id="no_lanjut" class="radio radio-sm radio-success peer/no_lanjut {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'btn-disabled bg-gray-300' : '' }}" type="radio" />
                                     <span class="text-xs font-semibold peer-checked/no_lanjut:text-success">No</span>
                                 </label>
                             </div>
