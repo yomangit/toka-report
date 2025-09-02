@@ -32,6 +32,8 @@ use App\Models\WorkflowApplicable;
 use App\Notifications\toModerator;
 use App\Helpers\NotificationHelper;
 use App\Models\HazardDocumentation;
+use App\Models\RiskAssessmentMatrix;
+use App\Models\RiskMatrixCell;
 use App\Models\TableRiskAssessment;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -336,7 +338,9 @@ class Detail extends Component
     {
         $this->risk_consequence_id = $risk_consequence_id;
         $this->risk_likelihood_id = $risk_likelihood_id;
-        // $this->risk_assessment_id = $risk_assessment_id;
+        $id_table = RiskMatrixCell::where('likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->first()->id;
+        $risk_assessment_id = RiskAssessmentMatrix::whereId($id_table)->first()->risk_assessment_id;
+        $this->RiskAssessment =RiskAssessment::whereId($risk_assessment_id)->get();
     }
     // public function TableRiskFunction()
     // {

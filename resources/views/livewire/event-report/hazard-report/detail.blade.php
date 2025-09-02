@@ -355,21 +355,21 @@
                     <tr>
                         <th class="w-40 text-xs border-2 border-slate-400">Potential Risk Rating</th>
                         <td class="pl-2 text-xs border-2 border-slate-400">
-                            {{ $item->RiskAssessment->risk_assessments_name }}</td>
+                            {{ $item->risk_assessments_name }}</td>
                     </tr>
                     <tr>
                         <th class="w-40 text-xs border-2 border-slate-400">Notify</th>
                         <td class="pl-2 text-xs border-2 border-slate-400">
-                            {{ $item->RiskAssessment->reporting_obligation }}</td>
+                            {{ $item->reporting_obligation }}</td>
                     </tr>
                     <tr>
                         <th class="w-40 text-xs border-2 border-slate-400">Deadline</th>
-                        <td class="pl-2 text-xs border-2 border-slate-400">{{ $item->RiskAssessment->notes }}</td>
+                        <td class="pl-2 text-xs border-2 border-slate-400">{{ $item->notes }}</td>
                     </tr>
                     <tr>
                         <th class="w-40 text-xs border-2 border-slate-400">Coordinator</th>
                         <td class="pl-2 text-xs border-2 border-slate-400">
-                            {{ $item->RiskAssessment->coordinator }}
+                            {{ $item->coordinator }}
                         </td>
                     </tr>
                     @endforeach
