@@ -34,4 +34,15 @@ class TableRiskAssessment extends Model
     {
         return $this->belongsTo(RiskLikelihood::class);
     }
+
+     protected static function booted()
+    {
+        static::saving(function ($model) {
+            if (empty($model->score)) {
+                $likelihood = RiskLikelihood::find($model->likelihood_id)?->level ?? 0;
+                $consequence = RiskConsequence::find($model->risk_consequence_id)?->level ?? 0;
+                $model->score = $likelihood * $consequence;
+            }
+        });
+    }
 }
