@@ -51,6 +51,7 @@ use App\Livewire\Admin\TypeEventReport\Index as typeEventReport;
 use App\Livewire\Admin\TypeInvolvement\Index as typeInvolvement;
 use App\Livewire\EventReport\HazardReport\Index as hazardReport;
 use App\Livewire\Admin\EventUserSecurity\Index as eventUserSecurity;
+use App\Livewire\Admin\TableRiskAssessment\Grid;
 use App\Livewire\Admin\UserInputManhours\Index as userInputManhours;
 use App\Livewire\EventReport\IncidentReport\Index as IncidentReport;
 use App\Livewire\EventReport\HazardReport\Detail as hazardReportDetail;
@@ -112,6 +113,7 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
         Route::get('admin/parent/riskAssessment', RiskAssessment::class)->name('riskAssessment');
         Route::get('admin/parent/riskLikelihood', RiskLikelihood::class)->name('riskLikelihood');
         Route::get('admin/parent/tableRiskAssessment', TableRiskAssessment::class)->name('tableRiskAssessment');
+        Route::get('admin/parent/matrix', Grid::class)->name('matrix');
         Route::get('admin/parent/location', Location::class)->name('location');
         Route::get('admin/parent/event/eventCategory', EventCategory::class)->name('eventCategory');
         Route::get('admin/parent/event/typeEventReport', typeEventReport::class)->name('typeEventReport');
