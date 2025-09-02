@@ -318,7 +318,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($likelihoods as $l)
-                                        <tr class="w-32 text-xs text-center">
+                                        <tr class="text-xs text-center w-28">
 
                                             <td class="w-1 font-bold border-1">{{ $l->risk_likelihoods_name }}</td>
                                             @foreach ($consequences as $c)
