@@ -345,7 +345,7 @@
                                             @endphp
                                             <td class="border cursor-pointer w-4 {{ $color }}
                                     @if($risk_likelihood_id == $l->id && $risk_consequence_id == $c->id) border-2 border-stone-500 @endif" wire:click="riskId({{ $l->id }}, {{ $c->id }})">
-                                                <div class="text-[6px]">{{ Str::upper(substr($severity, 0, 1)) }}</div>
+                                                <div class="text-xs font-semibold">{{ Str::upper(substr($severity, 0, 1)) }}</div>
 
                                             </td>
 
