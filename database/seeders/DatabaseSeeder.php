@@ -19,15 +19,19 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         // DB::table('role_user_permits')->insert([
         //     'name_role_user' => 'Administrator ',
-           
+
         // ]);
-        DB::table('users')->insert([
-            'name' => 'Yoman',
-            'username' => 'yoman.denis',
-            'role_user_permit_id' => 1,
-            'email' => Str::random(10).'@example.com',
-            'email' => Str::random(10).'@example.com',
-            'password' => Hash::make('password'),
+        // DB::table('users')->insert([
+        //     'name' => 'Yoman',
+        //     'username' => 'yoman.denis',
+        //     'role_user_permit_id' => 1,
+        //     'email' => Str::random(10).'@example.com',
+        //     'email' => Str::random(10).'@example.com',
+        //     'password' => Hash::make('password'),
+        // ]);
+        $this->call([
+            RiskMatrixCellSeeder::class,
+
         ]);
     }
 }
