@@ -165,6 +165,17 @@
                         </div>
                         <x-label-error :messages="$errors->get('documentation')" />
                     </div>
+                    <div>
+                        @php
+                        $extension = pathinfo($documentation, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if(in_array(strtolower($extension), ['png', 'jpg', 'jpeg']))
+                        <img src="{{ asset('storage/documents/hzd/' . $documentation) }}" class="h-24 mt-1 border rounded">
+                        @else
+                        <span>File bukan gambar yang didukung</span>
+                        @endif
+                    </div>
                 </div>
                 <div>
                     <div wire:ignore class="w-full form-control">
@@ -304,56 +315,56 @@
                         </div>
                     </div>
                     <div class="flex-none w-72 md:w-80 ">
-                            {{-- Kolom Risk Matrix --}}
-                            <div class="flex-none overflow-x-auto ">
-                                <table class="table text-xs table-xs ">
-                                    <caption class="mb-2 text-sm font-bold caption-top">Table Initial Risk Assessment</caption>
-                                    <thead>
-                                        <tr>
-                                            <th colspan="2" class="text-center bg-gray-200 border border-black ">Legend</th>
-                                            @foreach ($RiskAssessments as $risk_assessment)
-                                            <th class="text-xs text-center border border-black rotate_text">
-                                                <div class=" {{ $risk_assessment->colour }}"> {{ $risk_assessment->risk_assessments_name }}</div>
-                                            </th>
-                                            @endforeach
-                                        </tr>
-                                        <tr class="text-center text-[9px]">
-                                            <th class="border-1">Likelihooc ↓ / Consequence →</th>
-                                            @foreach ($consequences as $c)
-                                            <th class="rotate_text border-1">{{ $c->risk_consequence_name }}</th>
-                                            @endforeach
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($likelihoods as $l)
-                                        <tr class="text-xs text-center w-28">
-
-                                            <td class="w-1 font-bold border-1">{{ $l->risk_likelihoods_name }}</td>
-                                            @foreach ($consequences as $c)
-                                            @php
-                                            $cell = App\Models\RiskMatrixCell::where('likelihood_id', $l->id)->where('risk_consequence_id', $c->id)->first() ?? null;
-                                            $score = $l->level * $c->level;
-                                            $severity = $cell?->severity ?? '';
-                                            $color = match($severity) {
-                                            'Low' => 'bg-emerald-500',
-                                            'Moderate' => 'bg-sky-500',
-                                            'High' => 'bg-orange-300',
-                                            'Extreme' => 'bg-rose-500',
-                                            default => 'bg-gray-100',
-                                            };
-                                            @endphp
-                                            <td class="border cursor-pointer w-4 {{ $color }}
-                                    @if($risk_likelihood_id == $l->id && $risk_consequence_id == $c->id) border-2 border-stone-500 @endif" wire:click="riskId({{ $l->id }}, {{ $c->id }})">
-                                                <div class="text-xs font-semibold">{{ Str::upper(substr($severity, 0, 1)) }}</div>
-
-                                            </td>
-
-                                            @endforeach
-                                        </tr>
+                        {{-- Kolom Risk Matrix --}}
+                        <div class="flex-none overflow-x-auto ">
+                            <table class="table text-xs table-xs ">
+                                <caption class="mb-2 text-sm font-bold caption-top">Table Initial Risk Assessment</caption>
+                                <thead>
+                                    <tr>
+                                        <th colspan="2" class="text-center bg-gray-200 border border-black ">Legend</th>
+                                        @foreach ($RiskAssessments as $risk_assessment)
+                                        <th class="text-xs text-center border border-black rotate_text">
+                                            <div class=" {{ $risk_assessment->colour }}"> {{ $risk_assessment->risk_assessments_name }}</div>
+                                        </th>
                                         @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                    </tr>
+                                    <tr class="text-center text-[9px]">
+                                        <th class="border-1">Likelihooc ↓ / Consequence →</th>
+                                        @foreach ($consequences as $c)
+                                        <th class="rotate_text border-1">{{ $c->risk_consequence_name }}</th>
+                                        @endforeach
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($likelihoods as $l)
+                                    <tr class="text-xs text-center w-28">
+
+                                        <td class="w-1 font-bold border-1">{{ $l->risk_likelihoods_name }}</td>
+                                        @foreach ($consequences as $c)
+                                        @php
+                                        $cell = App\Models\RiskMatrixCell::where('likelihood_id', $l->id)->where('risk_consequence_id', $c->id)->first() ?? null;
+                                        $score = $l->level * $c->level;
+                                        $severity = $cell?->severity ?? '';
+                                        $color = match($severity) {
+                                        'Low' => 'bg-emerald-500',
+                                        'Moderate' => 'bg-sky-500',
+                                        'High' => 'bg-orange-300',
+                                        'Extreme' => 'bg-rose-500',
+                                        default => 'bg-gray-100',
+                                        };
+                                        @endphp
+                                        <td class="border cursor-pointer w-4 {{ $color }}
+                                    @if($risk_likelihood_id == $l->id && $risk_consequence_id == $c->id) border-2 border-stone-500 @endif" wire:click="riskId({{ $l->id }}, {{ $c->id }})">
+                                            <div class="text-xs font-semibold">{{ Str::upper(substr($severity, 0, 1)) }}</div>
+
+                                        </td>
+
+                                        @endforeach
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 @if ($RiskAssessment !=null)
@@ -404,7 +415,7 @@
                         </div>
                     </div>
 
-                  
+
                     <div>
                         <div wire:ignore class="w-full form-control">
                             <x-label-no-req :value="__('moderator comment')" />
