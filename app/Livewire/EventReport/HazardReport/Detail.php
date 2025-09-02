@@ -217,7 +217,7 @@ class Detail extends Component
         } else {
             $this->divisi_search = Division::with(['DeptByBU.BusinesUnit.Company', 'DeptByBU.Department', 'Company', 'Section'])->searchDeptCom(trim($this->workgroup_name))->searchParent(trim($this->parent_Company))->searchBU(trim($this->business_unit))->searchDept(trim($this->dept))->searchComp(trim($this->select_divisi))->orderBy('dept_by_business_unit_id', 'asc')->get();
         }
-        $this->TableRiskFunction();
+        // $this->TableRiskFunction();
         $this->EventSubType = (isset($this->event_type_id)) ? $this->EventSubType = Eventsubtype::where('event_type_id', $this->event_type_id)->get() : [];
     }
     public function updatedKeyWord($value)
@@ -338,23 +338,23 @@ class Detail extends Component
         $this->risk_likelihood_id = $risk_likelihood_id;
         // $this->risk_assessment_id = $risk_assessment_id;
     }
-    public function TableRiskFunction()
-    {
-        $this->RiskAssessment = TableRiskAssessment::with(['RiskAssessment'])->where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->get();
+    // public function TableRiskFunction()
+    // {
+    //     $this->RiskAssessment = TableRiskAssessment::with(['RiskAssessment'])->where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->get();
 
-        if ($this->risk_consequence_id) {
-            $this->risk_consequence_doc = RiskConsequence::where('id',  $this->risk_consequence_id)->first()->description;
-        }
-        if ($this->risk_likelihood_id) {
-            $this->risk_likelihood_notes = RiskLikelihood::where('id', $this->risk_likelihood_id)->first()->notes;
-        }
-        if ($this->risk_consequence_id && $this->risk_likelihood_id) {
-            $RiskAssessments = TableRiskAssessment::where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->first()->risk_assessment_id;
+    //     if ($this->risk_consequence_id) {
+    //         $this->risk_consequence_doc = RiskConsequence::where('id',  $this->risk_consequence_id)->first()->description;
+    //     }
+    //     if ($this->risk_likelihood_id) {
+    //         $this->risk_likelihood_notes = RiskLikelihood::where('id', $this->risk_likelihood_id)->first()->notes;
+    //     }
+    //     if ($this->risk_consequence_id && $this->risk_likelihood_id) {
+    //         $RiskAssessments = TableRiskAssessment::where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->first()->risk_assessment_id;
 
-            $this->tablerisk_id = TableRiskAssessment::where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->where('risk_assessment_id', $RiskAssessments)->first()->id;
-        }
-        $this->TableRisk = TableRiskAssessment::with(['RiskAssessment', 'RiskConsequence', 'RiskLikelihood'])->get();
-    }
+    //         $this->tablerisk_id = TableRiskAssessment::where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->where('risk_assessment_id', $RiskAssessments)->first()->id;
+    //     }
+    //     $this->TableRisk = TableRiskAssessment::with(['RiskAssessment', 'RiskConsequence', 'RiskLikelihood'])->get();
+    // }
 
     public function download()
     {
