@@ -190,7 +190,7 @@ class Index extends Component
         HazardReport::whereId($this->data_id)->update($fields);
         HazardReportLog::create([
             'hazard_report_id' => $this->data_id,
-            'user_id' => auth()->id,
+            'user_id' => auth()->id(),
             'action' => 'updated status',
             'description' => "Status changed from $old to $newStatus",
             'old_values' => ['status' => $old],
