@@ -354,8 +354,8 @@
                                         default => 'bg-gray-100',
                                         };
                                         @endphp
-                                        <td class="border cursor-pointer w-4 {{ $color }}
-                                    @if($risk_likelihood_id == $l->id && $risk_consequence_id == $c->id) border-2 border-stone-500 @endif" wire:click="riskId({{ $l->id }}, {{ $c->id }})">
+                                        <td class="border cursor-pointer w-4 @if($currentStep === 'Closed' || $currentStep === 'Cancelled') bg-base-300 @else  {{ $color }} @endif
+                                    @if($risk_likelihood_id == $l->id && $risk_consequence_id == $c->id) border-2 border-stone-500 @endif"@if($currentStep === 'Closed' || $currentStep === 'Cancelled') @else wire:click="riskId({{ $l->id }}, {{ $c->id }})" @endif >
                                             <div class="text-xs font-semibold">{{ Str::upper(substr($severity, 0, 1)) }}</div>
 
                                         </td>
