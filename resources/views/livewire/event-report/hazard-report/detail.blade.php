@@ -107,7 +107,7 @@
                             <div tabindex="0" class="dropdown-content card card-compact  bg-base-300 text-primary-content z-[1] w-full  p-2 shadow {{ $hiddenReportTo }}">
                                 <div class="relative">
 
-                                    <div class="h-40 mb-2 pb-6 overflow-auto scroll-smooth focus:scroll-auto" wire:target='report_toName' wire:loading.class='hidden'>
+                                    <div class="h-40 pb-6 mb-2 overflow-auto scroll-smooth focus:scroll-auto" wire:target='report_toName' wire:loading.class='hidden'>
                                         @forelse ($Report_To as $report_to)
                                         <div wire:click="reportedTo({{ $report_to->users_id }})" class="flex flex-col border-b cursor-pointer hover:bg-primary border-base-200 ">
                                             <strong class="text-[10px] text-slate-800">{{ $report_to->users->lookup_name }}</strong>
@@ -120,7 +120,7 @@
                                     <div class="hidden pt-5 text-center" wire:target='report_toName' wire:loading.class.remove='hidden'>
                                         <x-loading-spinner />
                                     </div>
-                                    
+
                                     <div class="fixed bottom-0 left-0 right-0 px-2 mb-1 bg-base-300 opacity-95 ">
                                         <x-input-no-req wire:model.live='report_to_nolist' placeholder="{{ __('name_notList') }}" />
                                     </div>
@@ -305,48 +305,47 @@
                     </div>
                     <div class="flex-none md:w-72 ">
                         <div class="m-1 overflow-x-auto ">
-                            <table class="w-full text-xs border border-black table-auto bg-base-300 md:table-fixed">
-                                <caption class="mb-2 text-sm font-bold caption-top">Table Initial Risk Assessment</caption>
+                            {{-- Kolom Risk Matrix --}}
+                            <div class="flex-none overflow-x-auto ">
+                                <table class="table table-xs w-60">
+                                    <thead>
+                                        <tr class="text-center text-[9px]">
+                                            <th class="border-1">Likelihooc ↓ / Consequence →</th>
+                                            @foreach ($consequences as $c)
+                                            <th class="rotate_text border-1">{{ $c->name }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($likelihoods as $l)
+                                        <tr class="w-32 text-xs text-center">
 
-                                <thead>
-                                    <tr>
-                                        <th colspan="2" class="p-1 text-center bg-gray-200 border border-black">Legend</th>
-                                        @foreach ($RiskAssessments as $risk_assessment)
-                                        <th class="p-1 text-xs text-center rotate_text border border-black {{ $risk_assessment->colour }}">
-                                            {{ $risk_assessment->risk_assessments_name }}
-                                        </th>
+                                            <td class="w-1 font-bold  border-1">{{ $l->name }}</td>
+                                            @foreach ($consequences as $c)
+                                            @php
+                                            $cell = App\Models\RiskMatrixCell::where('likelihood_id', $l->id)->where('risk_consequence_id', $c->id)->first() ?? null;
+                                            $score = $l->level * $c->level;
+                                            $severity = $cell?->severity ?? '';
+                                            $color = match($severity) {
+                                            'Low' => 'bg-emerald-500',
+                                            'Moderate' => 'bg-sky-500',
+                                            'High' => 'bg-orange-300',
+                                            'Extreme' => 'bg-rose-500',
+                                            default => 'bg-gray-100',
+                                            };
+                                            @endphp
+                                            <td class="border cursor-pointer w-4 {{ $color }}
+                                    @if($likelihood_id == $l->id && $consequence_id == $c->id) border-2 border-stone-500 @endif" wire:click="riskId({{ $l->id }}, {{ $c->id }})">
+                                                <div class="text-[6px]">{{ Str::upper(substr($severity, 0, 1)) }}</div>
+
+                                            </td>
+
+                                            @endforeach
+                                        </tr>
                                         @endforeach
-                                    </tr>
-                                    <tr>
-                                        <th class="text-center bg-gray-100 border border-black">Likelihood</th>
-                                        @foreach ($RiskConsequence as $risk_consequence)
-                                        <th class="text-center bg-gray-100 border border-black rotate_text">
-                                            {{ $risk_consequence->risk_consequence_name }}
-                                        </th>
-                                        @endforeach
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    @foreach ($RiskLikelihood as $risk_likelihood)
-                                    <tr>
-                                        <th class=" p-0 text-[10px] font-semibold border-2 border-black">
-                                            {{ $risk_likelihood->risk_likelihoods_name }}
-                                        </th>
-                                        @foreach ($risk_likelihood->RiskConsequence()->get() as $risk_consequence)
-                                        <th class=" p-0 text-xs font-semibold text-center border-2 border-black {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? ' opacity-35 bg-gray-500' : '' }}">
-                                            <label @if ($currentStep==='Closed' || $currentStep==='Cancelled' ) @else wire:click="riskId({{ $risk_likelihood->id }}, {{ $risk_consequence->id }},{{ $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $risk_consequence->id)->first()->risk_assessment_id }})" @endif class="btn p-0 mt-1 btn-block btn-xs {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'cursor-not-allowed' : '' }}  @if (
-                                                            $tablerisk_id ==
-                                                                $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $risk_consequence->id)->first()->id) border-4 border-neutral @endif {{ $TableRisk->where('risk_likelihood_id', $risk_likelihood->id)->where('risk_consequence_id', $risk_consequence->id)->first()->RiskAssessment->colour }}">
-                                            </label>
-                                        </th>
-                                        @endforeach
-                                    </tr>
-                                    @endforeach
-
-
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
 
                         </div>
                     </div>

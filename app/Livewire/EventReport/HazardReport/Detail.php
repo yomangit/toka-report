@@ -49,6 +49,7 @@ class Detail extends Component
     public $description_temp;
     public $key_word;
     public $kondisitidakamen_id;
+    public $likelihoods, $consequences;
     public $tindakantidakamen_id;
     public $location_name, $search, $show_immidiate = 'yes', $procced_to, $location_id, $divider = 'Details Hazard Report', $TableRisk = [], $RiskAssessment = [], $EventSubType = [], $ResponsibleRole, $EventUserSecurity = [];
     public $searchLikelihood                        = '', $searchConsequence                        = '', $tablerisk_id, $risk_assessment_id, $reference, $workflow_detail_id, $division_id, $division, $parent_Company, $business_unit, $dept;
@@ -63,6 +64,8 @@ class Detail extends Component
     protected $listeners      = ['ubahData' => 'changeData'];
     public function mount($id)
     {
+         $this->likelihoods = RiskLikelihood::orderByDesc('level')->get();
+        $this->consequences = RiskConsequence::orderBy('level')->get();
         $projectExists = HazardReport::whereId($id)->exists();
 
         if ($projectExists) {
@@ -329,11 +332,11 @@ class Detail extends Component
         }
     }
 
-    public function riskId($risk_likelihood_id, $risk_consequence_id, $risk_assessment_id)
+    public function riskId($risk_likelihood_id, $risk_consequence_id, )
     {
         $this->risk_consequence_id = $risk_consequence_id;
         $this->risk_likelihood_id = $risk_likelihood_id;
-        $this->risk_assessment_id = $risk_assessment_id;
+        // $this->risk_assessment_id = $risk_assessment_id;
     }
     public function TableRiskFunction()
     {
