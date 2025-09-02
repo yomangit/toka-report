@@ -96,7 +96,7 @@
             <div class="p-4 mb-3 transition duration-200 border rounded-md shadow-sm bg-base-100 hover:bg-base-200">
                 <div class="flex flex-col sm:flex-row sm:justify-between">
                     <div class="text-sm text-gray-700">
-                        <strong>{{ $log->user->name }}</strong> melakukan
+                        <strong>{{ $log->user->lookup_name }}</strong> melakukan
                         <span class="italic text-blue-600">{{ $log->action }}</span>
                     </div>
                     <div class="mt-1 text-xs text-gray-500 sm:mt-0">
