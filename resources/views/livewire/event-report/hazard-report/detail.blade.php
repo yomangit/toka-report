@@ -320,7 +320,7 @@
                                         @foreach ($likelihoods as $l)
                                         <tr class="w-32 text-xs text-center">
 
-                                            <td class="w-1 font-bold  border-1">{{ $l->name }}</td>
+                                            <td class="w-1 font-bold border-1">{{ $l->name }}</td>
                                             @foreach ($consequences as $c)
                                             @php
                                             $cell = App\Models\RiskMatrixCell::where('likelihood_id', $l->id)->where('risk_consequence_id', $c->id)->first() ?? null;
@@ -335,7 +335,7 @@
                                             };
                                             @endphp
                                             <td class="border cursor-pointer w-4 {{ $color }}
-                                    @if($likelihood_id == $l->id && $consequence_id == $c->id) border-2 border-stone-500 @endif" wire:click="riskId({{ $l->id }}, {{ $c->id }})">
+                                    @if($risk_likelihood_id == $l->id && $risk_consequence_id == $c->id) border-2 border-stone-500 @endif" wire:click="riskId({{ $l->id }}, {{ $c->id }})">
                                                 <div class="text-[6px]">{{ Str::upper(substr($severity, 0, 1)) }}</div>
 
                                             </td>
