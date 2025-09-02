@@ -68,6 +68,6 @@ class Grid extends Component
     }
     public function render()
     {
-        return view('livewire.admin.table-risk-assessment.grid');
+        return view('livewire.admin.table-risk-assessment.grid')->extends('base.index', ['header' => 'Table Risk ', 'title' => 'Table Risk'])->section('content');
     }
 }
