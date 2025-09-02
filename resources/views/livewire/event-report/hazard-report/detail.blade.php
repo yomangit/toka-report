@@ -312,7 +312,7 @@
                                         <tr class="text-center text-[9px]">
                                             <th class="border-1">Likelihooc ↓ / Consequence →</th>
                                             @foreach ($consequences as $c)
-                                            <th class="rotate_text border-1">{{ $c->name }}</th>
+                                            <th class="rotate_text border-1">{{ $c->risk_consequence_name }}</th>
                                             @endforeach
                                         </tr>
                                     </thead>
@@ -320,7 +320,7 @@
                                         @foreach ($likelihoods as $l)
                                         <tr class="w-32 text-xs text-center">
 
-                                            <td class="w-1 font-bold border-1">{{ $l->name }}</td>
+                                            <td class="w-1 font-bold border-1">{{ $l->risk_likelihoods_name }}</td>
                                             @foreach ($consequences as $c)
                                             @php
                                             $cell = App\Models\RiskMatrixCell::where('likelihood_id', $l->id)->where('risk_consequence_id', $c->id)->first() ?? null;
