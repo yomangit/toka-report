@@ -351,28 +351,28 @@
                     </div>
                 </div>
                 <table class="table table-xs">
-                    @foreach ($RiskAssessment as $item)
+               
                     <tr>
                         <th class="w-40 text-xs border-2 border-slate-400">Potential Risk Rating</th>
                         <td class="pl-2 text-xs border-2 border-slate-400">
-                            {{ $item->risk_assessments_name }}</td>
+                            {{ $RiskAssessment->risk_assessments_name }}</td>
                     </tr>
                     <tr>
                         <th class="w-40 text-xs border-2 border-slate-400">Notify</th>
                         <td class="pl-2 text-xs border-2 border-slate-400">
-                            {{ $item->reporting_obligation }}</td>
+                            {{ $RiskAssessment->reporting_obligation }}</td>
                     </tr>
                     <tr>
                         <th class="w-40 text-xs border-2 border-slate-400">Deadline</th>
-                        <td class="pl-2 text-xs border-2 border-slate-400">{{ $item->notes }}</td>
+                        <td class="pl-2 text-xs border-2 border-slate-400">{{ $RiskAssessment->notes }}</td>
                     </tr>
                     <tr>
                         <th class="w-40 text-xs border-2 border-slate-400">Coordinator</th>
                         <td class="pl-2 text-xs border-2 border-slate-400">
-                            {{ $item->coordinator }}
+                            {{ $RiskAssessment->coordinator }}
                         </td>
                     </tr>
-                    @endforeach
+                  
 
                 </table>
 

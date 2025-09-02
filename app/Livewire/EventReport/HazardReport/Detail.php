@@ -340,7 +340,7 @@ class Detail extends Component
         $this->risk_likelihood_id = $risk_likelihood_id;
         $id_table = RiskMatrixCell::where('likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->first()->id;
         $risk_assessment_id = RiskAssessmentMatrix::where('risk_matrix_cell_id',$id_table)->first()->risk_assessment_id;
-        $this->RiskAssessment =RiskAssessment::whereId($risk_assessment_id)->get();
+        $this->RiskAssessment =RiskAssessment::whereId($risk_assessment_id)->first();
     }
 
     public function download()
