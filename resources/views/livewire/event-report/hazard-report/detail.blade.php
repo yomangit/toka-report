@@ -311,10 +311,10 @@
                                     <caption class="mb-2 text-sm font-bold caption-top">Table Initial Risk Assessment</caption>
                                     <thead>
                                         <tr>
-                                            <th colspan="2" class="p-1 text-center bg-gray-200 border border-black">Legend</th>
+                                            <th colspan="2" class="text-center bg-gray-200 border border-black ">Legend</th>
                                             @foreach ($RiskAssessments as $risk_assessment)
                                             <th class="text-xs text-center border border-black rotate_text">
-                                                <span class="{{ $risk_assessment->colour }}"> {{ $risk_assessment->risk_assessments_name }}</span>
+                                                <div class="p-2 {{ $risk_assessment->colour }}"> {{ $risk_assessment->risk_assessments_name }}</div>
                                             </th>
                                             @endforeach
                                         </tr>
