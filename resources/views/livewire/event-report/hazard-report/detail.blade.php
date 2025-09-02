@@ -307,8 +307,17 @@
                         <div class="m-1 overflow-x-auto ">
                             {{-- Kolom Risk Matrix --}}
                             <div class="flex-none overflow-x-auto ">
-                                <table class="table table-xs w-60">
+                                <table class="table text-xs table-xs ">
+                                    <caption class="mb-2 text-sm font-bold caption-top">Table Initial Risk Assessment</caption>
                                     <thead>
+                                        <tr>
+                                            <th colspan="2" class="p-1 text-center bg-gray-200 border border-black">Legend</th>
+                                            @foreach ($RiskAssessments as $risk_assessment)
+                                            <th class="p-1 text-xs text-center rotate_text border border-black {{ $risk_assessment->colour }}">
+                                                {{ $risk_assessment->risk_assessments_name }}
+                                            </th>
+                                            @endforeach
+                                        </tr>
                                         <tr class="text-center text-[9px]">
                                             <th class="border-1">Likelihooc ↓ / Consequence →</th>
                                             @foreach ($consequences as $c)
@@ -351,8 +360,8 @@
                     </div>
                 </div>
                 @if ($RiskAssessment !=null)
-                    <table class="table table-xs">
-               
+                <table class="table table-xs">
+
                     <tr>
                         <th class="w-40 text-xs border-2 border-slate-400">Potential Risk Rating</th>
                         <td class="pl-2 text-xs border-2 border-slate-400">
@@ -373,7 +382,7 @@
                             {{ $RiskAssessment->coordinator }}
                         </td>
                     </tr>
-                  
+
 
                 </table>
                 @endif
