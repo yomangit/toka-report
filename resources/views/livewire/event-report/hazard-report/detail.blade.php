@@ -303,7 +303,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex-none md:w-72 ">
+                    <div class="flex-none md:w-80 ">
                         <div class="m-1 overflow-x-auto ">
                             {{-- Kolom Risk Matrix --}}
                             <div class="flex-none overflow-x-auto ">
