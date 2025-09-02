@@ -32,7 +32,7 @@
                 <td> {{ $hr->report_byName }}</td>
                 <td>{{$hr->eventType->type_eventreport_name}}</td>
                 <td>{{ $hr->subEventType->event_sub_type_name }}</td>
-                <td> {{ $hr->reportBy->department_name }}</td>
+                <td> {{ $hr->reportBy?->department_name ?? '-' }}</td>
                 <td> {{ $hr->workgroup_name }}</td>
                 <td> {{ $hr->report_toName }}</td>
                 <td> {{ $hr->eventLocation->location_name }}/ {{ $hr->location_name }}</td>
