@@ -28,7 +28,7 @@
                     };
                     @endphp
                     <td wire:click="edit({{ $l->id }}, {{ $c->id }})" class="border w-1 cursor-pointer {{ $color }}">
-                        <div class="text-[6px] ">{{ $severity }}
+                        <div class="text-[6px] ">{{ strtoupper( $severity[0] ?? '') }}
                         </div>
                     </td>
                     @endforeach
