@@ -202,12 +202,12 @@
 
                             <div class="flex items-center gap-4 mt-2">
                                 <label class="flex items-center space-x-1">
-                                    <input x-model="status" value="kta" id="draft" type="radio" name="status" class="radio radio-sm radio-primary {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'btn-disabled bg-gray-300' : '' }}" />
+                                    <input x-model="status" value="kta" id="draft" type="radio" name="status" class="radio radio-sm radio-primary {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled' : '' }}" />
                                     <span class="text-xs font-semibold">Kondisi Tidak Aman</span>
                                 </label>
 
                                 <label class="flex items-center space-x-1">
-                                    <input x-model="status" value="tta" id="published" type="radio" name="status" class="radio radio-sm radio-accent {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'btn-disabled bg-gray-300' : '' }}" />
+                                    <input x-model="status" value="tta" id="published" type="radio" name="status" class="radio radio-sm radio-accent {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled' : '' }}" />
                                     <span class="text-xs font-semibold">Tindakan Tidak Aman</span>
                                 </label>
                             </div>
