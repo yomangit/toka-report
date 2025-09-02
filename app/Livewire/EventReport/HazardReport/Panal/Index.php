@@ -251,10 +251,22 @@ class Index extends Component
                     'line3'      => 'Terima kasih',
                     'actionUrl'  => url("https://tokasafe.archimining.com/eventReport/hazardReportDetail/{$url}"),
                 ];
-                Notification::send($user, new toModerator($offerData));
+                try {
+
+                    Notification::send($user, new toModerator($offerData));
+                } catch (\Throwable $th) {
+                    $this->dispatch('alert', [
+                        'text' => 'Email gagal dikirim: ' . $th->getMessage(),
+                        'duration' => 3000,
+                        'destination' => '/contact',
+                        'newWindow' => true,
+                        'close' => true,
+                        'backgroundColor' => "linear-gradient(to right, #a3e635, #eab308)",
+                    ]);
+                }
                 $user_erm = User::find($user->id);
                 $judul =  ['en' => '⚠️ Laporan Bahaya No. Referensi: ' . $this->reference];
-                $isi = ['en' =>  Auth::user()->lookup_name.' mengirimkan laporan bahaya kepada anda, Mohon untuk ditinjau'];
+                $isi = ['en' =>  Auth::user()->lookup_name . ' mengirimkan laporan bahaya kepada anda, Mohon untuk ditinjau'];
                 $url = url("/eventReport/hazardReportDetail/{$url}");
                 NotificationHelper::sendToUser($user_erm, $judul, $isi, $url);
             }
