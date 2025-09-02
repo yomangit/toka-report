@@ -53,7 +53,7 @@ class Detail extends Component
     public $kondisitidakamen_id;
     public $likelihoods, $consequences;
     public $tindakantidakamen_id;
-    public $location_name, $search, $show_immidiate = 'yes', $procced_to, $location_id, $divider = 'Details Hazard Report', $TableRisk = [], $RiskAssessment = [], $EventSubType = [], $ResponsibleRole, $EventUserSecurity = [];
+    public $location_name, $search, $show_immidiate = 'yes', $procced_to, $location_id, $divider = 'Details Hazard Report', $TableRisk = [], $RiskAssessment , $EventSubType = [], $ResponsibleRole, $EventUserSecurity = [];
     public $searchLikelihood                        = '', $searchConsequence                        = '', $tablerisk_id, $risk_assessment_id, $reference, $workflow_detail_id, $division_id, $division, $parent_Company, $business_unit, $dept;
     public $risk_likelihood_id, $risk_likelihood_notes, $event_category, $select_divisi;
     public $risk_consequence_id, $risk_consequence_doc, $risk_probability_doc;
