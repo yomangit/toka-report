@@ -303,8 +303,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex-none md:w-80 ">
-                        <div class="m-1 overflow-x-auto ">
+                    <div class="flex-none w-72 md:w-80 ">
                             {{-- Kolom Risk Matrix --}}
                             <div class="flex-none overflow-x-auto ">
                                 <table class="table text-xs table-xs ">
@@ -355,8 +354,6 @@
                                     </tbody>
                                 </table>
                             </div>
-
-                        </div>
                     </div>
                 </div>
                 @if ($RiskAssessment !=null)
