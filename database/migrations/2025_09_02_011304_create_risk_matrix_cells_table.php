@@ -27,7 +27,8 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->unique(['likelihood_id', 'risk_consequence_id', 'company_id']);
+           $table->unique(['likelihood_id', 'risk_consequence_id', 'company_id'], 'risk_matrix_unique');
+
         });
     }
     /**
