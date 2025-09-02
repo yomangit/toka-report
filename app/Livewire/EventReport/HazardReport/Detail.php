@@ -337,7 +337,9 @@ class Detail extends Component
     public function riskId($risk_likelihood_id, $risk_consequence_id, )
     {
         $this->risk_consequence_id = $risk_consequence_id;
+		 $this->risk_consequence_doc = RiskConsequence::where('id',  $this->risk_consequence_id)->first()->description;
         $this->risk_likelihood_id = $risk_likelihood_id;
+		$this->risk_likelihood_notes = RiskLikelihood::where('id', $this->risk_likelihood_id)->first()->notes;
         $id_table = RiskMatrixCell::where('likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->first()->id;
         $risk_assessment_id = RiskAssessmentMatrix::where('risk_matrix_cell_id',$id_table)->first()->risk_assessment_id;
         $this->RiskAssessment =RiskAssessment::whereId($risk_assessment_id)->first();
