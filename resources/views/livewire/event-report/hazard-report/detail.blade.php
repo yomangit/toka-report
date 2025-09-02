@@ -215,7 +215,7 @@
 
                             <!-- KTA Select -->
                             <div x-show="status === 'kta'" x-transition.opacity.duration.300ms class="mt-2">
-                                <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')">
+                                <x-select {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled' : '' }} wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')">
                                     <option value="" selected>Pilih KTA...</option>
                                     @forelse ($KTA as $kta)
                                     <option value="{{ $kta->id }}">{{ $kta->name }}</option>
@@ -226,7 +226,7 @@
 
                             <!-- TTA Select -->
                             <div x-show="status === 'tta'" x-transition.opacity.duration.300ms class="mt-2">
-                                <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
+                                <x-select {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled' : '' }} wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
                                     <option value="" selected>Pilih TTA</option>
                                     @forelse ($TTA as $tta)
                                     <option value="{{ $tta->id }}">{{ $tta->name }}</option>
