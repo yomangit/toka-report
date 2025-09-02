@@ -339,26 +339,9 @@ class Detail extends Component
         $this->risk_consequence_id = $risk_consequence_id;
         $this->risk_likelihood_id = $risk_likelihood_id;
         $id_table = RiskMatrixCell::where('likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->first()->id;
-        $risk_assessment_id = RiskAssessmentMatrix::whereId($id_table)->first()->risk_assessment_id;
+        $risk_assessment_id = RiskAssessmentMatrix::where('risk_matrix_cell_id',$id_table)->first()->risk_assessment_id;
         $this->RiskAssessment =RiskAssessment::whereId($risk_assessment_id)->get();
     }
-    // public function TableRiskFunction()
-    // {
-    //     $this->RiskAssessment = TableRiskAssessment::with(['RiskAssessment'])->where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->get();
-
-    //     if ($this->risk_consequence_id) {
-    //         $this->risk_consequence_doc = RiskConsequence::where('id',  $this->risk_consequence_id)->first()->description;
-    //     }
-    //     if ($this->risk_likelihood_id) {
-    //         $this->risk_likelihood_notes = RiskLikelihood::where('id', $this->risk_likelihood_id)->first()->notes;
-    //     }
-    //     if ($this->risk_consequence_id && $this->risk_likelihood_id) {
-    //         $RiskAssessments = TableRiskAssessment::where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->first()->risk_assessment_id;
-
-    //         $this->tablerisk_id = TableRiskAssessment::where('risk_likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->where('risk_assessment_id', $RiskAssessments)->first()->id;
-    //     }
-    //     $this->TableRisk = TableRiskAssessment::with(['RiskAssessment', 'RiskConsequence', 'RiskLikelihood'])->get();
-    // }
 
     public function download()
     {
