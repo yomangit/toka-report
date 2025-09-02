@@ -313,8 +313,8 @@
                                         <tr>
                                             <th colspan="2" class="p-1 text-center bg-gray-200 border border-black">Legend</th>
                                             @foreach ($RiskAssessments as $risk_assessment)
-                                            <th class="p-4 text-xs text-center rotate_text border border-black {{ $risk_assessment->colour }}">
-                                                {{ $risk_assessment->risk_assessments_name }}
+                                            <th class="text-xs text-center border border-black rotate_text">
+                                                <span class="{{ $risk_assessment->colour }}"> {{ $risk_assessment->risk_assessments_name }}</span>
                                             </th>
                                             @endforeach
                                         </tr>
