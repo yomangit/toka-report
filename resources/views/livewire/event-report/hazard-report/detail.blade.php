@@ -350,7 +350,8 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-xs">
+                @if ($RiskAssessment !=null)
+                    <table class="table table-xs">
                
                     <tr>
                         <th class="w-40 text-xs border-2 border-slate-400">Potential Risk Rating</th>
@@ -375,6 +376,7 @@
                   
 
                 </table>
+                @endif
 
 
                 <div class="flex flex-col w-full mt-4 border-opacity-50">
