@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('risk_assessment_id')->constrained('risk_assessments')->cascadeOnDelete();
             $table->foreignId('risk_matrix_cell_id')->constrained('risk_matrix_cells')->cascadeOnDelete();
             $table->timestamps();
-            $table->timestamps();
+           
         });
     }
 
