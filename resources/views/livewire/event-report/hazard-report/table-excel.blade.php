@@ -5,6 +5,8 @@
             <tr class="text-center">
                 <th>Reference</th>
                 <th>Tanggal & Waktu</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
                 <th>Dilaporkan Oleh</th>
                 <th>Tipe Bahaya</th>
                 <th>Jenis Bahaya</th>
@@ -29,7 +31,9 @@
             <tr class="text-center">
 
                 <td>{{ $hr->reference }}</td>
-                <td>{{$hr->date}}</td>
+                <td>{{ DateTime::createFromFormat('Y-m-d : H:i', $hr->date)->format('d-m-Y : H:i') }}</td>
+                <td>{{ DateTime::createFromFormat('Y-m-d : H:i', $hr->date)->format('m-Y') }}</td>
+                <td>{{ DateTime::createFromFormat('Y-m-d : H:i', $hr->date)->format('Y') }}</td>
                 <td> {{ $hr->report_byName }}</td>
                 <td>{{$hr->eventType->type_eventreport_name}}</td>
                 <td>{{ $hr->subEventType->event_sub_type_name }}</td>
