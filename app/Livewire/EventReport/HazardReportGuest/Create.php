@@ -183,6 +183,7 @@ class Create extends Component
             'report_byName.required'                => 'Kolom wajib diisi',
             'report_toName.required'                => 'Kolom wajib diisi',
             'workgroup_name.required'               => 'Kolom wajib diisi',
+            'date.required'               => 'Kolom wajib diisi',
             'date.before_or_equal' => 'Tanggal tidak boleh melebihi hari ini.',
             'site_id.required'                      => 'Kolom wajib diisi',
             'documentation.mimes'                   => 'Hanya format file jpg, jpeg, png, svg, gif, xlsx, pdf, docx yang diizinkan',
