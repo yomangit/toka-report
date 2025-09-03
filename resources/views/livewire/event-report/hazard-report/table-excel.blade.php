@@ -29,7 +29,7 @@
             <tr class="text-center">
 
                 <td>{{ $hr->reference }}</td>
-                <td>{{ DateTime::createFromFormat('Y-m-d : H:i', $hr->date)->format('d-m-Y') }}</td>
+                <td>{{ DateTime::createFromFormat('Y-m-d : H:i', $hr->date)->format('Y-m-d') }}</td>
                 <td> {{ $hr->report_byName }}</td>
                 <td>{{$hr->eventType->type_eventreport_name}}</td>
                 <td>{{ $hr->subEventType->event_sub_type_name }}</td>
