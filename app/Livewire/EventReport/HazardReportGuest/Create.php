@@ -35,7 +35,7 @@ class Create extends Component
 {
     use WithFileUploads;
     use WithPagination;
-   // Basic UI Controls
+    // Basic UI Controls
     public $divider = 'Input Hazard Report';
     public $show = false;
     public $show_immidiate = 'yes';
@@ -65,9 +65,9 @@ class Create extends Component
     public $workflow_detail_id;
     public $workflow_template_id;
     public $division_id;
-     #[Validate]
+    #[Validate]
     public $event_type_id;
-     #[Validate]
+    #[Validate]
     public $sub_event_type_id;
     public $report_by;
     public $report_to;
@@ -83,11 +83,11 @@ class Create extends Component
     // Names and Labels
     #[Validate]
     public $location_name;
-     #[Validate]
+    #[Validate]
     public $workgroup_name;
-     #[Validate]
+    #[Validate]
     public $report_byName;
-     #[Validate]
+    #[Validate]
     public $report_toName;
 
     // Other Report Data
@@ -156,7 +156,7 @@ class Create extends Component
             'sub_event_type_id'     => ['required'],
             'report_byName'         => ['required'],
             'report_toName'         => ['required'],
-            'date'                  => ['required'],
+            'date' => 'required|date|before_or_equal:today',
             'documentation'         => 'nullable|mimes:jpg,jpeg,png,svg,gif,xlsx,pdf,docx',
             'description'           => ['required'],
             'location_id'           => ['required'],
@@ -167,10 +167,10 @@ class Create extends Component
         ];
         if ($this->key_word === 'kta') {
             $baseRules['kondisitidakamen_id'] = ['required'];
-        } 
+        }
         if ($this->key_word === 'tta') {
             $baseRules['tindakantidakamen_id'] = ['required'];
-        } 
+        }
 
         return $baseRules;
     }
@@ -183,7 +183,7 @@ class Create extends Component
             'report_byName.required'                => 'Kolom wajib diisi',
             'report_toName.required'                => 'Kolom wajib diisi',
             'workgroup_name.required'               => 'Kolom wajib diisi',
-            'date.required'                         => 'Kolom wajib diisi',
+            'date.before_or_equal' => 'Tanggal tidak boleh melebihi hari ini.',
             'site_id.required'                      => 'Kolom wajib diisi',
             'documentation.mimes'                   => 'Hanya format file jpg, jpeg, png, svg, gif, xlsx, pdf, docx yang diizinkan',
             'description.required'                  => 'Kolom wajib diisi',
@@ -365,7 +365,6 @@ class Create extends Component
     {
         if ($this->date) {
             $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $this->date);
-            $dateForRef = $dateObj->format('Y/m/d');
             $dateForDB  = $dateObj->format('Y-m-d : H:i');
 
             // Generate reference number
@@ -526,7 +525,7 @@ class Create extends Component
         $this->dispatch('refreshChartHazard');
         // $this->redirectRoute('hazardReportCreate', ['workflow_template_id' => $this->workflow_template_id]);
     }
-     public function clearFields()
+    public function clearFields()
     {
         $this->report_byName               = "";
         $this->report_toName               = "";
