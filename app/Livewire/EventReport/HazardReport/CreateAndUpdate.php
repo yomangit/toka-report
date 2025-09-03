@@ -201,6 +201,11 @@ class CreateAndUpdate extends Component
             'key_word.required'        => 'Kolom wajib dicentang',
         ];
     }
+     // real-time validation
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
     #[On('closeAll')]
     public function clearTindakkan_selanjutnya()
     {
