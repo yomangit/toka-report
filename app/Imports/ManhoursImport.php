@@ -7,43 +7,53 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ManhoursImport implements ToModel,WithHeadingRow, SkipsEmptyRows
+class ManhoursImport implements ToModel, WithHeadingRow, SkipsEmptyRows, WithValidation
 {
     use Importable;
+
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * Mapping row Excel ke model
+     */
     public function model(array $row)
     {
         return new Manhours([
-            'date'=>$row['date'],
-            'company_category'=>$row['company_category'],
-            'company'=>$row['company'],
-            'department'=>$row['department'],
-            'dept_group'=>$row['dept_group'],
-            'job_class'=>$row['job_class'],
-            'manhours'=>$row['manhours'],
-            'manpower'=>$row['manpower'],
+            'date'             => $row['date'],
+            'company_category' => $row['company_category'],
+            'company'          => $row['company'],
+            'department'       => $row['department'],
+            'dept_group'       => $row['dept_group'],
+            'job_class'        => $row['job_class'],
+            'manhours'         => $row['manhours'] ?? 0,   // default 0 jika kosong
+            'manpower'         => $row['manpower'] ?? 0,   // default 0 jika kosong
         ]);
     }
+
+    /**
+     * Baris dianggap kosong jika semua field penting kosong
+     */
     public function isEmptyWhen(array $row): bool
     {
-        return $row['date'] === '-';
-        return $row['company_category'] === '-';
-        return $row['company'] === '-';
-        return $row['department'] === '-';
-        return $row['dept_group'] === '-';
-        return $row['job_class'] === '-';
-        return $row['manhours'] === '-';
-        return $row['manpower'] === '-';
+        return empty($row['date']) &&
+               empty($row['company_category']) &&
+               empty($row['company']) &&
+               empty($row['department']) &&
+               empty($row['dept_group']) &&
+               empty($row['job_class']) &&
+               empty($row['manhours']) &&
+               empty($row['manpower']);
     }
+
+    /**
+     * Validasi kolom Excel
+     */
     public function rules(): array
     {
         return [
-            'date'=>'required|date_format:Y/m/d'
+            'date'      => 'required|date_format:Y/m/d',
+            'manhours'  => 'nullable|numeric',
+            'manpower'  => 'nullable|numeric',
         ];
     }
 }
