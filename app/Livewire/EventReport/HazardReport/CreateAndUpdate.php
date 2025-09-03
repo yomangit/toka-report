@@ -65,9 +65,9 @@ class CreateAndUpdate extends Component
     public $workflow_detail_id;
     public $workflow_template_id;
     public $division_id;
-     #[Validate]
+    #[Validate]
     public $event_type_id;
-     #[Validate]
+    #[Validate]
     public $sub_event_type_id;
     public $report_by;
     public $report_to;
@@ -83,11 +83,11 @@ class CreateAndUpdate extends Component
     // Names and Labels
     #[Validate]
     public $location_name;
-     #[Validate]
+    #[Validate]
     public $workgroup_name;
-     #[Validate]
+    #[Validate]
     public $report_byName;
-     #[Validate]
+    #[Validate]
     public $report_toName;
 
     // Other Report Data
@@ -167,10 +167,10 @@ class CreateAndUpdate extends Component
         ];
         if ($this->key_word === 'kta') {
             $baseRules['kondisitidakamen_id'] = ['required'];
-        } 
+        }
         if ($this->key_word === 'tta') {
             $baseRules['tindakantidakamen_id'] = ['required'];
-        } 
+        }
 
         return $baseRules;
     }
@@ -183,7 +183,8 @@ class CreateAndUpdate extends Component
             'report_byName.required'                => 'Kolom wajib diisi',
             'report_toName.required'                => 'Kolom wajib diisi',
             'workgroup_name.required'               => 'Kolom wajib diisi',
-              'date.before_or_equal' => 'Tanggal tidak boleh melebihi hari ini.',
+            'date.required'               => 'Kolom wajib diisi',
+            'date.before_or_equal' => 'Tanggal tidak boleh melebihi hari ini.',
             'site_id.required'                      => 'Kolom wajib diisi',
             'documentation.mimes'                   => 'Hanya format file jpg, jpeg, png, svg, gif, xlsx, pdf, docx yang diizinkan',
             'description.required'                  => 'Kolom wajib diisi',
