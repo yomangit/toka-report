@@ -9,6 +9,7 @@
                 <th>Tipe Bahaya</th>
                 <th>Jenis Bahaya</th>
                 <th>Divisi yang melapor</th>
+                <th>Workgroup</th>
                 <th>Divisi Penanggung Jawab</th>
                 <th>Penanggung Jawab Area</th>
                 <th>Lokasi / Lokasi Spesifik</th>
@@ -34,6 +35,7 @@
                 <td>{{ $hr->subEventType->event_sub_type_name }}</td>
                 <td> {{ $hr->reportBy?->department_name ?? '-' }}</td>
                 <td> {{ $hr->workgroup_name }}</td>
+                <td> {{ $hr->division?->Company?->name_company ?? $hr->division?->DeptByBU?->Department?->department_name ?? '' }}</td>
                 <td> {{ $hr->report_toName }}</td>
                 <td> {{ $hr->eventLocation->location_name }}/ {{ $hr->location_name }}</td>
                 <td>{!! $hr->description? "$hr->description":'-' !!}</td>
