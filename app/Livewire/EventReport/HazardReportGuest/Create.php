@@ -25,6 +25,7 @@ use App\Notifications\toModerator;
 use App\Helpers\NotificationHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use App\Rules\DateBeforeOrEqualToday;
 use Intervention\Image\Facades\Image;
 use Cjmellor\Approval\Models\Approval;
 use Illuminate\Support\Facades\Request;
@@ -156,7 +157,10 @@ class Create extends Component
             'sub_event_type_id'     => ['required'],
             'report_byName'         => ['required'],
             'report_toName'         => ['required'],
-            'date' => 'required|date|before_or_equal:today',
+            'date' => [
+                'required',
+                new DateBeforeOrEqualToday, // pakai custom rule
+            ],
             'documentation'         => 'nullable|mimes:jpg,jpeg,png,svg,gif,xlsx,pdf,docx',
             'description'           => ['required'],
             'location_id'           => ['required'],
