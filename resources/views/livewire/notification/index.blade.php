@@ -13,6 +13,8 @@
             </label>
             <div tabindex="0" class=" z-20 card card-compact dropdown-content w-56  lg:w-[28rem] lg:h-[34rem] xl:h-[48rem] bg-base-100 shadow">
                 <div class=" card-body">
+                    <label wire:click='deleteAll' class=" text-rose-500 btn-link btn-xs {{ $hidden ? 'hidden' : '' }}" checked="checked">Delete
+                        All</label>
                     <label wire:click='deleteCheked' class=" text-rose-500 btn-link btn-xs {{ $hidden ? 'hidden' : '' }}" checked="checked">Delete
                         Checked</label>
                     <div wire:poll role="tablist" class="tabs tabs-bordered ">

@@ -46,6 +46,14 @@ class Index extends Component
             $userDeleteNotification->delete();
         }
     }
+    public function deleteAll()
+    {
+        $user = auth()->user();
+
+        if ($user) {
+            $user->notifications()->delete();
+        }
+    }
     public function deleteCheked()
     {
 
