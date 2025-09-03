@@ -4,7 +4,7 @@
         <thead>
             <tr class="text-center">
                 <th>Reference</th>
-                <th>Tanggal</th>
+                <th>Tanggal & Waktu</th>
                 <th>Dilaporkan Oleh</th>
                 <th>Tipe Bahaya</th>
                 <th>Jenis Bahaya</th>
