@@ -8,14 +8,13 @@ use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
 
-class ManhoursImport implements ToModel, WithHeadingRow, SkipsEmptyRows, WithValidation
+class ManhoursImport implements ToModel, WithHeadingRow, SkipsEmptyRows, WithValidation, SkipsOnFailure
 {
-    use Importable;
+    use Importable, SkipsFailures;
 
-    /**
-     * Mapping row Excel ke model
-     */
     public function model(array $row)
     {
         return new Manhours([
@@ -25,14 +24,11 @@ class ManhoursImport implements ToModel, WithHeadingRow, SkipsEmptyRows, WithVal
             'department'       => $row['department'],
             'dept_group'       => $row['dept_group'],
             'job_class'        => $row['job_class'],
-            'manhours'         => $row['manhours'] ?? 0,   // default 0 jika kosong
-            'manpower'         => $row['manpower'] ?? 0,   // default 0 jika kosong
+            'manhours'         => $row['manhours'] ?? 0,
+            'manpower'         => $row['manpower'] ?? 0,
         ]);
     }
 
-    /**
-     * Baris dianggap kosong jika semua field penting kosong
-     */
     public function isEmptyWhen(array $row): bool
     {
         return empty($row['date']) &&
@@ -45,9 +41,6 @@ class ManhoursImport implements ToModel, WithHeadingRow, SkipsEmptyRows, WithVal
                empty($row['manpower']);
     }
 
-    /**
-     * Validasi kolom Excel
-     */
     public function rules(): array
     {
         return [

@@ -34,10 +34,35 @@ class Upload extends ModalComponent
     public function store()
     {
         set_time_limit(300);
-        $this->validate(['files' => 'required']);
-        Excel::import(new ManhoursImport, $this->files);
-        session()->flash('success', "importing file has done!!");
+
+        $this->validate([
+            'files' => 'required|mimes:xlsx,csv,xls',
+        ]);
+
+        $import = new ManhoursImport();
+        Excel::import($import, $this->files);
+
+        if ($import->failures()->isNotEmpty()) {
+            // kirim error ke session agar bisa ditampilkan di blade
+            session()->flash('failures', $import->failures());
+
+            $this->dispatch(
+                'alert',
+                [
+                    'text' => "Beberapa baris gagal diimport. Silakan cek pesan error.",
+                    'duration' => 5000,
+                    'close' => true,
+                    'backgroundColor' => "linear-gradient(to right, #ff5f6d, #ffc371)",
+                ]
+            );
+
+            return;
+        }
+
+        session()->flash('success', "Importing file has done!!");
+
         $this->dispatch('manhours_upload');
+
         $this->dispatch(
             'alert',
             [
