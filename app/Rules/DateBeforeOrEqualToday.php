@@ -16,12 +16,23 @@ class DateBeforeOrEqualToday implements Rule
             return false; // format salah
         }
 
-        // cek apakah tidak melebihi hari ini
-        return $dateObj <= Carbon::now();
+        $now = Carbon::now();
+
+        // Kalau tanggal lebih besar dari hari ini → salah
+        if ($dateObj->format('Y-m-d') > $now->format('Y-m-d')) {
+            return false;
+        }
+
+        // Kalau tanggal sama dengan hari ini tapi jam melebihi sekarang → salah
+        if ($dateObj->format('Y-m-d') === $now->format('Y-m-d') && $dateObj > $now) {
+            return false;
+        }
+
+        return true;
     }
 
     public function message()
     {
-        return 'Tanggal tidak boleh melebihi hari ini.';
+        return 'Tanggal dan jam tidak boleh melebihi waktu saat ini.';
     }
 }
