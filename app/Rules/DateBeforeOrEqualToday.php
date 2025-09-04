@@ -27,7 +27,6 @@ class DateBeforeOrEqualToday implements Rule
         $inputTime = $dateObj->format('H:i');
         $today     = $now->format('Y-m-d');
         $nowTime   = $now->format('H:i');
-        dd($inputTime.'>'.$nowTime);
         // Validasi tanggal
         if ($inputDate > $today) {
             return false; // tanggal lebih dari hari ini
