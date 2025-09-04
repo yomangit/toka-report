@@ -33,7 +33,8 @@ const initDatePickers = () => {
             selector: "#tanggal",
             options: {
                 enableTime: true,
-                dateFormat: "d-m-Y : H:i"
+                dateFormat: "d-m-Y : H:i",
+                time_24hr: true
             }
         },
         {
