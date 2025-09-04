@@ -12,7 +12,7 @@ class DateBeforeOrEqualToday implements Rule
     {
         // hilangkan spasi ganda
         $value = preg_replace('/\s+/', ' ', trim($value));
-        dd($value);
+       
         // coba parsing dengan kedua format
         $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $value)
                  ?: DateTime::createFromFormat('d-m-Y H:i', $value);
