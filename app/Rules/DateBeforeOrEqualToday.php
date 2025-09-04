@@ -20,7 +20,7 @@ class DateBeforeOrEqualToday implements Rule
             return false; // format salah
         }
 
-        $now = Carbon::now();
+        $now = Carbon::now('Asia/Makassar');
 
         // --- Pisahkan tanggal & jam ---
         $inputDate = $dateObj->format('Y-m-d');
