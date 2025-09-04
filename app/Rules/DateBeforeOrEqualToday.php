@@ -24,7 +24,7 @@ class DateBeforeOrEqualToday implements Rule
         $now = Carbon::now();
 
         // tanggal lebih besar dari hari ini → salah
-        if ($dateObj->format('Y-m-d') > $now->format('Y-m-d')) {
+        if ($dateObj->format('Y-m-d') >= $now->format('Y-m-d')) {
             return false;
         }
 
