@@ -66,8 +66,8 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'UTC'),
-
+    // 'timezone' => env('APP_TIMEZONE', 'UTC'),
+    'timezone' => 'Asia/Makassar', // untuk WITA
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
