@@ -10,7 +10,12 @@ class DateBeforeOrEqualToday implements Rule
 {
     public function passes($attribute, $value)
     {
-        $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $value);
+        // hilangkan spasi ganda
+        $value = preg_replace('/\s+/', ' ', trim($value));
+
+        // coba parsing dengan kedua format
+        $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $value)
+                 ?: DateTime::createFromFormat('d-m-Y H:i', $value);
 
         if (!$dateObj) {
             return false; // format salah
@@ -18,12 +23,12 @@ class DateBeforeOrEqualToday implements Rule
 
         $now = Carbon::now();
 
-        // Kalau tanggal lebih besar dari hari ini → salah
+        // tanggal lebih besar dari hari ini → salah
         if ($dateObj->format('Y-m-d') > $now->format('Y-m-d')) {
             return false;
         }
 
-        // Kalau tanggal sama dengan hari ini tapi jam melebihi sekarang → salah
+        // tanggal sama tapi jam lebih besar dari sekarang → salah
         if ($dateObj->format('Y-m-d') === $now->format('Y-m-d') && $dateObj > $now) {
             return false;
         }
