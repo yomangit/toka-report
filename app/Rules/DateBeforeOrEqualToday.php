@@ -10,10 +10,9 @@ class DateBeforeOrEqualToday implements Rule
 {
     public function passes($attribute, $value)
     {
-        // hilangkan spasi ganda
         $value = preg_replace('/\s+/', ' ', trim($value));
-       
-        // parsing dengan format yang mungkin
+
+        // parsing input
         $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $value)
                  ?: DateTime::createFromFormat('d-m-Y H:i', $value);
 
@@ -21,15 +20,29 @@ class DateBeforeOrEqualToday implements Rule
             return false; // format salah
         }
 
-        // bandingkan hanya tanggal (Y-m-d)
-        $inputDate = $dateObj->format('Y-m-d');
-        $today     = Carbon::now()->format('Y-m-d');
+        $now = Carbon::now();
 
-        return $inputDate <= $today;
+        // --- Pisahkan tanggal & jam ---
+        $inputDate = $dateObj->format('Y-m-d');
+        $inputTime = $dateObj->format('H:i');
+        $today     = $now->format('Y-m-d');
+        $nowTime   = $now->format('H:i');
+
+        // Validasi tanggal
+        if ($inputDate > $today) {
+            return false; // tanggal lebih dari hari ini
+        }
+
+        // Kalau tanggal = hari ini → validasi jam
+        if ($inputDate === $today && $inputTime > $nowTime) {
+            return false; // jam melebihi jam sekarang
+        }
+
+        return true;
     }
 
     public function message()
     {
-        return 'Tanggal tidak boleh melebihi hari ini.';
+        return 'Tanggal atau jam tidak boleh melebihi waktu saat ini.';
     }
 }
