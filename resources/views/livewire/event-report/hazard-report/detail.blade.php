@@ -169,12 +169,10 @@
                         @php
                         $extension = pathinfo($documentation, PATHINFO_EXTENSION);
                         @endphp
-
                         @if(in_array(strtolower($extension), ['png', 'jpg', 'jpeg']))
-                       
                         <img src="{{ asset('storage/documents/hzd/' . $documentation) }}" class="h-24 mt-1 border rounded">
                         @else
-                        <span>File bukan gambar yang didukung</span>
+                     
                         @endif
                     </div>
                 </div>

@@ -3,7 +3,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @endpush
     <x-notification />
-    <div class="flex flex-col justify-items-stretch sm:flex-row sm:justify-between mb-2">
+    <div class="flex flex-col mb-2 justify-items-stretch sm:flex-row sm:justify-between">
         <div class=" justify-self-start">
              <div class= "flex gap-1">
                 <x-btn-add data-tip="Add data" wire:click="$dispatch('openModalManhours')" />
@@ -21,22 +21,22 @@
         </div>
         <div class="flex flex-col sm:flex-wrap sm:w-full sm:max-w-2xl gap-y-1 sm:pl-4 gap-x-2 sm:flex-row ">
             <x-select-search wire:model.live='search_companyCategory'>
-                <option class="opacity-40  " value="" selected>Select All Company Category</option>
+                <option class="opacity-40 " value="" selected>Select All Company Category</option>
                 @foreach ($CompanyCategory as $item)
-                    <option class="opacity-40  " value="{{ $item->name_category_company }}">
+                    <option class="opacity-40 " value="{{ $item->name_category_company }}">
                         {{ $item->name_category_company }}</option>
                 @endforeach
             </x-select-search>
             <x-select-search wire:model.live='search_name_company'>
-                <option class="opacity-40  " value="" selected>Select All Company </option>
+                <option class="opacity-40 " value="" selected>Select All Company </option>
                 @foreach ($Company as $item)
-                    <option class="opacity-40  " value="{{ $item->name_company }}">{{ $item->name_company }}</option>
+                    <option class="opacity-40 " value="{{ $item->name_company }}">{{ $item->name_company }}</option>
                 @endforeach
             </x-select-search>
             <x-select-search wire:model.live='search_department'>
-                <option class="opacity-40  " value="" selected>Select All Department </option>
+                <option class="opacity-40 " value="" selected>Select All Department </option>
                 @foreach ($Department as $item)
-                    <option class="opacity-40  " value="{{ $item->department_name }}">{{ $item->department_name }}
+                    <option class="opacity-40 " value="{{ $item->department_name }}">{{ $item->department_name }}
                     </option>
                 @endforeach
             </x-select-search>
@@ -64,7 +64,7 @@
                     <th>Job Class</th>
                     <th>Manhours</th>
                     <th>Manpower</th>
-                    <th>Action</th>
+                    {{-- <th>Action</th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -86,7 +86,7 @@
                         <td>{{ $cc->job_class }}</td>
                         <td>{{ $cc->manhours }}</td>
                         <td>{{ $cc->manpower }}</td>
-                        <td>
+                        {{-- <td>
                             <div class="">
                                 <x-icon-btn-edit wire:click="$dispatch('openModalManhours',{ id: {{ $cc->id }} })"
                                     data-tip="Update"></x-icon-btn-edit>
@@ -94,7 +94,7 @@
                                     wire:confirm.prompt="Are you sure you want to delete this data ?\n\nType DELETE to confirm|DELETE"
                                     data-tip="Delete"></x-icon-btn-delete>
                             </div>
-                        </td>
+                        </td> --}}
                     </tr>
                 @empty
                     <tr class="text-center">
