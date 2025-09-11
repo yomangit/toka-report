@@ -15,11 +15,7 @@ class Index extends Component
 
     public function name_Click(User $id)
     {
-        $this->user_id = $id->id;
-        $this->name = $id->lookup_name;
-        $this->email = $id->email;
-        $this->username = $id->username;
-        if (!empty($id->password)) {
+         if (!empty($id->password)) {
             // kirim notif ke frontend (pakai session flash atau Livewire dispatch)
             $this->dispatch(
                 'alert',
@@ -36,6 +32,11 @@ class Index extends Component
             // reset form supaya tidak bisa lanjut register
             $this->reset(['user_id', 'name', 'email', 'username']);
         }
+        $this->user_id = $id->id;
+        $this->name = $id->lookup_name;
+        $this->email = $id->email;
+        $this->username = $id->username;
+       
     }
     public function rules()
     {
