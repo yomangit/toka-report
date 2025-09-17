@@ -19,7 +19,7 @@ class KondisiGrapf extends Component
     public $rangeDate;
     public $tglMulai;
     public $tglAkhir;
-
+     public $to
 
     public function mount()
     {
@@ -33,7 +33,7 @@ class KondisiGrapf extends Component
     {
         try {
             Mail::raw('Ini isi email test dari Laravel.', function ($message) {
-                $message->to('yomandenis28@gmail.com')
+                $message->to($this->to)
                     ->subject('Test Kirim Email Laravel');
             });
             $this->dispatch('alert', [
