@@ -1,10 +1,10 @@
    <div>
        <x-notification />
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
-       <div>
+       {{-- <div>
            <input type="email" wire:model.live="to" class="p-2 border rounded" placeholder="Masukkan email penerima">
            <x-btn-add data-tip="Add data" wire:click="test" />
-       </div>
+       </div> --}}
        <div class="mt-2 mt-4 card card-border bg-base-300">
            <div wire:ignore id="chart-divisi" style="height: 400px;"></div>
        </div>
