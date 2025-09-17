@@ -6,7 +6,6 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use App\Models\HazardReport;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class KondisiGrapf extends Component
@@ -34,7 +33,7 @@ class KondisiGrapf extends Component
     {
         try {
             Mail::raw('Ini isi email test dari Laravel.', function ($message) {
-                $message->to('yoman.banea@archimining.com')
+                $message->to('yomandenis28@gmail.com')
                     ->subject('Test Kirim Email Laravel');
             });
             $this->dispatch('alert', [
