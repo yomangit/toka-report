@@ -7,6 +7,7 @@ use Livewire\Attributes\On;
 use App\Models\HazardReport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class KondisiGrapf extends Component
 {
@@ -23,11 +24,41 @@ class KondisiGrapf extends Component
 
     public function mount()
     {
-       
+
         $this->divisiUp();
         $this->kondisiTidakAman();
         $this->tindakanTidakAman();
         $this->updatePerbandinganData();
+    }
+    public function test()
+    {
+        try {
+            Mail::raw('Ini isi email test dari Laravel.', function ($message) {
+                $message->to('yoman.banea@archimining.com')
+                    ->subject('Test Kirim Email Laravel');
+            });
+            $this->dispatch('alert', [
+                'text'            => "Laporan Hazard Anda Sudah Terkirim, Terima kasih sudah melapor!!!",
+                'duration'        => 5000,
+                'destination'     => '/contact',
+                'newWindow'       => true,
+                'close'           => true,
+                'backgroundColor' => "linear-gradient(to right, #06b6d4, #22c55e)",
+            ]);
+        } catch (\Exception $e) {
+
+            $this->dispatch(
+                'alert',
+                [
+                    'text' => '❌ Gagal kirim email: ' . $e->getMessage(),
+                    'duration' => 3000,
+                    'destination' => '/contact',
+                    'newWindow' => true,
+                    'close' => true,
+                    'backgroundColor' => "linear-gradient(to right, #ff3333, #ff6666)",
+                ]
+            );
+        }
     }
 
     #[On('chartUpdated')]
@@ -58,7 +89,7 @@ class KondisiGrapf extends Component
             'count' => $count
         ];
         $this->divisi = json_encode($divisi);
-         $this->dispatch('berhasilUpdateDivisi', $this->divisi);
+        $this->dispatch('berhasilUpdateDivisi', $this->divisi);
     }
     #[On('chartUpdated')]
     public function kondisiTidakAman()
@@ -146,6 +177,7 @@ class KondisiGrapf extends Component
         $this->pie = json_encode($data);
         $this->dispatch('berhasilUpdatePie',   $this->pie);
     }
+
     public function render()
     {
         $this->divisiUp();

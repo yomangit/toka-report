@@ -1,5 +1,7 @@
    <div>
+     <x-notification />
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
+        <x-btn-add data-tip="Add data" wire:click="test" />
        <div class="mt-2 mt-4 card card-border bg-base-300">
            <div wire:ignore id="chart-divisi" style="height: 400px;"></div>
        </div>
