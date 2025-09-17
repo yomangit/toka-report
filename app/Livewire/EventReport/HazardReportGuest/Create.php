@@ -525,6 +525,7 @@ class Create extends Component
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
             ];
             Notification::send($reportTo, new toModerator($content));
+            
             $user_os = User::find($this->report_to);
             $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
