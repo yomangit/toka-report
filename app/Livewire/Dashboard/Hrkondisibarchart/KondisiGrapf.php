@@ -19,7 +19,7 @@ class KondisiGrapf extends Component
     public $rangeDate;
     public $tglMulai;
     public $tglAkhir;
-     public $to
+    public $to;
 
     public function mount()
     {
