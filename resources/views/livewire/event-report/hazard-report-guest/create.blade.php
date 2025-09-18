@@ -259,6 +259,8 @@
                 </div>
             </div>
 
+            <livewire:event-report.hazard-report-guest.action :token="$token" :tgl="$date" />
+            <livewire:event-report.hazard-report-guest.action-index :token="$token" :tgl="$date" />
             <!-- Tombol Simpan -->
             <div class="flex justify-end">
                 <x-btn-save-active wire:target="documentation,division_id" wire:loading.class="btn-disabled">
@@ -267,8 +269,6 @@
             </div>
         </form>
 
-        <livewire:event-report.hazard-report-guest.action :token="$token" :tgl="$date" />
-        <livewire:event-report.hazard-report-guest.action-index :token="$token" :tgl="$date" />
 
         <!-- Flatpickr dan CKEditor -->
         <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
