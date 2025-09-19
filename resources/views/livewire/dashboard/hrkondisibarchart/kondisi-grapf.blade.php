@@ -103,11 +103,7 @@
                , axisLabel: {
                    interval: 0, // tampilkan semua label
                    rotate: 45, // miringkan label
-                   fontSize: 10,
-                   , formatter: function(value) {
-                       //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
-                       return value.split(" ").join("\n");
-                   }
+                   fontSize: 10
                }
            }
            , yAxis: {
