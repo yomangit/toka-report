@@ -97,9 +97,6 @@
            , legend: {
                selectedMode: true
            }
-           , grid: {
-               bottom: 100 // beri ruang bawah agar label miring tidak terpotong
-           }
            , xAxis: {
                type: 'category'
                , data: divisi.label
