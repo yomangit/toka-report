@@ -102,6 +102,7 @@
                , data: divisi.label
                , axisLabel: {
                    interval: 0, // tampilkan semua label
+                    fontSize: 9, // kecilkan font
                    formatter: function(value) {
                        //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
                        return value.split(" ").join("\n");
