@@ -82,7 +82,7 @@
        const warnaOtomatistta = data_tta.count.map(() => getRandomColor());
        const warnaOtomatispie = data_pie.count.map(() => getRandomColor());
 
-       //     ====== DIVISI ======
+       // ====== DIVISI ======
        var dom_divisi = document.getElementById('chart-divisi');
        var myChart_divisi = echarts.init(dom_divisi);
 
@@ -97,13 +97,19 @@
            , legend: {
                selectedMode: true
            }
+           , grid: {
+               bottom: 100 // beri ruang bawah agar label miring tidak terpotong
+           }
            , xAxis: {
                type: 'category'
                , data: divisi.label
                , axisLabel: {
                    interval: 0, // tampilkan semua label
-                   rotate: 45, // miringkan label
-                   fontSize: 10
+                   rotate: 45, // miring 45 derajat
+                   fontSize: 10, // perkecil font biar muat
+                   formatter: function(value) {
+                       return value; // bisa ditambah split kalau mau multi-line
+                   }
                }
            }
            , yAxis: {
@@ -121,6 +127,7 @@
                }
            }]
        };
+
        myChart_divisi.setOption(option_divisi);
 
        Livewire.on('berhasilUpdateDivisi', event => {
@@ -134,6 +141,7 @@
                }]
            });
        });
+
        //    ===== KTA =====
        var dom = document.getElementById('chart_kondisi');
        var myChart = echarts.init(dom);
