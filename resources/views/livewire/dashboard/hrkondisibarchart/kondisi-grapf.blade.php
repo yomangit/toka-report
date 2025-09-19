@@ -1,7 +1,7 @@
    <div>
        <x-notification />
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
-      
+
        <div class="mt-2 mt-4 card card-border bg-base-300">
            <div wire:ignore id="chart-divisi" style="height: 400px;"></div>
        </div>
@@ -97,12 +97,19 @@
            , legend: {
                selectedMode: true
            }
+           , dataZoom: [{
+               type: 'slider'
+               , show: true
+               , xAxisIndex: 0
+               , start: 0
+               , end: 30 // tampilkan 30% pertama, bisa digeser
+           }]
            , xAxis: {
                type: 'category'
                , data: divisi.label
                , axisLabel: {
                    interval: 0, // tampilkan semua label
-                    fontSize: 9, // kecilkan font
+                   fontSize: 9, // kecilkan font
                    formatter: function(value) {
                        //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
                        return value.split(" ").join("\n");
