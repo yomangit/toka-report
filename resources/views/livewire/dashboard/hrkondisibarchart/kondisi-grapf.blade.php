@@ -85,7 +85,16 @@
        // ====== DIVISI ======
        var dom_divisi = document.getElementById('chart-divisi');
        var myChart_divisi = echarts.init(dom_divisi);
+       // filter PT. MSM
+       let filteredLabel = [];
+       let filteredCount = [];
 
+       divisi.label.forEach((lbl, idx) => {
+           if (lbl !== "PT. MSM") {
+               filteredLabel.push(lbl);
+               filteredCount.push(divisi.count[idx]);
+           }
+       });
        var option_divisi = {
            title: {
                text: 'Laporan Hazard Per Divisi'
@@ -102,7 +111,7 @@
            }
            , xAxis: {
                type: 'category'
-               , data: divisi.label
+               , data: filteredLabel
                , axisLabel: {
                    interval: 0, // tampilkan semua label
                    rotate: 45, // miring 45 derajat
@@ -116,7 +125,7 @@
                type: 'value'
            }
            , series: [{
-               data: divisi.count
+               data: filteredCount
                , type: 'bar'
                , itemStyle: {
                    color: (params) => warnaOtomatis[params.dataIndex]
@@ -132,12 +141,21 @@
 
        Livewire.on('berhasilUpdateDivisi', event => {
            let payload_divisi = JSON.parse(event); // ini parse JSON dari PHP
+           let filteredLabelUp = [];
+           let filteredCountUp = [];
+
+           payload_divisi.label.forEach((lbl, idx) => {
+               if (lbl !== "PT. MSM") {
+                   filteredLabelUp.push(lbl);
+                   filteredCountUp.push(divisi.count[idx]);
+               }
+           });
            myChart_divisi.setOption({
                xAxis: {
-                   data: payload_divisi.label
+                   data:filteredLabelUp
                }
                , series: [{
-                   data: payload_divisi.count
+                   data: filteredCountUp
                }]
            });
        });
