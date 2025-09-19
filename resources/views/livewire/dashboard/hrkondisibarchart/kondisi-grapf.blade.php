@@ -112,6 +112,11 @@
                    fontSize: 9, // kecilkan font
                    formatter: function(value) {
                        //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
+                       // 1. Hilangkan kata "Contractor"
+                       value = value.replace(/Contractor/gi, "").trim();
+
+                       // 2. Kalau mengandung "Samudera Mulia Abadi" → ganti jadi "SMA"
+                       value = value.replace(/Samudera Mulia Abadi/gi, "SMA");
                        return value.split(/[\s-]+/).join("\n");
                    }
                }
