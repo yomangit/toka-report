@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard\Hrkondisibarchart;
 
+use App\Mail\TestEmail;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use App\Models\HazardReport;
@@ -29,34 +30,33 @@ class KondisiGrapf extends Component
         $this->tindakanTidakAman();
         $this->updatePerbandinganData();
     }
-    public function test()
+     public string $recipient = '';
+
+    public function send()
     {
+        $this->validate([
+            'recipient' => 'required|email',
+        ]);
+
         try {
-            Mail::raw('Ini isi email test dari Laravel.', function ($message) {
-                $message->to($this->to)
-                    ->subject('Test Kirim Email Laravel');
-            });
+            Mail::to($this->recipient)->send(new TestEmail());
             $this->dispatch('alert', [
-                'text'            => "Laporan Hazard Anda Sudah Terkirim, Terima kasih sudah melapor!!!",
+                'text'            => 'Email berhasil dikirim ke ' . $this->recipient,
                 'duration'        => 5000,
                 'destination'     => '/contact',
                 'newWindow'       => true,
                 'close'           => true,
                 'backgroundColor' => "linear-gradient(to right, #06b6d4, #22c55e)",
             ]);
-        } catch (\Exception $e) {
-
-            $this->dispatch(
-                'alert',
-                [
-                    'text' => '❌ Gagal kirim email: ' . $e->getMessage(),
-                    'duration' => 3000,
-                    'destination' => '/contact',
-                    'newWindow' => true,
-                    'close' => true,
-                    'backgroundColor' => "linear-gradient(to right, #ff3333, #ff6666)",
-                ]
-            );
+        } catch (\Throwable $e) {
+            $this->dispatch('alert', [
+                'text'            => 'Gagal kirim email Graph: ' . $e->getMessage(),
+                'duration'        => 5000,
+                'destination'     => '/contact',
+                'newWindow'       => true,
+                'close'           => true,
+                'backgroundColor' => "linear-gradient(to right, #06b6d4, #22c55e)",
+            ]);
         }
     }
 
