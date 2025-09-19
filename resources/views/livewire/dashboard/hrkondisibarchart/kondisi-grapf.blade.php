@@ -82,275 +82,269 @@
        const warnaOtomatistta = data_tta.count.map(() => getRandomColor());
        const warnaOtomatispie = data_pie.count.map(() => getRandomColor());
 
-       // ====== DIVISI ======
+       //     ====== DIVISI ======
        var dom_divisi = document.getElementById('chart-divisi');
        var myChart_divisi = echarts.init(dom_divisi);
 
        var option_divisi = {
-               title: {
-                   text: 'Laporan Hazard Per Divisi'
-                   , left: 'center'
+           title: {
+               text: 'Laporan Hazard Per Divisi'
+               , left: 'center'
+           }
+           , tooltip: {
+               trigger: 'item'
+           }
+           , legend: {
+               selectedMode: true
+           }
+           , xAxis: {
+               type: 'category'
+               , data: divisi.label
+               , axisLabel: {
+                   interval: 0, // tampilkan semua label
+                   fontSize: 10,
+                   , formatter: function(value) {
+                       //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
+                       return value.split(" ").join("\n");
+                   }
                }
-               , tooltip: {
-                   trigger: 'item'
+           }
+           , yAxis: {
+               type: 'value'
+           }
+           , series: [{
+               data: divisi.count
+               , type: 'bar'
+               , itemStyle: {
+                   color: (params) => warnaOtomatis[params.dataIndex]
                }
-               , legend: {
-                   selectedMode: true
+               , label: {
+                   show: true
+                   , position: 'inside'
                }
-               , dataZoom: [{
-                   type: 'slider'
-                   , show: true
-                   , xAxisIndex: 0
-                   , start: 0
-                   , end: 40
+           }]
+       };
+       myChart_divisi.setOption(option_divisi);
+
+       Livewire.on('berhasilUpdateDivisi', event => {
+           let payload_divisi = JSON.parse(event); // ini parse JSON dari PHP
+           myChart_divisi.setOption({
+               xAxis: {
+                   data: payload_divisi.label
+               }
+               , series: [{
+                   data: payload_divisi.count
                }]
-               , xAxis: {
-                   type: 'category'
-                   , data: divisi.label
-                   , axisLabel: {
-                       interval: 0, // tampilkan semua label
-                       fontSize: 10, // perkecil font biar muat
-                       formatter: function(value) { // return value.length > 20 ? value.slice(0, 20) + '...' : value; return value.split(" ").join("\n"); }
-                       }
-                   }
-                   , yAxis: {
-                       type: 'value'
-                   }
-                   , series: [{
-                       data: divisi.count
-                       , type: 'bar'
-                       , itemStyle: {
-                           color: (params) => warnaOtomatis[params.dataIndex]
-                       }
-                       , label: {
-                           show: true
-                           , position: 'inside'
-                       }
-                   }]
-               };
+           });
+       });
+       //    ===== KTA =====
+       var dom = document.getElementById('chart_kondisi');
+       var myChart = echarts.init(dom);
 
-               myChart_divisi.setOption(option_divisi);
-
-               Livewire.on('berhasilUpdateDivisi', event => {
-                   let payload_divisi = JSON.parse(event); // ini parse JSON dari PHP
-                   myChart_divisi.setOption({
-                       xAxis: {
-                           data: payload_divisi.label
-                       }
-                       , series: [{
-                           data: payload_divisi.count
-                       }]
-                   });
-               });
-
-               //    ===== KTA =====
-               var dom = document.getElementById('chart_kondisi');
-               var myChart = echarts.init(dom);
-
-               var option = {
-                   title: {
-                       text: 'Kondisi Tidak Aman'
-                       , left: 'center'
+       var option = {
+           title: {
+               text: 'Kondisi Tidak Aman'
+               , left: 'center'
+           }
+           , tooltip: {
+               trigger: 'item'
+           }
+           , legend: {
+               selectedMode: true
+           }
+           , xAxis: {
+               type: 'category'
+               , data: data.label
+               , axisLabel: {
+                   interval: 0, // tampilkan semua label
+                   formatter: function(value) {
+                       //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
+                       return value.split(" ").join("\n");
                    }
-                   , tooltip: {
-                       trigger: 'item'
-                   }
-                   , legend: {
-                       selectedMode: true
-                   }
-                   , xAxis: {
-                       type: 'category'
-                       , data: data.label
-                       , axisLabel: {
-                           interval: 0, // tampilkan semua label
-                           formatter: function(value) {
-                               //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
-                               return value.split(" ").join("\n");
-                           }
-                       }
-                   }
-                   , yAxis: {
-                       type: 'value'
-                   }
-                   , series: [{
-                       data: data.count
-                       , type: 'bar'
-                       , itemStyle: {
-                           color: (params) => warnaOtomatis[params.dataIndex]
-                       }
-                       , label: {
-                           show: true
-                           , position: 'inside'
-                       }
-                   }]
-               };
-               myChart.setOption(option);
-
-               Livewire.on('berhasilUpdate', event => {
-                   let payload = JSON.parse(event); // ini parse JSON dari PHP
-                   myChart.setOption({
-                       xAxis: {
-                           data: payload.label
-                       }
-                       , series: [{
-                           data: payload.count
-                       }]
-                   });
-               });
-               //    ===== TTA =====
-               var dom_tta = document.getElementById('chart_tindakan');
-               var myChart_tta = echarts.init(dom_tta);
-
-               var option_tta = {
-                   title: {
-                       text: 'Tindakkan Tidak Aman'
-                       , left: 'center'
-                   }
-                   , tooltip: {
-                       trigger: 'item'
-                   }
-                   , legend: {
-                       selectedMode: true
-                   }
-                   , xAxis: {
-                       type: 'category'
-                       , data: data_tta.label
-                       , axisLabel: {
-                           interval: 0, // tampilkan semua label
-                           formatter: function(value) {
-                               //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
-                               return value.split(" ").join("\n");
-                           }
-                       }
-                   }
-                   , yAxis: {
-                       type: 'value'
-                   }
-                   , series: [{
-                       data: data_tta.count
-                       , type: 'bar'
-                       , itemStyle: {
-                           color: (params) => warnaOtomatistta[params.dataIndex]
-                       }
-                       , label: {
-                           show: true
-                           , position: 'inside'
-                       }
-                   }]
-               };
-               myChart_tta.setOption(option_tta);
-
-               Livewire.on('berhasilUpdate_tta', event => {
-                   let tta = JSON.parse(event); // ini parse JSON dari PHP
-                   myChart_tta.setOption({
-                       xAxis: {
-                           data: tta.label
-                       }
-                       , series: [{
-                           data: tta.count
-                       }]
-                   });
-               });
-               // ===== PIE CHART =====
-
-               const chartData = data_pie.label.map((label, index) => ({
-                   value: data_pie.count[index]
-                   , name: label
-               }));
-               const seriesName = chartData.map(d => d.label).join(', ');
-               console.log(chartData);
-
-               var dom_ie = document.getElementById('chart-pie');
-               var pieChart = echarts.init(dom_ie, null, {
-                   renderer: 'canvas'
-                   , useDirtyRect: false
-               });
-               var app = {};
-
-
-               var option_pie;
-               option_pie = {
-                   title: {
-                       text: 'Leading Indicator Cause Analysis'
-                       , left: 'center'
-                   }
-                   , tooltip: {
-                       trigger: 'item'
-                   }
-                   , legend: {
-                       orient: 'vertical'
-                       , left: 'left'
-                   }
-                   , color: warnaOtomatispie
-                   , series: [{
-                       name: 'Cause Analysis'
-                       , type: 'pie'
-                       , radius: '50%'
-                       , data: chartData
-                       , label: {
-                           formatter: '{d}%' // menampilkan persentase
-                       }
-                       , emphasis: {
-                           itemStyle: {
-                               shadowBlur: 10
-                               , shadowOffsetX: 0
-                               , shadowColor: 'rgba(0, 0, 0, 0.5)'
-                           }
-                       }
-                   }]
-               };
-
-               if (option_pie && typeof option_pie === 'object') {
-                   pieChart.setOption(option_pie);
                }
-               Livewire.on('berhasilUpdatePie', event => {
-                   let payload = JSON.parse(event); // ini parse JSON dari PHP
-                   const chartData = payload.label.map((label, index) => ({
-                       value: payload.count[index]
-                       , name: label
-                   }));
-                   pieChart.setOption({
-                       series: [{
-                           name: 'Cause Analysis'
-                           , type: 'pie'
-                           , radius: '50%'
-                           , data: chartData
-                           , emphasis: {
-                               itemStyle: {
-                                   shadowBlur: 10
-                                   , shadowOffsetX: 0
-                                   , shadowColor: 'rgba(0, 0, 0, 0.5)'
-                               }
-                           }
-                       }]
-                   });
-               });
-               // ===== RESIZE HANDLER =====
-               const charts = [{
-                       dom: dom_divisi
-                       , chart: myChart_divisi
-                   }
-                   , {
-                       dom: dom
-                       , chart: myChart
-                   }
-                   , {
-                       dom: dom_tta
-                       , chart: myChart_tta
-                   }
-                   , {
-                       dom: dom_ie
-                       , chart: pieChart
-                   }
-               , ];
+           }
+           , yAxis: {
+               type: 'value'
+           }
+           , series: [{
+               data: data.count
+               , type: 'bar'
+               , itemStyle: {
+                   color: (params) => warnaOtomatis[params.dataIndex]
+               }
+               , label: {
+                   show: true
+                   , position: 'inside'
+               }
+           }]
+       };
+       myChart.setOption(option);
 
-               charts.forEach(item => {
-                   if (item.dom && item.chart) {
-                       new ResizeObserver(() => {
-                           item.chart.resize();
-                       }).observe(item.dom);
+       Livewire.on('berhasilUpdate', event => {
+           let payload = JSON.parse(event); // ini parse JSON dari PHP
+           myChart.setOption({
+               xAxis: {
+                   data: payload.label
+               }
+               , series: [{
+                   data: payload.count
+               }]
+           });
+       });
+       //    ===== TTA =====
+       var dom_tta = document.getElementById('chart_tindakan');
+       var myChart_tta = echarts.init(dom_tta);
+
+       var option_tta = {
+           title: {
+               text: 'Tindakkan Tidak Aman'
+               , left: 'center'
+           }
+           , tooltip: {
+               trigger: 'item'
+           }
+           , legend: {
+               selectedMode: true
+           }
+           , xAxis: {
+               type: 'category'
+               , data: data_tta.label
+               , axisLabel: {
+                   interval: 0, // tampilkan semua label
+                   formatter: function(value) {
+                       //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
+                       return value.split(" ").join("\n");
                    }
-               });
+               }
+           }
+           , yAxis: {
+               type: 'value'
+           }
+           , series: [{
+               data: data_tta.count
+               , type: 'bar'
+               , itemStyle: {
+                   color: (params) => warnaOtomatistta[params.dataIndex]
+               }
+               , label: {
+                   show: true
+                   , position: 'inside'
+               }
+           }]
+       };
+       myChart_tta.setOption(option_tta);
+
+       Livewire.on('berhasilUpdate_tta', event => {
+           let tta = JSON.parse(event); // ini parse JSON dari PHP
+           myChart_tta.setOption({
+               xAxis: {
+                   data: tta.label
+               }
+               , series: [{
+                   data: tta.count
+               }]
+           });
+       });
+       // ===== PIE CHART =====
+
+       const chartData = data_pie.label.map((label, index) => ({
+           value: data_pie.count[index]
+           , name: label
+       }));
+       const seriesName = chartData.map(d => d.label).join(', ');
+       console.log(chartData);
+
+       var dom_ie = document.getElementById('chart-pie');
+       var pieChart = echarts.init(dom_ie, null, {
+           renderer: 'canvas'
+           , useDirtyRect: false
+       });
+       var app = {};
+
+
+       var option_pie;
+       option_pie = {
+           title: {
+               text: 'Leading Indicator Cause Analysis'
+               , left: 'center'
+           }
+           , tooltip: {
+               trigger: 'item'
+           }
+           , legend: {
+               orient: 'vertical'
+               , left: 'left'
+           }
+           , color: warnaOtomatispie
+           , series: [{
+               name: 'Cause Analysis'
+               , type: 'pie'
+               , radius: '50%'
+               , data: chartData
+               , label: {
+                   formatter: '{d}%' // menampilkan persentase
+               }
+               , emphasis: {
+                   itemStyle: {
+                       shadowBlur: 10
+                       , shadowOffsetX: 0
+                       , shadowColor: 'rgba(0, 0, 0, 0.5)'
+                   }
+               }
+           }]
+       };
+
+       if (option_pie && typeof option_pie === 'object') {
+           pieChart.setOption(option_pie);
+       }
+       Livewire.on('berhasilUpdatePie', event => {
+           let payload = JSON.parse(event); // ini parse JSON dari PHP
+           const chartData = payload.label.map((label, index) => ({
+               value: payload.count[index]
+               , name: label
+           }));
+           pieChart.setOption({
+               series: [{
+                   name: 'Cause Analysis'
+                   , type: 'pie'
+                   , radius: '50%'
+                   , data: chartData
+                   , emphasis: {
+                       itemStyle: {
+                           shadowBlur: 10
+                           , shadowOffsetX: 0
+                           , shadowColor: 'rgba(0, 0, 0, 0.5)'
+                       }
+                   }
+               }]
+           });
+       });
+       // ===== RESIZE HANDLER =====
+       const charts = [{
+               dom: dom_divisi
+               , chart: myChart_divisi
+           }
+           , {
+               dom: dom
+               , chart: myChart
+           }
+           , {
+               dom: dom_tta
+               , chart: myChart_tta
+           }
+           , {
+               dom: dom_ie
+               , chart: pieChart
+           }
+       , ];
+
+       charts.forEach(item => {
+           if (item.dom && item.chart) {
+               new ResizeObserver(() => {
+                   item.chart.resize();
+               }).observe(item.dom);
+           }
+       });
 
    </script>
    @endpush
