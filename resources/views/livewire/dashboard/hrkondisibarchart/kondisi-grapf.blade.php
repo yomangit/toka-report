@@ -109,15 +109,9 @@
                , data: divisi.label
                , axisLabel: {
                    interval: 0, // tampilkan semua label
-                   rotate: 45, // miring 45 derajat
                    fontSize: 10, // perkecil font biar muat
                    formatter: function(value) {
-                       const maxLength = 12;
-                       const lines = [];
-                       for (let i = 0; i < value.length; i += maxLength) {
-                           lines.push(value.substring(i, i + maxLength));
-                       }
-                       return lines.join('\n');
+                       return value;
                    }
                }
            }
