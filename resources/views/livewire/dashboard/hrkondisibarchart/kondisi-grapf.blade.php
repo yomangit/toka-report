@@ -97,6 +97,13 @@
            , legend: {
                selectedMode: true
            }
+           , dataZoom: [{
+               type: 'slider'
+               , show: true
+               , xAxisIndex: 0
+               , start: 0
+               , end: 40
+           }]
            , xAxis: {
                type: 'category'
                , data: divisi.label
