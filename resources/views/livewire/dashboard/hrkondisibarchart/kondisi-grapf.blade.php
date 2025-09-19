@@ -85,16 +85,7 @@
        // ====== DIVISI ======
        var dom_divisi = document.getElementById('chart-divisi');
        var myChart_divisi = echarts.init(dom_divisi);
-       // filter PT. MSM
-       let filteredLabel = [];
-       let filteredCount = [];
 
-       divisi.label.forEach((lbl, idx) => {
-           if (lbl !== "PT. MSM") {
-               filteredLabel.push(lbl);
-               filteredCount.push(divisi.count[idx]);
-           }
-       });
        var option_divisi = {
            title: {
                text: 'Laporan Hazard Per Divisi'
@@ -111,13 +102,18 @@
            }
            , xAxis: {
                type: 'category'
-               , data: filteredLabel
+               , data: divisi.label
                , axisLabel: {
                    interval: 0, // tampilkan semua label
                    rotate: 45, // miring 45 derajat
                    fontSize: 10, // perkecil font biar muat
                    formatter: function(value) {
-                       return value; // bisa ditambah split kalau mau multi-line
+                       const maxLength = 12;
+                       const lines = [];
+                       for (let i = 0; i < value.length; i += maxLength) {
+                           lines.push(value.substring(i, i + maxLength));
+                       }
+                       return lines.join('\n');
                    }
                }
            }
@@ -125,7 +121,7 @@
                type: 'value'
            }
            , series: [{
-               data: filteredCount
+               data: divisi.count
                , type: 'bar'
                , itemStyle: {
                    color: (params) => warnaOtomatis[params.dataIndex]
@@ -141,21 +137,12 @@
 
        Livewire.on('berhasilUpdateDivisi', event => {
            let payload_divisi = JSON.parse(event); // ini parse JSON dari PHP
-           let filteredLabelUp = [];
-           let filteredCountUp = [];
-
-           payload_divisi.label.forEach((lbl, idx) => {
-               if (lbl !== "PT. MSM") {
-                   filteredLabelUp.push(lbl);
-                   filteredCountUp.push(divisi.count[idx]);
-               }
-           });
            myChart_divisi.setOption({
                xAxis: {
-                   data:filteredLabelUp
+                   data: payload_divisi.label
                }
                , series: [{
-                   data: filteredCountUp
+                   data: payload_divisi.count
                }]
            });
        });
