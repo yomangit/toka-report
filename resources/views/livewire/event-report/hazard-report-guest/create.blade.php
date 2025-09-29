@@ -70,7 +70,7 @@
                             </div>
                         </div>
                     </div>
-                    <x-label-error :messages="$errors->get('report_byName')" />
+                    <x-label-error :messages="$errors->get('report_by')" />
                 </div>
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <x-label-req :value="__('Perusahaan terkait')" />
