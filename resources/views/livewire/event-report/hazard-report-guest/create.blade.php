@@ -47,9 +47,9 @@
                     <x-label-req :value="__('report_by')" />
                     <div class="dropdown dropdown-end">
                         <x-input wire:click='clickReportBy' wire:model.live='report_byName' placeholder='cari nama pelapor...' :error="$errors->get('report_byName')" class="cursor-pointer" tabindex="0" role="button" />
-                         <span wire:loading wire:loading.class.remove="hidden" wire:target="reportedBy" class="absolute right-0 hidden -translate-y-1/2 top-1/2 loading loading-spinner text-secondary">
-                            </span>
-                            <div tabindex="0" class="dropdown-content card card-compact  bg-base-300 text-primary-content z-[1] w-full  p-2 shadow {{ $hiddenReportBy }}">
+                        <span wire:loading wire:loading.class.remove="hidden" wire:target="reportedBy" class="absolute right-0 hidden -translate-y-1/2 top-1/2 loading loading-spinner text-secondary">
+                        </span>
+                        <div tabindex="0" class="dropdown-content card card-compact  bg-base-300 text-primary-content z-[1] w-full  p-2 shadow {{ $hiddenReportBy }}">
                             <div class="relative">
                                 <div class="h-full mb-4 overflow-auto max-h-40 scroll-smooth focus:scroll-auto" wire:target='report_byName' wire:loading.class='hidden'>
                                     @forelse ($Report_By as $report_by)
@@ -258,8 +258,8 @@
                 </div>
             </div>
 
-            <livewire:event-report.hazard-report-guest.action :token="$token" :tgl="$date" />
-            <livewire:event-report.hazard-report-guest.action-index :token="$token" :tgl="$date" />
+
+            {{-- <livewire:event-report.hazard-report-guest.action-index :token="$token" :tgl="$date" /> --}}
             <!-- Tombol Simpan -->
             <div class="flex justify-end">
                 <x-btn-save-active wire:target="documentation,division_id" wire:loading.class="btn-disabled">
@@ -268,7 +268,7 @@
             </div>
         </form>
 
-
+        <livewire:event-report.hazard-report-guest.action :token="$token" :tgl="$date" />
         <!-- Flatpickr dan CKEditor -->
         <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
