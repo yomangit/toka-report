@@ -201,7 +201,7 @@ class Create extends Component
             'key_word.required'        => 'Kolom wajib dicentang',
         ];
     }
-     // real-time validation
+    // real-time validation
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
@@ -357,7 +357,7 @@ class Create extends Component
         $this->realTimeFunc();
         $this->ReportByAndReportTo();
         return view('livewire.event-report.hazard-report-guest.create', [
-            'Report_By'  => User::searchNama(trim($this->report_byName))->paginate(100, ['*'], 'Report_By'),
+            'Report_By' => User::searchNama(trim($this->report_byName))->limit(100)->get(),
             'Report_To'  =>  PersonInCharge::where('division_id', $this->division_id)->get(),
             'Division'   => $this->divisi_search,
             'EventType'  => $this->Event_type,
@@ -525,7 +525,7 @@ class Create extends Component
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
             ];
             Notification::send($reportTo, new toModerator($content));
-            
+
             $user_os = User::find($this->report_to);
             $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
