@@ -218,6 +218,7 @@ class Create extends Component
         $reportBy = User::find($id);
         if ($reportBy) {
             $this->report_byName = $reportBy->lookup_name;
+            $this->validateOnly('report_by');
         }
 
         $this->report_by_nolist = null;
