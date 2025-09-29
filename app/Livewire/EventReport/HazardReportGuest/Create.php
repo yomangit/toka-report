@@ -358,7 +358,7 @@ class Create extends Component
         $this->realTimeFunc();
         $this->ReportByAndReportTo();
         return view('livewire.event-report.hazard-report-guest.create', [
-            'Report_By' => User::searchNama(trim($this->report_byName))->limit(100)->get(),
+            'Report_By' => User::searchNama($this->report_byName)->limit(100)->get(),
             'Report_To'  =>  PersonInCharge::where('division_id', $this->division_id)->get(),
             'Division'   => $this->divisi_search,
             'EventType'  => $this->Event_type,
