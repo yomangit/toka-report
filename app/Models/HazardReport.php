@@ -204,7 +204,7 @@ class HazardReport extends Model
                     $q->where('site_name', 'like', '%' . $term . '%');
                 })
                 ->orWhereHas('eventLocation', function ($q) use ($term) {
-                    $q->where('location_event_name', 'like', '%' . $term . '%');
+                    $q->where('location_name', 'like', '%' . $term . '%');
                 })
                 ->orWhereHas('WorkflowDetails', function ($q) use ($term) {
                     $q->whereHas('Status', function ($q) use ($term) {
