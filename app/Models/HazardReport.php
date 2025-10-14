@@ -192,7 +192,7 @@ class HazardReport extends Model
             $term ?? false,
             fn($query, $term) =>
             $query->where('reference', 'LIKE', "%{$term}%")
-                ->orWhere('description', 'LIKE', "%{$term}%")
+                ->orWhere('description', 'LIKE', "%{$term}%")->orWhere('workgroup_name', 'LIKE', "%{$term}%")
                 ->orWhereHas('eventType', function ($q) use ($term) {
                     $q->where('type_eventreport_name', 'like', '%' . $term . '%');
                 })
@@ -211,7 +211,6 @@ class HazardReport extends Model
                         $q->where('status_name', 'like', '%' . $term . '%');
                     });
                 })
-                ->orWhere('workgroup_name', 'like', '%' . $term . '%')
 
         );
     }
