@@ -211,7 +211,7 @@ class HazardReport extends Model
                         $q->where('status_name', 'like', '%' . $term . '%');
                     });
                 })
-                ->where('workgroup_name', 'like', '%' . $term . '%')
+                ->orWhere('workgroup_name', 'like', '%' . $term . '%')
 
         );
     }
