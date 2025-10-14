@@ -53,9 +53,9 @@ class HazardReport extends Model
         'submitter'
     ];
     public function actions()
-{
-    return $this->hasMany(ActionHazard::class, 'hazard_id');
-}
+    {
+        return $this->hasMany(ActionHazard::class, 'hazard_id');
+    }
     public function riskConsequence()
     {
         return $this->belongsTo(RiskConsequence::class);
@@ -109,7 +109,7 @@ class HazardReport extends Model
     {
         return $this->belongsTo(Kondisitidakaman::class, 'kondisitidakamen_id');
     }
-	    public function Tindakantidakaman()
+    public function Tindakantidakaman()
     {
         return $this->belongsTo(Tindakantidakaman::class, 'tindakantidakamen_id');
     }
@@ -166,9 +166,9 @@ class HazardReport extends Model
             fn($q, $term) => $q->where('submitter', $term)
                 ->orWhere('report_to', $term)->orWhere('report_by', $term)
                 ->orWhere('assign_to', $term)->orWhere('assign_to', $term)
-                // ->orWhereHas('reportBy', function ($q) use ($dept_name) {
-                //     $q->where('department_name', 'like', '%' . $dept_name . '%');
-                // })
+            // ->orWhereHas('reportBy', function ($q) use ($dept_name) {
+            //     $q->where('department_name', 'like', '%' . $dept_name . '%');
+            // })
         );
     }
     public function scopeSearchEventSubType($q, $term)
@@ -211,6 +211,7 @@ class HazardReport extends Model
                         $q->where('status_name', 'like', '%' . $term . '%');
                     });
                 })
+                ->where('workgroup_name', 'like', '%' . $term . '%')
 
         );
     }
