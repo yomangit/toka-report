@@ -2,38 +2,40 @@
 
 namespace App\Livewire;
 
-use App\Models\OnesignalPlayer;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use App\Models\OnesignalPlayer;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Berkayk\OneSignal\OneSignalFacade as OneSignal;
 
 class NotificationManager extends Component
 {
-    #[On('userSubscribed')]
-    public function simpanPlayerId($data)
-    {
-        $playerId = $data['player_id'] ?? null;
 
-        if ($playerId && Auth::check()) {
+    #[On('userSubscribed')]
+    public function simpanPlayerId($player_id)
+    {
+        $playerId = $player_id ?? null;
+
+        if (isset($playerId) && Auth::check()) {
             OnesignalPlayer::updateOrCreate(
                 ['player_id' => $playerId],
-                ['user_id' => Auth::id()]
+                ['user_id' => Auth::user()->id]
             );
         }
     }
-
     #[On('removePlayerId')]
-    public function removePlayerId($data)
+    public function removePlayerId($player_id)
     {
-        $playerId = $data['player_id'] ?? null;
+        $playerId = $player_id ?? null;
 
-        if (!$playerId || !Auth::check()) return;
+        if (!$playerId || !auth()->check()) return;
 
-        OnesignalPlayer::where('user_id', Auth::id())
+        OnesignalPlayer::where('user_id', auth()->id())
             ->where('player_id', $playerId)
             ->delete();
     }
-
     public function render()
     {
         return view('livewire.notification-manager');
