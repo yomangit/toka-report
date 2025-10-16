@@ -14,10 +14,9 @@ class NotificationManager extends Component
 {
 
     #[On('userSubscribed')]
-    public function simpanPlayerId($player_id)
+    public function simpanPlayerId($data)
     {
-        dd($player_id);
-        $playerId = $player_id[0]??null;
+        $playerId = $data['player_id'] ?? null;
 
         if (isset($playerId) && Auth::check()) {
             OnesignalPlayer::updateOrCreate(
@@ -27,9 +26,9 @@ class NotificationManager extends Component
         }
     }
     #[On('removePlayerId')]
-    public function removePlayerId($player_id)
+    public function removePlayerId($data)
     {
-        $playerId = $player_id ?? null;
+        $playerId = $data['player_id'] ?? null;
 
         if (!$playerId || !auth()->check()) return;
 
