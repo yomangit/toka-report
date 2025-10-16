@@ -16,6 +16,7 @@ class NotificationManager extends Component
     #[On('userSubscribed')]
     public function simpanPlayerId($player_id)
     {
+        dd($player_id);
         $playerId = $player_id[0]??null;
 
         if (isset($playerId) && Auth::check()) {
