@@ -53,7 +53,7 @@ class Detail extends Component
     public $kondisitidakamen_id;
     public $likelihoods, $consequences;
     public $tindakantidakamen_id;
-    public $location_name, $search, $show_immidiate = 'yes', $procced_to, $location_id, $divider = 'Details Hazard Report', $TableRisk = [], $RiskAssessment , $EventSubType = [], $ResponsibleRole, $EventUserSecurity = [];
+    public $location_name, $search, $show_immidiate = 'yes', $procced_to, $location_id, $divider = 'Details Hazard Report', $TableRisk = [], $RiskAssessment, $EventSubType = [], $ResponsibleRole, $EventUserSecurity = [];
     public $searchLikelihood                        = '', $searchConsequence                        = '', $tablerisk_id, $risk_assessment_id, $reference, $workflow_detail_id, $division_id, $division, $parent_Company, $business_unit, $dept;
     public $risk_likelihood_id, $risk_likelihood_notes, $event_category, $select_divisi;
     public $risk_consequence_id, $risk_consequence_doc, $risk_probability_doc;
@@ -66,7 +66,7 @@ class Detail extends Component
     protected $listeners      = ['ubahData' => 'changeData'];
     public function mount($id)
     {
-         $this->likelihoods = RiskLikelihood::orderByDesc('level')->get();
+        $this->likelihoods = RiskLikelihood::orderByDesc('level')->get();
         $this->consequences = RiskConsequence::orderBy('level')->get();
         $projectExists = HazardReport::whereId($id)->exists();
 
@@ -78,7 +78,11 @@ class Detail extends Component
                 ->orWhere('report_to', Auth::user()->id)
                 ->orWhere('assign_to', Auth::user()->id)
                 ->orWhere('also_assign_to', Auth::user()->id);
-            if ($projectAkses->exists() || Auth::user()->role_user_permit_id == 1) {
+            // ✅ Tambahan akses berdasarkan event_user_securities.responsible_role_id == 1
+            $hasResponsibleAccess = EventUserSecurity::where('user_id', Auth::id())
+                ->where('responsible_role_id', 1)
+                ->exists();
+            if ($projectAkses->exists() || Auth::user()->role_user_permit_id == 1 || $hasResponsibleAccess) {
                 $HazardReport                = HazardReport::whereId($this->data_id)->first();
                 $this->risk_consequence_id   = $HazardReport->risk_consequence_id;
                 $this->risk_likelihood_id    = $HazardReport->risk_likelihood_id;
@@ -334,15 +338,15 @@ class Detail extends Component
         }
     }
 
-    public function riskId($risk_likelihood_id, $risk_consequence_id, )
+    public function riskId($risk_likelihood_id, $risk_consequence_id,)
     {
         $this->risk_consequence_id = $risk_consequence_id;
-		 $this->risk_consequence_doc = RiskConsequence::where('id',  $this->risk_consequence_id)->first()->description;
+        $this->risk_consequence_doc = RiskConsequence::where('id',  $this->risk_consequence_id)->first()->description;
         $this->risk_likelihood_id = $risk_likelihood_id;
-		$this->risk_likelihood_notes = RiskLikelihood::where('id', $this->risk_likelihood_id)->first()->notes;
+        $this->risk_likelihood_notes = RiskLikelihood::where('id', $this->risk_likelihood_id)->first()->notes;
         $id_table = RiskMatrixCell::where('likelihood_id', $this->risk_likelihood_id)->where('risk_consequence_id', $this->risk_consequence_id)->first()->id;
-        $risk_assessment_id = RiskAssessmentMatrix::where('risk_matrix_cell_id',$id_table)->first()->risk_assessment_id;
-        $this->RiskAssessment =RiskAssessment::whereId($risk_assessment_id)->first();
+        $risk_assessment_id = RiskAssessmentMatrix::where('risk_matrix_cell_id', $id_table)->first()->risk_assessment_id;
+        $this->RiskAssessment = RiskAssessment::whereId($risk_assessment_id)->first();
     }
 
     public function download()
