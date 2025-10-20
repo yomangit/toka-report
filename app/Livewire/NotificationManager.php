@@ -13,29 +13,29 @@ use Berkayk\OneSignal\OneSignalFacade as OneSignal;
 class NotificationManager extends Component
 {
 
-    #[On('userSubscribed')]
-    public function simpanPlayerId($player_id)
-    {
-        $playerId = $player_id ?? null;
+    // #[On('userSubscribed')]
+    // public function simpanPlayerId($player_id)
+    // {
+    //     $playerId = $player_id ?? null;
 
-        if (isset($playerId) && Auth::check()) {
-            OnesignalPlayer::updateOrCreate(
-                ['player_id' => $playerId],
-                ['user_id' => Auth::user()->id]
-            );
-        }
-    }
-    #[On('removePlayerId')]
-    public function removePlayerId($player_id)
-    {
-        $playerId = $player_id ?? null;
+    //     if (isset($playerId) && Auth::check()) {
+    //         OnesignalPlayer::updateOrCreate(
+    //             ['player_id' => $playerId],
+    //             ['user_id' => Auth::user()->id]
+    //         );
+    //     }
+    // }
+    // #[On('removePlayerId')]
+    // public function removePlayerId($player_id)
+    // {
+    //     $playerId = $player_id ?? null;
 
-        if (!$playerId || !auth()->check()) return;
+    //     if (!$playerId || !auth()->check()) return;
 
-        OnesignalPlayer::where('user_id', auth()->id())
-            ->where('player_id', $playerId)
-            ->delete();
-    }
+    //     OnesignalPlayer::where('user_id', auth()->id())
+    //         ->where('player_id', $playerId)
+    //         ->delete();
+    // }
     public function render()
     {
         return view('livewire.notification-manager');
