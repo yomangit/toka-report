@@ -79,54 +79,11 @@ class Detail extends Component
                 ->orWhere('assign_to', Auth::user()->id)
                 ->orWhere('also_assign_to', Auth::user()->id);
             // ✅ Tambahan akses berdasarkan event_user_securities.responsible_role_id == 1
-            $hasResponsibleAccessOHS = EventUserSecurity::where('user_id', Auth::id())
+            $hasResponsibleAccess = EventUserSecurity::where('user_id', Auth::id())
                 ->where('responsible_role_id', 1)
-                ->where('type_event_report_id', 8) // Wajib sama eventnya
+                ->where('type_event_report_id', $projectAkses->event_type_id) // Wajib sama eventnya
                 ->exists();
-            $hasResponsibleAccessENV = EventUserSecurity::where('user_id', Auth::id())
-                ->where('responsible_role_id', 1)
-                ->where('type_event_report_id', 9) // Wajib sama eventnya
-                ->exists();
-            if ($projectAkses->exists() && Auth::user()->role_user_permit_id == 1 && $hasResponsibleAccessOHS) {
-                $HazardReport                = HazardReport::whereId($this->data_id)->first();
-                $this->risk_consequence_id   = $HazardReport->risk_consequence_id;
-                $this->risk_likelihood_id    = $HazardReport->risk_likelihood_id;
-                $this->report_by             = $HazardReport->report_by;
-                $this->key_word             = $HazardReport->key_word;
-                $this->kondisitidakamen_id             = $HazardReport->kondisitidakamen_id;
-                $this->tindakantidakamen_id             = $HazardReport->tindakantidakamen_id;
-                $this->report_to             = $HazardReport->report_to;
-                $this->location_id             = $HazardReport->event_location_id;
-                $this->submitter             = $HazardReport->submitter;
-                $this->assign_to             = $HazardReport->assign_to;
-                $this->tindakkan_selanjutnya = $HazardReport->tindakkan_selanjutnya;
-                $this->also_assign_to        = $HazardReport->also_assign_to;
-                $this->division_id           = $HazardReport->division_id;
-                $this->reference             = $HazardReport->reference;
-                $this->workflow_detail_id    = $HazardReport->workflow_detail_id;
-                $this->workflow_template_id  = $HazardReport->workflow_template_id;
-                $this->event_type_id         = $HazardReport->event_type_id;
-                $this->event_category        = ($this->event_type_id == null) ? "" : $HazardReport->eventType->event_category_id;
-                $this->sub_event_type_id     = $HazardReport->sub_event_type_id;
-                $this->report_toName         = ($HazardReport->report_to) ? $HazardReport->reportsTo->lookup_name : $HazardReport->report_toName;
-                $this->report_byName         = ($HazardReport->report_by) ? $HazardReport->reportBy->lookup_name : $HazardReport->report_byName;
-                $this->report_to_nolist      = ($HazardReport->report_to_nolist) ? $HazardReport->report_to_nolist : "";
-                $this->report_by_nolist      = ($HazardReport->report_by_nolist) ? $HazardReport->report_by_nolist : "";
-                $this->date                  = DateTime::createFromFormat('Y-m-d : H:i', $HazardReport->date)->format('d-m-Y : H:i');
-                // $this->site_id = $HazardReport->site_id;
-                $this->task_being_done                  = $HazardReport->task_being_done;
-                $this->description_temp                 = $HazardReport->description;
-                $this->immediate_corrective_action_temp = $HazardReport->immediate_corrective_action;
-                $this->suggested_corrective_action_temp = $HazardReport->suggested_corrective_action;
-                $this->corrective_action_suggested_temp = $HazardReport->corrective_action_suggested;
-                $this->company_involved                 = $HazardReport->company_involved;
-                $this->location_name                    = $HazardReport->location_name;
-                $this->comment_temp                     = $HazardReport->comment;
-            } else {
-                abort(401, 'Unauthorized Access Denied');
-            }
-
-            if ($projectAkses->exists() && Auth::user()->role_user_permit_id == 1 && $hasResponsibleAccessENV) {
+            if ($projectAkses->exists() || Auth::user()->role_user_permit_id == 1 || $hasResponsibleAccess) {
                 $HazardReport                = HazardReport::whereId($this->data_id)->first();
                 $this->risk_consequence_id   = $HazardReport->risk_consequence_id;
                 $this->risk_likelihood_id    = $HazardReport->risk_likelihood_id;
