@@ -122,7 +122,11 @@ class Detail extends Component
                 $this->company_involved                 = $HazardReport->company_involved;
                 $this->location_name                    = $HazardReport->location_name;
                 $this->comment_temp                     = $HazardReport->comment;
-            } else if ($projectAkses->exists() || Auth::user()->role_user_permit_id == 1 || $hasResponsibleAccessENV) {
+            } else {
+                abort(401, 'Unauthorized Access Denied');
+            }
+
+            if ($projectAkses->exists() || Auth::user()->role_user_permit_id == 1 || $hasResponsibleAccessENV) {
                 $HazardReport                = HazardReport::whereId($this->data_id)->first();
                 $this->risk_consequence_id   = $HazardReport->risk_consequence_id;
                 $this->risk_likelihood_id    = $HazardReport->risk_likelihood_id;
