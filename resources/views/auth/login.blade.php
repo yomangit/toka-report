@@ -49,5 +49,5 @@
             </x-primary-button>
         </div>
     </form>
-    <livewire:notification-manager />
+    {{-- <livewire:notification-manager /> --}}
 </x-guest-layout>
