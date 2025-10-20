@@ -238,9 +238,7 @@ class Index extends Component
             $komentar = strip_tags($this->comment);
             $assignedUserIds = array_filter([$this->assign_to, $this->also_assign_to]);
 
-            $assignedUsers = User::whereIn('id', $assignedUserIds)
-                ->whereNotNull('email')
-                ->get();
+            $assignedUsers = User::whereIn('id', $assignedUserIds)->whereNotNull('email')->get();
 
             foreach ($assignedUsers as $user) {
                 $offerData = [
@@ -252,7 +250,6 @@ class Index extends Component
                     'actionUrl'  => url("https://tokasafe.archimining.com/eventReport/hazardReportDetail/{$url}"),
                 ];
                 try {
-
                     Notification::send($user, new toModerator($offerData));
                 } catch (\Throwable $th) {
                     $this->dispatch('alert', [
