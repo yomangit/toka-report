@@ -78,11 +78,11 @@
                     <th>{{ $HazardReport->firstItem() + $index }}</th>
                     <td>{{ \DateTime::createFromFormat('Y-m-d : H:i', $item->date)?->format('d-m-Y') ?? '-' }}</td>
                     <td>{{ $item->reference }}</td>
-                   <td>{{ strip_tags($item->description) ?? '-' }}</td>
+                    <td>{{ strip_tags($item->description) ?? '-' }}</td>
                     <td>{{ $item->subEventType?->event_sub_type_name ?? '-' }}</td>
                     <td>{{ $item->workgroup_name ?? '-' }}</td>
                     <td>
-                        {{ $ActionHazard->where('hazard_id', $item->id)->count('due_date') }} / 
+                        {{ $ActionHazard->where('hazard_id', $item->id)->count('due_date') }} /
                         {{ $ActionHazard->where('hazard_id', $item->id)->whereNull('completion_date')->count('completion_date') }}
                     </td>
                     <td>
@@ -99,8 +99,10 @@
                             $item->report_to == auth()->id() ||
                             $item->assign_to == auth()->id() ||
                             $item->also_assign_to == auth()->id()||
-                            auth()->user()->moderatorAkases->contains('pivot.responsible_role_id', 1)
-                            )
+                            auth()->user()->moderatorAkases->contains(function($akses) use ($item) {
+                            return $akses->pivot->responsible_role_id == 1
+                            && $akses->pivot->type_event_report_id == $item->event_type_id;
+                            }))
                             <x-icon-btn-detail href="{{ route('hazardReportDetail', ['id' => $item->id]) }}" data-tip="Details" />
                             <x-icon-btn-delete data-tip="delete" wire:click='delete({{ $item->id }})' wire:confirm.prompt="Are you sure delete {{ $item->reference }}?\n\nType DELETE to confirm|DELETE" />
                             @endif
