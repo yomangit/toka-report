@@ -87,7 +87,7 @@ class Detail extends Component
                 ->where('responsible_role_id', 1)
                 ->where('type_event_report_id', 9) // Wajib sama eventnya
                 ->exists();
-            if ($projectAkses->exists() || Auth::user()->role_user_permit_id == 1 && $hasResponsibleAccessOHS) {
+            if ($projectAkses->exists() && Auth::user()->role_user_permit_id == 1 && $hasResponsibleAccessOHS) {
                 $HazardReport                = HazardReport::whereId($this->data_id)->first();
                 $this->risk_consequence_id   = $HazardReport->risk_consequence_id;
                 $this->risk_likelihood_id    = $HazardReport->risk_likelihood_id;
@@ -126,7 +126,7 @@ class Detail extends Component
                 abort(401, 'Unauthorized Access Denied');
             }
 
-            if ($projectAkses->exists() || Auth::user()->role_user_permit_id == 1 && $hasResponsibleAccessENV) {
+            if ($projectAkses->exists() && Auth::user()->role_user_permit_id == 1 && $hasResponsibleAccessENV) {
                 $HazardReport                = HazardReport::whereId($this->data_id)->first();
                 $this->risk_consequence_id   = $HazardReport->risk_consequence_id;
                 $this->risk_likelihood_id    = $HazardReport->risk_likelihood_id;
