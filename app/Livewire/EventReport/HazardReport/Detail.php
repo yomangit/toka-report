@@ -80,9 +80,7 @@ class Detail extends Component
                 ->orWhere('also_assign_to', Auth::user()->id);
             // ✅ Tambahan akses berdasarkan event_user_securities.responsible_role_id == 1
             $hasResponsibleAccess = EventUserSecurity::where('user_id', Auth::id())
-                ->where('responsible_role_id', 1)
-                ->where('type_event_report_id', $projectAkses->event_type_id) // Wajib sama eventnya
-                ->exists();
+                ->where('responsible_role_id', 1)->exists();
             if ($projectAkses->exists() || Auth::user()->role_user_permit_id == 1 || $hasResponsibleAccess) {
                 $HazardReport                = HazardReport::whereId($this->data_id)->first();
                 $this->risk_consequence_id   = $HazardReport->risk_consequence_id;
