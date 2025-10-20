@@ -362,13 +362,17 @@ class Detail extends Component
         $this->report_by_nolist = null;
         $this->hiddenReportBy   = 'hidden';
     }
+
     public function reportedTo($id)
     {
-        $this->report_to        = $id;
-        $ReportTo               = User::whereId($id)->first();
-        $this->report_toName    = $ReportTo->lookup_name;
-        $this->report_to_nolist = null;
-        $this->hiddenReportTo   = 'hidden';
+        if (!empty($this->report_to)) {
+            $this->reset('report_to');
+            $this->report_to        = $id;
+            $ReportTo               = User::whereId($id)->first();
+            $this->report_toName    = $ReportTo->lookup_name;
+            $this->report_to_nolist = null;
+            $this->hiddenReportTo   = 'hidden';
+        }
     }
     public function store()
     {
