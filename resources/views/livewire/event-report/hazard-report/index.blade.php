@@ -101,7 +101,7 @@
                             $item->also_assign_to == auth()->id()||
                             auth()->user()->moderatorAkases->contains(function($akses) use ($item) {
                             return $akses->pivot->responsible_role_id == 1
-                            && $akses->pivot->type_event_report_id == $item->event_type_id;
+                            && $akses->pivot->type_event_report_id == 9;
                             }))
                             <x-icon-btn-detail href="{{ route('hazardReportDetail', ['id' => $item->id]) }}" data-tip="Details" />
                             <x-icon-btn-delete data-tip="delete" wire:click='delete({{ $item->id }})' wire:confirm.prompt="Are you sure delete {{ $item->reference }}?\n\nType DELETE to confirm|DELETE" />
