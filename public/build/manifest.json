@@ -4,7 +4,7 @@
     "name": "apexcharts.common"
   },
   "resources/css/app.css": {
-    "file": "assets/app-QmHOdKrM.css",
+    "file": "assets/app-XZJHLlDb.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -18,7 +18,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-DnJ8pqZ9.js",
+    "file": "assets/app-CHz0qWCY.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
