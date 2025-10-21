@@ -135,7 +135,7 @@
                 </div>
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <x-label-req :value="__('date of event')" />
-                    <x-input-date id="tanggal" wire:model.live='date' readonly :error="$errors->get('date')" />
+                    <x-input id="tanggal" wire:model.live='date' readonly :error="$errors->get('date')" />
                     <x-label-error :messages="$errors->get('date')" />
                 </div>
                 <div class="w-full max-w-md xl:max-w-xl form-control">

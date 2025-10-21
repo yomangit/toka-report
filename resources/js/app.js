@@ -34,7 +34,7 @@ const initDatePickers = () => {
             options: {
                 enableTime: true,
                 dateFormat: "d-m-Y : H:i",
-                time_24hr: false
+                time_24hr: true
             }
         },
         {
