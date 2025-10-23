@@ -215,7 +215,7 @@ class CreateAndUpdate extends Component
         $this->reset('manualPelaporName');
         $this->manualPelaporMode = false;
         if (strlen($this->searchPelapor) > 1) {
-            $this->pelapors = User::where('lookup_name', 'like', '%' . $this->searchPelapor . '%')
+            $this->pelapors = User::searchNama(trim($this->searchPelapor))
                 ->orderBy('lookup_name')
                 ->limit(10)
                 ->get();
