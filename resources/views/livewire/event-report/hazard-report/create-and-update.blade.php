@@ -58,6 +58,7 @@
                     </div>
                     <x-label-error :messages="$errors->get('key_word')" />
                 </div>
+                @if ($key_word)
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <div x-data x-show="$wire.key_word === 'kta'" x-transition.opacity.duration.300ms>
                         <x-label-req :value="__('Key Word')" />
@@ -82,6 +83,7 @@
                         <x-label-error :messages="$errors->get('tindakantidakamen_id')" />
                     </div>
                 </div>
+                @endif
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <fieldset class="fieldset ">
                         <x-label-req :value="__('Dilaporkan Oleh')" />
