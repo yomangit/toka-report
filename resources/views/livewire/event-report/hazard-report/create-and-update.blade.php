@@ -45,7 +45,7 @@
                 </div>
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <x-label-req :value="__('Key Word')" />
-                    <div class="flex items-center gap-4 ">
+                    <div class="flex items-center gap-4 border">
                         <label class="flex items-center space-x-1">
                             <input wire:model.live="key_word" value="kta" type="radio" name="key_word" class="radio radio-sm radio-primary" />
                             <span class="text-xs font-semibold">Kondisi Tidak Aman</span>
