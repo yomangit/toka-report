@@ -59,6 +59,30 @@
                     <x-label-error :messages="$errors->get('key_word')" />
                 </div>
                 <div class="w-full max-w-md xl:max-w-xl form-control">
+                    <div x-data x-show="$wire.key_word === 'kta'" x-transition.opacity.duration.300ms>
+                        <x-label-req :value="__('Key Word')" />
+                        <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')">
+                            <option value="" selected>Pilih KTA...</option>
+                            @foreach ($KTA as $kta)
+                            <option value="{{ $kta->id }}">{{ $kta->name }}</option>
+                            @endforeach
+                        </x-select>
+                        <x-label-error :messages="$errors->get('kondisitidakamen_id')" />
+                    </div>
+
+                    <!-- TTA Select -->
+                    <div x-data x-show="$wire.key_word === 'tta'" x-transition.opacity.duration.300ms>
+                        <x-label-req :value="__('Key Word')" />
+                        <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
+                            <option value="" selected>Pilih TTA</option>
+                            @foreach ($TTA as $tta)
+                            <option value="{{ $tta->id }}">{{ $tta->name }}</option>
+                            @endforeach
+                        </x-select>
+                        <x-label-error :messages="$errors->get('tindakantidakamen_id')" />
+                    </div>
+                </div>
+                <div class="w-full max-w-md xl:max-w-xl form-control">
                     <fieldset class="fieldset ">
                         <x-label-req :value="__('Dilaporkan Oleh')" />
                         <div class="relative">
