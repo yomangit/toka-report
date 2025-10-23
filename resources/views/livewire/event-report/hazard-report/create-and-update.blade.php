@@ -45,7 +45,7 @@
                 </div>
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <x-label-req :value="__('Key Word')" />
-                    <div class="flex items-center gap-4 p-0.5 pl-3 border border-base-300">
+                    <div class="flex items-center gap-4 p-0.5 pl-3 border border-base-300 rounded">
                         <label class="flex items-center space-x-1">
                             <input wire:model.live="key_word" value="kta" type="radio" name="key_word" class="radio radio-sm radio-primary" />
                             <span class="text-xs font-semibold">Kondisi Tidak Aman</span>
@@ -60,7 +60,7 @@
                 </div>
                 @if ($key_word)
                 <div class="w-full max-w-md xl:max-w-xl form-control">
-                    <div x-data x-show="$wire.key_word === 'kta'" >
+                    <div x-data x-show="$wire.key_word === 'kta'">
                         <x-label-req :value="__('Key Word')" />
                         <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')">
                             <option value="" selected>Pilih KTA...</option>
@@ -72,7 +72,7 @@
                     </div>
 
                     <!-- TTA Select -->
-                    <div x-data x-show="$wire.key_word === 'tta'" >
+                    <div x-data x-show="$wire.key_word === 'tta'">
                         <x-label-req :value="__('Key Word')" />
                         <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
                             <option value="" selected>Pilih TTA</option>
@@ -93,14 +93,14 @@
                             <!-- Dropdown hasil search (teleport keluar collapse) -->
                             @if ($showPelaporDropdown)
                             <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
-
+                                <div class="hidden" wire:loading.class.remove="hidden" wire:loading wire:target="selectPelapor">
+                                    <span class="loading loading-spinner loading-sm text-secondary"></span>
+                                </div>
                                 @if (count($pelapors) > 0)
                                 @foreach ($pelapors as $pelapor)
                                 <li wire:click="selectPelapor({{ $pelapor->id }}, '{{ $pelapor->lookup_name }}')" class="px-3 py-2 text-xs cursor-pointer hover:bg-base-200">
                                     {{ $pelapor->lookup_name }}
-                                    <div class="hidden" wire:loading.class.remove="hidden" wire:loading wire:target="selectPelapor">
-                                        <span class="loading loading-spinner loading-sm text-secondary"></span>
-                                    </div>
+
                                 </li>
                                 @endforeach
                                 @else
