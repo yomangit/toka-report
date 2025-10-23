@@ -152,7 +152,10 @@ class CreateAndUpdate extends Component
     public function mount()
     {
         $this->token = Str::uuid()->toString();
-        
+        if (Auth::check()) {
+            $this->searchPelapor = Auth::user()->lookup_name ?? Auth::user()->name;
+            $this->pelapor_id     = Auth::id();
+        }
     }
     public function rules()
     {
@@ -406,10 +409,6 @@ class CreateAndUpdate extends Component
     }
     public function render()
     {
-        if (Auth::check()) {
-            $this->searchPelapor = Auth::user()->lookup_name ?? Auth::user()->name;
-            $this->pelapor_id     = Auth::id();
-        }
         $this->realTimeFunc();
         $this->ReportByAndReportTo();
 
