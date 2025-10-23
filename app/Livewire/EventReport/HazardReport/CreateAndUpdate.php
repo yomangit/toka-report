@@ -72,7 +72,7 @@ class CreateAndUpdate extends Component
     public $location_id;
     public $showLocationDropdown = false;
     public $locations = [];
-    public $searchLocation='';
+    public $searchLocation = '';
     // IDs and Relational Keys
 
     public $tablerisk_id;
@@ -357,7 +357,11 @@ class CreateAndUpdate extends Component
         $this->select_divisi = null;
         $this->division_id = null;
     }
-
+    public function updatedEventTypeId($value)
+    {
+        // Misalnya otomatis ubah field lain
+        $this->EventSubType = $value ? Eventsubtype::where('event_type_id', $value)->get() : [];
+    }
     public function realTimeFunc()
     {
         // Tampilkan lokasi jika dipilih
@@ -372,9 +376,7 @@ class CreateAndUpdate extends Component
         }
 
         // Ambil subtype jika event_type_id dipilih
-        $this->EventSubType = $this->event_type_id
-            ? Eventsubtype::where('event_type_id', $this->event_type_id)->get()
-            : [];
+
 
         // Ambil ekstensi file dokumentasi
         if ($this->documentation) {

@@ -205,7 +205,7 @@
                         <x-label-req :value="__('eventLocation')" />
                         <div class="relative">
                             <!-- Input Search -->
-                            <x-input wire:model.live='searchLocation' placeholder='cari divisi...' :error="$errors->get('location_id')" class="cursor-pointer" />
+                            <x-input wire:model.live='searchLocation' placeholder='Pilih Lokasi...' :error="$errors->get('location_id')" class="cursor-pointer" />
                             <!-- Dropdown hasil search -->
                             @if($showLocationDropdown && count($locations) > 0)
                             <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
