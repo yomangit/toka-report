@@ -215,8 +215,7 @@ class CreateAndUpdate extends Component
     // Fungsi dari Pelapor
     public function updatedSearchPelapor()
     {
-        $this->reset('manualPelaporName', 'pelapor_id');
-        $this->manualPelaporMode = false;
+        
         if (strlen($this->searchPelapor) >= 1) {
             $this->pelapors = User::searchNama(trim($this->searchPelapor))
                 ->orderBy('lookup_name')
@@ -227,6 +226,8 @@ class CreateAndUpdate extends Component
             $this->pelapors = [];
             $this->showPelaporDropdown = false;
         }
+        $this->reset('manualPelaporName', 'pelapor_id');
+        $this->manualPelaporMode = false;
     }
     public function selectPelapor($id, $name)
     {
