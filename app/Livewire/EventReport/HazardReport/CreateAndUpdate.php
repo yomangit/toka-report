@@ -212,7 +212,7 @@ class CreateAndUpdate extends Component
     // Fungsi dari Pelapor
     public function updatedSearchPelapor()
     {
-        $this->reset('manualPelaporName');
+        $this->reset('manualPelaporName','pelapor_id');
         $this->manualPelaporMode = false;
         if (strlen($this->searchPelapor) > 1) {
             $this->pelapors = User::searchNama(trim($this->searchPelapor))
