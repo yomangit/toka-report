@@ -212,7 +212,6 @@ class CreateAndUpdate extends Component
             'pelapor_id.required' => 'Pelapor wajib dipilih.',
         ];
     }
-
     // Fungsi dari Pelapor
     public function updatedSearchPelapor()
     {
