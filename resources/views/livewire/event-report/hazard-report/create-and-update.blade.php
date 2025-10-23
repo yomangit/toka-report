@@ -67,8 +67,8 @@
 
                                     @if (count($pelapors) > 0)
                                     @foreach ($pelapors as $pelapor)
-                                    <li wire:click="selectPelapor({{ $pelapor->id }}, '{{ $pelapor->name }}')" class="px-3 py-2 cursor-pointer hover:bg-base-200">
-                                        {{ $pelapor->name }}
+                                    <li wire:click="selectPelapor({{ $pelapor->id }}, '{{ $pelapor->lookup_name }}')" class="px-3 py-2 cursor-pointer hover:bg-base-200">
+                                        {{ $pelapor->lookup_name }}
                                     </li>
                                     @endforeach
                                     @else
