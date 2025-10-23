@@ -169,12 +169,13 @@
                             @if($showLocationDropdown && count($locations) > 0)
                             <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
                                 <!-- Spinner ketika klik -->
-                                <div wire:loading wire:target="selectLocation" class="p-2 text-center">
-                                    <span class="loading loading-spinner loading-sm text-secondary"></span>
-                                </div>
+                               
                                 @foreach($locations as $loc)
                                 <li wire:click="selectLocation({{ $loc->id }}, '{{ $loc->location_name }}')" class="px-3 py-2 cursor-pointer hover:bg-base-200">
                                     {{ $loc->location_name }}
+                                    <div class="hidden" wire:loading.class.remove="hidden" wire:loading wire:target="selectLocation">
+                                        <span class="loading loading-spinner loading-sm text-secondary"></span>
+                                    </div>
                                 </li>
                                 @endforeach
                             </ul>
