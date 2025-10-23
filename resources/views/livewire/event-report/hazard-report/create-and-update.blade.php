@@ -52,9 +52,7 @@
                             <!-- Dropdown hasil search (teleport keluar collapse) -->
                             @if ($showPelaporDropdown)
                                 <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
-                                    <div wire:loading wire:target="selectPelapor" class="p-2 text-center">
-                                        <span class="loading loading-spinner loading-sm text-secondary"></span>
-                                    </div>
+                                        <span wire:loading wire:target="selectPelapor" class="loading loading-spinner loading-sm text-secondary"></span>
                                     @if (count($pelapors) > 0)
                                     @foreach ($pelapors as $pelapor)
                                     <li wire:click="selectPelapor({{ $pelapor->id }}, '{{ $pelapor->lookup_name }}')" class="px-3 py-2 text-xs cursor-pointer hover:bg-base-200">
