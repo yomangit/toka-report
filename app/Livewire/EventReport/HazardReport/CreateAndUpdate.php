@@ -58,6 +58,13 @@ class CreateAndUpdate extends Component
     public $search_report_to = '';
     public $location_search = '';
 
+    // Pelapor
+    public $pelapor_id;
+    public $searchPelapor = '';
+    public $pelapors = [];
+    public $showPelaporDropdown = false;
+    public $manualPelaporMode = false;
+    public $manualPelaporName = '';
     // IDs and Relational Keys
     #[Validate]
     public $location_id;
@@ -145,8 +152,8 @@ class CreateAndUpdate extends Component
     {
         $this->token = Str::uuid()->toString();
         if (Auth::check()) {
-            $this->report_byName = Auth::user()->lookup_name ?? Auth::user()->name;
-            $this->report_by     = Auth::id();
+            $this->searchPelapor = Auth::user()->lookup_name ?? Auth::user()->name;
+            $this->pelapor_id     = Auth::id();
         }
     }
     public function rules()
@@ -201,7 +208,52 @@ class CreateAndUpdate extends Component
             'key_word.required'        => 'Kolom wajib dicentang',
         ];
     }
-     // real-time validation
+
+    // Fungsi dari Pelapor
+    public function updatedSearchPelapor()
+    {
+        $this->reset('manualPelaporName');
+        $this->manualPelaporMode = false;
+        if (strlen($this->searchPelapor) > 1) {
+            $this->pelapors = User::where('name', 'like', '%' . $this->searchPelapor . '%')
+                ->orderBy('name')
+                ->limit(10)
+                ->get();
+            $this->showPelaporDropdown = true;
+        } else {
+            $this->pelapors = [];
+            $this->showPelaporDropdown = false;
+        }
+    }
+    public function selectPelapor($id, $name)
+    {
+        $this->pelapor_id = $id;
+        $this->searchPelapor = $name;
+        $this->showPelaporDropdown = false;
+        $this->manualPelaporMode = false;
+        $this->validateOnly('pelapor_id');
+    }
+    public function enableManualPelapor()
+    {
+        $this->manualPelaporMode = true;
+        $this->manualPelaporName = $this->searchPelapor; // isi default sama dengan isi search
+    }
+    public function updatedManualPelaporName($value)
+    {
+        $this->pelapor_id = null;
+    }
+
+    public function addPelaporManual()
+    {
+        $this->searchPelapor = $this->manualPelaporName;
+        $this->showPelaporDropdown = false;
+        $this->pelapor_id = null;
+    }
+
+
+
+
+    // real-time validation
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
@@ -417,13 +469,14 @@ class CreateAndUpdate extends Component
             $this->workflow_detail_id = optional($workflow)->id;
             $closed_by = $this->report_byName;
         }
+         $pelaporId = $this->pelapor_id ?: null;
 
         // Simpan data ke database
         $fields = [
             'event_type_id'               => $this->event_type_id,
             'sub_event_type_id'           => $this->sub_event_type_id,
             'reference'                   => $this->reference,
-            'report_by'                   => $this->report_by,
+            'report_by'                   => $pelaporId,
             'report_to'                   => $this->report_to,
             'division_id'                 => $this->division_id,
             'date'                        => $dateForDB,
@@ -524,7 +577,7 @@ class CreateAndUpdate extends Component
                 'actionUrl' => url("/eventReport/hazardReportDetail/{$url}"),
             ];
             Notification::send($reportTo, new toModerator($content));
-            
+
             $user_os = User::find($this->report_to);
             $judul =  ['en' => '⚠️ Laporan Bahaya Nomor Referensi: ' . $this->reference];
             $isi = ['en' => $this->report_byName . ' telah mengirimkan laporan bahaya kepada Anda. Mohon untuk segera ditinjau.'];
