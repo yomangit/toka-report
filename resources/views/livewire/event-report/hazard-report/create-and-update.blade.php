@@ -47,12 +47,12 @@
                     <x-label-req :value="__('Key Word')" />
                     <div class="flex items-center gap-4 p-0.5 pl-3 border border-base-300 rounded">
                         <label class="flex items-center space-x-1">
-                            <input wire:model.live="key_word" value="kta" type="radio" name="key_word" class="radio radio-sm radio-primary" />
+                            <input wire:model.live="key_word" value="kta" type="radio" name="key_word" class="radio radio-xs radio-primary" />
                             <span class="text-xs font-semibold">Kondisi Tidak Aman</span>
                         </label>
 
                         <label class="flex items-center space-x-1">
-                            <input wire:model.live="key_word" value="tta" type="radio" name="key_word" class="radio radio-sm radio-accent" />
+                            <input wire:model.live="key_word" value="tta" type="radio" name="key_word" class="radio radio-xs radio-accent" />
                             <span class="text-xs font-semibold">Tindakan Tidak Aman</span>
                         </label>
                     </div>
