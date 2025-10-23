@@ -48,7 +48,7 @@
                         <x-label-req :value="__('Dilaporkan Oleh')" />
                         <div class="relative">
                             <!-- Input Search -->
-                            <x-input  wire:model.live='searchPelapor' wire:keydown.self="changeConditionDivision" placeholder='cari divisi...' :error="$errors->get('pelapor_id')" class="cursor-pointer" tabindex="0" role="button" />
+                            <x-input wire:model.live='searchPelapor' wire:keydown.self="changeConditionDivision" placeholder='cari divisi...' :error="$errors->get('pelapor_id')" class="cursor-pointer" />
                             <!-- Dropdown hasil search (teleport keluar collapse) -->
                             @if ($showPelaporDropdown)
                             <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
@@ -160,15 +160,31 @@
                     <x-label-error :messages="$errors->get('date')" />
                 </div>
                 <div class="w-full max-w-md xl:max-w-xl form-control">
-                    <x-label-req :value="__('eventLocation')" />
-                    <x-select wire:model.live='location_id' :error="$errors->get('location_id')">
-                        <option value="" selected>Select an option</option>
-                        @forelse ($Location as $location)
-                        <option value="{{ $location->id }}" selected>{{ $location->location_name }}</option>
-                        @endforeach
-                    </x-select>
-                    <x-label-error :messages="$errors->get('location_id')" />
+                    <fieldset class="fieldset ">
+                        <x-label-req :value="__('eventLocation')" />
+                        <div class="relative">
+                            <!-- Input Search -->
+                            <x-input wire:model.live='searchLocation' placeholder='cari divisi...' :error="$errors->get('location_id')" class="cursor-pointer" />
+                            <input type="text" wire:model.live.debounce.300ms="searchLocation" placeholder="Cari Lokasi..." class="input input-bordered w-full focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('location_id') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
+                            <!-- Dropdown hasil search -->
+                            @if($showLocationDropdown && count($locations) > 0)
+                            <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
+                                <!-- Spinner ketika klik -->
+                                <div wire:loading wire:target="selectLocation" class="p-2 text-center">
+                                    <span class="loading loading-spinner loading-sm text-secondary"></span>
+                                </div>
+                                @foreach($locations as $loc)
+                                <li wire:click="selectLocation({{ $loc->id }}, '{{ $loc->location_name }}')" class="px-3 py-2 cursor-pointer hover:bg-base-200">
+                                    {{ $loc->location_name }}
+                                </li>
+                                @endforeach
+                            </ul>
+                            @endif
+                        </div>
+                        <x-label-error :messages="$errors->get('location_id')" />
+                    </fieldset>
                 </div>
+                
                 <div class="w-full max-w-md xl:max-w-xl form-control {{ $showLocation==true ? 'block' : 'hidden' }}">
                     <x-label-req :value="__('Lokasi Spesifik')" />
                     <x-input wire:model.blur='location_name' :error="$errors->get('location_name')" />

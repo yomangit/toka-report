@@ -66,9 +66,15 @@ class CreateAndUpdate extends Component
     public $showPelaporDropdown = false;
     public $manualPelaporMode = false;
     public $manualPelaporName = '';
-    // IDs and Relational Keys
+
+    // Location
     #[Validate]
     public $location_id;
+    public $showLocationDropdown = false;
+    public $locations = [];
+    public $searchLocation='';
+    // IDs and Relational Keys
+
     public $tablerisk_id;
     public $risk_assessment_id;
     public $workflow_detail_id;
@@ -253,7 +259,27 @@ class CreateAndUpdate extends Component
         $this->pelapor_id = null;
     }
 
-
+    // fungsi dari Location
+    public function updatedSearchLocation()
+    {
+        if (strlen($this->searchLocation) > 2) {
+            $this->locations = LocationEvent::SearchFor(trim($this->searchLocation))
+                ->orderBy('name')
+                ->limit(10)
+                ->get();
+            $this->showLocationDropdown = true;
+        } else {
+            $this->locations = [];
+            $this->showLocationDropdown = false;
+        }
+    }
+    public function selectLocation($id, $name)
+    {
+        $this->location_id = $id;
+        $this->searchLocation = $name;
+        $this->showLocationDropdown = false;
+        $this->validateOnly('location_id');
+    }
 
 
     // real-time validation
