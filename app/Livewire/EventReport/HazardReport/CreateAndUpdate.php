@@ -264,7 +264,7 @@ class CreateAndUpdate extends Component
     {
         if (strlen($this->searchLocation) > 2) {
             $this->locations = LocationEvent::SearchFor(trim($this->searchLocation))
-                ->orderBy('name')
+                ->orderBy('location_name')
                 ->limit(10)
                 ->get();
             $this->showLocationDropdown = true;
