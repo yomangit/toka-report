@@ -215,7 +215,6 @@ class CreateAndUpdate extends Component
     // Fungsi dari Pelapor
     public function updatedSearchPelapor()
     {
-        
         if (strlen($this->searchPelapor) > 2) {
             $this->pelapors = User::searchNama(trim($this->searchPelapor))
                 ->orderBy('lookup_name')
