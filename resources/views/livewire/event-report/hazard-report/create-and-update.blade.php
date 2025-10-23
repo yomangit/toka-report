@@ -44,6 +44,21 @@
                     <x-label-error :messages="$errors->get('sub_event_type_id')" />
                 </div>
                 <div class="w-full max-w-md xl:max-w-xl form-control">
+                    <x-label-req :value="__('Key Word')" />
+                    <div class="flex items-center gap-4 mt-2">
+                        <label class="flex items-center space-x-1">
+                            <input wire:model.live="key_word" value="kta" type="radio" name="key_word" class="radio radio-sm radio-primary" />
+                            <span class="text-xs font-semibold">Kondisi Tidak Aman</span>
+                        </label>
+
+                        <label class="flex items-center space-x-1">
+                            <input wire:model.live="key_word" value="tta" type="radio" name="key_word" class="radio radio-sm radio-accent" />
+                            <span class="text-xs font-semibold">Tindakan Tidak Aman</span>
+                        </label>
+                    </div>
+                    <x-label-error :messages="$errors->get('key_word')" />
+                </div>
+                <div class="w-full max-w-md xl:max-w-xl form-control">
                     <fieldset class="fieldset ">
                         <x-label-req :value="__('Dilaporkan Oleh')" />
                         <div class="relative">
@@ -169,7 +184,7 @@
                             @if($showLocationDropdown && count($locations) > 0)
                             <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
                                 <!-- Spinner ketika klik -->
-                               
+
                                 @foreach($locations as $loc)
                                 <li wire:click="selectLocation({{ $loc->id }}, '{{ $loc->location_name }}')" class="px-3 py-2 cursor-pointer hover:bg-base-200">
                                     {{ $loc->location_name }}
@@ -184,7 +199,7 @@
                         <x-label-error :messages="$errors->get('location_id')" />
                     </fieldset>
                 </div>
-                
+
                 <div class="w-full max-w-md xl:max-w-xl form-control {{ $showLocation==true ? 'block' : 'hidden' }}">
                     <x-label-req :value="__('Lokasi Spesifik')" />
                     <x-input wire:model.blur='location_name' :error="$errors->get('location_name')" />
