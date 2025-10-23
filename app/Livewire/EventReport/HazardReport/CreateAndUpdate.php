@@ -176,7 +176,7 @@ class CreateAndUpdate extends Component
             'key_word'         => ['required'],
             'tindakkan_selanjutnya' => ['required'],
             'immediate_corrective_action' => ['required'],
-             'pelapor_id' => $this->manualPelaporMode ? 'nullable' : 'required',
+            'pelapor_id' => $this->manualPelaporMode ? 'nullable' : 'required',
             'manualPelaporName' => $this->manualPelaporMode ? 'required|string|max:255' : 'nullable',
         ];
         if ($this->key_word === 'kta') {
@@ -209,13 +209,14 @@ class CreateAndUpdate extends Component
             'tindakantidakamen_id.required'                  => 'Kolom wajib diisi',
             'tindakkan_selanjutnya.required'        => 'Kolom wajib dicentang',
             'key_word.required'        => 'Kolom wajib dicentang',
+            'pelapor_id.required' => 'Pelapor wajib dipilih.',
         ];
     }
 
     // Fungsi dari Pelapor
     public function updatedSearchPelapor()
     {
-        $this->reset('manualPelaporName','pelapor_id');
+        $this->reset('manualPelaporName', 'pelapor_id');
         $this->manualPelaporMode = false;
         if (strlen($this->searchPelapor) > 1) {
             $this->pelapors = User::searchNama(trim($this->searchPelapor))
@@ -472,7 +473,7 @@ class CreateAndUpdate extends Component
             $this->workflow_detail_id = optional($workflow)->id;
             $closed_by = $this->report_byName;
         }
-         $pelaporId = $this->pelapor_id ?: null;
+        $pelaporId = $this->pelapor_id ?: null;
 
         // Simpan data ke database
         $fields = [
@@ -494,7 +495,7 @@ class CreateAndUpdate extends Component
             'risk_consequence_id'         => $this->risk_consequence_id,
             'risk_likelihood_id'          => $this->risk_likelihood_id,
             'workgroup_name'              => $this->workgroup_name,
-            'report_byName'               =>$this->pelapor_id ? User::find($this->pelapor_id)?->lookup_name : $this->manualPelaporName,
+            'report_byName'               => $this->pelapor_id ? User::find($this->pelapor_id)?->lookup_name : $this->manualPelaporName,
             'report_toName'               => $this->report_toName,
             'task_being_done'             => $this->task_being_done,
             'documentation'               => $file_name,
