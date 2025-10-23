@@ -48,37 +48,39 @@
                         <x-label-req :value="__('Dilaporkan Oleh')" />
                         <div class="relative">
                             <!-- Input Search -->
-                            <input name="searchPelapor" type="text" wire:model.live.debounce.300ms="searchPelapor" placeholder="Cari Nama Pelapor..." class="input input-bordered w-full max-w-sm focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('pelapor_id') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}"  />
+                            <input name="searchPelapor" type="text" wire:model.live.debounce.300ms="searchPelapor" placeholder="Cari Nama Pelapor..." class="input input-bordered w-full max-w-sm focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('pelapor_id') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
                             <!-- Dropdown hasil search (teleport keluar collapse) -->
                             @if ($showPelaporDropdown)
-                                <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
-                                        <span wire:loading wire:target="selectPelapor" class="loading loading-spinner loading-sm text-secondary"></span>
-                                    @if (count($pelapors) > 0)
-                                    @foreach ($pelapors as $pelapor)
-                                    <li wire:click="selectPelapor({{ $pelapor->id }}, '{{ $pelapor->lookup_name }}')" class="px-3 py-2 text-xs cursor-pointer hover:bg-base-200">
-                                        {{ $pelapor->lookup_name }}
-                                    </li>
-                                    @endforeach
-                                    @else
-                                    @if (!$manualPelaporMode)
-                                    <li wire:click="enableManualPelapor" class="px-3 py-2 cursor-pointer text-warning hover:bg-base-200">
-                                        Tidak ditemukan, tambah pelapor manual
-                                    </li>
-                                    @endif
-                                    @endif
-                                    @if ($manualPelaporMode)
-                                    <li class="p-2">
-                                        <div class="relative w-full">
-                                            <input name="manualPelaporName" type="text" wire:model.live="manualPelaporName" placeholder="Masukkan nama pelapor..." class="input input-bordered w-full pr-20 focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('manualPelaporName') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
-                                            <div class="!absolute top-1/2 -translate-y-1/2 right-0 z-20">
-                                                <flux:button size="xs" wire:click="addPelaporManual" icon="plus" variant="primary">
-                                                    Tambah
-                                                </flux:button>
-                                            </div>
+                            <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
+                                <div class="hidden" wire:loading.class.remove="hidden" wire:loading wire:target="selectPelapor">
+                                    <span class="loading loading-spinner loading-sm text-secondary"></span>
+                                </div>
+                                @if (count($pelapors) > 0)
+                                @foreach ($pelapors as $pelapor)
+                                <li wire:click="selectPelapor({{ $pelapor->id }}, '{{ $pelapor->lookup_name }}')" class="px-3 py-2 text-xs cursor-pointer hover:bg-base-200">
+                                    {{ $pelapor->lookup_name }}
+                                </li>
+                                @endforeach
+                                @else
+                                @if (!$manualPelaporMode)
+                                <li wire:click="enableManualPelapor" class="px-3 py-2 cursor-pointer text-warning hover:bg-base-200">
+                                    Tidak ditemukan, tambah pelapor manual
+                                </li>
+                                @endif
+                                @endif
+                                @if ($manualPelaporMode)
+                                <li class="p-2">
+                                    <div class="relative w-full">
+                                        <input name="manualPelaporName" type="text" wire:model.live="manualPelaporName" placeholder="Masukkan nama pelapor..." class="input input-bordered w-full pr-20 focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('manualPelaporName') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
+                                        <div class="!absolute top-1/2 -translate-y-1/2 right-0 z-20">
+                                            <flux:button size="xs" wire:click="addPelaporManual" icon="plus" variant="primary">
+                                                Tambah
+                                            </flux:button>
                                         </div>
-                                    </li>
-                                    @endif
-                                </ul>
+                                    </div>
+                                </li>
+                                @endif
+                            </ul>
                             @endif
                         </div>
 
@@ -90,7 +92,7 @@
                         @endif
                     </fieldset>
                 </div>
-               
+
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <x-label-req :value="__('Perusahaan terkait')" />
                     <div class="dropdown dropdown-end">
