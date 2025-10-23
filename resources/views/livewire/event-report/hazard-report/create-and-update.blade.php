@@ -48,23 +48,13 @@
                         <x-label-req :value="__('Dilaporkan Oleh')" />
                         <div class="relative">
                             <!-- Input Search -->
-                            <input name="searchPelapor" type="text" wire:model.live.debounce.300ms="searchPelapor" placeholder="Cari Nama Pelapor..." class="input input-bordered w-full max-w-sm focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('pelapor_id') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}"x-ref="searchInput"  />
+                            <input name="searchPelapor" type="text" wire:model.live.debounce.300ms="searchPelapor" placeholder="Cari Nama Pelapor..." class="input input-bordered w-full max-w-sm focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('pelapor_id') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}"  />
                             <!-- Dropdown hasil search (teleport keluar collapse) -->
                             @if ($showPelaporDropdown)
-                            <template  x-teleport="body">
-                                <ul x-data x-init="
-                                    // Posisikan dropdown tepat di bawah input
-                                    $el.style.position = 'absolute';
-                                    const rect = $refs.searchInput.getBoundingClientRect();
-                                    $el.style.top = rect.bottom + 'px';
-                                    $el.style.left = rect.left + 'px';
-                                    $el.style.width = rect.width + 'px';
-                                    $el.style.zIndex = 9999;
-                                " class="mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
+                                <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
                                     <div wire:loading wire:target="selectPelapor" class="p-2 text-center">
                                         <span class="loading loading-spinner loading-sm text-secondary"></span>
                                     </div>
-
                                     @if (count($pelapors) > 0)
                                     @foreach ($pelapors as $pelapor)
                                     <li wire:click="selectPelapor({{ $pelapor->id }}, '{{ $pelapor->lookup_name }}')" class="px-3 py-2 text-xs cursor-pointer hover:bg-base-200">
@@ -78,7 +68,6 @@
                                     </li>
                                     @endif
                                     @endif
-
                                     @if ($manualPelaporMode)
                                     <li class="p-2">
                                         <div class="relative w-full">
@@ -92,7 +81,6 @@
                                     </li>
                                     @endif
                                 </ul>
-                            </template>
                             @endif
                         </div>
 
