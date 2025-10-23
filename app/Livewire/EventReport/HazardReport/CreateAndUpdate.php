@@ -176,6 +176,8 @@ class CreateAndUpdate extends Component
             'key_word'         => ['required'],
             'tindakkan_selanjutnya' => ['required'],
             'immediate_corrective_action' => ['required'],
+             'pelapor_id' => $this->manualPelaporMode ? 'nullable' : 'required',
+            'manualPelaporName' => $this->manualPelaporMode ? 'required|string|max:255' : 'nullable',
         ];
         if ($this->key_word === 'kta') {
             $baseRules['kondisitidakamen_id'] = ['required'];
@@ -492,7 +494,7 @@ class CreateAndUpdate extends Component
             'risk_consequence_id'         => $this->risk_consequence_id,
             'risk_likelihood_id'          => $this->risk_likelihood_id,
             'workgroup_name'              => $this->workgroup_name,
-            'report_byName'               => $this->report_byName,
+            'report_byName'               =>$this->pelapor_id ? User::find($this->pelapor_id)?->lookup_name : $this->manualPelaporName,
             'report_toName'               => $this->report_toName,
             'task_being_done'             => $this->task_being_done,
             'documentation'               => $file_name,
