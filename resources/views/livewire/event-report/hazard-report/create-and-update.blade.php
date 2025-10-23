@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="w-full max-w-md xl:max-w-xl form-control">
-                    <x-label-req :value="__('jenis bahaya')" />
+                    <x-label-req :value="__('kategori bahaya')" />
                     <x-select wire:model.live='sub_event_type_id' :error="$errors->get('sub_event_type_id')">
                         <option value="" selected>Select an option</option>
                         @foreach ($EventSubType as $item)
@@ -45,7 +45,7 @@
                 </div>
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <x-label-req :value="__('Key Word')" />
-                    <div class="flex items-center gap-4 border">
+                    <div class="flex items-center gap-4 p-1 border border-base-300">
                         <label class="flex items-center space-x-1">
                             <input wire:model.live="key_word" value="kta" type="radio" name="key_word" class="radio radio-sm radio-primary" />
                             <span class="text-xs font-semibold">Kondisi Tidak Aman</span>
