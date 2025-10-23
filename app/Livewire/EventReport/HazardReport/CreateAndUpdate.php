@@ -59,6 +59,7 @@ class CreateAndUpdate extends Component
     public $location_search = '';
 
     // Pelapor
+    #[Validate]
     public $pelapor_id;
     public $searchPelapor = '';
     public $pelapors = [];
