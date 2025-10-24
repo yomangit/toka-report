@@ -153,8 +153,7 @@
        var option_divisi;
        option_divis = {
            title: {
-               text: 'Laporan Hazard Per Divisi'
-               , left: 'center'
+               text: 'Jumlah Laporan'
            }
            , grid: {
                top: 50
@@ -163,59 +162,38 @@
                , bottom: 60
            }
            , tooltip: {
-               trigger: 'item'
-           }
-           , legend: {
-            selectedMode: true
-           }
-           , xAxis: {
-               type: 'category'
-               , data: divisi.label
-               , axisLabel: {
-                   interval: 0
-                   , fontSize: 9
-                   , formatter: function(value) {
-                       // daftar mapping nama panjang ke singkatan
-                       const mapping = {
-                           "Samudera Mulia Abadi": "SMA"
-                           , "Geopersada Mulia Abadi": "GMA"
-                           , "Karya Utama Service": "KUS"
-                           , "Manado Karya Anugerah": "MKA"
-                           , "Macmahon Indonesia": "Macmahon"
-                           , "Tou Maesa Sejahtera": "TMS"
-                           , "PSI Drilling Service": "PSI"
-                           , "Mining Technical Service": "MTS"
-                           , "Mining Tech Service": "MTS"
-                           , "Mandara Fasilitas Indonesia": "MFI"
-                           // tinggal tambah lagi di sini kalau ada
-                       };
-
-                       // 1. Hilangkan kata "Contractor"
-                       value = value.replace(/Contractor/gi, "").trim();
-
-                       // 2. Loop semua mapping dan ganti
-                       Object.keys(mapping).forEach(function(key) {
-                           let regex = new RegExp(key, "gi"); // cari case-insensitive
-                           value = value.replace(regex, mapping[key]);
-                       });
-
-                       // 3. Pecah berdasarkan strip, biar rapi kebawah
-                       return value.split(/\s*-\s*/).join("\n");
-                   }
+               trigger: 'axis'
+               , axisPointer: {
+                   type: 'shadow'
                }
-
+           }
+           , legend: {}
+           , xAxis: {
+               type: 'value'
+               , boundaryGap: [0, 0.01]
            }
            , yAxis: {
-               type: 'value'
+               type: 'category'
+               , data: divisi.label
+               , inverse: true
+               , axisLabel: {
+                   color: '#333', // warna teks
+                   fontSize: 7, // ukuran font
+                   fontWeight: 'bold', // ketebalan font (normal | bold | bolder | lighter)
+                   fontFamily: 'Poppins, sans-serif', // jenis font
+                   overflow: 'truncate', // potong teks jika terlalu panjang
+                   width: 150, // batas lebar teks (bisa disesuaikan)
+                   align: 'right' // posisi teks relatif ke sumbu
+               }, // ⬅️ urutkan dari atas ke bawah sesuai urutan data // ⬅️ urutkan dari atas ke bawah sesuai urutan data
            }
            , series: [{
-               name: categories.year // ✅ ambil dari data Livewire
+               name: divisi.year // ✅ ambil dari data Livewire
                , type: 'bar'
                , data: divisi.count
                , itemStyle: {
                    color: function(params) {
                        // Gunakan warna dinamis berdasarkan posisi bar
-                       return generateColor(params.dataIndex, divisi.count.length);
+                       return generateColor(params.dataIndex, categories.counts.length);
                    }
                    , borderRadius: [0, 6, 6, 0]
                }

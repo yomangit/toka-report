@@ -61,10 +61,11 @@ class KondisiGrapf extends Component
                 $q->where('status_name', $status);
             })->count();
         }
-
+         $year = Carbon::now()->year;
         $label = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
         $count = $reports->pluck('total')->toArray();
         $divisi = [
+            'year' =>$year,
             'label' => $label,
             'count' => $count
         ];
