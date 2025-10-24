@@ -335,6 +335,7 @@ class Create extends Component
         $this->location_id = $id;
         $this->searchLocation = $name;
         $this->showLocationDropdown = false;
+        $this->showLocation =true;
         $this->validateOnly('location_id');
     }
     // real-time validation
