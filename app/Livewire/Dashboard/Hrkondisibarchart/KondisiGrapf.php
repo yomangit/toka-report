@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard\Hrkondisibarchart;
 
+use Carbon\Carbon;
 use App\Mail\TestEmail;
 use Livewire\Component;
 use Livewire\Attributes\On;
@@ -61,11 +62,11 @@ class KondisiGrapf extends Component
                 $q->where('status_name', $status);
             })->count();
         }
-         $year = Carbon::now()->year;
+        $year = Carbon::now()->year;
         $label = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
         $count = $reports->pluck('total')->toArray();
         $divisi = [
-            'year' =>$year,
+            'year' => $year,
             'label' => $label,
             'count' => $count
         ];
