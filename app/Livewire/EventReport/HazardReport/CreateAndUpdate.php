@@ -3,6 +3,7 @@
 namespace App\Livewire\EventReport\HazardReport;
 
 use DateTime;
+use Carbon\Carbon;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Division;
@@ -11,6 +12,7 @@ use Livewire\Attributes\On;
 use App\Models\Eventsubtype;
 use App\Models\HazardReport;
 use Livewire\WithPagination;
+use App\Models\DocHazPelapor;
 use App\Models\LocationEvent;
 use Livewire\WithFileUploads;
 use App\Models\choseEventType;
@@ -525,7 +527,7 @@ class CreateAndUpdate extends Component
             'backgroundColor' => "background: linear-gradient(135deg, #00c853, #00bfa5);",
         ]);
         // reset input sementara
-        $this->reset(['action_description', 'action_due_date', 'action_responsible_id', 'searchActResponsibility']);
+        $this->reset(['action_description', 'action_due_date','actual_close_date', 'action_responsible_id', 'searchActResponsibility']);
         $this->dispatch('reset-ckeditor');
     }
 
@@ -636,6 +638,19 @@ class CreateAndUpdate extends Component
         ];
 
         $hazardReport = HazardReport::create($fields);
+
+         // 2. Simpan semua action
+            foreach ($this->actions as $act) {
+                $due_date = Carbon::createFromFormat('d-m-Y', $act['due_date'])->format('Y-m-d');
+                $actual_close_date = Carbon::createFromFormat('d-m-Y', $act['actual_close_date'])->format('Y-m-d');
+                DocHazPelapor::create([
+                    'hazard_id'     => $hazardReport->id,
+                    'followup_action'   => $act['description'],
+                    'due_date'      => $due_date,
+                    'completion_date'      => $actual_close_date,
+                    'responsibility' => $act['responsible_id'],
+                ]);
+            }
         if ($this->tindakkan_selanjutnya == 1) {
             $source = Approval::where('new_data->token', $this->token)->get();
             foreach ($source as $approval) {
