@@ -163,34 +163,7 @@
                         </div>
                         <x-label-error :messages="$errors->get('workgroup_name')" />
                     </div>
-                    <div class="w-full max-w-md xl:max-w-xl form-control">
-                        <x-label-req :value="__('report_by')" />
-                        <div class="dropdown dropdown-end">
-                            <x-input wire:click='clickReportBy' wire:model.live='report_byName' :error="$errors->get('report_byName')" class="{{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'btn-disabled bg-gray-300' : '' }} cursor-pointer" tabindex="0" role="button" />
-                            <div tabindex="0" class="dropdown-content card card-compact  bg-base-300 text-primary-content z-[1] w-full  p-2 shadow {{ $hiddenReportBy }}">
-                                <div class="relative">
-                                    <div class="h-full mb-2 overflow-auto max-h-40 scroll-smooth focus:scroll-auto" wire:target='report_byName' wire:loading.class='hidden'>
-                                        @forelse ($Report_By as $report_by)
-                                        <div wire:click="reportedBy({{ $report_by->id }})" class="flex flex-col border-b cursor-pointer border-base-200 ">
-                                            <strong class="text-[10px] text-slate-800">{{ $report_by->lookup_name }}</strong>
-                                        </div>
-                                        @empty
-                                        <strong class="text-xs text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-rose-800">Name
-                                            Not Found!!!</strong>
-                                        @endforelse
-                                    </div>
-                                    <div class="hidden pt-5 text-center" wire:target='report_byName' wire:loading.class.remove='hidden'>
-                                        <x-loading-spinner />
-                                    </div>
-                                    <div class="pb-6">{{ $Report_By->links('pagination.minipaginate') }}</div>
-                                    <div class="fixed bottom-0 left-0 right-0 px-2 mb-1 bg-base-300 opacity-95 ">
-                                        <x-input-no-req wire:model.live='report_by_nolist' placeholder="{{ __('name_notList') }}" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <x-label-error :messages="$errors->get('report_byName')" />
-                    </div>
+                    
                     <div class="w-full max-w-md xl:max-w-xl form-control">
                         <x-label-req :value="__('report_to')" />
                         <div class="dropdown dropdown-end">

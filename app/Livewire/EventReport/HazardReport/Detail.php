@@ -65,7 +65,7 @@ class Detail extends Component
     public $dropdownWorkgroup = 'dropdown', $hiddenWorkgroup = 'block';
     public $dropdownReportBy  = 'dropdown', $hiddenReportBy  = 'block', $hiddenReportTo  = 'block', $tindakan_tidak_aman, $kondisi_tidak_aman, $tindakkan_selanjutnya, $showLocation  = false;
     protected $listeners      = ['ubahData' => 'changeData'];
-     // Pelapor
+    // Pelapor
     #[Validate]
     public $pelapor_id;
     public $searchPelapor = '';
