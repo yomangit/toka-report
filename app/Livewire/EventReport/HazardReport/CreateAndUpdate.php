@@ -67,7 +67,6 @@ class CreateAndUpdate extends Component
     public $manualPelaporMode = false;
     public $manualPelaporName = '';
     // Pelapor Act
-    public $action_responsible_ids;
     public $searchActResponsibility = '';
     public $pelaporsAct = [];
     public $showActPelaporDropdown = false;
@@ -299,11 +298,11 @@ class CreateAndUpdate extends Component
     }
     public function selectActPelapor($id, $name)
     {
-        $this->action_responsible_ids = $id;
+        $this->action_responsible_id = $id;
         $this->searchActResponsibility = $name;
         $this->showActPelaporDropdown = false;
         $this->manualActPelaporMode = false;
-        $this->validateOnly('action_responsible_ids');
+        $this->validateOnly('action_responsible_id');
     }
     public function enableManualActPelapor()
     {
@@ -312,14 +311,14 @@ class CreateAndUpdate extends Component
     }
     public function updatedManualActPelaporName($value)
     {
-        $this->action_responsible_ids = null;
+        $this->action_responsible_id = null;
     }
 
     public function addActPelaporManual()
     {
         $this->searchActResponsibility = $this->manualActPelaporName;
         $this->showActPelaporDropdown = false;
-        $this->action_responsible_ids = null;
+        $this->action_responsible_id = null;
     }
 
     // fungsi dari Location
@@ -509,13 +508,13 @@ class CreateAndUpdate extends Component
             'action_description' => 'required|string',
             'action_due_date' => 'required|date',
             'actual_close_date' => 'required|date',
-            'action_responsible_ids' => 'required|exists:users,id',
+            'action_responsible_id' => 'required|exists:users,id',
         ]);
         $this->actions[] = [
             'description' => $this->action_description,
             'due_date' => $this->action_due_date,
             'actual_close_date' => $this->actual_close_date,
-            'responsible_id' => $this->action_responsible_ids,
+            'responsible_id' => $this->action_responsible_id,
         ];
         dd($this->actions);
         $this->dispatch('alert', [
