@@ -193,7 +193,7 @@
                , itemStyle: {
                    color: function(params) {
                        // Gunakan warna dinamis berdasarkan posisi bar
-                       return generateColor(params.dataIndex, categories.counts.length);
+                       return generateColor(params.dataIndex, divisi.count.length);
                    }
                    , borderRadius: [0, 6, 6, 0]
                }
