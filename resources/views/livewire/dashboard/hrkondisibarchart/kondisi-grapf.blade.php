@@ -153,13 +153,7 @@
        var option_divisi;
        option_divisi = {
            title: {
-               text: 'Jumlah Laporan'
-           }
-           , grid: {
-               top: 50
-               , left: 110
-               , right: 30
-               , bottom: 60
+               text: 'World Population'
            }
            , tooltip: {
                trigger: 'axis'
@@ -174,30 +168,19 @@
            }
            , yAxis: {
                type: 'category'
-               , data: divisi.label
-               , inverse: true
-               , axisLabel: {
-                   color: '#333', // warna teks
-                   fontSize: 7, // ukuran font
-                   fontWeight: 'bold', // ketebalan font (normal | bold | bolder | lighter)
-                   fontFamily: 'Poppins, sans-serif', // jenis font
-                   overflow: 'truncate', // potong teks jika terlalu panjang
-                   width: 150, // batas lebar teks (bisa disesuaikan)
-                   align: 'right' // posisi teks relatif ke sumbu
-               }, // ⬅️ urutkan dari atas ke bawah sesuai urutan data // ⬅️ urutkan dari atas ke bawah sesuai urutan data
+               , data: ['Brazil', 'Indonesia', 'USA', 'India', 'China', 'World']
            }
            , series: [{
-               name: divisi.year // ✅ ambil dari data Livewire
-               , type: 'bar'
-               , data: divisi.count
-               , itemStyle: {
-                   color: function(params) {
-                       // Gunakan warna dinamis berdasarkan posisi bar
-                       return generateColor(params.dataIndex, divisi.count.length);
-                   }
-                   , borderRadius: [0, 6, 6, 0]
+                   name: '2011'
+                   , type: 'bar'
+                   , data: [18203, 23489, 29034, 104970, 131744, 630230]
                }
-           }]
+               , {
+                   name: '2012'
+                   , type: 'bar'
+                   , data: [19325, 23438, 31000, 121594, 134141, 681807]
+               }
+           ]
        };
        myChart_divisi.setOption(option_divisi);
 
