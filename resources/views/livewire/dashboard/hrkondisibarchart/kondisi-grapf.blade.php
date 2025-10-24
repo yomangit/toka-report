@@ -141,6 +141,12 @@
        function getRandomColor() {
            return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
        }
+       // 🎨 Fungsi untuk menghasilkan warna berbeda-beda otomatis
+       function generateColor(index, total) {
+           // Gunakan lingkaran warna (HSL)
+           const hue = (index * (360 / total)) % 360; // bagi rata keliling 360°
+           return `hsl(${hue}, 65%, 55%)`; // saturasi & lightness agar tetap cerah
+       }
        // Buat array warna sesuai jumlah data
        const warnaOtomatisdivisi = divisi.count.map(() => getRandomColor());
        const warnaOtomatis = data.count.map(() => getRandomColor());
