@@ -299,7 +299,6 @@ class CreateAndUpdate extends Component
     public function selectActPelapor($id, $name)
     {
         $this->action_responsible_id = $id;
-        dd($this->action_responsible_id);
         $this->searchActResponsibility = $name;
         $this->showActPelaporDropdown = false;
         $this->manualActPelaporMode = false;

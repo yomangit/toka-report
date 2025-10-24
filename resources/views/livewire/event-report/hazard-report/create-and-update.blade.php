@@ -401,7 +401,7 @@
                             @if ($manualPelaporMode)
                             <x-label-error :messages="$errors->get('manualPelaporName')" />
                             @else
-                            <x-label-error :messages="$errors->get('responsible_id')" />
+                            <x-label-error :messages="$errors->get('action_responsible_id')" />
                             @endif
                         </fieldset>
                     </div>
