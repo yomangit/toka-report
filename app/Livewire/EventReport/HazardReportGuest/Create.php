@@ -494,6 +494,50 @@ class Create extends Component
             ])
             ->section('content');
     }
+            public function addAction()
+    {
+        $this->dispatch('validateCkEditorAddAction');
+        $this->validate([
+            'action_description' => 'required|string',
+            'action_due_date' => 'required|date',
+            'actual_close_date' => 'required|date',
+            'action_responsible_id' => 'required|exists:users,id',
+        ]);
+        $this->actions[] = [
+            'description' => $this->action_description,
+            'due_date' => $this->action_due_date,
+            'actual_close_date' => $this->actual_close_date,
+            'responsible_id' => $this->action_responsible_id,
+        ];
+        $this->dispatch('alert', [
+            'text' => "Tindakan Lanjutan berhasil dibuat!!",
+            'duration' => 5000,
+            'destination' => '/contact',
+            'newWindow' => true,
+            'close' => true,
+            'backgroundColor' => "background: linear-gradient(135deg, #00c853, #00bfa5);",
+        ]);
+        // reset input sementara
+        $this->reset(['action_description', 'action_due_date','actual_close_date', 'action_responsible_id', 'searchActResponsibility']);
+        $this->dispatch('reset-ckeditor');
+    }
+
+    public function removeAction($index)
+    {
+        unset($this->actions[$index]);
+        $this->actions = array_values($this->actions); // reindex
+        $this->dispatch(
+            'alert',
+            [
+                'text' => "Tindakan Lanjutan berhasil di hapus!!!",
+                'duration' => 5000,
+                'destination' => '/contact',
+                'newWindow' => true,
+                'close' => true,
+                'backgroundColor' => "linear-gradient(to right, #ff3333, #ff6666)",
+            ]
+        );
+    }
     public function store()
     {
         if ($this->date) {
