@@ -181,6 +181,7 @@ class Create extends Component
             $this->searchPelapor = Auth::user()->lookup_name ?? Auth::user()->name;
             $this->pelapor_id     = Auth::id();
         }
+        dd($this->pelapor_id);
     }
     public function rules()
     {
