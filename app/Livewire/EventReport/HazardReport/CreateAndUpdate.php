@@ -510,7 +510,7 @@ class CreateAndUpdate extends Component
             'action_description' => 'required|string',
             'action_due_date' => 'required|date',
             'actual_close_date' => 'required|date',
-            'action_responsible_id' => 'required|exists:users,id',
+            'action_responsible_ids' => 'required|exists:users,id',
         ]);
         $this->actions[] = [
             'description' => $this->action_description,
