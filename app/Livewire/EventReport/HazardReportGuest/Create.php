@@ -181,7 +181,7 @@ class Create extends Component
             $this->searchPelapor = Auth::user()->lookup_name ?? Auth::user()->name;
             $this->pelapor_id     = Auth::id();
         }
-        dd($this->pelapor_id);
+       
     }
     public function rules()
     {
@@ -189,8 +189,8 @@ class Create extends Component
             'workgroup_name'        => ['required'],
             'event_type_id'         => ['required'],
             'sub_event_type_id'     => ['required'],
-            'report_byName'         => ['required'],
             'report_toName'         => ['required'],
+            'pelapor_id'         => ['required'],
             'date' => [
                 'required',
                 new DateBeforeOrEqualToday, // pakai custom rule
