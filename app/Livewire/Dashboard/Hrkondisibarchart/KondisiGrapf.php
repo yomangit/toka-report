@@ -54,10 +54,8 @@ class KondisiGrapf extends Component
             // User tanpa relasi division_user tidak bisa lihat laporan
             $reports = collect();
         }
-        $this->total_laporan = $query->count();
-
+        $this->total_laporan = HazardReport::whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->count();;
         $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
-
         foreach ($statuses as $status) {
             $this->hazardByStatus[$status] = HazardReport::whereHas('WorkflowDetails.Status', function ($q) use ($status) {
                 $q->where('status_name', $status);
