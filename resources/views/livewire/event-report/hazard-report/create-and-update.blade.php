@@ -310,6 +310,7 @@
                         <!-- Deskripsi Tindakan -->
                         <fieldset class="fieldset md:col-span-1">
                             <x-form.label label="Deskripsi Tindakan" required />
+                           
                             <div wire:ignore>
                                 <textarea id="ckeditor-action_description" class="w-full h-20 textarea textarea-bordered"></textarea>
                             </div>
