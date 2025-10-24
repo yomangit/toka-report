@@ -516,7 +516,7 @@ class CreateAndUpdate extends Component
             'description' => $this->action_description,
             'due_date' => $this->action_due_date,
             'actual_close_date' => $this->actual_close_date,
-            'responsible_id' => $this->action_responsible_id,
+            'responsible_id' => $this->action_responsible_ids,
         ];
         dd($this->actions);
         $this->dispatch('alert', [
