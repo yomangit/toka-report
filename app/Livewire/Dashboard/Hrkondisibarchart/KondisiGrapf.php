@@ -38,13 +38,12 @@ class KondisiGrapf extends Component
     public function divisiUp()
     {
         $user = auth()->user();
+         $this->total_laporan = $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->get()->sum('total');
         $query = HazardReport::select('division_id', DB::raw('count(*) as total'))->with('division')->groupBy('division_id');
         if ($this->tglMulai && $this->tglAkhir) {
             $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
-            $this->total_laporan = $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->get()->sum('total');
-        } else {
-            $this->total_laporan = $query->get()->sum('total');
-        }
+           
+        } 
         if ($user->hasRolePermit('administration')) {
             // Admin bisa lihat semua laporan
             $reports = $query->get();
