@@ -150,25 +150,24 @@
        //     ====== DIVISI ======
        var dom_divisi = document.getElementById('chart-divisi');
        var myChart_divisi = echarts.init(dom_divisi);
-
-       var option_divisi = {
+       var option_divisi;
+       option_divis = {
            title: {
                text: 'Laporan Hazard Per Divisi'
                , left: 'center'
+           }
+           , grid: {
+               top: 50
+               , left: 110
+               , right: 30
+               , bottom: 60
            }
            , tooltip: {
                trigger: 'item'
            }
            , legend: {
-               selectedMode: true
+            selectedMode: true
            }
-           , dataZoom: [{
-               type: 'slider'
-               , show: true
-               , xAxisIndex: 0
-               , start: 0
-               , end: 30 // tampilkan 30% pertama, bisa digeser
-           }]
            , xAxis: {
                type: 'category'
                , data: divisi.label
@@ -210,14 +209,15 @@
                type: 'value'
            }
            , series: [{
-               data: divisi.count
+               name: categories.year // ✅ ambil dari data Livewire
                , type: 'bar'
+               , data: divisi.count
                , itemStyle: {
-                   color: (params) => warnaOtomatis[params.dataIndex]
-               }
-               , label: {
-                   show: true
-                   , position: 'inside'
+                   color: function(params) {
+                       // Gunakan warna dinamis berdasarkan posisi bar
+                       return generateColor(params.dataIndex, divisi.count.length);
+                   }
+                   , borderRadius: [0, 6, 6, 0]
                }
            }]
        };
