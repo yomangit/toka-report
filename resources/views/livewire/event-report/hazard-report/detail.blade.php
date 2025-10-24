@@ -49,6 +49,97 @@
                         <x-label-error :messages="$errors->get('sub_event_type_id')" />
                     </div>
                     <div class="w-full max-w-md xl:max-w-xl form-control">
+                        <x-label-req :value="__('Key Word')" />
+                        <div class="flex items-center gap-4 p-1 pl-3 border rounded border-base-300">
+                            <label class="flex items-center space-x-1">
+                                <input wire:model.live="key_word" value="kta" type="radio" name="key_word" class="radio radio-xs radio-primary {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled' : '' }}" />
+                                <span class="text-xs font-semibold">Kondisi Tidak Aman</span>
+                            </label>
+
+                            <label class="flex items-center space-x-1">
+                                <input wire:model.live="key_word" value="tta" type="radio" name="key_word" class="radio radio-xs radio-accent {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled' : '' }}" />
+                                <span class="text-xs font-semibold">Tindakan Tidak Aman</span>
+                            </label>
+                        </div>
+                        <x-label-error :messages="$errors->get('key_word')" />
+                    </div>
+                    @if ($key_word)
+                    <div class="w-full max-w-md xl:max-w-xl form-control">
+                        <div x-data x-show="$wire.key_word === 'kta'">
+                            <x-label-req :value="__('kategori bahaya')" />
+                            <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')" {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled' : '' }}>
+                                <option value="" selected>Pilih KTA...</option>
+                                @foreach ($KTA as $kta)
+                                <option value="{{ $kta->id }}">{{ $kta->name }}</option>
+                                @endforeach
+                            </x-select>
+                            <x-label-error :messages="$errors->get('kondisitidakamen_id')" />
+                        </div>
+
+                        <!-- TTA Select -->
+                        <div x-data x-show="$wire.key_word === 'tta'">
+                            <x-label-req :value="__('kategori bahaya')" />
+                            <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')" {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled' : '' }}>
+                                <option value="" selected>Pilih TTA</option>
+                                @foreach ($TTA as $tta)
+                                <option value="{{ $tta->id }}">{{ $tta->name }}</option>
+                                @endforeach
+                            </x-select>
+                            <x-label-error :messages="$errors->get('tindakantidakamen_id')" />
+                        </div>
+                    </div>
+                    @endif
+                    <div class="w-full max-w-md xl:max-w-xl form-control">
+                        <fieldset class="fieldset ">
+                            <x-label-req :value="__('Dilaporkan Oleh')" />
+                            <div class="relative">
+                                <!-- Input Search -->
+                                <x-input wire:model.live='searchPelapor' wire:keydown.self="changeConditionDivision" placeholder='cari divisi...' :error="$errors->get('pelapor_id')" class="cursor-pointer" />
+                                <!-- Dropdown hasil search (teleport keluar collapse) -->
+                                @if ($showPelaporDropdown)
+                                <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
+                                    <div class="text-center ">
+                                        <span class="hidden loading loading-spinner loading-sm text-secondary" wire:loading.class.remove="hidden" wire:loading wire:target="selectPelapor"></span>
+                                    </div>
+                                    @if (count($pelapors) > 0)
+                                    @foreach ($pelapors as $pelapor)
+                                    <li wire:click="selectPelapor({{ $pelapor->id }}, '{{ $pelapor->lookup_name }}')" class="px-3 py-2 text-xs cursor-pointer hover:bg-base-200" wire:loading.class="hidden" wire:loading wire:target="selectPelapor">
+                                        {{ $pelapor->lookup_name }}
+
+                                    </li>
+                                    @endforeach
+                                    @else
+                                    @if (!$manualPelaporMode)
+                                    <li wire:click="enableManualPelapor" class="px-3 py-2 cursor-pointer text-warning hover:bg-base-200">
+                                        Tidak ditemukan, tambah pelapor manual
+                                    </li>
+                                    @endif
+                                    @endif
+                                    @if ($manualPelaporMode)
+                                    <li class="p-2">
+                                        <div class="relative w-full">
+                                            <input name="manualPelaporName" type="text" wire:model.live="manualPelaporName" placeholder="Masukkan nama pelapor..." class="input input-bordered w-full pr-20 focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('manualPelaporName') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
+                                            <div class="!absolute top-1/2 -translate-y-1/2 right-0 z-20">
+                                                <flux:button size="xs" wire:click="addPelaporManual" icon="plus" variant="primary">
+                                                    Tambah
+                                                </flux:button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    @endif
+                                </ul>
+                                @endif
+                            </div>
+
+                            <!-- Error Message -->
+                            @if ($manualPelaporMode)
+                            <x-label-error :messages="$errors->get('manualPelaporName')" />
+                            @else
+                            <x-label-error :messages="$errors->get('pelapor_id')" />
+                            @endif
+                        </fieldset>
+                    </div>
+                    <div class="w-full max-w-md xl:max-w-xl form-control">
                         <x-label-req :value="__('Perusahaan terkait')" />
                         <div class="dropdown dropdown-end">
                             <x-input wire:click='clickWorkgroup' wire:model.live='workgroup_name' wire:keydown.self="changeConditionDivision" :error="$errors->get('workgroup_name')" class="cursor-pointer {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'btn-disabled bg-gray-300' : '' }}" tabindex="0" role="button" />
@@ -172,7 +263,7 @@
                         @if(in_array(strtolower($extension), ['png', 'jpg', 'jpeg']))
                         <img src="{{ asset('storage/documents/hzd/' . $documentation) }}" class="h-24 mt-1 border rounded">
                         @else
-                     
+
                         @endif
                     </div>
                 </div>
@@ -193,52 +284,6 @@
                     <x-label-error :messages="$errors->get('immediate_corrective_action')" />
                 </div>
                 <div class="grid grid-cols-1 gap-6 mt-4 transition-all duration-300 ease-in-out border divide-y border-base-200 divide-base-200 rounded-xl md:grid-cols-3 md:divide-y-0 md:divide-x md:p-6">
-                    <!-- KEYWORD (KTA / TTA) -->
-                    <div class="px-4 py-2 space-y-3 md:px-0">
-                        <fieldset x-data="{ status: @entangle('key_word') }" class="space-y-3">
-                            <x-label-req :value="__('Key Word')" />
-
-                            <div class="flex items-center gap-4 mt-2">
-                                <label class="flex items-center space-x-1">
-                                    <input x-model="status" value="kta" id="draft" type="radio" name="status" class="radio radio-sm radio-primary {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled' : '' }}" />
-                                    <span class="text-xs font-semibold">Kondisi Tidak Aman</span>
-                                </label>
-
-                                <label class="flex items-center space-x-1">
-                                    <input x-model="status" value="tta" id="published" type="radio" name="status" class="radio radio-sm radio-accent {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled' : '' }}" />
-                                    <span class="text-xs font-semibold">Tindakan Tidak Aman</span>
-                                </label>
-                            </div>
-                            <x-label-error :messages="$errors->get('key_word')" />
-
-                            <!-- KTA Select -->
-                            <div x-show="status === 'kta'" x-transition.opacity.duration.300ms class="mt-2">
-                                <x-select  wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')">
-                                    <option value="" selected>Pilih KTA...</option>
-                                    @forelse ($KTA as $kta)
-                                    <option value="{{ $kta->id }}">{{ $kta->name }}</option>
-                                    @endforeach
-                                </x-select>
-                                <x-label-error :messages="$errors->get('kondisitidakamen_id')" />
-                            </div>
-
-                            <!-- TTA Select -->
-                            <div x-show="status === 'tta'" x-transition.opacity.duration.300ms class="mt-2">
-                                <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
-                                    <option value="" selected>Pilih TTA</option>
-                                    @forelse ($TTA as $tta)
-                                    <option value="{{ $tta->id }}">{{ $tta->name }}</option>
-                                    @endforeach
-                                </x-select>
-                                <x-label-error :messages="$errors->get('tindakantidakamen_id')" />
-                            </div>
-                        </fieldset>
-
-                    </div>
-
-                    <!-- Divider untuk mobile -->
-                    <div class="border-t md:hidden border-base-200"></div>
-
                     <!-- PERBAIKAN TINGKAT LANJUT -->
                     <div class="px-4 py-2 md:px-6 md:col-span-2">
                         <fieldset class="space-y-2">
@@ -353,7 +398,7 @@
                                         };
                                         @endphp
                                         <td class="border cursor-pointer w-4 @if($currentStep === 'Closed' || $currentStep === 'Cancelled') bg-base-300 @else  {{ $color }} @endif
-                                    @if($risk_likelihood_id == $l->id && $risk_consequence_id == $c->id) border-2 border-stone-500 @endif"@if($currentStep === 'Closed' || $currentStep === 'Cancelled') @else wire:click="riskId({{ $l->id }}, {{ $c->id }})" @endif >
+                                    @if($risk_likelihood_id == $l->id && $risk_consequence_id == $c->id) border-2 border-stone-500 @endif" @if($currentStep==='Closed' || $currentStep==='Cancelled' ) @else wire:click="riskId({{ $l->id }}, {{ $c->id }})" @endif>
                                             <div class="text-xs font-semibold">{{ Str::upper(substr($severity, 0, 1)) }}</div>
 
                                         </td>

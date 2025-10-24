@@ -20,6 +20,7 @@ use App\Models\choseEventType;
 use App\Models\PersonInCharge;
 use App\Models\RiskAssessment;
 use App\Models\RiskLikelihood;
+use App\Models\RiskMatrixCell;
 use App\Models\CompanyCategory;
 use App\Models\HazardReportLog;
 use App\Models\RiskConsequence;
@@ -28,14 +29,14 @@ use App\Models\Kondisitidakaman;
 use App\Models\EventParticipants;
 use App\Models\EventUserSecurity;
 use App\Models\Tindakantidakaman;
+use Livewire\Attributes\Validate;
 use App\Models\WorkflowApplicable;
 use App\Notifications\toModerator;
 use App\Helpers\NotificationHelper;
 use App\Models\HazardDocumentation;
-use App\Models\RiskAssessmentMatrix;
-use App\Models\RiskMatrixCell;
 use App\Models\TableRiskAssessment;
 use Illuminate\Support\Facades\Log;
+use App\Models\RiskAssessmentMatrix;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 
@@ -64,6 +65,14 @@ class Detail extends Component
     public $dropdownWorkgroup = 'dropdown', $hiddenWorkgroup = 'block';
     public $dropdownReportBy  = 'dropdown', $hiddenReportBy  = 'block', $hiddenReportTo  = 'block', $tindakan_tidak_aman, $kondisi_tidak_aman, $tindakkan_selanjutnya, $showLocation  = false;
     protected $listeners      = ['ubahData' => 'changeData'];
+     // Pelapor
+    #[Validate]
+    public $pelapor_id;
+    public $searchPelapor = '';
+    public $pelapors = [];
+    public $showPelaporDropdown = false;
+    public $manualPelaporMode = false;
+    public $manualPelaporName = '';
     public function mount($id)
     {
         $this->likelihoods = RiskLikelihood::orderByDesc('level')->get();
@@ -85,7 +94,7 @@ class Detail extends Component
                 $HazardReport                = HazardReport::whereId($this->data_id)->first();
                 $this->risk_consequence_id   = $HazardReport->risk_consequence_id;
                 $this->risk_likelihood_id    = $HazardReport->risk_likelihood_id;
-                $this->report_by             = $HazardReport->report_by;
+                $this->pelapor_id             = $HazardReport->report_by;
                 $this->key_word             = $HazardReport->key_word;
                 $this->kondisitidakamen_id             = $HazardReport->kondisitidakamen_id;
                 $this->tindakantidakamen_id             = $HazardReport->tindakantidakamen_id;
@@ -103,7 +112,7 @@ class Detail extends Component
                 $this->event_category        = ($this->event_type_id == null) ? "" : $HazardReport->eventType->event_category_id;
                 $this->sub_event_type_id     = $HazardReport->sub_event_type_id;
                 $this->report_toName         = ($HazardReport->report_to) ? $HazardReport->reportsTo->lookup_name : $HazardReport->report_toName;
-                $this->report_byName         = ($HazardReport->report_by) ? $HazardReport->reportBy->lookup_name : $HazardReport->report_byName;
+                $this->searchPelapor         = ($HazardReport->report_by) ? $HazardReport->reportBy->lookup_name : $HazardReport->report_byName;
                 $this->report_to_nolist      = ($HazardReport->report_to_nolist) ? $HazardReport->report_to_nolist : "";
                 $this->report_by_nolist      = ($HazardReport->report_by_nolist) ? $HazardReport->report_by_nolist : "";
                 $this->date                  = DateTime::createFromFormat('Y-m-d : H:i', $HazardReport->date)->format('d-m-Y : H:i');
@@ -307,9 +316,45 @@ class Detail extends Component
         $this->select_divisi  = null;
         $this->workgroup_name = null;
     }
-    public function clickReportBy()
+    // Fungsi dari Pelapor
+    public function updatedSearchPelapor()
     {
-        $this->hiddenReportBy = 'block';
+        if (strlen($this->searchPelapor) > 2) {
+            $this->pelapors = User::searchNama(trim($this->searchPelapor))
+                ->orderBy('lookup_name')
+                ->limit(10)
+                ->get();
+            $this->showPelaporDropdown = true;
+        } else {
+            $this->pelapors = [];
+            $this->showPelaporDropdown = false;
+        }
+        $this->reset('manualPelaporName', 'pelapor_id');
+        $this->manualPelaporMode = false;
+    }
+    public function selectPelapor($id, $name)
+    {
+        $this->pelapor_id = $id;
+        $this->searchPelapor = $name;
+        $this->showPelaporDropdown = false;
+        $this->manualPelaporMode = false;
+        $this->validateOnly('pelapor_id');
+    }
+    public function enableManualPelapor()
+    {
+        $this->manualPelaporMode = true;
+        $this->manualPelaporName = $this->searchPelapor; // isi default sama dengan isi search
+    }
+    public function updatedManualPelaporName($value)
+    {
+        $this->pelapor_id = null;
+    }
+
+    public function addPelaporManual()
+    {
+        $this->searchPelapor = $this->manualPelaporName;
+        $this->showPelaporDropdown = false;
+        $this->pelapor_id = null;
     }
     public function clickReportTo()
     {
