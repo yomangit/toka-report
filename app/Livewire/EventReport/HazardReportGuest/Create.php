@@ -61,7 +61,7 @@ class Create extends Component
     public $location_search = '';
 
     // IDs and Relational Keys
-   
+
     public $tablerisk_id;
     public $risk_assessment_id;
     public $workflow_detail_id;
@@ -108,7 +108,7 @@ class Create extends Component
     public $suggested_corrective_action;
     public $preliminary_cause;
     public $corrective_action_suggested;
-     // Pelapor
+    // Pelapor
     #[Validate]
     public $pelapor_id;
     public $searchPelapor = '';
@@ -116,13 +116,13 @@ class Create extends Component
     public $showPelaporDropdown = false;
     public $manualPelaporMode = false;
     public $manualPelaporName = '';
-        // Pelapor Act
+    // Pelapor Act
     public $searchActResponsibility = '';
     public $pelaporsAct = [];
     public $showActPelaporDropdown = false;
     public $manualActPelaporMode = false;
     public $manualActPelaporName = '';
-     // input action
+    // input action
     public $actions = []; // kumpulan action sebelum disimpan
     public $action_description;
     public $action_due_date;
@@ -171,7 +171,7 @@ class Create extends Component
     // data action
     public function mount()
     {
-         $routePath = Request::getPathInfo();
+        $routePath = Request::getPathInfo();
         $eventTypeIds = choseEventType::where('route_name', 'LIKE', $routePath)->pluck('event_type_id');
         if ($eventTypeIds->isNotEmpty()) {
             $this->Event_type = TypeEventReport::whereIn('id', $eventTypeIds)->get();
@@ -234,7 +234,7 @@ class Create extends Component
             'key_word.required'        => 'Kolom wajib dicentang',
         ];
     }
-        // Fungsi dari Pelapor
+    // Fungsi dari Pelapor
     public function updatedSearchPelapor()
     {
         if (strlen($this->searchPelapor) > 2) {
@@ -274,7 +274,7 @@ class Create extends Component
         $this->showPelaporDropdown = false;
         $this->pelapor_id = null;
     }
-// fungsi pelapor act
+    // fungsi pelapor act
 
     public function updatedSearchActResponsibility()
     {
@@ -494,7 +494,7 @@ class Create extends Component
             ])
             ->section('content');
     }
-            public function addAction()
+    public function addAction()
     {
         $this->dispatch('validateCkEditorAddAction');
         $this->validate([
@@ -518,7 +518,7 @@ class Create extends Component
             'backgroundColor' => "background: linear-gradient(135deg, #00c853, #00bfa5);",
         ]);
         // reset input sementara
-        $this->reset(['action_description', 'action_due_date','actual_close_date', 'action_responsible_id', 'searchActResponsibility']);
+        $this->reset(['action_description', 'action_due_date', 'actual_close_date', 'action_responsible_id', 'searchActResponsibility']);
         $this->dispatch('reset-ckeditor');
     }
 
@@ -585,13 +585,13 @@ class Create extends Component
             $this->workflow_detail_id = optional($workflow)->id;
             $closed_by = $this->report_byName;
         }
-
+        $pelaporId = $this->pelapor_id ?: null;
         // Simpan data ke database
         $fields = [
             'event_type_id'               => $this->event_type_id,
             'sub_event_type_id'           => $this->sub_event_type_id,
             'reference'                   => $this->reference,
-            'report_by'                   => $this->report_by,
+            'report_by'                   =>  $pelaporId,
             'report_to'                   => $this->report_to,
             'division_id'                 => $this->division_id,
             'date'                        => $dateForDB,
@@ -626,16 +626,16 @@ class Create extends Component
 
         $hazardReport = HazardReport::create($fields);
         foreach ($this->actions as $act) {
-                $due_date = Carbon::createFromFormat('d-m-Y', $act['due_date'])->format('Y-m-d');
-                $actual_close_date = Carbon::createFromFormat('d-m-Y', $act['actual_close_date'])->format('Y-m-d');
-                DocHazPelapor::create([
-                    'hazard_id'     => $hazardReport->id,
-                    'followup_action'   => $act['description'],
-                    'due_date'      => $due_date,
-                    'completion_date'      => $actual_close_date,
-                    'responsibility' => $act['responsible_id'],
-                ]);
-            }
+            $due_date = Carbon::createFromFormat('d-m-Y', $act['due_date'])->format('Y-m-d');
+            $actual_close_date = Carbon::createFromFormat('d-m-Y', $act['actual_close_date'])->format('Y-m-d');
+            DocHazPelapor::create([
+                'hazard_id'     => $hazardReport->id,
+                'followup_action'   => $act['description'],
+                'due_date'      => $due_date,
+                'completion_date'      => $actual_close_date,
+                'responsibility' => $act['responsible_id'],
+            ]);
+        }
         if ($this->tindakkan_selanjutnya == 1) {
             $source = Approval::where('new_data->token', $this->token)->get();
             foreach ($source as $approval) {
