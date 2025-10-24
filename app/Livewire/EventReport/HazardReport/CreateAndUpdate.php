@@ -288,8 +288,8 @@ class CreateAndUpdate extends Component
         $this->reset('manualActPelaporName');
         $this->manualActPelaporMode = false;
         if (strlen($this->searchActResponsibility) > 1) {
-            $this->pelaporsAct = User::where('name', 'like', '%' . $this->searchActResponsibility . '%')
-                ->orderBy('name')
+            $this->pelaporsAct = User::where('lookup_name', 'like', '%' . $this->searchActResponsibility . '%')
+                ->orderBy('lookup_name')
                 ->limit(10)
                 ->get();
             $this->showActPelaporDropdown = true;
