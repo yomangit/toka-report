@@ -618,11 +618,11 @@ class Create extends Component
             $due_date = Carbon::createFromFormat('d-m-Y', $act['due_date'])->format('Y-m-d');
             $actual_close_date = Carbon::createFromFormat('d-m-Y', $act['actual_close_date'])->format('Y-m-d');
             DocHazPelapor::create([
-                'hazard_id'     => $hazardReport->id,
-                'followup_action'   => $act['description'],
-                'due_date'      => $due_date,
-                'completion_date'      => $actual_close_date,
-                'responsibility' => $act['responsible_id'],
+                'hazard_id'             => $hazardReport->id,
+                'followup_action'       => $act['description'],
+                'due_date'              => $due_date,
+                'completion_date'       => $actual_close_date,
+                'responsibility'        => $act['responsible_id'],
             ]);
         }
         if ($this->tindakkan_selanjutnya == 1) {

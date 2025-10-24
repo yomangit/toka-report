@@ -409,7 +409,7 @@
                                     <p class="text-sm text-gray-500">
                                         Batas Waktu Penyelesaian: {{ $act['due_date'] }} |
                                         Tanggal Penyelesaian Tindakan: {{ $act['actual_close_date'] }} |
-                                        PIC: {{ optional(\App\Models\User::find($act['responsible_id']))->name }}
+                                        PIC: {{ optional(\App\Models\User::find($act['responsible_id']))->lookup_name }}
                                     </p>
                                 </div>
                                 <label type="button" wire:click="removeAction({{ $index }})" class="self-start btn btn-error btn-xs md:self-center">Hapus</label>
