@@ -157,6 +157,14 @@ class CreateAndUpdate extends Component
     // data action
     public function mount()
     {
+         // Ambil event_type berdasarkan route
+        $routePath = Request::getPathInfo();
+        $eventTypeIds = choseEventType::where('route_name', 'LIKE', $routePath)->pluck('event_type_id');
+
+        if ($eventTypeIds->isNotEmpty()) {
+            $this->Event_type = TypeEventReport::whereIn('id', $eventTypeIds)->get();
+        }
+
         $this->token = Str::uuid()->toString();
         if (Auth::check()) {
             $this->searchPelapor = Auth::user()->lookup_name ?? Auth::user()->name;
@@ -364,19 +372,6 @@ class CreateAndUpdate extends Component
     }
     public function realTimeFunc()
     {
-        // Tampilkan lokasi jika dipilih
-        $this->showLocation = !empty($this->location_id);
-
-        // Ambil event_type berdasarkan route
-        $routePath = Request::getPathInfo();
-        $eventTypeIds = choseEventType::where('route_name', 'LIKE', $routePath)->pluck('event_type_id');
-
-        if ($eventTypeIds->isNotEmpty()) {
-            $this->Event_type = TypeEventReport::whereIn('id', $eventTypeIds)->get();
-        }
-
-        // Ambil subtype jika event_type_id dipilih
-
 
         // Ambil ekstensi file dokumentasi
         if ($this->documentation) {

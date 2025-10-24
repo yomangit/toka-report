@@ -157,6 +157,11 @@ class Create extends Component
     // data action
     public function mount()
     {
+         $routePath = Request::getPathInfo();
+        $eventTypeIds = choseEventType::where('route_name', 'LIKE', $routePath)->pluck('event_type_id');
+        if ($eventTypeIds->isNotEmpty()) {
+            $this->Event_type = TypeEventReport::whereIn('id', $eventTypeIds)->get();
+        }
         $this->token = Str::uuid()->toString();
         if (Auth::check()) {
             $this->report_byName = Auth::user()->lookup_name ?? Auth::user()->name;
@@ -353,33 +358,20 @@ class Create extends Component
         $this->select_divisi = null;
         $this->division_id = null;
     }
-
+    public function updatedEventTypeId($value)
+    {
+        // Misalnya otomatis ubah field lain
+        $this->EventSubType = $value ? Eventsubtype::where('event_type_id', $value)->get() : [];
+    }
     public function realTimeFunc()
     {
-        // Tampilkan lokasi jika dipilih
-        $this->showLocation = !empty($this->location_id);
-
-        // Ambil event_type berdasarkan route
-        $routePath = Request::getPathInfo();
-        $eventTypeIds = choseEventType::where('route_name', 'LIKE', $routePath)->pluck('event_type_id');
-
-        if ($eventTypeIds->isNotEmpty()) {
-            $this->Event_type = TypeEventReport::whereIn('id', $eventTypeIds)->get();
-        }
-
-        // Ambil subtype jika event_type_id dipilih
-        $this->EventSubType = $this->event_type_id
-            ? Eventsubtype::where('event_type_id', $this->event_type_id)->get()
-            : [];
 
         // Ambil ekstensi file dokumentasi
         if ($this->documentation) {
             $this->fileUpload = pathinfo($this->documentation->getClientOriginalName(), PATHINFO_EXTENSION);
         }
-
         // Tampilkan form jika user adalah superadmin (role_user_permit_id = 1)
         $this->show = Auth::check() && Auth::user()->role_user_permit_id == 1;
-
         // Proses data divisi
         if ($this->division_id) {
             $divisi = Division::with([
