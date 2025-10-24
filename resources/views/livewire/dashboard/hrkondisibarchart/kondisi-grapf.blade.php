@@ -171,11 +171,18 @@
                , data: divisi.label
            }
            , series: [{
-                   name: '2011'
+                   name: divisi.year
                    , type: 'bar'
-                   , data:divisi.count
+                   , data: divisi.count
+                   , itemStyle: {
+                       color: function(params) {
+                           // Gunakan warna dinamis berdasarkan posisi bar
+                           return generateColor(params.dataIndex, divisi.count.length);
+                       }
+                       , borderRadius: [0, 6, 6, 0]
+                   }
                }
-               
+
            ]
        };
        myChart_divisi.setOption(option_divisi);
