@@ -341,6 +341,7 @@ class CreateAndUpdate extends Component
     {
         $this->location_id = $id;
         $this->searchLocation = $name;
+         $this->showLocation =true;
         $this->showLocationDropdown = false;
         $this->validateOnly('location_id');
     }
