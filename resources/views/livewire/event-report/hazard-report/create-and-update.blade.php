@@ -453,6 +453,13 @@
                     @this.set('immediate_corrective_action', editor.getData());
                 });
             });
+            ClassicEditor.create(document.querySelector('#ckeditor-action_description'), {
+                toolbar: ['undo', 'redo', 'bold', 'italic', 'numberedList', 'bulletedList', 'link']
+            }).then(editor => {
+                editor.model.document.on('change:data', () => {
+                    @this.set('action_description', editor.getData());
+                });
+            });
 
         </script>
     </div>
