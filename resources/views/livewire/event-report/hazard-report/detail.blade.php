@@ -67,7 +67,7 @@
                     <div class="w-full max-w-md xl:max-w-xl form-control">
                         <div x-data x-show="$wire.key_word === 'kta'">
                             <x-label-req :value="__('kategori bahaya')" />
-                            <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')" {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled' : '' }}>
+                            <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')" class="{{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled' : '' }}">
                                 <option value="" selected>Pilih KTA...</option>
                                 @foreach ($KTA as $kta)
                                 <option value="{{ $kta->id }}">{{ $kta->name }}</option>
@@ -79,7 +79,7 @@
                         <!-- TTA Select -->
                         <div x-data x-show="$wire.key_word === 'tta'">
                             <x-label-req :value="__('kategori bahaya')" />
-                            <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')" {{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled' : '' }}>
+                            <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')" class="{{ $currentStep === 'Closed' || $currentStep === 'Cancelled' ? 'disabled' : '' }}">
                                 <option value="" selected>Pilih TTA</option>
                                 @foreach ($TTA as $tta)
                                 <option value="{{ $tta->id }}">{{ $tta->name }}</option>
