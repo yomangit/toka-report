@@ -66,6 +66,14 @@ class CreateAndUpdate extends Component
     public $showPelaporDropdown = false;
     public $manualPelaporMode = false;
     public $manualPelaporName = '';
+    // Pelapor Act
+    #[Validate]
+    public $action_responsible_ids;
+    public $searchActResponsibility = '';
+    public $pelaporsAct = [];
+    public $showActPelaporDropdown = false;
+    public $manualActPelaporMode = false;
+    public $manualActPelaporName = '';
 
     // Location
     #[Validate]
@@ -73,6 +81,13 @@ class CreateAndUpdate extends Component
     public $showLocationDropdown = false;
     public $locations = [];
     public $searchLocation = '';
+
+     // input action
+    public $actions = []; // kumpulan action sebelum disimpan
+    public $action_description;
+    public $action_due_date;
+    public $actual_close_date;
+    public $action_responsible_id;
     // IDs and Relational Keys
 
     public $tablerisk_id;
@@ -266,6 +281,47 @@ class CreateAndUpdate extends Component
         $this->showPelaporDropdown = false;
         $this->pelapor_id = null;
     }
+    // fungsi pelapor act
+
+    public function updatedSearchActResponsibility()
+    {
+        $this->reset('manualActPelaporName');
+        $this->manualActPelaporMode = false;
+        if (strlen($this->searchActResponsibility) > 1) {
+            $this->pelaporsAct = User::where('name', 'like', '%' . $this->searchActResponsibility . '%')
+                ->orderBy('name')
+                ->limit(10)
+                ->get();
+            $this->showActPelaporDropdown = true;
+        } else {
+            $this->pelaporsAct = [];
+            $this->showActPelaporDropdown = false;
+        }
+    }
+    public function selectActPelapor($id, $name)
+    {
+        $this->action_responsible_ids = $id;
+        $this->searchActResponsibility = $name;
+        $this->showActPelaporDropdown = false;
+        $this->manualActPelaporMode = false;
+        $this->validateOnly('action_responsible_ids');
+    }
+    public function enableManualActPelapor()
+    {
+        $this->manualActPelaporMode = true;
+        $this->manualActPelaporName = $this->searchPelapor; // isi default sama dengan isi search
+    }
+    public function updatedManualActPelaporName($value)
+    {
+        $this->action_responsible_ids = null;
+    }
+
+    public function addActPelaporManual()
+    {
+        $this->searchActResponsibility = $this->manualActPelaporName;
+        $this->showActPelaporDropdown = false;
+        $this->action_responsible_ids = null;
+    }
 
     // fungsi dari Location
     public function updatedSearchLocation()
@@ -446,6 +502,52 @@ class CreateAndUpdate extends Component
             'Location'   => LocationEvent::all(),
         ])->extends('base.index', ['header' => 'Hazard Report', 'title' => 'Hazard Report'])->section('content');
     }
+
+        public function addAction()
+    {
+        $this->dispatch('validateCkEditorAddAction');
+        $this->validate([
+            'action_description' => 'required|string',
+            'action_due_date' => 'required|date',
+            'actual_close_date' => 'required|date',
+            'action_responsible_id' => 'required|exists:users,id',
+        ]);
+        $this->actions[] = [
+            'description' => $this->action_description,
+            'due_date' => $this->action_due_date,
+            'actual_close_date' => $this->actual_close_date,
+            'responsible_id' => $this->action_responsible_id,
+        ];
+        $this->dispatch('alert', [
+            'text' => "Tindakan Lanjutan berhasil dibuat!!",
+            'duration' => 5000,
+            'destination' => '/contact',
+            'newWindow' => true,
+            'close' => true,
+            'backgroundColor' => "background: linear-gradient(135deg, #00c853, #00bfa5);",
+        ]);
+        // reset input sementara
+        $this->reset(['action_description', 'action_due_date', 'action_responsible_id', 'searchActResponsibility']);
+        $this->dispatch('reset-ckeditor');
+    }
+
+    public function removeAction($index)
+    {
+        unset($this->actions[$index]);
+        $this->actions = array_values($this->actions); // reindex
+        $this->dispatch(
+            'alert',
+            [
+                'text' => "Tindakan Lanjutan berhasil di hapus!!!",
+                'duration' => 5000,
+                'destination' => '/contact',
+                'newWindow' => true,
+                'close' => true,
+                'backgroundColor' => "linear-gradient(to right, #ff3333, #ff6666)",
+            ]
+        );
+    }
+
     public function store()
     {
         // Format tanggal untuk referensi
