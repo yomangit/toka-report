@@ -518,6 +518,7 @@ class CreateAndUpdate extends Component
             'actual_close_date' => $this->actual_close_date,
             'responsible_id' => $this->action_responsible_id,
         ];
+        dd($this->actions);
         $this->dispatch('alert', [
             'text' => "Tindakan Lanjutan berhasil dibuat!!",
             'duration' => 5000,
