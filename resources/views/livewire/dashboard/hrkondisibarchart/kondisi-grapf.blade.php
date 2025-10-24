@@ -151,7 +151,7 @@
        var dom_divisi = document.getElementById('chart-divisi');
        var myChart_divisi = echarts.init(dom_divisi);
        var option_divisi;
-       option_divis = {
+       option_divisi = {
            title: {
                text: 'Jumlah Laporan'
            }
