@@ -3,7 +3,7 @@
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
 
        {{-- Statistik Ringkas --}}
-       <div class="w-full shadow stats stats-vertical lg:stats-horizontal">
+       <div class="w-full mt-4 shadow stats stats-vertical lg:stats-horizontal">
 
            {{-- Total Laporan --}}
            <div class="stat">
