@@ -356,18 +356,6 @@ class CreateAndUpdate extends Component
     {
         $this->reset('tindakkan_selanjutnya');
     }
-    public function reportedBy($id)
-    {
-        $this->report_by = $id;
-
-        $reportBy = User::find($id);
-        if ($reportBy) {
-            $this->report_byName = $reportBy->lookup_name;
-        }
-
-        $this->report_by_nolist = null;
-        $this->hiddenReportBy = 'hidden';
-    }
 
     public function reportedTo($id)
     {
@@ -389,31 +377,26 @@ class CreateAndUpdate extends Component
             $this->report_byName = $this->report_by_nolist;
         }
     }
-
     public function select_division($id)
     {
         $this->division_id = $id;
         $this->hiddenWorkgroup = 'hidden';
         $this->hiddenReportBy = 'hidden';
     }
-
     public function clickReportBy()
     {
         $this->dropdownReportBy = 'dropdown dropdown-open dropdown-end';
         $this->hiddenReportBy = 'block';
     }
-
     public function clickReportTo()
     {
         $this->hiddenReportTo = 'block';
     }
-
     public function clickWorkgroup()
     {
         $this->dropdownWorkgroup = 'dropdown dropdown-open dropdown-end';
         $this->hiddenWorkgroup = 'block';
     }
-
     public function changeConditionDivision()
     {
         $this->business_unit = null;
