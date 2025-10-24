@@ -2,41 +2,69 @@
        <x-notification />
        <x-input-daterange id="tanggal_range" placeholder='date-range' />
 
-       <div class="shadow stats">
+       {{-- Statistik Ringkas --}}
+       <div class="w-full shadow stats stats-vertical lg:stats-horizontal">
+
+           {{-- Total Laporan --}}
            <div class="stat">
                <div class="stat-figure text-primary">
-                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
-                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-bar-big-icon lucide-chart-bar-big">
+                       <path d="M3 3v16a2 2 0 0 0 2 2h16" />
+                       <rect x="7" y="13" width="9" height="4" rx="1" />
+                       <rect x="7" y="5" width="12" height="4" rx="1" />
                    </svg>
                </div>
-               <div class="stat-title">Total Likes</div>
-               <div class="stat-value text-primary">25.6K</div>
-               <div class="stat-desc">21% more than last month</div>
+               <div class="stat-title">Total Laporan</div>
+               <div class="stat-value text-primary">{{ $total_laporan }}</div>
+               <div class="stat-desc">Semua laporan hazard</div>
            </div>
 
+           {{-- Sedang Diproses --}}
            <div class="stat">
                <div class="stat-figure text-secondary">
-                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
-                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench-icon lucide-wrench">
+                       <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z" />
                    </svg>
                </div>
-               <div class="stat-title">Page Views</div>
-               <div class="stat-value text-secondary">2.6M</div>
-               <div class="stat-desc">21% more than last month</div>
+               <div class="stat-title">Sedang Diproses</div>
+               <div class="stat-value text-secondary">
+                   {{ $hazardByStatus['In Progress'] ?? 0 }}
+               </div>
+               <div class="stat-desc">Laporan aktif</div>
            </div>
 
+           {{-- Submitted --}}
            <div class="stat">
-               <div class="stat-figure text-secondary">
-                   <div class="avatar online">
-                       <div class="w-16 rounded-full">
-                           <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                       </div>
-                   </div>
+               <div class="stat-figure text-info">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hourglass-icon lucide-hourglass">
+                       <path d="M5 22h14" />
+                       <path d="M5 2h14" />
+                       <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" />
+                       <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
+                   </svg>
                </div>
-               <div class="stat-value">86%</div>
-               <div class="stat-title">Tasks done</div>
-               <div class="stat-desc text-secondary">31 tasks remaining</div>
+               <div class="stat-title">Submitted</div>
+               <div class="stat-value text-info">
+                   {{ $hazardByStatus['Submitted'] ?? 0 }}
+               </div>
+               <div class="stat-desc">Menunggu diproses</div>
            </div>
+
+           {{-- Closed --}}
+           <div class="stat">
+               <div class="stat-figure text-success">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-check-icon lucide-book-check">
+                       <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
+                       <path d="m9 9.5 2 2 4-4" />
+                   </svg>
+               </div>
+               <div class="stat-title">Selesai</div>
+               <div class="stat-value text-success">
+                   {{ $hazardByStatus['Closed'] ?? 0 }}
+               </div>
+               <div class="stat-desc">Laporan selesai</div>
+           </div>
+
        </div>
 
        <div class="mt-2 mt-4 card card-border bg-base-300">

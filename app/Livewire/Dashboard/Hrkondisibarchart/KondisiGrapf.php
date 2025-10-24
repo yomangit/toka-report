@@ -13,10 +13,12 @@ class KondisiGrapf extends Component
 {
     public $labels = [];
     public $counts = [];
+    public $hazardByStatus = [];
     public $divisi;
     public $kondisi;
     public $tindakan;
     public $pie;
+    public $total_laporan;
     public $rangeDate;
     public $tglMulai;
     public $tglAkhir;
@@ -52,6 +54,16 @@ class KondisiGrapf extends Component
             // User tanpa relasi division_user tidak bisa lihat laporan
             $reports = collect();
         }
+        $this->total_laporan = $query->count();
+
+        $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
+
+        foreach ($statuses as $status) {
+            $this->hazardByStatus[$status] = HazardReport::whereHas('WorkflowDetails.Status', function ($q) use ($status) {
+                $q->where('status_name', $status);
+            })->count();
+        }
+
         $label = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
         $count = $reports->pluck('total')->toArray();
         $divisi = [
