@@ -57,7 +57,7 @@ class KondisiGrapf extends Component
         }
         $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
         foreach ($statuses as $status) {
-            $this->hazardByStatus[$status] = HazardReport::whereHas('WorkflowDetails.Status', function ($q) use ($status) {
+            $this->hazardByStatus[$status] = HazardReport::whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->whereHas('WorkflowDetails.Status', function ($q) use ($status) {
                 $q->where('status_name', $status);
             })->count();
         }
