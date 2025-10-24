@@ -89,7 +89,7 @@
                         <x-label-req :value="__('Dilaporkan Oleh')" />
                         <div class="relative">
                             <!-- Input Search -->
-                            <x-input wire:model.live='searchPelapor' wire:keydown.self="changeConditionDivision" placeholder='cari divisi...' :error="$errors->get('pelapor_id')" class="cursor-pointer" />
+                            <x-input wire:model.live='searchPelapor' wire:keydown.self="changeConditionDivision" placeholder='pilih pelapor...' :error="$errors->get('pelapor_id')" class="cursor-pointer" />
                             <!-- Dropdown hasil search (teleport keluar collapse) -->
                             @if ($showPelaporDropdown)
                             <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">

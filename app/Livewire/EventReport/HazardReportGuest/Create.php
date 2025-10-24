@@ -178,7 +178,7 @@ class Create extends Component
         }
         $this->token = Str::uuid()->toString();
         if (Auth::check()) {
-            $this->report_byName = Auth::user()->lookup_name ?? Auth::user()->name;
+            $this->searchPelapor = Auth::user()->lookup_name ?? Auth::user()->name;
             $this->report_by     = Auth::id();
         }
     }
