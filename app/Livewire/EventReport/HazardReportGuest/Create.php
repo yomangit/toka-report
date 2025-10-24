@@ -346,19 +346,7 @@ class Create extends Component
     {
         $this->reset('tindakkan_selanjutnya');
     }
-    public function reportedBy($id)
-    {
-        $this->report_by = $id;
-
-        $reportBy = User::find($id);
-        if ($reportBy) {
-            $this->report_byName = $reportBy->lookup_name;
-            $this->validateOnly('report_by');
-        }
-
-        $this->report_by_nolist = null;
-        $this->hiddenReportBy = 'hidden';
-    }
+    
 
     public function reportedTo($id)
     {
@@ -480,7 +468,6 @@ class Create extends Component
         $this->realTimeFunc();
         $this->ReportByAndReportTo();
         return view('livewire.event-report.hazard-report-guest.create', [
-            'Report_By' => User::searchNama($this->report_byName)->limit(100)->get(),
             'Report_To'  =>  PersonInCharge::where('division_id', $this->division_id)->get(),
             'Division'   => $this->divisi_search,
             'EventType'  => $this->Event_type,
@@ -583,7 +570,7 @@ class Create extends Component
                 ->first();
 
             $this->workflow_detail_id = optional($workflow)->id;
-            $closed_by = $this->report_byName;
+            $closed_by = User::whereId($this->pelapor_id)->first()->lookup_name;
         }
         $pelaporId = $this->pelapor_id ?: null;
         // Simpan data ke database
