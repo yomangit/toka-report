@@ -67,7 +67,6 @@ class CreateAndUpdate extends Component
     public $manualPelaporMode = false;
     public $manualPelaporName = '';
     // Pelapor Act
-    #[Validate]
     public $action_responsible_ids;
     public $searchActResponsibility = '';
     public $pelaporsAct = [];
@@ -510,7 +509,7 @@ class CreateAndUpdate extends Component
             'action_description' => 'required|string',
             'action_due_date' => 'required|date',
             'actual_close_date' => 'required|date',
-            'action_responsible_ids' => 'required',
+            'action_responsible_ids' => 'required|exists:users,id',
         ]);
         $this->actions[] = [
             'description' => $this->action_description,
