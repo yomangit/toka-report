@@ -179,7 +179,7 @@ class Create extends Component
         $this->token = Str::uuid()->toString();
         if (Auth::check()) {
             $this->searchPelapor = Auth::user()->lookup_name ?? Auth::user()->name;
-            $this->report_by     = Auth::id();
+            $this->pelapor_id     = Auth::id();
         }
     }
     public function rules()
