@@ -93,8 +93,8 @@
                             <!-- Dropdown hasil search (teleport keluar collapse) -->
                             @if ($showPelaporDropdown)
                             <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
-                                <div class="hidden" wire:loading.class.remove="hidden" wire:loading wire:target="selectPelapor">
-                                    <span class="loading loading-spinner loading-sm text-secondary"></span>
+                                <div class="text-center " >
+                                    <span class="hidden loading loading-spinner loading-sm text-secondary" wire:loading.class.remove="hidden" wire:loading wire:target="selectPelapor"></span>
                                 </div>
                                 @if (count($pelapors) > 0)
                                 @foreach ($pelapors as $pelapor)
@@ -210,8 +210,8 @@
                             @if($showLocationDropdown && count($locations) > 0)
                             <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
                                 <!-- Spinner ketika klik -->
-                                <div class="hidden" wire:loading.class.remove="hidden" wire:loading wire:target="selectLocation">
-                                    <span class="loading loading-spinner loading-sm text-secondary"></span>
+                                <div class="text-center" >
+                                    <span class="hidden loading loading-spinner loading-sm text-secondary" wire:loading.class.remove="hidden" wire:loading wire:target="selectLocation"></span>
                                 </div>
                                 @foreach($locations as $loc)
                                 <li wire:click="selectLocation({{ $loc->id }}, '{{ $loc->location_name }}')" class="px-3 py-2 cursor-pointer hover:bg-base-200" wire:loading.class="hidden" wire:loading wire:target="selectLocation">
@@ -232,9 +232,7 @@
                     <x-label-error :messages="$errors->get('location_name')" />
                 </div>
             </div>
-
             <!-- Textarea description -->
-
             <div>
                 <x-label-req :value="__('Hazard Details')" />
                 <div class="@error('description') border border-rose-500 rounded-sm @enderror">
@@ -399,9 +397,7 @@
 
                         <!-- Tombol Tambah -->
                         <div class="flex justify-end ">
-                            <x-btn-save-active wire:click="addAction">
-                                {{ __('Tambah') }}
-                            </x-btn-save-active>
+                            <label for="" class="btn btn-accent btn-xs" wire:click="addAction">Tambah</label>
                         </div>
                         <!-- List Actions -->
                         <div class="my-2 divider">Daftar Tindakan</div>
@@ -416,7 +412,7 @@
                                         PIC: {{ optional(\App\Models\User::find($act['responsible_id']))->name }}
                                     </p>
                                 </div>
-                                <button type="button" wire:click="removeAction({{ $index }})" class="self-start btn btn-error btn-xs md:self-center">Hapus</button>
+                                <label type="button" wire:click="removeAction({{ $index }})" class="self-start btn btn-error btn-xs md:self-center">Hapus</label>
                             </li>
                             @empty
                             <li class="text-sm text-gray-500">Belum ada tindakan lanjutan ditambahkan.</li>

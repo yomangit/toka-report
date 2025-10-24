@@ -3,6 +3,7 @@
 namespace App\Livewire\EventReport\HazardReportGuest;
 
 use DateTime;
+use Carbon\Carbon;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Division;
@@ -11,6 +12,7 @@ use Livewire\Attributes\On;
 use App\Models\Eventsubtype;
 use App\Models\HazardReport;
 use Livewire\WithPagination;
+use App\Models\DocHazPelapor;
 use App\Models\LocationEvent;
 use Livewire\WithFileUploads;
 use App\Models\choseEventType;
@@ -114,6 +116,18 @@ class Create extends Component
     public $showPelaporDropdown = false;
     public $manualPelaporMode = false;
     public $manualPelaporName = '';
+        // Pelapor Act
+    public $searchActResponsibility = '';
+    public $pelaporsAct = [];
+    public $showActPelaporDropdown = false;
+    public $manualActPelaporMode = false;
+    public $manualActPelaporName = '';
+     // input action
+    public $actions = []; // kumpulan action sebelum disimpan
+    public $action_description;
+    public $action_due_date;
+    public $actual_close_date;
+    public $action_responsible_id;
 
     // Location
     #[Validate]
@@ -260,7 +274,47 @@ class Create extends Component
         $this->showPelaporDropdown = false;
         $this->pelapor_id = null;
     }
+// fungsi pelapor act
 
+    public function updatedSearchActResponsibility()
+    {
+        $this->reset('manualActPelaporName');
+        $this->manualActPelaporMode = false;
+        if (strlen($this->searchActResponsibility) > 1) {
+            $this->pelaporsAct = User::where('lookup_name', 'like', '%' . $this->searchActResponsibility . '%')
+                ->orderBy('lookup_name')
+                ->limit(10)
+                ->get();
+            $this->showActPelaporDropdown = true;
+        } else {
+            $this->pelaporsAct = [];
+            $this->showActPelaporDropdown = false;
+        }
+    }
+    public function selectActPelapor($id, $name)
+    {
+        $this->action_responsible_id = $id;
+        $this->searchActResponsibility = $name;
+        $this->showActPelaporDropdown = false;
+        $this->manualActPelaporMode = false;
+        $this->validateOnly('action_responsible_id');
+    }
+    public function enableManualActPelapor()
+    {
+        $this->manualActPelaporMode = true;
+        $this->manualActPelaporName = $this->searchPelapor; // isi default sama dengan isi search
+    }
+    public function updatedManualActPelaporName($value)
+    {
+        $this->action_responsible_id = null;
+    }
+
+    public function addActPelaporManual()
+    {
+        $this->searchActResponsibility = $this->manualActPelaporName;
+        $this->showActPelaporDropdown = false;
+        $this->action_responsible_id = null;
+    }
     // fungsi dari Location
     public function updatedSearchLocation()
     {
@@ -527,6 +581,17 @@ class Create extends Component
         ];
 
         $hazardReport = HazardReport::create($fields);
+        foreach ($this->actions as $act) {
+                $due_date = Carbon::createFromFormat('d-m-Y', $act['due_date'])->format('Y-m-d');
+                $actual_close_date = Carbon::createFromFormat('d-m-Y', $act['actual_close_date'])->format('Y-m-d');
+                DocHazPelapor::create([
+                    'hazard_id'     => $hazardReport->id,
+                    'followup_action'   => $act['description'],
+                    'due_date'      => $due_date,
+                    'completion_date'      => $actual_close_date,
+                    'responsibility' => $act['responsible_id'],
+                ]);
+            }
         if ($this->tindakkan_selanjutnya == 1) {
             $source = Approval::where('new_data->token', $this->token)->get();
             foreach ($source as $approval) {
