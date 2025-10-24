@@ -168,18 +168,14 @@
            }
            , yAxis: {
                type: 'category'
-               , data: ['Brazil', 'Indonesia', 'USA', 'India', 'China', 'World']
+               , data: divisi.label
            }
            , series: [{
                    name: '2011'
                    , type: 'bar'
-                   , data: [18203, 23489, 29034, 104970, 131744, 630230]
+                   , data:divisi.count
                }
-               , {
-                   name: '2012'
-                   , type: 'bar'
-                   , data: [19325, 23438, 31000, 121594, 134141, 681807]
-               }
+               
            ]
        };
        myChart_divisi.setOption(option_divisi);
