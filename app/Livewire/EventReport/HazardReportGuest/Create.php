@@ -59,8 +59,7 @@ class Create extends Component
     public $location_search = '';
 
     // IDs and Relational Keys
-    #[Validate]
-    public $location_id;
+   
     public $tablerisk_id;
     public $risk_assessment_id;
     public $workflow_detail_id;
@@ -107,6 +106,21 @@ class Create extends Component
     public $suggested_corrective_action;
     public $preliminary_cause;
     public $corrective_action_suggested;
+     // Pelapor
+    #[Validate]
+    public $pelapor_id;
+    public $searchPelapor = '';
+    public $pelapors = [];
+    public $showPelaporDropdown = false;
+    public $manualPelaporMode = false;
+    public $manualPelaporName = '';
+
+    // Location
+    #[Validate]
+    public $location_id;
+    public $showLocationDropdown = false;
+    public $locations = [];
+    public $searchLocation = '';
 
     // Risk Details
     public $TableRisk = [];
@@ -200,6 +214,68 @@ class Create extends Component
             'tindakkan_selanjutnya.required'        => 'Kolom wajib dicentang',
             'key_word.required'        => 'Kolom wajib dicentang',
         ];
+    }
+        // Fungsi dari Pelapor
+    public function updatedSearchPelapor()
+    {
+        if (strlen($this->searchPelapor) > 2) {
+            $this->pelapors = User::searchNama(trim($this->searchPelapor))
+                ->orderBy('lookup_name')
+                ->limit(10)
+                ->get();
+            $this->showPelaporDropdown = true;
+        } else {
+            $this->pelapors = [];
+            $this->showPelaporDropdown = false;
+        }
+        $this->reset('manualPelaporName', 'pelapor_id');
+        $this->manualPelaporMode = false;
+    }
+    public function selectPelapor($id, $name)
+    {
+        $this->pelapor_id = $id;
+        $this->searchPelapor = $name;
+        $this->showPelaporDropdown = false;
+        $this->manualPelaporMode = false;
+        $this->validateOnly('pelapor_id');
+    }
+    public function enableManualPelapor()
+    {
+        $this->manualPelaporMode = true;
+        $this->manualPelaporName = $this->searchPelapor; // isi default sama dengan isi search
+    }
+    public function updatedManualPelaporName($value)
+    {
+        $this->pelapor_id = null;
+    }
+
+    public function addPelaporManual()
+    {
+        $this->searchPelapor = $this->manualPelaporName;
+        $this->showPelaporDropdown = false;
+        $this->pelapor_id = null;
+    }
+
+    // fungsi dari Location
+    public function updatedSearchLocation()
+    {
+        if (strlen($this->searchLocation) > 2) {
+            $this->locations = LocationEvent::SearchFor(trim($this->searchLocation))
+                ->orderBy('location_name')
+                ->limit(10)
+                ->get();
+            $this->showLocationDropdown = true;
+        } else {
+            $this->locations = [];
+            $this->showLocationDropdown = false;
+        }
+    }
+    public function selectLocation($id, $name)
+    {
+        $this->location_id = $id;
+        $this->searchLocation = $name;
+        $this->showLocationDropdown = false;
+        $this->validateOnly('location_id');
     }
     // real-time validation
     public function updated($propertyName)
