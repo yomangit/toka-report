@@ -61,7 +61,7 @@
                 @if ($key_word)
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <div x-data x-show="$wire.key_word === 'kta'">
-                        <x-label-req :value="__('Key Word')" />
+                        <x-label-req :value="__('kategori bahaya')" />
                         <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')">
                             <option value="" selected>Pilih KTA...</option>
                             @foreach ($KTA as $kta)
@@ -73,7 +73,7 @@
 
                     <!-- TTA Select -->
                     <div x-data x-show="$wire.key_word === 'tta'">
-                        <x-label-req :value="__('Key Word')" />
+                        <x-label-req :value="__('kategori bahaya')" />
                         <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
                             <option value="" selected>Pilih TTA</option>
                             @foreach ($TTA as $tta)

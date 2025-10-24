@@ -61,7 +61,7 @@
                 @if ($key_word)
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <div x-data x-show="$wire.key_word === 'kta'">
-                        <x-label-req :value="__('Key Word')" />
+                        <x-label-req :value="__('kategori bahaya')" />
                         <x-select wire:model.live='kondisitidakamen_id' :error="$errors->get('kondisitidakamen_id')">
                             <option value="" selected>Pilih KTA...</option>
                             @foreach ($KTA as $kta)
@@ -73,7 +73,7 @@
 
                     <!-- TTA Select -->
                     <div x-data x-show="$wire.key_word === 'tta'">
-                        <x-label-req :value="__('Key Word')" />
+                        <x-label-req :value="__('kategori bahaya')" />
                         <x-select wire:model.live='tindakantidakamen_id' :error="$errors->get('tindakantidakamen_id')">
                             <option value="" selected>Pilih TTA</option>
                             @foreach ($TTA as $tta)
@@ -89,7 +89,7 @@
                         <x-label-req :value="__('Dilaporkan Oleh')" />
                         <div class="relative">
                             <!-- Input Search -->
-                            <x-input wire:model.live='searchPelapor' wire:keydown.self="changeConditionDivision" placeholder='cari divisi...' :error="$errors->get('pelapor_id')" class="cursor-pointer" />
+                            <x-input wire:model.live='searchPelapor' wire:keydown.self="changeConditionDivision" placeholder='pilih pelapor...' :error="$errors->get('pelapor_id')" class="cursor-pointer" />
                             <!-- Dropdown hasil search (teleport keluar collapse) -->
                             @if ($showPelaporDropdown)
                             <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
