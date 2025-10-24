@@ -192,7 +192,6 @@ class CreateAndUpdate extends Component
             'workgroup_name'        => ['required'],
             'event_type_id'         => ['required'],
             'sub_event_type_id'     => ['required'],
-            'report_byName'         => ['required'],
             'report_toName'         => ['required'],
             'date' => [
                 'required',
@@ -223,7 +222,6 @@ class CreateAndUpdate extends Component
         return [
             'event_type_id.required'                => 'Kolom wajib diisi',
             'sub_event_type_id.required'            => 'Kolom wajib diisi',
-            'report_byName.required'                => 'Kolom wajib diisi',
             'report_toName.required'                => 'Kolom wajib diisi',
             'workgroup_name.required'               => 'Kolom wajib diisi',
             'date.required'               => 'Kolom wajib diisi',
