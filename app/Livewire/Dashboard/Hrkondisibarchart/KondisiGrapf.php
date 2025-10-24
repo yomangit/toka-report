@@ -42,7 +42,9 @@ class KondisiGrapf extends Component
             ->groupBy('division_id');
         if ($this->tglMulai && $this->tglAkhir) {
             $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
-            $this->total_laporan = HazardReport::whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->count();
+            $this->total_laporan = $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->count();
+        } else {
+            $this->total_laporan = $query->count();
         }
         if ($user->hasRolePermit('administration')) {
             // Admin bisa lihat semua laporan
@@ -54,7 +56,6 @@ class KondisiGrapf extends Component
         } else {
             // User tanpa relasi division_user tidak bisa lihat laporan
             $reports = collect();
-            $this->total_laporan = HazardReport::count();
         }
         $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
         foreach ($statuses as $status) {
