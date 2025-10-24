@@ -293,7 +293,7 @@
                     </fieldset>
                 </div>
             </div>
-            <div class="mx-auto mb-4 ">
+            <div class="mx-auto mb-4  x-data x-show="$wire.tindakkan_selanjutnya === '1'"">
                 <fieldset class="p-3 border border-gray-200 shadow-md fieldset card bg-base-100">
                     <legend class="text-sm font-semibold card-title "> Tindakan Lanjutan</legend>
                     <div class="card-body ">
