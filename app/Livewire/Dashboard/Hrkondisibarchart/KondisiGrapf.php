@@ -50,7 +50,7 @@ class KondisiGrapf extends Component
                 })->count();
             }
         } else {
-             $this->total_laporan = $query->get()->sum('total');
+            $this->total_laporan = $query->get()->sum('total');
             $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
             foreach ($statuses as $status) {
                 $this->hazardByStatus[$status] = HazardReport::whereHas('WorkflowDetails.Status', function ($q) use ($status) {
@@ -71,8 +71,17 @@ class KondisiGrapf extends Component
         }
 
         $year = Carbon::now()->year;
-        $label = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->sortDesc()->values()->toArray();
-       $count = $reports->pluck('total')->sortDesc()->values()->toArray();
+        // Urutkan berdasarkan total, descending (besar ke kecil)
+        $sortedReports = $reports->sortByDesc('total')->values();
+
+        // Ambil label & count sesuai urutan baru
+        $label = $sortedReports
+            ->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')
+            ->toArray();
+
+        $count = $sortedReports
+            ->pluck('total')
+            ->toArray();
         $divisi = [
             'year' => $year,
             'label' => $label,
