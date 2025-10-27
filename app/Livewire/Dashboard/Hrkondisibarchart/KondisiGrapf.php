@@ -50,6 +50,7 @@ class KondisiGrapf extends Component
                 })->count();
             }
         } else {
+             $this->total_laporan = $query->get()->sum('total');
             $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
             foreach ($statuses as $status) {
                 $this->hazardByStatus[$status] = HazardReport::whereHas('WorkflowDetails.Status', function ($q) use ($status) {
