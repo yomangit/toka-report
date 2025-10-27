@@ -75,12 +75,10 @@
                <div wire:ignore id="chart_kondisi" style="height: 400px;"></div>
            </div>
            <div class="card card-border bg-base-300 ">
-               <div wire:ignore id="chart_tindakan" style="height: 400px;"></div>
+               <div wire:ignore id="chart-pie" style="height: 400px;"></div>
            </div>
        </div>
-       <div class="mt-4 card card-border bg-base-300">
-           <div wire:ignore id="chart-pie" style="height: 400px;"></div>
-       </div>
+      
    </div>
    @push('scripts')
    <script src="https://echarts.apache.org/en/js/vendors/echarts/dist/echarts.min.js"></script>
@@ -298,60 +296,7 @@
            });
        });
 
-       //    ===== TTA =====
-       var dom_tta = document.getElementById('chart_tindakan');
-       var myChart_tta = echarts.init(dom_tta);
-
-       var option_tta = {
-           title: {
-               text: 'Tindakkan Tidak Aman'
-               , left: 'center'
-           }
-           , tooltip: {
-               trigger: 'item'
-           }
-           , legend: {
-               selectedMode: true
-           }
-           , xAxis: {
-               type: 'category'
-               , data: data_tta.label
-               , axisLabel: {
-                   interval: 0, // tampilkan semua label
-                   formatter: function(value) {
-                       //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
-                       return value.split(" ").join("\n");
-                   }
-               }
-           }
-           , yAxis: {
-               type: 'value'
-           }
-           , series: [{
-               data: data_tta.count
-               , type: 'bar'
-               , itemStyle: {
-                   color: (params) => warnaOtomatistta[params.dataIndex]
-               }
-               , label: {
-                   show: true
-                   , position: 'inside'
-               }
-           }]
-       };
-       myChart_tta.setOption(option_tta);
-
-       Livewire.on('berhasilUpdate_tta', event => {
-           let tta = JSON.parse(event); // ini parse JSON dari PHP
-           myChart_tta.setOption({
-               xAxis: {
-                   data: tta.label
-               }
-               , series: [{
-                   data: tta.count
-               }]
-           });
-       });
+       
        // ===== PIE CHART =====
        const chartData = data_pie.label.map((label, index) => ({
            value: data_pie.count[index]
