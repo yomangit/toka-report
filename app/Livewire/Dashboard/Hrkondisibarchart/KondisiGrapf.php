@@ -38,15 +38,20 @@ class KondisiGrapf extends Component
     public function divisiUp()
     {
         $user = auth()->user();
-         $this->total_laporan =HazardReport::whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->count();
+        $this->total_laporan = HazardReport::whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->count();
         $query = HazardReport::select('division_id', DB::raw('count(*) as total'))->with('division')->groupBy('division_id');
         if ($this->tglMulai && $this->tglAkhir) {
             $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
-           
-        } 
+        }
         if ($user->hasRolePermit('administration')) {
             // Admin bisa lihat semua laporan
             $reports = $query->get();
+            $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
+            foreach ($statuses as $status) {
+                $this->hazardByStatus[$status] = $reports->whereHas('WorkflowDetails.Status', function ($q) use ($status) {
+                    $q->where('status_name', $status);
+                })->count();
+            }
         } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
             // Hanya user yang punya relasi dengan division_user
             $divisionIds = $user->divisions->pluck('id')->toArray();
@@ -55,12 +60,9 @@ class KondisiGrapf extends Component
             // User tanpa relasi division_user tidak bisa lihat laporan
             $reports = collect();
         }
-        $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
-        foreach ($statuses as $status) {
-            $this->hazardByStatus[$status] = HazardReport::whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->whereHas('WorkflowDetails.Status', function ($q) use ($status) {
-                $q->where('status_name', $status);
-            })->count();
-        }
+
+
+
         $year = Carbon::now()->year;
         $label = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
         $count = $reports->pluck('total')->toArray();
