@@ -16,7 +16,7 @@ class KondisiGrapf extends Component
     public $counts = [];
     public $hazardByStatus = [];
     public $divisi;
-    public $topkontributor;
+    public $kontributor;
     public $kondisi;
     public $tindakan;
     public $pie;
@@ -30,6 +30,7 @@ class KondisiGrapf extends Component
     {
 
         $this->divisiUp();
+        $this->topContributor();
         $this->kondisiTidakAman();
         $this->tindakanTidakAman();
         $this->updatePerbandinganData();
@@ -217,8 +218,8 @@ class KondisiGrapf extends Component
             'label' => $label,
             'count' => $count
         ];
-        $this->topkontributor = json_encode($topContributor);
-        $this->dispatch('berhasilUpdateTopContributor', $this->topkontributor);
+        $this->kontributor = json_encode($topContributor);
+        $this->dispatch('berhasilUpdateTopContributor', $this->kontributor);
     }
     public function render()
     {
