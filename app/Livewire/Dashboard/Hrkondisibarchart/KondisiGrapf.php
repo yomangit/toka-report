@@ -38,19 +38,12 @@ class KondisiGrapf extends Component
     public function divisiUp()
     {
         $user = auth()->user();
-        $this->total_laporan = HazardReport::whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->count('date');
+        //  $this->total_laporan =HazardReport::whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->get()->sum('total');
         $query = HazardReport::select('division_id', DB::raw('count(*) as total'))->with('division')->groupBy('division_id');
         if ($this->tglMulai && $this->tglAkhir) {
             $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
-        }
-
-        $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
-        foreach ($statuses as $status) {
-            $this->hazardByStatus[$status] = $query->whereHas('WorkflowDetails.Status', function ($q) use ($status) {
-                $q->where('status_name', $status);
-            })->count();
-        }
-        $this->total_laporan = $query->get()->count('total');
+           $this->total_laporan = $query->get()->sum('total');
+        } 
         if ($user->hasRolePermit('administration')) {
             // Admin bisa lihat semua laporan
             $reports = $query->get();
@@ -62,9 +55,12 @@ class KondisiGrapf extends Component
             // User tanpa relasi division_user tidak bisa lihat laporan
             $reports = collect();
         }
-
-
-
+        $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
+        foreach ($statuses as $status) {
+            $this->hazardByStatus[$status] = HazardReport::whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->whereHas('WorkflowDetails.Status', function ($q) use ($status) {
+                $q->where('status_name', $status);
+            })->count();
+        }
         $year = Carbon::now()->year;
         $label = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
         $count = $reports->pluck('total')->toArray();
