@@ -135,6 +135,8 @@
        setInterval(() => Livewire.dispatch('chartUpdated'), 1000);
        const divisi = JSON.parse('<?php echo $divisi ?>');
        const topContributor = JSON.parse('<?php echo $topContributor ?>');
+       console.log(topContributor);
+       
        const data = JSON.parse('<?php echo $kondisi ?>');
        const data_tta = JSON.parse('<?php echo $tindakan ?>');
        const data_pie = JSON.parse('<?php echo $pie ?>');
