@@ -46,6 +46,7 @@ class KondisiGrapf extends Component
         if ($user->hasRolePermit('administration')) {
             // Admin bisa lihat semua laporan
             $reports = $query->get();
+             $this->total_laporan = $reports->count('total');
             $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
             foreach ($statuses as $status) {
                 $this->hazardByStatus[$status] = $reports->whereHas('WorkflowDetails.Status', function ($q) use ($status) {
