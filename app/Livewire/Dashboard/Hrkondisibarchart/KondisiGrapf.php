@@ -184,6 +184,7 @@ class KondisiGrapf extends Component
         $this->pie = json_encode($data);
         $this->dispatch('berhasilUpdatePie',   $this->pie);
     }
+    #[On('chartUpdated')]
     public function topContributor()
     {
         $year = Carbon::now()->year;
