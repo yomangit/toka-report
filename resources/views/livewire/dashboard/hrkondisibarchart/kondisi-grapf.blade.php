@@ -433,6 +433,10 @@
                , chart: myChart_divisi
            }
            , {
+               dom: dom_kontributor
+               , chart: myChart_kontributor
+           }
+           ,{
                dom: dom
                , chart: myChart
            }
