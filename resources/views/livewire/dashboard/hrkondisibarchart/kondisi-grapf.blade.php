@@ -196,7 +196,7 @@
        Livewire.on('berhasilUpdateDivisi', event => {
            let payload_divisi = JSON.parse(event); // ini parse JSON dari PHP
            myChart_divisi.setOption({
-               xAxis: {
+               yAxis: {
                    data: payload_divisi.label
                }
                , series: [{
