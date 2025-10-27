@@ -43,16 +43,17 @@ class KondisiGrapf extends Component
         if ($this->tglMulai && $this->tglAkhir) {
             $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
         }
+
+        $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
+        foreach ($statuses as $status) {
+            $this->hazardByStatus[$status] = $query->whereHas('WorkflowDetails.Status', function ($q) use ($status) {
+                $q->where('status_name', $status);
+            })->count();
+        }
+        $this->total_laporan = $query->get()->count('total');
         if ($user->hasRolePermit('administration')) {
             // Admin bisa lihat semua laporan
-            $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
-            foreach ($statuses as $status) {
-                $this->hazardByStatus[$status] = $query->whereHas('WorkflowDetails.Status', function ($q) use ($status) {
-                    $q->where('status_name', $status);
-                })->count();
-            }
             $reports = $query->get();
-             $this->total_laporan = $reports->count('total');
         } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
             // Hanya user yang punya relasi dengan division_user
             $divisionIds = $user->divisions->pluck('id')->toArray();
