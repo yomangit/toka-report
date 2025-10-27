@@ -162,7 +162,7 @@
        var option_divisi;
        option_divisi = {
            title: {
-               text: 'World Population'
+               text: 'Top divisions in charge'
            }
            , tooltip: {
                trigger: 'axis'
