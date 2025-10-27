@@ -72,7 +72,7 @@ class KondisiGrapf extends Component
 
         $year = Carbon::now()->year;
         $label = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
-        $count = $reports->pluck('total')->toArray();
+       $count = $reports->pluck('total')->sortDesc()->values()->toArray();
         $divisi = [
             'year' => $year,
             'label' => $label,
