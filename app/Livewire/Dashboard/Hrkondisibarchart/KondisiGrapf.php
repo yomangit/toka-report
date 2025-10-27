@@ -193,7 +193,9 @@ class KondisiGrapf extends Component
         $query = HazardReport::join('users', 'hazard_reports.report_by', '=', 'users.id')
             ->select('users.lookup_name as label', DB::raw('COUNT(*) as total'))
             ->whereNotNull('report_by')
-            ->groupBy('users.lookup_name');
+            ->groupBy('users.lookup_name')
+            ->orderByRaw('COUNT(*) DESC') // urutkan dari total terbanyak
+            ->limit(10);
         if ($this->tglMulai && $this->tglAkhir) {
             $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
         }
