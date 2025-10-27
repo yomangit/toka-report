@@ -181,16 +181,16 @@
                    , formatter: function(value) {
                        // daftar mapping nama panjang -> singkatan
                        const mapping = {
-                           "Samudera Mulia Abadi": "SMA"
-                           , "Geopersada Mulia Abadi": "GMA"
-                           , "Karya Utama Service": "KUS"
-                           , "Manado Karya Anugerah": "MKA"
-                           , "Macmahon Indonesia": "Macmahon"
-                           , "Tou Maesa Sejahtera": "TMS"
-                           , "PSI Drilling Service": "PSI"
-                           , "Mining Technical Service": "MTS"
-                           , "Mining Tech Service": "MTS"
-                           , "Mandara Fasilitas Indonesia": "MFI"
+                           "Contractor-PT. Samudera Mulia Abadi": "SMA"
+                           , "Contractor-PT. Geopersada Mulia Abadi": "GMA"
+                           , "Contractor-PT. Karya Utama Service": "KUS"
+                           , "Contractor-PT. Manado Karya Anugerah": "MKA"
+                           , "Contractor-PT. Macmahon Indonesia": "Macmahon"
+                           , "Contractor-PT. Tou Maesa Sejahtera": "TMS"
+                           , "Contractor-PT. PSI Drilling Service": "PSI"
+                           , "Contractor-PT. Mining Technical Service": "MTS"
+                           , "Contractor-PT. Mining Tech Service": "MTS"
+                           , "Contractor-PT. Mandara Fasilitas Indonesia": "MFI"
                            // tambahkan lainnya di sini
                        };
 
