@@ -210,11 +210,8 @@ class KondisiGrapf extends Component
         $sortedReports = $reports->sortByDesc('total')->values();
 
         // Ambil label & count sesuai urutan baru
-        $label = $sortedReports->map(fn($r) => optional($r->reportBy)?->lookup_name() ?? 'Unknown')->toArray();
-
-        $count = $sortedReports
-            ->pluck('total')
-            ->toArray();
+        $label = $sortedReports->pluck('label')->toArray();
+        $count = $sortedReports->pluck('total')->toArray();
         $topContributor = [
             'year' => $year,
             'label' => $label,
