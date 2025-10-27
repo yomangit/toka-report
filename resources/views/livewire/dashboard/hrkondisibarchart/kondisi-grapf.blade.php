@@ -298,60 +298,7 @@
                }]
            });
        });
-       //    ===== KTA =====
-       var dom = document.getElementById('chart_kondisi');
-       var myChart = echarts.init(dom);
 
-       var option = {
-           title: {
-               text: 'Kondisi Tidak Aman'
-               , left: 'center'
-           }
-           , tooltip: {
-               trigger: 'item'
-           }
-           , legend: {
-               selectedMode: true
-           }
-           , xAxis: {
-               type: 'category'
-               , data: data.label
-               , axisLabel: {
-                   interval: 0, // tampilkan semua label
-                   formatter: function(value) {
-                       //    return value.length > 20 ? value.slice(0, 20) + '...' : value;
-                       return value.split(" ").join("\n");
-                   }
-               }
-           }
-           , yAxis: {
-               type: 'value'
-           }
-           , series: [{
-               data: data.count
-               , type: 'bar'
-               , itemStyle: {
-                   color: (params) => warnaOtomatis[params.dataIndex]
-               }
-               , label: {
-                   show: true
-                   , position: 'inside'
-               }
-           }]
-       };
-       myChart.setOption(option);
-
-       Livewire.on('berhasilUpdate', event => {
-           let payload = JSON.parse(event); // ini parse JSON dari PHP
-           myChart.setOption({
-               xAxis: {
-                   data: payload.label
-               }
-               , series: [{
-                   data: payload.count
-               }]
-           });
-       });
        //    ===== TTA =====
        var dom_tta = document.getElementById('chart_tindakan');
        var myChart_tta = echarts.init(dom_tta);
