@@ -38,7 +38,7 @@ class KondisiGrapf extends Component
     public function divisiUp()
     {
         $user = auth()->user();
-         $this->total_laporan =HazardReport::whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->get()->sum('total');
+         $this->total_laporan =HazardReport::whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->count();
         $query = HazardReport::select('division_id', DB::raw('count(*) as total'))->with('division')->groupBy('division_id');
         if ($this->tglMulai && $this->tglAkhir) {
             $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
