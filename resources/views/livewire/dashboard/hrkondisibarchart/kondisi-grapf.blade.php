@@ -252,7 +252,7 @@
        var option_kontributor;
        option_kontributor = {
            title: {
-               text: 'World Population'
+               text: 'Top Kontribusi'
            }
            , tooltip: {
                trigger: 'axis'
