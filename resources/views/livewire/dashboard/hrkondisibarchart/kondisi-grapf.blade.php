@@ -353,22 +353,18 @@
            });
        });
        // ===== PIE CHART =====
-
        const chartData = data_pie.label.map((label, index) => ({
            value: data_pie.count[index]
            , name: label
        }));
        const seriesName = chartData.map(d => d.label).join(', ');
        console.log(chartData);
-
        var dom_ie = document.getElementById('chart-pie');
        var pieChart = echarts.init(dom_ie, null, {
            renderer: 'canvas'
            , useDirtyRect: false
        });
        var app = {};
-
-
        var option_pie;
        option_pie = {
            title: {
@@ -400,7 +396,6 @@
                }
            }]
        };
-
        if (option_pie && typeof option_pie === 'object') {
            pieChart.setOption(option_pie);
        }
