@@ -191,6 +191,10 @@
                            , "Contractor-PT. Mining Technical Service": "MTS"
                            , "Contractor-PT. Mining Tech Service": "MTS"
                            , "Contractor-PT. Mandara Fasilitas Indonesia": "MFI"
+                           , "Contractor-PT. Tata Wisata": "Tata Wisata"
+                           , "Contractor-PT. Maxidrill": "Maxidrill"
+                           , "Contractor-PT. DNX Indonesia": "DNX"
+                           , "Mining Technical Service": "MTS"
                            // tambahkan lainnya di sini
                        };
 
