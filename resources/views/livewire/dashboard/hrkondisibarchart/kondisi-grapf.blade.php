@@ -175,7 +175,43 @@
            , yAxis: {
                type: 'category'
                , data: divisi.label
+               , axisLabel: {
+                   interval: 0
+                   , fontSize: 9
+                   , formatter: function(value) {
+                       // daftar mapping nama panjang -> singkatan
+                       const mapping = {
+                           "Samudera Mulia Abadi": "SMA"
+                           , "Geopersada Mulia Abadi": "GMA"
+                           , "Karya Utama Service": "KUS"
+                           , "Manado Karya Anugerah": "MKA"
+                           , "Macmahon Indonesia": "Macmahon"
+                           , "Tou Maesa Sejahtera": "TMS"
+                           , "PSI Drilling Service": "PSI"
+                           , "Mining Technical Service": "MTS"
+                           , "Mining Tech Service": "MTS"
+                           , "Mandara Fasilitas Indonesia": "MFI"
+                           // tambahkan lainnya di sini
+                       };
+
+                       // cari dan ganti substring yang cocok
+                       for (let key in mapping) {
+                           if (value.includes(key)) {
+                               value = value.replace(key, mapping[key]);
+                           }
+                       }
+
+                       // opsional: batasi panjang total jika masih kepanjangan
+                       const maxLength = 30;
+                       if (value.length > maxLength) {
+                           value = value.substring(0, maxLength) + '...';
+                       }
+
+                       return value;
+                   }
+               }
            }
+
            , series: [{
                    name: divisi.year
                    , type: 'bar'
