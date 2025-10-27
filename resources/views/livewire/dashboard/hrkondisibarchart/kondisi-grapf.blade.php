@@ -174,6 +174,7 @@
            }
            , yAxis: {
                type: 'category'
+               , inverse: true
                , data: divisi.label
                , axisLabel: {
                    interval: 0
