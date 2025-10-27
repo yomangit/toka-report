@@ -246,7 +246,7 @@
                }]
            });
        });
-           //     ====== Top Kontributor ======
+       //     ====== Top Kontributor ======
        var dom_kontributor = document.getElementById('chart_kondisi');
        var myChart_kontributor = echarts.init(dom_kontributor);
        var option_kontributor;
@@ -269,21 +269,20 @@
                type: 'category'
                , inverse: true
                , data: topContributor.label
-              
+
            }
            , series: [{
-                   name: topContributor.year
-                   , type: 'bar'
-                   , data: topContributor.count
-                   , itemStyle: {
-                       color: function(params) {
-                           // Gunakan warna dinamis berdasarkan posisi bar
-                           return generateColor(params.dataIndex, topContributor.count.length);
-                       }
-                       , borderRadius: [0, 6, 6, 0]
+               name: topContributor.year
+               , type: 'bar'
+               , data: topContributor.count
+               , itemStyle: {
+                   color: function(params) {
+                       // Gunakan warna dinamis berdasarkan posisi bar
+                       return generateColor(params.dataIndex, topContributor.count.length);
                    }
+                   , borderRadius: [0, 6, 6, 0]
                }
-           ]
+           }]
        };
        myChart_kontributor.setOption(option_kontributor);
 
@@ -435,10 +434,6 @@
            , {
                dom: dom_kontributor
                , chart: myChart_kontributor
-           }
-           ,{
-               dom: dom
-               , chart: myChart
            }
            , {
                dom: dom_tta
