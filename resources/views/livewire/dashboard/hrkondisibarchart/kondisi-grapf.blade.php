@@ -134,6 +134,7 @@
        // end date range
        setInterval(() => Livewire.dispatch('chartUpdated'), 1000);
        const divisi = JSON.parse('<?php echo $divisi ?>');
+       const topContributor = JSON.parse('<?php echo $topContributor ?>');
        const data = JSON.parse('<?php echo $kondisi ?>');
        const data_tta = JSON.parse('<?php echo $tindakan ?>');
        const data_pie = JSON.parse('<?php echo $pie ?>');
@@ -242,6 +243,58 @@
                }
                , series: [{
                    data: payload_divisi.count
+               }]
+           });
+       });
+           //     ====== Top Kontributor ======
+       var dom_kontributor = document.getElementById('chart_kondisi');
+       var myChart_kontributor = echarts.init(dom_kontributor);
+       var option_kontributor;
+       option_kontributor = {
+           title: {
+               text: 'World Population'
+           }
+           , tooltip: {
+               trigger: 'axis'
+               , axisPointer: {
+                   type: 'shadow'
+               }
+           }
+           , legend: {}
+           , xAxis: {
+               type: 'value'
+               , boundaryGap: [0, 0.01]
+           }
+           , yAxis: {
+               type: 'category'
+               , inverse: true
+               , data: topContributor.label
+              
+           }
+           , series: [{
+                   name: topContributor.year
+                   , type: 'bar'
+                   , data: topContributor.count
+                   , itemStyle: {
+                       color: function(params) {
+                           // Gunakan warna dinamis berdasarkan posisi bar
+                           return generateColor(params.dataIndex, topContributor.count.length);
+                       }
+                       , borderRadius: [0, 6, 6, 0]
+                   }
+               }
+           ]
+       };
+       myChart_kontributor.setOption(option_kontributor);
+
+       Livewire.on('berhasilUpdateTopContributor', event => {
+           let payload_kontributor = JSON.parse(event); // ini parse JSON dari PHP
+           myChart_kontributor.setOption({
+               yAxis: {
+                   data: payload_kontributor.label
+               }
+               , series: [{
+                   data: payload_kontributor.count
                }]
            });
        });

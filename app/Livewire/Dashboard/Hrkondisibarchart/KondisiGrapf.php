@@ -16,6 +16,7 @@ class KondisiGrapf extends Component
     public $counts = [];
     public $hazardByStatus = [];
     public $divisi;
+    public $topContributor;
     public $kondisi;
     public $tindakan;
     public $pie;
@@ -104,6 +105,8 @@ class KondisiGrapf extends Component
         }
         if ($user->hasRolePermit('administration')) {
             $reports = $query->get();
+        } elseif ($user->hasRolePermit('auth') && $user->moderatorAkases()->exists()) {
+            $reports = $query->get();
         } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
             $divisionIds = $user->divisions->pluck('id')->toArray();
             $reports = $query->whereIn('division_id', $divisionIds)->get();
@@ -131,6 +134,8 @@ class KondisiGrapf extends Component
             $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
         }
         if ($user->hasRolePermit('administration')) {
+            $reports = $query->get();
+        } elseif ($user->hasRolePermit('auth') && $user->moderatorAkases()->exists()) {
             $reports = $query->get();
         } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
             $divisionIds = $user->divisions->pluck('id')->toArray();
@@ -161,6 +166,9 @@ class KondisiGrapf extends Component
         if ($user->hasRolePermit('administration')) {
             $kondisi = $totalKondisi->count();
             $tindakan = $totalTindakan->count();
+        } elseif ($user->hasRolePermit('auth') && $user->moderatorAkases()->exists()) {
+            $kondisi = $totalKondisi->count();
+            $tindakan = $totalTindakan->count();
         } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
             $divisionIds = $user->divisions->pluck('id')->toArray();
             $kondisi = $totalKondisi->whereIn('division_id', $divisionIds)->count();
@@ -176,7 +184,44 @@ class KondisiGrapf extends Component
         $this->pie = json_encode($data);
         $this->dispatch('berhasilUpdatePie',   $this->pie);
     }
+    public function topContributor()
+    {
+        $year = Carbon::now()->year;
+        $user = auth()->user();
+        $query = HazardReport::join('users', 'hazard_reports.report_by', '=', 'users.id')
+            ->select('users.lookup_name as label', DB::raw('COUNT(*) as total'))
+            ->whereNotNull('report_by')
+            ->groupBy('users.lookup_name');
+        if ($this->tglMulai && $this->tglAkhir) {
+            $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
+        }
+        if ($user->hasRolePermit('administration')) {
+            // Admin bisa lihat semua laporan
+            $reports = $query->get();
+        } elseif ($user->hasRolePermit('auth') && $user->moderatorAkases()->exists()) {
+            $reports = $query->get();
+        } else {
+            // User tanpa relasi division_user tidak bisa lihat laporan
+            $reports = collect();
+        }
 
+        // Urutkan berdasarkan total, descending (besar ke kecil)
+        $sortedReports = $reports->sortByDesc('total')->values();
+
+        // Ambil label & count sesuai urutan baru
+        $label = $sortedReports->map(fn($r) => optional($r->reportBy)?->lookup_name() ?? 'Unknown')->toArray();
+
+        $count = $sortedReports
+            ->pluck('total')
+            ->toArray();
+        $topContributor = [
+            'year' => $year,
+            'label' => $label,
+            'count' => $count
+        ];
+        $this->topContributor = json_encode($topContributor);
+        $this->dispatch('berhasilUpdateTopContributor', $this->topContributor);
+    }
     public function render()
     {
         $this->divisiUp();
