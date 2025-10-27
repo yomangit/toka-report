@@ -45,14 +45,14 @@ class KondisiGrapf extends Component
         }
         if ($user->hasRolePermit('administration')) {
             // Admin bisa lihat semua laporan
-            $reports = $query->get();
-             $this->total_laporan = $reports->count('total');
             $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
             foreach ($statuses as $status) {
-                $this->hazardByStatus[$status] = $reports->whereHas('WorkflowDetails.Status', function ($q) use ($status) {
+                $this->hazardByStatus[$status] = $query->whereHas('WorkflowDetails.Status', function ($q) use ($status) {
                     $q->where('status_name', $status);
                 })->count();
             }
+            $reports = $query->get();
+             $this->total_laporan = $reports->count('total');
         } elseif ($user->hasRolePermit('auth') && $user->divisions()->exists()) {
             // Hanya user yang punya relasi dengan division_user
             $divisionIds = $user->divisions->pluck('id')->toArray();
