@@ -217,6 +217,7 @@ class KondisiGrapf extends Component
             'label' => $label,
             'count' => $count
         ];
+        dd($topContributor);
         $this->topContributor = json_encode($topContributor);
         $this->dispatch('berhasilUpdateTopContributor', $this->topContributor);
     }
