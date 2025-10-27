@@ -42,8 +42,21 @@ class KondisiGrapf extends Component
         $query = HazardReport::select('division_id', DB::raw('count(*) as total'))->with('division')->groupBy('division_id');
         if ($this->tglMulai && $this->tglAkhir) {
             $query->whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)]);
-           $this->total_laporan = $query->get()->sum('total');
-        } 
+            $this->total_laporan = $query->get()->sum('total');
+            $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
+            foreach ($statuses as $status) {
+                $this->hazardByStatus[$status] = HazardReport::whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->whereHas('WorkflowDetails.Status', function ($q) use ($status) {
+                    $q->where('status_name', $status);
+                })->count();
+            }
+        } else {
+            $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
+            foreach ($statuses as $status) {
+                $this->hazardByStatus[$status] = HazardReport::whereHas('WorkflowDetails.Status', function ($q) use ($status) {
+                    $q->where('status_name', $status);
+                })->count();
+            }
+        }
         if ($user->hasRolePermit('administration')) {
             // Admin bisa lihat semua laporan
             $reports = $query->get();
@@ -55,12 +68,7 @@ class KondisiGrapf extends Component
             // User tanpa relasi division_user tidak bisa lihat laporan
             $reports = collect();
         }
-        $statuses = ['Submitted', 'In Progress', 'Pending', 'Closed', 'Cancelled'];
-        foreach ($statuses as $status) {
-            $this->hazardByStatus[$status] = HazardReport::whereBetween('date', [array($this->tglMulai), array($this->tglAkhir)])->whereHas('WorkflowDetails.Status', function ($q) use ($status) {
-                $q->where('status_name', $status);
-            })->count();
-        }
+
         $year = Carbon::now()->year;
         $label = $reports->map(fn($r) => optional($r->division)?->formatWorkgroupName() ?? 'Unknown')->toArray();
         $count = $reports->pluck('total')->toArray();
