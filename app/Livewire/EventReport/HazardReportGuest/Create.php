@@ -186,13 +186,12 @@ class Create extends Component
 
     public function updatedSearch()
     {
-        $this->showDropdown = strlen($this->search) > 0;
+        $this->showDropdown = strlen($this->searchDept) > 0;
         $this->departments = $this->showDropdown
             ? Department::where('department_name', 'like', '%' . $this->search . '%')
                 ->orderBy('department_name')
                 ->limit(10)
                 ->get()
-                ->toArray()
             : [];
     }
 
@@ -204,7 +203,6 @@ class Create extends Component
                 ->orderBy('name_company')
                 ->limit(10)
                 ->get()
-                ->toArray()
             : [];
     }
 public function selectDepartment($id, $name)
