@@ -119,7 +119,7 @@ class Create extends Component
     public $showPelaporDropdown = false;
     public $manualPelaporMode = false;
     #[Validate('required_without:report_by')]
-    public $manualPelaporName ;
+    public $manualPelaporName;
     // Pelapor Act
     public $searchActResponsibility = '';
     public $pelaporsAct = [];
@@ -283,6 +283,8 @@ class Create extends Component
             'event_type_id.required'                => 'Kolom wajib diisi',
             'sub_event_type_id.required'            => 'Kolom wajib diisi',
             'pelapor_id.required'                => 'Kolom wajib diisi',
+            'pelapor_id.required_without' => 'Kolom wajib disini.',
+            'manualPelaporName.required_without' => 'Kolom wajib disini.',
             'report_toName.required'                => 'Kolom wajib diisi',
             'workgroup_name.required'               => 'Kolom wajib diisi',
             'date.required'               => 'Kolom wajib diisi',
@@ -327,7 +329,7 @@ class Create extends Component
     {
         $this->manualPelaporMode = true;
         $this->manualPelaporName = $this->searchPelapor; // isi default sama dengan isi search
-         $this->validateOnly('site_id');
+        $this->validateOnly('site_id');
     }
     public function updatedManualPelaporName($value)
     {
@@ -340,7 +342,7 @@ class Create extends Component
         $this->report_byName = $this->manualPelaporName;
         $this->showPelaporDropdown = false;
         $this->pelapor_id = null;
-        $this->pilihDivisiPelapor= true;
+        $this->pilihDivisiPelapor = true;
     }
     // fungsi pelapor act
 
