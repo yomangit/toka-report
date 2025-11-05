@@ -112,13 +112,13 @@ class Create extends Component
     public $corrective_action_suggested;
     // Pelapor
     #[Validate]
-    #[Validate('required_without:report_byName')]
+    #[Validate('required_without:manualPelaporName')]
     public $pelapor_id;
     public $searchPelapor = '';
     public $pelapors = [];
     public $showPelaporDropdown = false;
     public $manualPelaporMode = false;
-    #[Validate('required_without:report_by')]
+    #[Validate('required_without:pelapor_id')]
     public $manualPelaporName;
     // Pelapor Act
     public $searchActResponsibility = '';
