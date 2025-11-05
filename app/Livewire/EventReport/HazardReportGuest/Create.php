@@ -184,7 +184,7 @@ class Create extends Component
     public ?string $department_name = null;
     public ?string $contractor_name = null;
 
-    public function updatedSearch()
+    public function updatedSearchDept()
     {
         if (strlen($this->searchDept) > 1) {
             $this->departments = Department::where('department_name', 'like', '%' . $this->searchDept . '%')
@@ -202,7 +202,7 @@ class Create extends Component
     {
         if (strlen($this->searchContractor) > 1) {
            
-            $this->contractors = Company::query()->where('company_category_id', 1)->where('name_company', 'like', '%' . $this->searchContractor . '%')
+            $this->contractors = Company::query()->where('company_category_id', 2)->where('name_company', 'like', '%' . $this->searchContractor . '%')
                 ->orderBy('name_company')
                 ->limit(10)
                 ->get();
