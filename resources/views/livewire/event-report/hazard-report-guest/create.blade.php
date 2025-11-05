@@ -93,7 +93,7 @@
                             <!-- Dropdown hasil search (teleport keluar collapse) -->
                             @if ($showPelaporDropdown)
                             <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
-                                <div class="text-center " >
+                                <div class="text-center ">
                                     <span class="hidden loading loading-spinner loading-sm text-secondary" wire:loading.class.remove="hidden" wire:loading wire:target="selectPelapor"></span>
                                 </div>
                                 @if (count($pelapors) > 0)
@@ -115,9 +115,7 @@
                                     <div class="relative w-full">
                                         <input name="manualPelaporName" type="text" wire:model.live="manualPelaporName" placeholder="Masukkan nama pelapor..." class="input input-bordered w-full pr-20 focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('manualPelaporName') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
                                         <div class="!absolute top-1/2 -translate-y-1/2 right-0 z-20">
-                                            <flux:button size="xs" wire:click="addPelaporManual" icon="plus" variant="primary">
-                                                Tambah
-                                            </flux:button>
+                                            <label class="btn btn-neutral btn-dash btn-xs btn-primary" wire:click="addPelaporManual">Tambah</label>
                                         </div>
                                     </div>
                                 </li>
@@ -133,6 +131,67 @@
                         <x-label-error :messages="$errors->get('pelapor_id')" />
                         @endif
                     </fieldset>
+                </div>
+
+                <div class="w-full max-w-md xl:max-w-xl form-control">
+                    <x-label-req :value="__('Divisi yang melapor')" />
+                    <fieldset>
+                        <input id="department" value="department" wire:model="deptCont" class="peer/department radio radio-xs radio-accent" type="radio" name="deptCont" checked />
+                        <x-form.label for="department" class="peer-checked/department:text-accent text-[10px]" label="PT. MSM & PT. TTN" required />
+                        <input id="company" value="company" wire:model="deptCont" class="peer/company radio radio-xs radio-primary" type="radio" name="deptCont" />
+                        <x-form.label for="company" class="peer-checked/company:text-primary" label="Kontraktor" required />
+
+                        <div class="hidden mt-2 peer-checked/department:block">
+                            {{-- Department --}}
+                            <div class="relative mb-1">
+                                <!-- Input Search -->
+
+                                <input name="search" type="text" wire:model.live.debounce.300ms="search" placeholder="Departemen Pelapor..." class="input input-bordered w-full focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('department_id') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
+                                <!-- Dropdown hasil search -->
+                                @if ($showDropdown && count($departments) > 0)
+                                <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
+                                    <!-- Spinner ketika klik salah satu -->
+                                    <div wire:loading wire:target="selectDepartment" class="p-2 text-center">
+                                        <span class="loading loading-spinner loading-sm text-secondary"></span>
+                                    </div>
+                                    @foreach ($departments as $dept)
+                                    <li wire:click="selectDepartment({{ $dept->id }}, '{{ $dept->department_name }}')" class="px-3 py-2 cursor-pointer hover:bg-base-200">
+                                        {{ $dept->department_name }}
+                                    </li>
+                                    @endforeach
+                                </ul>
+                                @endif
+                            </div>
+                            @if ($deptCont === 'department')
+                            <x-label-error :messages="$errors->get('department_id')" />
+                            @endif
+                        </div>
+                        <div class="hidden mt-2 peer-checked/company:block">
+                            {{-- Contractor --}}
+                            <div class="relative mb-1">
+                                <!-- Input Search -->
+                                <input name="searchContractor" type="text" wire:model.live.debounce.300ms="searchContractor" placeholder="Kontraktor Pelapor..." class="input input-bordered w-full focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('contractor_id') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
+                                <!-- Dropdown hasil search -->
+                                @if ($showContractorDropdown && count($contractors) > 0)
+                                <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
+                                    <!-- Spinner ketika klik -->
+                                    <div wire:loading wire:target="selectContractor" class="p-2 text-center">
+                                        <span class="loading loading-spinner loading-sm text-secondary"></span>
+                                    </div>
+                                    @foreach ($contractors as $contractor)
+                                    <li wire:click="selectContractor({{ $contractor->id }}, '{{ $contractor->contractor_name }}')" class="px-3 py-2 cursor-pointer hover:bg-base-200">
+                                        {{ $contractor->contractor_name }}
+                                    </li>
+                                    @endforeach
+                                </ul>
+                                @endif
+                            </div>
+                            @if ($deptCont === 'company')
+                            <x-label-error :messages="$errors->get('contractor_id')" />
+                            @endif
+                        </div>
+                    </fieldset>
+                    <x-label-error :messages="$errors->get('workgroup_name')" />
                 </div>
 
                 <div class="w-full max-w-md xl:max-w-xl form-control">
@@ -210,7 +269,7 @@
                             @if($showLocationDropdown && count($locations) > 0)
                             <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
                                 <!-- Spinner ketika klik -->
-                                <div class="text-center" >
+                                <div class="text-center">
                                     <span class="hidden loading loading-spinner loading-sm text-secondary" wire:loading.class.remove="hidden" wire:loading wire:target="selectLocation"></span>
                                 </div>
                                 @foreach($locations as $loc)

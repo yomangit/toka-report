@@ -25,6 +25,8 @@ use App\Models\Tindakantidakaman;
 use Livewire\Attributes\Validate;
 use App\Notifications\toModerator;
 use App\Helpers\NotificationHelper;
+use App\Models\Company;
+use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use App\Rules\DateBeforeOrEqualToday;
@@ -167,6 +169,61 @@ class Create extends Component
 
     // Miscellaneous
     public $data = [];
+
+    // pencarian divisi
+
+     public string $deptCont = 'department';
+    public string $searchDept = '';
+    public string $searchContractor = '';
+    public bool $showDropdown = false;
+    public bool $showContractorDropdown = false;
+    public array $departments = [];
+    public array $contractors = [];
+    public ?int $department_id = null;
+    public ?int $contractor_id = null;
+    public ?string $department_name = null;
+    public ?string $contractor_name = null;
+
+    public function updatedSearch()
+    {
+        $this->showDropdown = strlen($this->search) > 0;
+        $this->departments = $this->showDropdown
+            ? Department::where('department_name', 'like', '%' . $this->search . '%')
+                ->orderBy('department_name')
+                ->limit(10)
+                ->get()
+                ->toArray()
+            : [];
+    }
+
+    public function updatedSearchContractor()
+    {
+        $this->showContractorDropdown = strlen($this->searchContractor) > 0;
+        $this->contractors = $this->showContractorDropdown
+            ? Company::where('company_category_id',1)->where('name_company', 'like', '%' . $this->searchContractor . '%')
+                ->orderBy('name_company')
+                ->limit(10)
+                ->get()
+                ->toArray()
+            : [];
+    }
+public function selectDepartment($id, $name)
+    {
+        $this->department_id = $id;
+        $this->department_name = $name;
+        $this->search = $name;
+        $this->showDropdown = false;
+        $this->dispatch('departmentSelected', id: $id, name: $name);
+    }
+
+    public function selectContractor($id, $name)
+    {
+        $this->contractor_id = $id;
+        $this->contractor_name = $name;
+        $this->searchContractor = $name;
+        $this->showContractorDropdown = false;
+        $this->dispatch('contractorSelected', id: $id, name: $name);
+    }
 
     // data action
     public function mount()
