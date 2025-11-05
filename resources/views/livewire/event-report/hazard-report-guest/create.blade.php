@@ -145,7 +145,7 @@
                             <div class="relative mb-1">
                                 <!-- Input Search -->
 
-                                <input name="search" type="text" wire:model.live.debounce.300ms="search" placeholder="Departemen Pelapor..." class="input input-bordered w-full focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('department_id') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
+                                <input name="search" type="text" wire:model.live.debounce.300ms="searchDept" placeholder="Departemen Pelapor..." class="input input-bordered w-full focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('department_id') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
                                 <!-- Dropdown hasil search -->
                                 @if ($showDropdown && count($departments) > 0)
                                 <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
