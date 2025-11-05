@@ -144,8 +144,7 @@
                             {{-- Department --}}
                             <div class="relative ">
                                 <!-- Input Search -->
-
-                                <input name="search" type="text" wire:model.live="searchDept" placeholder="Departemen Pelapor..." class="input input-bordered w-full focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('site_id') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
+                                <x-input name="search" wire:model.live='searchDept' placeholder="Departemen Pelapor..." :error="$errors->get('site_id')" class="cursor-pointer" />
                                 <!-- Dropdown hasil search -->
                                 @if ($showDropdown && count($departments) > 0)
                                 <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
@@ -169,7 +168,7 @@
                             {{-- Contractor --}}
                             <div class="relative ">
                                 <!-- Input Search -->
-                                <input name="searchContractor" type="text" wire:model.live="searchContractor" placeholder="Kontraktor Pelapor..." class="input input-bordered w-full focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('site_id') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
+                                <x-input name="searchContractor" wire:model.live='searchContractor' placeholder="Kontraktor Pelapor..." :error="$errors->get('site_id')" class="cursor-pointer" />
                                 <!-- Dropdown hasil search -->
                                 @if ($showContractorDropdown && count($contractors) > 0)
                                 <ul class="absolute z-10 w-full mt-1 overflow-auto border rounded-md shadow bg-base-100 max-h-60">
