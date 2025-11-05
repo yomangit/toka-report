@@ -112,12 +112,14 @@ class Create extends Component
     public $corrective_action_suggested;
     // Pelapor
     #[Validate]
+    #[Validate('required_without:report_byName')]
     public $pelapor_id;
     public $searchPelapor = '';
     public $pelapors = [];
     public $showPelaporDropdown = false;
     public $manualPelaporMode = false;
-    public $manualPelaporName = '';
+    #[Validate('required_without:report_by')]
+    public $manualPelaporName ;
     // Pelapor Act
     public $searchActResponsibility = '';
     public $pelaporsAct = [];
@@ -336,6 +338,7 @@ class Create extends Component
     public function addPelaporManual()
     {
         $this->searchPelapor = $this->manualPelaporName;
+        $this->report_byName = $this->manualPelaporName;
         $this->showPelaporDropdown = false;
         $this->pelapor_id = null;
         $this->pilihDivisiPelapor= true;
