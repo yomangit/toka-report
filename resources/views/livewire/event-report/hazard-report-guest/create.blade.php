@@ -132,8 +132,7 @@
                         @endif
                     </fieldset>
                 </div>
-                 <x-label-error :messages="$errors->get('manualPelaporName')" />
-                    <x-label-error :messages="$errors->get('site_id')" />
+
                 @if ($pilihDivisiPelapor)
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <fieldset>
