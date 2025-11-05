@@ -186,12 +186,13 @@ class Create extends Component
 
     public function updatedSearch()
     {
-        if (strlen($this->searchDept) > 0) {
-            $this->showDropdown = true;
+        if (strlen($this->searchDept) > 1) {
             $this->departments = Department::where('department_name', 'like', '%' . $this->searchDept . '%')
                 ->orderBy('department_name')
                 ->limit(10)
                 ->get();
+            $this->showDropdown = true;
+
         } else {
             $this->departments = [];
         }
@@ -199,12 +200,13 @@ class Create extends Component
 
     public function updatedSearchContractor()
     {
-        if (strlen($this->searchContractor) > 0) {
-            $this->showContractorDropdown = true;
+        if (strlen($this->searchContractor) > 1) {
+           
             $this->contractors = Company::query()->where('company_category_id', 1)->where('name_company', 'like', '%' . $this->searchContractor . '%')
                 ->orderBy('name_company')
                 ->limit(10)
                 ->get();
+                 $this->showContractorDropdown = true;
         } else {
             $this->contractors = [];
         }
