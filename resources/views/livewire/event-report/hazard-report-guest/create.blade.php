@@ -134,14 +134,13 @@
                 </div>
 
                 <div class="w-full max-w-md xl:max-w-xl form-control">
-                    <x-label-req :value="__('Divisi yang melapor')" />
                     <fieldset>
                         <input id="department" value="department" wire:model="deptCont" class="peer/department radio radio-xs radio-accent" type="radio" name="deptCont" checked />
                         <x-form.label for="department" class="peer-checked/department:text-accent text-[10px]" label="PT. MSM & PT. TTN" required />
                         <input id="company" value="company" wire:model="deptCont" class="peer/company radio radio-xs radio-primary" type="radio" name="deptCont" />
                         <x-form.label for="company" class="peer-checked/company:text-primary" label="Kontraktor" required />
 
-                        <div class="hidden mt-2 peer-checked/department:block">
+                        <div class="hidden peer-checked/department:block">
                             {{-- Department --}}
                             <div class="relative mb-1">
                                 <!-- Input Search -->
@@ -166,7 +165,7 @@
                             <x-label-error :messages="$errors->get('department_id')" />
                             @endif
                         </div>
-                        <div class="hidden mt-2 peer-checked/company:block">
+                        <div class="hidden peer-checked/company:block">
                             {{-- Contractor --}}
                             <div class="relative mb-1">
                                 <!-- Input Search -->
@@ -179,8 +178,8 @@
                                         <span class="loading loading-spinner loading-sm text-secondary"></span>
                                     </div>
                                     @foreach ($contractors as $contractor)
-                                    <li wire:click="selectContractor({{ $contractor->id }}, '{{ $contractor->contractor_name }}')" class="px-3 py-2 cursor-pointer hover:bg-base-200">
-                                        {{ $contractor->contractor_name }}
+                                    <li wire:click="selectContractor({{ $contractor->id }}, '{{ $contractor->name_company }}')" class="px-3 py-2 cursor-pointer hover:bg-base-200">
+                                        {{ $contractor->name_company }}
                                     </li>
                                     @endforeach
                                 </ul>
