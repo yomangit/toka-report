@@ -214,7 +214,7 @@ class Create extends Component
     public function selectDepartment($id, $name)
     {
         $this->department_id = $id;
-        $this->department_name = $name;
+        $this->site_id = $name;
         $this->searchDept = $name;
         $this->showDropdown = false;
         $this->dispatch('departmentSelected', id: $id, name: $name);
@@ -224,7 +224,7 @@ class Create extends Component
     public function selectContractor($id, $name)
     {
         $this->contractor_id = $id;
-        $this->contractor_name = $name;
+        $this->site_id = $name;
         $this->searchContractor = $name;
         $this->showContractorDropdown = false;
         $this->reset('searchDept', 'department_id');
