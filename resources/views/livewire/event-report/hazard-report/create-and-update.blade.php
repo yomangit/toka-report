@@ -115,9 +115,7 @@
                                     <div class="relative w-full">
                                         <input name="manualPelaporName" type="text" wire:model.live="manualPelaporName" placeholder="Masukkan nama pelapor..." class="input input-bordered w-full pr-20 focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('manualPelaporName') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
                                         <div class="!absolute top-1/2 -translate-y-1/2 right-0 z-20">
-                                            <flux:button size="xs" wire:click="addPelaporManual" icon="plus" variant="primary">
-                                                Tambah
-                                            </flux:button>
+                                            <label class="btn btn-neutral btn-dash btn-xs btn-primary"  wire:click="addPelaporManual">Tambah</label>
                                         </div>
                                     </div>
                                 </li>

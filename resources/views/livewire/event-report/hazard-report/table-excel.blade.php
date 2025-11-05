@@ -34,7 +34,7 @@
                 <td>{{ DateTime::createFromFormat('Y-m-d : H:i', $hr->date)->format('d-m-Y : H:i') }}</td>
                 <td>{{ DateTime::createFromFormat('Y-m-d : H:i', $hr->date)->format('m-Y') }}</td>
                 <td>{{ DateTime::createFromFormat('Y-m-d : H:i', $hr->date)->format('Y') }}</td>
-                <td> {{ $hr->report_byName }}</td>
+                <td>{{ $hr->reportBy->lookup_name ?? $hr->report_byName }}</td>
                 <td>{{$hr->eventType->type_eventreport_name}}</td>
                 <td>{{ $hr->subEventType->event_sub_type_name }}</td>
                 <td> {{ $hr->reportBy?->department_name ?? '-' }}</td>
@@ -69,8 +69,8 @@
 
                 </td>
                 <td>
-                    {{ $ActionHazard->where('hazard_id', $hr->id)->count('due_date') }} / 
-                        {{ $ActionHazard->where('hazard_id', $hr->id)->whereNull('completion_date')->count('completion_date') }}
+                    {{ $ActionHazard->where('hazard_id', $hr->id)->count('due_date') }} /
+                    {{ $ActionHazard->where('hazard_id', $hr->id)->whereNull('completion_date')->count('completion_date') }}
                 </td>
                 <td>
                     @if ($hr->WorkflowDetails->Status->status_name ==='Closed')
