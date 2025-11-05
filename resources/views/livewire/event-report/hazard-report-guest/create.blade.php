@@ -142,7 +142,7 @@
 
                         <div class="hidden peer-checked/department:block">
                             {{-- Department --}}
-                            <div class="relative mb-1">
+                            <div class="relative ">
                                 <!-- Input Search -->
 
                                 <input name="search" type="text" wire:model.live="searchDept" placeholder="Departemen Pelapor..." class="input input-bordered w-full focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('department_id') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
@@ -167,7 +167,7 @@
                         </div>
                         <div class="hidden peer-checked/company:block">
                             {{-- Contractor --}}
-                            <div class="relative mb-1">
+                            <div class="relative ">
                                 <!-- Input Search -->
                                 <input name="searchContractor" type="text" wire:model.live="searchContractor" placeholder="Kontraktor Pelapor..." class="input input-bordered w-full focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('contractor_id') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
                                 <!-- Dropdown hasil search -->
