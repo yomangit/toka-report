@@ -189,7 +189,7 @@
                             @endif
                         </div>
                     </fieldset>
-                    <x-label-error :messages="$errors->get('workgroup_name')" />
+
                 </div>
                 @endif
                 <div class="w-full max-w-md xl:max-w-xl form-control">

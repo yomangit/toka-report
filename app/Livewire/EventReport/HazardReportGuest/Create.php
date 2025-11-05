@@ -260,6 +260,7 @@ class Create extends Component
             'documentation'         => 'nullable|mimes:jpg,jpeg,png,svg,gif,xlsx,pdf,docx',
             'description'           => ['required'],
             'location_id'           => ['required'],
+            'site_id'           => ['required'],
             'location_name'         => ['required'],
             'key_word'         => ['required'],
             'tindakkan_selanjutnya' => ['required'],
