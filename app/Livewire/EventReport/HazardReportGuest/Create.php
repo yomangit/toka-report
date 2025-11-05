@@ -641,7 +641,7 @@ class Create extends Component
                 ->first();
 
             $this->workflow_detail_id = optional($workflow)->id;
-            $closed_by = User::whereId($this->pelapor_id)->first()->lookup_name;
+            $closed_by = 'System';
         }
         $pelaporId = $this->pelapor_id ?: null;
         // Simpan data ke database
