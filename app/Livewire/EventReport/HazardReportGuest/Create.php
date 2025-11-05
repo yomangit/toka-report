@@ -192,7 +192,6 @@ class Create extends Component
                 ->limit(10)
                 ->get();
             $this->showDropdown = true;
-
         } else {
             $this->departments = [];
         }
@@ -201,12 +200,12 @@ class Create extends Component
     public function updatedSearchContractor()
     {
         if (strlen($this->searchContractor) > 1) {
-           
+
             $this->contractors = Company::query()->where('company_category_id', 2)->where('name_company', 'like', '%' . $this->searchContractor . '%')
                 ->orderBy('name_company')
                 ->limit(10)
                 ->get();
-                 $this->showContractorDropdown = true;
+            $this->showContractorDropdown = true;
         } else {
             $this->contractors = [];
         }
@@ -215,9 +214,10 @@ class Create extends Component
     {
         $this->department_id = $id;
         $this->department_name = $name;
-        $this->search = $name;
+        $this->searchDept = $name;
         $this->showDropdown = false;
         $this->dispatch('departmentSelected', id: $id, name: $name);
+        $this->reset('searchContractor', 'contractor_id');
     }
 
     public function selectContractor($id, $name)
@@ -226,6 +226,7 @@ class Create extends Component
         $this->contractor_name = $name;
         $this->searchContractor = $name;
         $this->showContractorDropdown = false;
+        $this->reset('searchDept', 'department_id');
         $this->dispatch('contractorSelected', id: $id, name: $name);
     }
 
@@ -301,7 +302,7 @@ class Create extends Component
         if (strlen($this->searchPelapor) > 2) {
             $this->pelapors = User::searchNama(trim($this->searchPelapor))
                 ->orderBy('lookup_name')
-                ->limit(10)
+                ->limit(40)
                 ->get();
             $this->showPelaporDropdown = true;
         } else {
