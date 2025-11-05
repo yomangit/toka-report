@@ -254,7 +254,6 @@ class Create extends Component
             'event_type_id'         => ['required'],
             'sub_event_type_id'     => ['required'],
             'report_toName'         => ['required'],
-            'pelapor_id'         => ['required'],
             'date' => [
                 'required',
                 new DateBeforeOrEqualToday, // pakai custom rule
