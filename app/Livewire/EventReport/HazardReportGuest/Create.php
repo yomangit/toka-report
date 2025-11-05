@@ -325,6 +325,7 @@ class Create extends Component
     {
         $this->manualPelaporMode = true;
         $this->manualPelaporName = $this->searchPelapor; // isi default sama dengan isi search
+         $this->validateOnly('site_id');
     }
     public function updatedManualPelaporName($value)
     {
