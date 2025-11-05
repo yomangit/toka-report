@@ -324,6 +324,7 @@ class Create extends Component
         $this->showPelaporDropdown = false;
         $this->manualPelaporMode = false;
          $this->pilihDivisiPelapor = false;
+         $this->site_id=null;
         $this->validateOnly('pelapor_id');
     }
     public function enableManualPelapor()
