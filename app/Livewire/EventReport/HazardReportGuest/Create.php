@@ -177,6 +177,7 @@ class Create extends Component
     public string $searchContractor = '';
     public  $showDropdown = false;
     public  $showContractorDropdown = false;
+    public  $pilihDivisiPelapor = false;
     public  $departments = [];
     public  $contractors = [];
     public ?int $department_id = null;
@@ -335,6 +336,7 @@ class Create extends Component
         $this->searchPelapor = $this->manualPelaporName;
         $this->showPelaporDropdown = false;
         $this->pelapor_id = null;
+        $this->pilihDivisiPelapor= true;
     }
     // fungsi pelapor act
 

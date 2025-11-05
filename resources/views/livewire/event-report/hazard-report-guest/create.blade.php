@@ -132,7 +132,7 @@
                         @endif
                     </fieldset>
                 </div>
-
+                @if ($pilihDivisiPelapor)
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <fieldset>
                         <input id="department" value="department" wire:model="deptCont" class="peer/department radio radio-xs radio-accent" type="radio" name="deptCont" checked />
@@ -192,7 +192,7 @@
                     </fieldset>
                     <x-label-error :messages="$errors->get('workgroup_name')" />
                 </div>
-
+                @endif
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <x-label-req :value="__('Perusahaan terkait')" />
                     <div class="dropdown dropdown-end">
