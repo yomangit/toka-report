@@ -136,7 +136,7 @@
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <fieldset>
                         <input id="department" value="department" wire:model="deptCont" class="peer/department radio radio-xs radio-accent" type="radio" name="deptCont" checked />
-                        <x-form.label for="department" class="peer-checked/department:text-accent text-[10px]" label="PT. MSM & PT. TTN" required />
+                        <x-form.label for="department" class="peer-checked/department:text-accent" label="PT. MSM & PT. TTN" required />
                         <input id="company" value="company" wire:model="deptCont" class="peer/company radio radio-xs radio-primary" type="radio" name="deptCont" />
                         <x-form.label for="company" class="peer-checked/company:text-primary" label="Kontraktor" required />
 
