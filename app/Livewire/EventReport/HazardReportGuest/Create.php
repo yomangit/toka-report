@@ -172,7 +172,7 @@ class Create extends Component
 
     // pencarian divisi
 
-     public string $deptCont = 'department';
+    public string $deptCont = 'department';
     public string $searchDept = '';
     public string $searchContractor = '';
     public bool $showDropdown = false;
@@ -186,26 +186,30 @@ class Create extends Component
 
     public function updatedSearch()
     {
-        $this->showDropdown = strlen($this->searchDept) > 0;
-        $this->departments = $this->showDropdown
-            ? Department::where('department_name', 'like', '%' . $this->search . '%')
+        if (strlen($this->searchDept) > 0) {
+            $this->showDropdown = true;
+            $this->departments = Department::where('department_name', 'like', '%' . $this->searchDept . '%')
                 ->orderBy('department_name')
                 ->limit(10)
-                ->get()
-            : [];
+                ->get();
+        } else {
+            $this->departments = [];
+        }
     }
 
     public function updatedSearchContractor()
     {
-        $this->showContractorDropdown = strlen($this->searchContractor) > 0;
-        $this->contractors = $this->showContractorDropdown
-            ? Company::where('company_category_id',1)->where('name_company', 'like', '%' . $this->searchContractor . '%')
+        if (strlen($this->searchContractor) > 0) {
+            $this->showContractorDropdown = true;
+            $this->contractors = Company::where('company_category_id', 1)->where('name_company', 'like', '%' . $this->searchContractor . '%')
                 ->orderBy('name_company')
                 ->limit(10)
-                ->get()
-            : [];
+                ->get();
+        } else {
+            $this->contractors = [];
+        }
     }
-public function selectDepartment($id, $name)
+    public function selectDepartment($id, $name)
     {
         $this->department_id = $id;
         $this->department_name = $name;
@@ -236,7 +240,6 @@ public function selectDepartment($id, $name)
             $this->searchPelapor = Auth::user()->lookup_name ?? Auth::user()->name;
             $this->pelapor_id     = Auth::id();
         }
-       
     }
     public function rules()
     {
@@ -390,7 +393,7 @@ public function selectDepartment($id, $name)
         $this->location_id = $id;
         $this->searchLocation = $name;
         $this->showLocationDropdown = false;
-        $this->showLocation =true;
+        $this->showLocation = true;
         $this->validateOnly('location_id');
     }
     // real-time validation
@@ -403,7 +406,7 @@ public function selectDepartment($id, $name)
     {
         $this->reset('tindakkan_selanjutnya');
     }
-    
+
 
     public function reportedTo($id)
     {
