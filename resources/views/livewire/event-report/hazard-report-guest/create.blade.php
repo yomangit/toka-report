@@ -132,7 +132,7 @@
                         @endif
                     </fieldset>
                 </div>
-                @if ($pilihDivisiPelapor)
+                @if (strlen($manualPelaporName)>2)
                 <div class="w-full max-w-md xl:max-w-xl form-control">
                     <fieldset>
                         <input id="department" value="department" wire:model="deptCont" class="peer/department radio radio-xs radio-accent" type="radio" name="deptCont" checked />
