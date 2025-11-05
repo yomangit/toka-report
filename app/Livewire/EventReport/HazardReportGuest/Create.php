@@ -201,7 +201,7 @@ class Create extends Component
     {
         if (strlen($this->searchContractor) > 0) {
             $this->showContractorDropdown = true;
-            $this->contractors = Company::where('company_category_id', 1)->where('name_company', 'like', '%' . $this->searchContractor . '%')
+            $this->contractors = Company::query()->where('company_category_id', 1)->where('name_company', 'like', '%' . $this->searchContractor . '%')
                 ->orderBy('name_company')
                 ->limit(10)
                 ->get();
