@@ -175,10 +175,10 @@ class Create extends Component
     public string $deptCont = 'department';
     public string $searchDept = '';
     public string $searchContractor = '';
-    public bool $showDropdown = false;
-    public bool $showContractorDropdown = false;
-    public array $departments = [];
-    public array $contractors = [];
+    public  $showDropdown = false;
+    public  $showContractorDropdown = false;
+    public  $departments = [];
+    public  $contractors = [];
     public ?int $department_id = null;
     public ?int $contractor_id = null;
     public ?string $department_name = null;
