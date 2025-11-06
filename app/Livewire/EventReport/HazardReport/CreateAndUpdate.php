@@ -82,7 +82,7 @@ class CreateAndUpdate extends Component
     public $locations = [];
     public $searchLocation = '';
 
-     // input action
+    // input action
     public $actions = []; // kumpulan action sebelum disimpan
     public $action_description;
     public $action_due_date;
@@ -172,7 +172,7 @@ class CreateAndUpdate extends Component
     // data action
     public function mount()
     {
-         // Ambil event_type berdasarkan route
+        // Ambil event_type berdasarkan route
         $routePath = Request::getPathInfo();
         $eventTypeIds = choseEventType::where('route_name', 'LIKE', $routePath)->pluck('event_type_id');
 
@@ -339,7 +339,7 @@ class CreateAndUpdate extends Component
     {
         $this->location_id = $id;
         $this->searchLocation = $name;
-         $this->showLocation =true;
+        $this->showLocation = true;
         $this->showLocationDropdown = false;
         $this->validateOnly('location_id');
     }
@@ -485,7 +485,7 @@ class CreateAndUpdate extends Component
         ])->extends('base.index', ['header' => 'Hazard Report', 'title' => 'Hazard Report'])->section('content');
     }
 
-        public function addAction()
+    public function addAction()
     {
         $this->dispatch('validateCkEditorAddAction');
         $this->validate([
@@ -509,7 +509,7 @@ class CreateAndUpdate extends Component
             'backgroundColor' => "background: linear-gradient(135deg, #00c853, #00bfa5);",
         ]);
         // reset input sementara
-        $this->reset(['action_description', 'action_due_date','actual_close_date', 'action_responsible_id', 'searchActResponsibility']);
+        $this->reset(['action_description', 'action_due_date', 'actual_close_date', 'action_responsible_id', 'searchActResponsibility']);
         $this->dispatch('reset-ckeditor');
     }
 
@@ -544,6 +544,14 @@ class CreateAndUpdate extends Component
             $this->reference = "LB-{$refNumber}";
         }
         // Validasi input
+         if ($this->tindakkan_selanjutnya == 1) {
+            $this->validate([
+                'action_description' => 'required|string',
+                'action_due_date' => 'required|date',
+                'actual_close_date' => 'required|date',
+                'action_responsible_id' => 'required|exists:users,id',
+            ]);
+        }
         $this->validate();
 
         // Upload file
@@ -621,18 +629,18 @@ class CreateAndUpdate extends Component
 
         $hazardReport = HazardReport::create($fields);
 
-         // 2. Simpan semua action
-            foreach ($this->actions as $act) {
-                $due_date = Carbon::createFromFormat('d-m-Y', $act['due_date'])->format('Y-m-d');
-                $actual_close_date = Carbon::createFromFormat('d-m-Y', $act['actual_close_date'])->format('Y-m-d');
-                DocHazPelapor::create([
-                    'hazard_id'     => $hazardReport->id,
-                    'followup_action'   => $act['description'],
-                    'due_date'      => $due_date,
-                    'completion_date'      => $actual_close_date,
-                    'responsibility' => $act['responsible_id'],
-                ]);
-            }
+        // 2. Simpan semua action
+        foreach ($this->actions as $act) {
+            $due_date = Carbon::createFromFormat('d-m-Y', $act['due_date'])->format('Y-m-d');
+            $actual_close_date = Carbon::createFromFormat('d-m-Y', $act['actual_close_date'])->format('Y-m-d');
+            DocHazPelapor::create([
+                'hazard_id'     => $hazardReport->id,
+                'followup_action'   => $act['description'],
+                'due_date'      => $due_date,
+                'completion_date'      => $actual_close_date,
+                'responsibility' => $act['responsible_id'],
+            ]);
+        }
         if ($this->tindakkan_selanjutnya == 1) {
             $source = Approval::where('new_data->token', $this->token)->get();
             foreach ($source as $approval) {
