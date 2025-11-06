@@ -323,8 +323,8 @@ class Create extends Component
         $this->searchPelapor = $name;
         $this->showPelaporDropdown = false;
         $this->manualPelaporMode = false;
-         $this->pilihDivisiPelapor = false;
-         $this->site_id=null;
+        $this->pilihDivisiPelapor = false;
+        $this->site_id = null;
         $this->validateOnly('pelapor_id');
     }
     public function enableManualPelapor()
@@ -610,6 +610,9 @@ class Create extends Component
             $this->reference = "LB-{$refNumber}";
         }
         // Validasi input
+        if ($this->tindakkan_selanjutnya == 1) {
+            $this->addAction();
+        }
         $this->validate();
 
         // Upload file
