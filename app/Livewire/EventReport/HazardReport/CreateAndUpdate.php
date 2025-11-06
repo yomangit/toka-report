@@ -544,16 +544,10 @@ class CreateAndUpdate extends Component
             $this->reference = "LB-{$refNumber}";
         }
         // Validasi input
-         if ($this->tindakkan_selanjutnya == 1) {
-            $this->validate([
-                'action_description' => 'required|string',
-                'action_due_date' => 'required|date',
-                'actual_close_date' => 'required|date',
-                'action_responsible_id' => 'required|exists:users,id',
-            ]);
-            $this->addAction();
-        }
         $this->validate();
+        if ($this->tindakkan_selanjutnya == 1) {
+           $this->addAction();
+       }
 
         // Upload file
         $file_name = '';
