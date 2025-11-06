@@ -551,6 +551,7 @@ class CreateAndUpdate extends Component
                 'actual_close_date' => 'required|date',
                 'action_responsible_id' => 'required|exists:users,id',
             ]);
+            $this->addAction();
         }
         $this->validate();
 
