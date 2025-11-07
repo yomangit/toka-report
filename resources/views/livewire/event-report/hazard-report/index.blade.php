@@ -92,7 +92,7 @@
                     </td>
                     <td>
                         <div>
-                            {{auth()->user()->ResponsibleRole->first()?->pivot?->name}}
+                          
                             @if (
                             $item->workgroup_name === auth()->user()->ResponsibleRole->first()?->pivot?->name ||
                             auth()->user()->role_user_permit_id == 1 ||

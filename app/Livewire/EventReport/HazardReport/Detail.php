@@ -81,16 +81,17 @@ class Detail extends Component
 
         if ($projectExists) {
             $this->data_id = $id;
+            $workgroup_name  = HazardReport::whereId($id)->first()->workgroup_name;
             $projectAkses  = HazardReport::whereId($id)
                 ->Where('submitter', Auth::user()->id)
-                ->orWhere('report_by', Auth::user()->id)
                 ->orWhere('report_to', Auth::user()->id)
+                ->orWhere('report_by', Auth::user()->id)
                 ->orWhere('assign_to', Auth::user()->id)
                 ->orWhere('also_assign_to', Auth::user()->id);
             // ✅ Tambahan akses berdasarkan event_user_securities.responsible_role_id == 1
             $hasResponsibleAccess = EventUserSecurity::where('user_id', Auth::id())
                 ->where('responsible_role_id', 1)->exists();
-            if ($projectAkses->exists() || Auth::user()->role_user_permit_id == 1 || $hasResponsibleAccess) {
+            if ($projectAkses->exists() || Auth::user()->role_user_permit_id == 1 || $hasResponsibleAccess || Auth::user()->ResponsibleRole->first()?->pivot?->name ===$workgroup_name) {
                 $HazardReport                = HazardReport::whereId($this->data_id)->first();
                 $this->risk_consequence_id   = $HazardReport->risk_consequence_id;
                 $this->risk_likelihood_id    = $HazardReport->risk_likelihood_id;
