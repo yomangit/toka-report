@@ -546,8 +546,20 @@ class CreateAndUpdate extends Component
         // Validasi input
         $this->validate();
         if ($this->tindakkan_selanjutnya == 1) {
-           $this->addAction();
-       }
+            if (empty($this->actions)) {
+                $this->dispatch(
+                    'alert',
+                    [
+                        'text' => "Tindakan Lanjutan Belum Ditambahkan!!!",
+                        'duration' => 5000,
+                        'destination' => '/contact',
+                        'newWindow' => true,
+                        'close' => true,
+                        'backgroundColor' => "linear-gradient(to right, #ff3333, #ff6666)",
+                    ]
+                );
+            }
+        }
 
         // Upload file
         $file_name = '';
@@ -636,22 +648,7 @@ class CreateAndUpdate extends Component
                 'responsibility' => $act['responsible_id'],
             ]);
         }
-        if ($this->tindakkan_selanjutnya == 1) {
-            $source = Approval::where('new_data->token', $this->token)->get();
-            foreach ($source as $approval) {
-                $newData = $approval->new_data; // ini adalah array/object yang bisa diubah
-                $newData['hazard_id'] = $hazardReport->id; // ubah hazard_id
 
-                $approval->new_data = $newData; // set ulang ke model
-                $approval->save();              // simpan ke database
-                $approval->approve();
-            }
-        } else {
-            $exists = Approval::where('new_data->token', $this->token)->exists();
-            if ($exists) {
-                Approval::whereIn('new_data->token', $this->token)->delete();
-            }
-        }
         // Pop-up sukses
         $this->dispatch('alert', [
             'text'            => "Laporan Hazard Anda Sudah Terkirim, Terima kasih sudah melapor!!!",

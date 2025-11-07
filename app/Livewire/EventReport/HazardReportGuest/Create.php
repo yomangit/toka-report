@@ -611,7 +611,19 @@ class Create extends Component
         }
         // Validasi input
         if ($this->tindakkan_selanjutnya == 1) {
-            $this->addAction();
+            if (empty($this->actions)) {
+                $this->dispatch(
+                    'alert',
+                    [
+                        'text' => "Tindakan Lanjutan Belum Ditambahkan!!!",
+                        'duration' => 5000,
+                        'destination' => '/contact',
+                        'newWindow' => true,
+                        'close' => true,
+                        'backgroundColor' => "linear-gradient(to right, #ff3333, #ff6666)",
+                    ]
+                );
+            }
         }
         $this->validate();
 
