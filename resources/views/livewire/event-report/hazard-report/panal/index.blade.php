@@ -28,7 +28,7 @@
                             <x-select wire:model.live='procced_to' :error="$errors->get('procced_to')" class="w-full">
                                 <option value="">Select an option</option>
                                 @forelse ($Workflow as $value)
-                                @if($value->responsible_role_id == auth()->user()->hasResponsibleRoleId(1))
+                                @if($value->responsible_role_id == 1 && auth()->user()->hasResponsibleRoleId(1))
                                 <option value="{{ $value->destination_1 }}">{{ $value->destination_1_label }}</option>
                                 @if ($value->destination_2)
                                 <option value="{{ $value->destination_2 }}">{{ $value->destination_2_label }}</option>
