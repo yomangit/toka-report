@@ -60,12 +60,23 @@ class Index extends Component
             }
         }
     }
+    public function updatePanel()
+    {
+        $HazardReport = HazardReport::whereId($this->data_id)->first();
+        $this->current_step = $HazardReport->WorkflowDetails->status_name;
+        $this->responsible_role_id = $HazardReport->WorkflowDetails->ResponsibleRole->id;
+        $this->status = $HazardReport->WorkflowDetails->Status->status_name;
+        $this->bg_status = $HazardReport->WorkflowDetails->Status->bg_status;
+        $this->wf_id = $HazardReport->workflow_detail_id;
+        $this->event_type_id = $HazardReport->event_type_id;
+    }
     public function render()
     {
 
         $this->updatePanel();
-        $this->workflow_administration_id = (!empty(WorkflowApplicable::where('type_event_report_id', $this->event_type_id)->first()->workflow_administration_id)) ? WorkflowApplicable::where('type_event_report_id', $this->event_type_id)->first()->workflow_administration_id : null;
-        $this->Workflows = WorkflowDetail::where('workflow_administration_id', $this->workflow_administration_id)->where('name', $this->current_step)->get();
+        $this->workflow_administration_id = (!empty(WorkflowApplicable::where('type_event_report_id', $this->event_type_id)->first()->workflow_administration_id)) 
+        ? WorkflowApplicable::where('type_event_report_id', $this->event_type_id)->first()->workflow_administration_id : null;
+        $this->Workflows = WorkflowDetail::where('workflow_administration_id', $this->workflow_administration_id)->where('status_name', $this->current_step)->get();
         $this->realtimeUpdate();
         $this->userSecurity();
         return view('livewire.event-report.hazard-report.panal.index', [
@@ -125,16 +136,7 @@ class Index extends Component
             );
         }
     }
-    public function updatePanel()
-    {
-        $HazardReport = HazardReport::whereId($this->data_id)->first();
-        $this->current_step = $HazardReport->WorkflowDetails->name;
-        $this->responsible_role_id = $HazardReport->WorkflowDetails->ResponsibleRole->id;
-        $this->status = $HazardReport->WorkflowDetails->Status->status_name;
-        $this->bg_status = $HazardReport->WorkflowDetails->Status->bg_status;
-        $this->wf_id = $HazardReport->workflow_detail_id;
-        $this->event_type_id = $HazardReport->event_type_id;
-    }
+    
     public function realtimeUpdate()
     {
         $ERM = ClassHierarchy::searchDivision(trim($this->division_id))->pluck('dept_by_business_unit_id');
