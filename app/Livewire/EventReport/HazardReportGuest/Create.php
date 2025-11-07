@@ -600,15 +600,7 @@ class Create extends Component
     }
     public function store()
     {
-        if ($this->date) {
-            $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $this->date);
-            $dateForDB  = $dateObj->format('Y-m-d : H:i');
 
-            // Generate reference number
-            $count = HazardReport::count() + 1;
-            $refNumber = str_pad($count, 4, '0', STR_PAD_LEFT);
-            $this->reference = "LB-{$refNumber}";
-        }
         // Validasi input
         if ($this->tindakkan_selanjutnya == 1) {
             if (empty($this->actions)) {
@@ -623,7 +615,23 @@ class Create extends Component
                         'backgroundColor' => "linear-gradient(to right, #ff3333, #ff6666)",
                     ]
                 );
+            } else {
+                $this->saveData();
             }
+        } else {
+            $this->saveData();
+        }
+    }
+    public function saveData()
+    {
+        if ($this->date) {
+            $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $this->date);
+            $dateForDB  = $dateObj->format('Y-m-d : H:i');
+
+            // Generate reference number
+            $count = HazardReport::count() + 1;
+            $refNumber = str_pad($count, 4, '0', STR_PAD_LEFT);
+            $this->reference = "LB-{$refNumber}";
         }
         $this->validate();
 
@@ -710,22 +718,6 @@ class Create extends Component
                 'completion_date'       => $actual_close_date,
                 'responsibility'        => $act['responsible_id'],
             ]);
-        }
-        if ($this->tindakkan_selanjutnya == 1) {
-            $source = Approval::where('new_data->token', $this->token)->get();
-            foreach ($source as $approval) {
-                $newData = $approval->new_data; // ini adalah array/object yang bisa diubah
-                $newData['hazard_id'] = $hazardReport->id; // ubah hazard_id
-
-                $approval->new_data = $newData; // set ulang ke model
-                $approval->save();              // simpan ke database
-                $approval->approve();
-            }
-        } else {
-            $exists = Approval::where('new_data->token', $this->token)->exists();
-            if ($exists) {
-                Approval::whereIn('new_data->token', $this->token)->delete();
-            }
         }
         // Pop-up sukses
         $this->dispatch('alert', [

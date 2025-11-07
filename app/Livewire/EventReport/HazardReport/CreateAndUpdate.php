@@ -532,19 +532,8 @@ class CreateAndUpdate extends Component
 
     public function store()
     {
-        // Format tanggal untuk referensi
-        if ($this->date) {
-            $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $this->date);
-            $dateForRef = $dateObj->format('Y/m/d');
-            $dateForDB  = $dateObj->format('Y-m-d : H:i');
 
-            // Generate reference number
-            $count = HazardReport::count() + 1;
-            $refNumber = str_pad($count, 4, '0', STR_PAD_LEFT);
-            $this->reference = "LB-{$refNumber}";
-        }
         // Validasi input
-        $this->validate();
         if ($this->tindakkan_selanjutnya == 1) {
             if (empty($this->actions)) {
                 $this->dispatch(
@@ -558,8 +547,25 @@ class CreateAndUpdate extends Component
                         'backgroundColor' => "linear-gradient(to right, #ff3333, #ff6666)",
                     ]
                 );
+            } else {
+                $this->saveData();
             }
+        } else {
+            $this->saveData();
         }
+    }
+    public function saveData()
+    {
+        if ($this->date) {
+            $dateObj = DateTime::createFromFormat('d-m-Y : H:i', $this->date);
+            $dateForDB  = $dateObj->format('Y-m-d : H:i');
+
+            // Generate reference number
+            $count = HazardReport::count() + 1;
+            $refNumber = str_pad($count, 4, '0', STR_PAD_LEFT);
+            $this->reference = "LB-{$refNumber}";
+        }
+        $this->validate();
 
         // Upload file
         $file_name = '';
@@ -592,16 +598,15 @@ class CreateAndUpdate extends Component
                 ->first();
 
             $this->workflow_detail_id = optional($workflow)->id;
-            $closed_by = $this->report_byName;
+            $closed_by = 'System';
         }
         $pelaporId = $this->pelapor_id ?: null;
-
         // Simpan data ke database
         $fields = [
             'event_type_id'               => $this->event_type_id,
             'sub_event_type_id'           => $this->sub_event_type_id,
             'reference'                   => $this->reference,
-            'report_by'                   => $pelaporId,
+            'report_by'                   =>  $pelaporId,
             'report_to'                   => $this->report_to,
             'division_id'                 => $this->division_id,
             'date'                        => $dateForDB,
@@ -616,7 +621,7 @@ class CreateAndUpdate extends Component
             'risk_consequence_id'         => $this->risk_consequence_id,
             'risk_likelihood_id'          => $this->risk_likelihood_id,
             'workgroup_name'              => $this->workgroup_name,
-            'report_byName'               => $this->pelapor_id ? User::find($this->pelapor_id)?->lookup_name : $this->manualPelaporName,
+            'report_byName'               => $this->report_byName,
             'report_toName'               => $this->report_toName,
             'task_being_done'             => $this->task_being_done,
             'documentation'               => $file_name,
@@ -635,30 +640,27 @@ class CreateAndUpdate extends Component
         ];
 
         $hazardReport = HazardReport::create($fields);
-
-        // 2. Simpan semua action
         foreach ($this->actions as $act) {
             $due_date = Carbon::createFromFormat('d-m-Y', $act['due_date'])->format('Y-m-d');
             $actual_close_date = Carbon::createFromFormat('d-m-Y', $act['actual_close_date'])->format('Y-m-d');
             DocHazPelapor::create([
-                'hazard_id'     => $hazardReport->id,
-                'followup_action'   => $act['description'],
-                'due_date'      => $due_date,
-                'completion_date'      => $actual_close_date,
-                'responsibility' => $act['responsible_id'],
+                'hazard_id'             => $hazardReport->id,
+                'followup_action'       => $act['description'],
+                'due_date'              => $due_date,
+                'completion_date'       => $actual_close_date,
+                'responsibility'        => $act['responsible_id'],
             ]);
         }
-
         // Pop-up sukses
         $this->dispatch('alert', [
             'text'            => "Laporan Hazard Anda Sudah Terkirim, Terima kasih sudah melapor!!!",
             'duration'        => 5000,
-            'destination'     => '/contact',
+            'destination'     => '',
             'newWindow'       => true,
             'close'           => true,
             'backgroundColor' => "linear-gradient(to right, #06b6d4, #22c55e)",
         ]);
-
+        $this->dispatch('hazardChartShouldRefresh');
         $this->dispatch('buttonClicked', ['duration' => 4000]);
 
         // Kirim notifikasi ke moderator
@@ -707,12 +709,10 @@ class CreateAndUpdate extends Component
             $urls = url("/eventReport/hazardReportDetail/{$hazardReport->id}");
             NotificationHelper::sendToUser($user_os, $judul, $isi, $urls);
         }
-        $this->dispatch('hazardChartShouldRefresh');
         $this->clearFields();
+        $this->dispatch('refreshChartHazard');
         // $this->redirectRoute('hazardReportCreate', ['workflow_template_id' => $this->workflow_template_id]);
-
     }
-
 
     public function clearFields()
     {
