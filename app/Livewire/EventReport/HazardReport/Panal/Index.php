@@ -98,6 +98,7 @@ class Index extends Component
                 }
             } else {
                 // Cek jika dia punya role 1 dan akses ke perusahaan atau departemen
+                
                 $hasRole1Access = EventUserSecurity::where('user_id', $userId)
                     ->where('responsible_role_id', 1)
                     ->where(function ($query) use ($typeId) {
@@ -108,8 +109,11 @@ class Index extends Component
                         $query->searchCompany($company)->orWhere(fn($q) => $q->searchDept($department));
                     })
                     ->exists();
-
+                $hasRole2Access = EventUserSecurity::where('user_id', $userId)
+                    ->where('responsible_role_id', 2)
+                    ->where('name','like',Auth::user()->ResponsibleRole->first()?->pivot?->name)->exists();
                 $this->muncul = $hasRole1Access; // kalau punya akses, true
+                $this->muncul = $hasRole2Access; // kalau punya akses, true
             }
         } else {
             $this->dispatch(
