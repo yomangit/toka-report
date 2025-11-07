@@ -513,39 +513,47 @@
         </script>
         <script>
             let ckAction_description = null;
+
             document.addEventListener('livewire:navigated', () => {
                 ClassicEditor
                     .create(document.querySelector('#ckeditor-action_description'), {
                         toolbar: [
-                            , 'bold', 'italic', 'bulletedList', 'numberedList', '|'
-                            , 'undo', 'redo'
+                            'bold', 'italic', 'bulletedList', 'numberedList', '|', 'undo', 'redo'
                         ]
-                        , removePlugins: ['ImageUpload', 'EasyImage', 'MediaEmbed'] // buang plugin gambar
+                        , removePlugins: ['ImageUpload', 'EasyImage', 'MediaEmbed']
                     })
                     .then(editor => {
                         ckAction_description = editor;
+
                         editor.model.document.on('change:data', () => {
                             const data = editor.getData();
                             document.querySelector('#ckeditor-action_description').value = data;
                             @this.set('action_description', data);
+
                             if (data.trim() !== '') {
                                 editor.ui.view.editable.element.classList.remove('error');
                             }
                         });
                     })
-                    .catch(error => {
-                        console.error(error);
-                    });
+                    .catch(error => console.error(error));
             });
+
             Livewire.on('validateCkEditorAddAction', event => {
                 if (ckAction_description) {
                     const data = ckAction_description.getData().trim();
                     if (data === '') {
                         ckAction_description.ui.view.editable.element.classList.add('error');
-                        return false; // cegah submit
+                        return false;
                     }
                 }
                 return true;
+            });
+
+            // 🔥 Tambahkan listener reset setelah submit
+            Livewire.on('resetCkEditorAction', () => {
+                if (ckAction_description) {
+                    ckAction_description.setData(''); // kosongkan text area
+                }
             });
 
         </script>

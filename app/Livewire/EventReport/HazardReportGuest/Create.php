@@ -579,7 +579,7 @@ class Create extends Component
         ]);
         // reset input sementara
         $this->reset(['action_description', 'action_due_date', 'actual_close_date', 'action_responsible_id', 'searchActResponsibility']);
-        $this->dispatch('reset-ckeditor');
+        $this->dispatch('resetCkEditorAction');
     }
 
     public function removeAction($index)
