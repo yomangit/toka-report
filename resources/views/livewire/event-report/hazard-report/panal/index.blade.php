@@ -35,7 +35,8 @@
                                 @elseif($value->is_cancel_step === 'Cancel')
                                 <option value="{{ $value->is_cancel_step }}">{{ $value->is_cancel_step }}</option>
                                 @endif
-                                @else
+                                  @endif
+                                 @if($value->responsible_role_id == 2 && auth()->user()->hasResponsibleRoleId(2))
                                 <option value="{{ $value->destination_1 }}">{{ $value->destination_1_label }}</option>
                                 @if ($value->destination_2)
                                 <option value="{{ $value->destination_2 }}">{{ $value->destination_2_label }}</option>
