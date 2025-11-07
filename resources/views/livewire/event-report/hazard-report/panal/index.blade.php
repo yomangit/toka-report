@@ -28,24 +28,17 @@
                             <x-select wire:model.live='procced_to' :error="$errors->get('procced_to')" class="w-full">
                                 <option value="">Select an option</option>
                                 @forelse ($Workflow as $value)
-                                @if($value->responsible_role_id == 1 && auth()->user()->hasResponsibleRoleId(1))
+                                @if ($value->responsible_role_id == auth()->user()->primaryResponsibleRoleId())
                                 <option value="{{ $value->destination_1 }}">{{ $value->destination_1_label }}</option>
-                                    @if ($value->destination_2)
-                                    <option value="{{ $value->destination_2 }}">{{ $value->destination_2_label }}</option>
-                                    @elseif($value->is_cancel_step === 'Cancel')
-                                    <option value="{{ $value->is_cancel_step }}">{{ $value->is_cancel_step }}</option>
-                                    @endif
+                                @if ($value->destination_2)
+                                <option value="{{ $value->destination_2 }}">{{ $value->destination_2_label }}</option>
+                                @elseif($value->is_cancel_step === 'Cancel')
+                                <option value="{{ $value->is_cancel_step }}">{{ $value->is_cancel_step }}</option>
                                 @endif
-                                @if($value->responsible_role_id == 2 && auth()->user()->hasResponsibleRoleId(2))
-                                    <option value="{{ $value->destination_1 }}">{{ $value->destination_1_label }}</option>
-                                    @if ($value->destination_2)
-                                    <option value="{{ $value->destination_2 }}">{{ $value->destination_2_label }}</option>
-                                    @elseif($value->is_cancel_step === 'Cancel')
-                                    <option value="{{ $value->is_cancel_step }}">{{ $value->is_cancel_step }}</option>
-                                    @endif
                                 @endif
                                 @empty
                                 @endforelse
+
                             </x-select>
                             <x-label-error :messages="$errors->get('procced_to')" />
                             @endif

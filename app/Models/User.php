@@ -140,6 +140,13 @@ class User extends Authenticatable implements LdapAuthenticatable
     {
         return $this->belongsToMany(ResponsibleRole::class, 'event_user_securities')->withPivot('name');
     }
+    public function primaryResponsibleRoleId()
+{
+    // Role 1 lebih prioritas
+    if ($this->hasResponsibleRoleId(1)) return 1;
+    if ($this->hasResponsibleRoleId(2)) return 2;
+    return null;
+}
     public function hasResponsibleRoleId($id)
     {
         return $this->ResponsibleRole->contains('id', $id);
