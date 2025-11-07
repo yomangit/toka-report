@@ -142,7 +142,7 @@ class User extends Authenticatable implements LdapAuthenticatable
     }
     public function Responsible()
     {
-        return $this->belongsTo(ResponsibleRole::class, 'event_user_securities');
+        return $this->belongsTo(EventUserSecurity::class,'user_id');
     }
     public function hasResponsibleRoleId($id)
 {
