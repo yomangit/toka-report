@@ -93,7 +93,7 @@
                     <td>
                         <div>
                             @if (
-                            $item->workgroup_name== auth()->user()->Responsible->name && auth()->user()->hasResponsibleRoleId(2) ||
+                          
                             auth()->user()->role_user_permit_id == 1 ||
                             $item->submitter == auth()->id() ||
                             $item->report_by == auth()->id() ||
