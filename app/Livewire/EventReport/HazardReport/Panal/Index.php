@@ -90,30 +90,33 @@ class Index extends Component
                 ->where('type_event_report_id', $typeId)
                 ->exists();
 
+            $hasRole1Access = EventUserSecurity::where('user_id', $userId)
+                ->where('responsible_role_id', 1)
+                ->where(function ($query) use ($typeId) {
+                    $query->where('type_event_report_id', $typeId)
+                        ->orWhereNull('type_event_report_id');
+                })
+                ->where(function ($query) use ($company, $department) {
+                    $query->searchCompany($company)->orWhere(fn($q) => $q->searchDept($department));
+                })
+                ->exists();
+            $hasRole2Access = EventUserSecurity::where('user_id', $userId)
+                ->where('responsible_role_id', 2)
+                ->where('name', 'like', Auth::user()->ResponsibleRole->first()?->pivot?->name)->exists();
+           
+
             if ($this->current_step === 'ERM Assigned') {
                 if ($isErm) {
                     $this->muncul = true; // jika role 2, maka true
                 } else {
                     $this->muncul = false;
                 }
-            } else {
-                // Cek jika dia punya role 1 dan akses ke perusahaan atau departemen
-                
-                $hasRole1Access = EventUserSecurity::where('user_id', $userId)
-                    ->where('responsible_role_id', 1)
-                    ->where(function ($query) use ($typeId) {
-                        $query->where('type_event_report_id', $typeId)
-                            ->orWhereNull('type_event_report_id');
-                    })
-                    ->where(function ($query) use ($company, $department) {
-                        $query->searchCompany($company)->orWhere(fn($q) => $q->searchDept($department));
-                    })
-                    ->exists();
-                $hasRole2Access = EventUserSecurity::where('user_id', $userId)
-                    ->where('responsible_role_id', 2)
-                    ->where('name','like',Auth::user()->ResponsibleRole->first()?->pivot?->name)->exists();
-                $this->muncul = $hasRole1Access; // kalau punya akses, true
-                $this->muncul = $hasRole2Access; // kalau punya akses, true
+            }
+            if (auth()->user()->hasResponsibleRoleId(1)) {
+                $this->muncul = $hasRole1Access;
+            }
+            if (auth()->user()->hasResponsibleRoleId(2)) {
+                $this->muncul = $hasRole2Access;
             }
         } else {
             $this->dispatch(
