@@ -92,9 +92,9 @@
                     </td>
                     <td>
                         <div>
-                            {{ auth()->user()->getResponsibleRoleName(2) }}
+                            {{auth()->user()->getAllResponsibleRoleNames()}}
                             @if (
-                            $item->workgroup_name === auth()->user()->getResponsibleRoleName(2) ||
+                            $item->workgroup_name === auth()->user()->getAllResponsibleRoleNames() ||
                             auth()->user()->role_user_permit_id == 1 ||
                             $item->submitter == auth()->id() ||
                             $item->report_by == auth()->id() ||
