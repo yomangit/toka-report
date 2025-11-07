@@ -92,6 +92,7 @@
                     </td>
                     <td>
                         <div>
+                            {{ auth()->user()->getResponsibleRoleName(2) }}
                             @if (
                             $item->workgroup_name === auth()->user()->getResponsibleRoleName(2) ||
                             auth()->user()->role_user_permit_id == 1 ||
