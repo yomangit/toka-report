@@ -367,7 +367,7 @@
                         <div class="grid items-end grid-cols-1 gap-4 md:grid-cols-3">
                             <!-- Tanggal & Waktu -->
                             <fieldset class="fieldset md:col-span-1">
-                                <x-form.label label="Batas Waktu Penyelesaian" required />
+                                <x-form.label label="Batas Waktu Penyelesaian"  />
                                 <div class="relative" wire:ignore x-data="{
                                     fp: null,
                                     initFlatpickr() {
@@ -406,7 +406,7 @@
                             </fieldset>
                             <!-- Dilaporkan Oleh -->
                             <fieldset class="relative fieldset md:col-span-1">
-                                <x-form.label label="Penanggung Jawab Area"  />
+                                <x-form.label label="Penanggung Jawab Area" required />
                                 <div class="relative">
                                     <input name="searchActResponsibility" type="text" wire:model.live.debounce.300ms="searchActResponsibility" placeholder="Cari Nama Pelapor..." class="input input-bordered w-full focus:ring-1 focus:border-info focus:ring-info focus:outline-hidden input-xs {{ $errors->has('pelapor_id') ? 'ring-1 ring-rose-500 focus:ring-rose-500 focus:border-rose-500' : '' }}" />
 
