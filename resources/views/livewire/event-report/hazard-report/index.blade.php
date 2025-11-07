@@ -94,7 +94,7 @@
                         <div>
                             {{auth()->user()->getAllResponsibleRoleNames()}}
                             @if (
-                            $item->workgroup_name === auth()->user()->getAllResponsibleRoleNames() ||
+                            $item->workgroup_name ===auth()->user()->ResponsibleRole->first()?->name ||
                             auth()->user()->role_user_permit_id == 1 ||
                             $item->submitter == auth()->id() ||
                             $item->report_by == auth()->id() ||
