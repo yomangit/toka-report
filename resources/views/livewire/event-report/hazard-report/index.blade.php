@@ -92,7 +92,6 @@
                     </td>
                     <td>
                         <div>
-                          
                             @if (
                             $item->workgroup_name === auth()->user()->ResponsibleRole->first()?->pivot?->name ||
                             auth()->user()->role_user_permit_id == 1 ||

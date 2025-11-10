@@ -100,11 +100,6 @@ class Index extends Component
                     $query->searchCompany($company)->orWhere(fn($q) => $q->searchDept($department));
                 })
                 ->exists();
-            $hasRole2Access = EventUserSecurity::where('user_id', $userId)
-                ->where('responsible_role_id', 2)
-                ->where('name', 'like', Auth::user()->ResponsibleRole->first()?->pivot?->name)->exists();
-           
-
             if ($this->current_step === 'ERM Assigned') {
                 if ($isErm) {
                     $this->muncul = true; // jika role 2, maka true
@@ -112,12 +107,7 @@ class Index extends Component
                     $this->muncul = false;
                 }
             }
-            if (auth()->user()->hasResponsibleRoleId(1)) {
                 $this->muncul = $hasRole1Access;
-            }
-            if (auth()->user()->hasResponsibleRoleId(2)) {
-                $this->muncul = $hasRole2Access;
-            }
         } else {
             $this->dispatch(
                 'alert',
