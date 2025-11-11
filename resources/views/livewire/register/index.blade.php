@@ -48,8 +48,7 @@
             <x-input-label for="password" :value="__('Password')" />
 
             <div class="relative">
-                <input id="password" class="block w-full mt-1 pr-10 input input-bordered @error('password') input-error @enderror" type="{{ $showPassword ? 'text' : 'password' }}" wire:model.live="password" required autocomplete="new-password" />
-
+                <x-text-input id="password" class="block w-full mt-1" type="{{ $showPassword ? 'text' : 'password' }}" wire:model.live="password" :error="$errors->get('password')" required autocomplete="new-password" />
                 <!-- eye icon -->
                 <button type="button" wire:click="togglePasswordVisibility" class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-800">
                     @if($showPassword)
@@ -74,8 +73,7 @@
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
             <div class="relative">
-                <input id="password_confirmation" class="block w-full mt-1 pr-10 input input-bordered @error('password_confirmation') input-error @enderror" type="{{ $showPasswordConfirmation ? 'text' : 'password' }}" wire:model.live="password_confirmation" required autocomplete="new-password" />
-
+                 <x-text-input id="password_confirmation" class="block w-full mt-1" type="{{ $showPasswordConfirmation ? 'text' : 'password' }}" wire:model.live="password_confirmation" :error="$errors->get('password_confirmation')" required autocomplete="new-password" />
                 <!-- eye icon -->
                 <button type="button" wire:click="togglePasswordConfirmationVisibility" class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-800">
                     @if($showPasswordConfirmation)
