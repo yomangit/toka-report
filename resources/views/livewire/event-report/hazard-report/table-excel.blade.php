@@ -37,7 +37,7 @@
                 <td>{{ $hr->reportBy->lookup_name ?? $hr->report_byName }}</td>
                 <td>{{$hr->eventType->type_eventreport_name}}</td>
                 <td>{{ $hr->subEventType->event_sub_type_name }}</td>
-                <td> {{ $hr->reportBy?->department_name ?? '-' }}</td>
+                <td> {{ $hr->reportBy?->department_name ?? $hr->site_id }}</td>
                 <td> {{ $hr->workgroup_name }}</td>
                 <td> {{ $hr->division?->Company?->name_company ?? $hr->division?->DeptByBU?->Department?->department_name ?? '' }}</td>
                 <td> {{ $hr->report_toName }}</td>

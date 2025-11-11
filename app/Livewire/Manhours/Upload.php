@@ -21,7 +21,7 @@ class Upload extends ModalComponent
     public function rules()
     {
         return [
-            'files' => 'required|mimes:csv',
+             'files' => 'required|mimes:xlsx,csv,xls',
         ];
     }
     public function message()

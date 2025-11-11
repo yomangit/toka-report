@@ -63,7 +63,7 @@
                     <th>Reference</th>
                     <th>Deskripsi</th>
                     <th>Event Sub Type</th>
-                    <th>Company Level</th>
+                    <th>Responsible</th>
                     <th class="flex-col">
                         <p>Action</p>
                         <p>Total/Open</p>
