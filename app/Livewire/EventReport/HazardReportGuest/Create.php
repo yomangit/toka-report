@@ -447,7 +447,7 @@ class Create extends Component
         $this->division_id = $id;
         $this->hiddenWorkgroup = 'hidden';
         $this->hiddenReportBy = 'hidden';
-         $this->validateOnly('division_id');
+        $this->validateOnly('division_id');
     }
 
     public function clickReportBy()
@@ -566,8 +566,8 @@ class Create extends Component
         ]);
         $this->actions[] = [
             'description' => $this->action_description,
-            'due_date' => (!empty($this->action_due_date)) ? $this->action_due_date : null ,
-            'actual_close_date' => (!empty($this->actual_close_date)) ? $this->actual_close_date : null ,
+            'due_date' => (!empty($this->action_due_date)) ? $this->action_due_date : null,
+            'actual_close_date' => (!empty($this->actual_close_date)) ? $this->actual_close_date : null,
             'responsible_id' => $this->action_responsible_id,
         ];
         $this->dispatch('alert', [
@@ -710,8 +710,13 @@ class Create extends Component
 
         $hazardReport = HazardReport::create($fields);
         foreach ($this->actions as $act) {
-            $due_date = Carbon::createFromFormat('d-m-Y', $act['due_date'])->format('Y-m-d');
-            $actual_close_date = Carbon::createFromFormat('d-m-Y', $act['actual_close_date'])->format('Y-m-d');
+            $due_date = !empty($act['due_date'])
+                ? Carbon::createFromFormat('d-m-Y', $act['due_date'])->format('Y-m-d')
+                : null;
+
+            $actual_close_date = !empty($act['actual_close_date'])
+                ? Carbon::createFromFormat('d-m-Y', $act['actual_close_date'])->format('Y-m-d')
+                : null;
             DocHazPelapor::create([
                 'hazard_id'             => $hazardReport->id,
                 'followup_action'       => $act['description'],
