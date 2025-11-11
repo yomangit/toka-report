@@ -193,8 +193,6 @@ class Index extends Component
             'old_values' => ['status' => $old],
             'new_values' => ['status' => $newStatus],
         ]);
-
-
         // Notifikasi ke Moderator jika role 1
         if ($this->responsible_role_id == 1) {
             $moderators = User::whereIn('id', function ($query) {

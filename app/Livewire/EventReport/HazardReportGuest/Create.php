@@ -447,6 +447,7 @@ class Create extends Component
         $this->division_id = $id;
         $this->hiddenWorkgroup = 'hidden';
         $this->hiddenReportBy = 'hidden';
+         $this->validateOnly('division_id');
     }
 
     public function clickReportBy()
