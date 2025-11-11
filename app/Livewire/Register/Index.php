@@ -12,6 +12,20 @@ use Illuminate\Support\Facades\Auth;
 class Index extends Component
 {
     public $name, $username, $user_id, $email, $password, $password_confirmation;
+// 👉 properti baru
+    public $showPassword = false;
+    public $showPasswordConfirmation = false;
+
+    // fungsi toggle
+    public function togglePasswordVisibility()
+    {
+        $this->showPassword = !$this->showPassword;
+    }
+
+    public function togglePasswordConfirmationVisibility()
+    {
+        $this->showPasswordConfirmation = !$this->showPasswordConfirmation;
+    }
 
     public function name_Click(User $id)
     {
