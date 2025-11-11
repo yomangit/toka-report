@@ -659,8 +659,8 @@ class CreateAndUpdate extends Component
         }
         // Pop-up sukses
         $this->dispatch('alert', [
-            'text'            => "Laporan Hazard Anda Sudah Terkirim, Terima kasih sudah melapor!!!",
-            'duration'        => 5000,
+            'text'            => 'Laporan Hazard dengan no'.  $hazardReport->reference .' Sudah Terkirim, Terima kasih sudah melapor!!!',
+            'duration'        => 10000,
             'destination'     => '',
             'newWindow'       => true,
             'close'           => true,
@@ -669,7 +669,7 @@ class CreateAndUpdate extends Component
         $this->dispatch('hazardChartShouldRefresh');
         $this->dispatch('buttonClicked', ['duration' => 4000]);
 
-        // Kirim notifikasi ke moderator
+        // Kirim notifikasi ke moderators
         $moderatorIds = EventUserSecurity::where('responsible_role_id', $this->ResponsibleRole)
             ->where('type_event_report_id', $this->event_type_id)
             ->when(Auth::check(), fn($q) => $q->where('user_id', '!=', Auth::id()))

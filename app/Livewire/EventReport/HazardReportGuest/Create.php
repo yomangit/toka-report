@@ -727,8 +727,8 @@ class Create extends Component
         }
         // Pop-up sukses
         $this->dispatch('alert', [
-            'text'            => "Laporan Hazard Anda Sudah Terkirim, Terima kasih sudah melapor!!!",
-            'duration'        => 5000,
+            'text'            => 'Laporan Hazard dengan no'.  $hazardReport->reference .' Sudah Terkirim, Terima kasih sudah melapor!!!',
+            'duration'        => 10000,
             'destination'     => '',
             'newWindow'       => true,
             'close'           => true,
