@@ -497,8 +497,8 @@ class CreateAndUpdate extends Component
         ]);
         $this->actions[] = [
             'description' => $this->action_description,
-            'due_date' => $this->action_due_date,
-            'actual_close_date' => $this->actual_close_date,
+            'due_date' => (!empty($this->action_due_date)) ? $this->action_due_date : null,
+            'actual_close_date' => (!empty($this->actual_close_date)) ? $this->actual_close_date : null,
             'responsible_id' => $this->action_responsible_id,
         ];
         $this->dispatch('alert', [
