@@ -10,6 +10,7 @@
                 , close: data[0]['close']
                 , gravity: "top", // `top` or `bottom`
                 position: 'right', // `true` or `false`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
                 style: {
                     background: data[0]['backgroundColor']
                 }
