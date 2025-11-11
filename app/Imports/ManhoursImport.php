@@ -17,6 +17,19 @@ class ManhoursImport implements ToModel, WithHeadingRow, SkipsEmptyRows, WithVal
 
     public function model(array $row)
     {
+        // Bersihkan data angka: ganti koma dengan titik
+        $manhours = isset($row['manhours'])
+            ? str_replace(',', '.', $row['manhours'])
+            : 0;
+
+        $manpower = isset($row['manpower'])
+            ? str_replace(',', '.', $row['manpower'])
+            : 0;
+
+        // Pastikan angka valid (convert ke float)
+        $manhours = is_numeric($manhours) ? (float) $manhours : 0;
+        $manpower = is_numeric($manpower) ? (float) $manpower : 0;
+
         return new Manhours([
             'date'             => $row['date'],
             'company_category' => $row['company_category'],
@@ -24,8 +37,8 @@ class ManhoursImport implements ToModel, WithHeadingRow, SkipsEmptyRows, WithVal
             'department'       => $row['department'],
             'dept_group'       => $row['dept_group'],
             'job_class'        => $row['job_class'],
-            'manhours'         => $row['manhours'] ?? 0,
-            'manpower'         => $row['manpower'] ?? 0,
+            'manhours'         => $manhours,
+            'manpower'         => $manpower,
         ]);
     }
 
