@@ -53,7 +53,7 @@
                         <div class="grid grid-cols-3 text-gray-500">
                             <span class="font-mono text-[10px] font-semibold ">{{ __('Responsibility') }}</span>
                             <span class="font-mono text-[10px] col-span-2 font-semibold ">
-                                {{  (!empty($index->responsibility)) = $index->users->lookup_name ? '-' }}</span>
+                               {{ !empty($index->responsibility) ? $index->users->lookup_name : '-' }}</span>
                         </div>
                     </div>
                     <div class="flex-row">
