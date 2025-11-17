@@ -15,17 +15,17 @@ use Livewire\Attributes\Validate;
 class CreateAndUpdate extends Component
 {
     #[Validate]
-    public $id, $name, $email, $password,$import_file, $first_name, $last_name, $lookup_name, $employee_id, $gender, $date_birth, $date_commenced,$end_date, $username, $company_id,$dept_id, $role_user_permit_id,$tanggal,$modal;
+    public $id, $name, $email, $password, $import_file, $first_name, $last_name, $lookup_name, $employee_id, $gender, $date_birth, $date_commenced, $end_date, $username, $company_id, $dept_id, $role_user_permit_id, $tanggal, $modal;
     public  $divider = '', $users_id,  $search_company = '';
     #[On('openModalPeople')]
     public function openModalPeople(User $user)
     {
-        $this->modal="modal-open";
-            if ($user->id) {
+        $this->modal = "modal-open";
+        if ($user->id) {
             $this->users_id = $user->id;
             $this->name = $user->name;
             $this->email = $user->email;
-            $this->lookup_name = (!empty($user->lookup_name)?$user->lookup_name: strtoupper($this->last_name) . ',' . ucwords($this->first_name));
+            $this->lookup_name = (!empty($user->lookup_name) ? $user->lookup_name : strtoupper($this->last_name) . ',' . ucwords($this->first_name));
             $this->employee_id = $user->employee_id;
             $this->first_name = $user->first_name;
             $this->last_name = $user->last_name;
@@ -37,16 +37,15 @@ class CreateAndUpdate extends Component
             $this->dept_id = $user->department;
             $this->end_date = $user->end_date;
             $this->role_user_permit_id = $user->role_user_permit_id;
-            }
-
+        }
     }
     public function rules()
     {
         if (!$this->users_id) {
             return [
-               
+
                 'email' => ['nullable', 'email', 'unique:users,email,' . $this->users_id],
-                'first_name' => ['nullable', 'string', 'max:255'],  
+                'first_name' => ['nullable', 'string', 'max:255'],
                 'last_name' => ['nullable', 'string', 'max:255'],
                 'lookup_name' => ['required', 'string', 'max:255'],
                 'employee_id' => ['nullable', 'string', 'max:255'],
@@ -58,11 +57,11 @@ class CreateAndUpdate extends Component
                 'dept_id' => ['required'],
                 'end_date' => ['nullable', 'date'],
                 'role_user_permit_id' => ['required'],
-                
+
             ];
-        }else{
+        } else {
             return [
-               
+
                 'lookup_name' => ['required', 'string', 'max:255'],
                 'employee_id' => ['required', 'string', 'max:255'],
                 'gender' => ['required', 'string', 'max:255'],
@@ -73,14 +72,14 @@ class CreateAndUpdate extends Component
                 // 'end_date' => ['required', 'date'],
                 'company_id' => ['required'],
                 'role_user_permit_id' => ['required'],
-                
+
             ];
         }
     }
     public function messages()
     {
         return [
-           
+
             'email.required' => 'The Email field is required.',
             'email.email' => 'The Email field must be a valid email address.',
             'email.unique' => 'The Email has already been taken.',
@@ -109,23 +108,38 @@ class CreateAndUpdate extends Component
     {
         if ($this->users_id) {
             $this->tanggal = "tanggal";
-            $this->divider="Edit People";
+            $this->divider = "Edit People";
         } else {
             $this->tanggal = "tanggal";
-            $this->divider="Add People";
+            $this->divider = "Add People";
         }
-        
-        if (!$this->users_id) {     
+
+        if (!$this->users_id) {
             $this->lookup_name =  strtoupper($this->last_name) . ',' . ucwords($this->first_name);
         }
         return view('livewire.admin.people.create-and-update', [
-            'Company'=>Company::searchCompany(trim($this->search_company))->orderBy('name_company','ASC')->get(),
-            'Department'=>Department::searchDepartment(trim($this->search_company))->orderBy('department_name','ASC')->get(),
-            "Role"=>RoleUserPermit::get(),
+            'Company' => Company::searchCompany(trim($this->search_company))->orderBy('name_company', 'ASC')->get(),
+            'Department' => Department::searchDepartment(trim($this->search_company))->orderBy('department_name', 'ASC')->get(),
+            "Role" => RoleUserPermit::get(),
         ])->extends('base.index');
     }
     public function store()
     {
+        $company = Company::find($this->company_id);
+
+        if (!$company) {
+            throw new \Exception("Company tidak ditemukan");
+        }
+
+        $nama_company = $company->name_company;
+
+        // Logika menentukan departement_name
+        if (in_array($nama_company, ['PT. MSM', 'PT. TTN'])) {
+            $departement = Department::find($this->dept_id);
+            $departement_name = $departement ? $departement->department_name : null;
+        } else {
+            $departement_name = $nama_company;
+        }
         $this->validate();
         User::updateOrCreate(['id' => $this->users_id], [
             'name' => $this->name,
@@ -138,6 +152,7 @@ class CreateAndUpdate extends Component
             'role_user_permit_id' => $this->role_user_permit_id,
             'username' => $this->username,
             'company_id' => $this->company_id,
+            'department_name' =>  $departement_name,
             'department' => $this->dept_id,
             'end_date' => $this->end_date,
         ]);
@@ -169,7 +184,7 @@ class CreateAndUpdate extends Component
             );
             $this->resetFilds();
         }
-       
+
         $this->dispatch('people_created');
     }
     /**
@@ -180,7 +195,7 @@ class CreateAndUpdate extends Component
         $this->reset('modal');
         $this->resetFilds();
     }
-   
+
     public function resetFilds()
     {
         $this->reset('users_id');
